@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 21:39:11 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/11 23:57:29 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/01/13 00:27:55 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,18 +48,6 @@ int	ft_strncmp(char *s1, char *s2, int n)
 	return (0);
 }
 
-char	*find_path(char **envp, char *str)
-{
-	int	i;
-
-	i = 0;
-	while (ft_strncmp(str, envp[i], ft_strlen(str)) == 1)
-		i++;
-    if (ft_strncmp(str, envp[i], ft_strlen(str)) == 1)
-        return (NULL);
-    return (&envp[i][ft_strlen(str)]);
-}
-
 int ft_occ(char *str, char c)
 {
     int index;
@@ -74,4 +62,30 @@ int ft_occ(char *str, char c)
         index++;
     }
     return (count);
+}
+
+int ft_strchr(char *str, char *find)
+{
+    int i;
+    int j;
+    
+    i = 0;
+    while (str[i])
+    {
+        j = 0;
+        while (str[i + j] == find[j])
+        {
+            j++;
+            if (j == ft_strlen(find))
+                return (1);
+        }
+        i++;
+        if (i > ft_strlen(str) - ft_strlen(find))
+            return (0);
+    }
+    return (0);
+}
+char *ft_get_str(char *str)
+{
+    return (str);
 }
