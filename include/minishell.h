@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/13 03:05:34 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/01/13 22:07:25 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,9 @@ char *ft_get_prompt(void);
 //ft_parse.c
 int ft_parse(t_token *token, char *input);
 
-//ft_split.c
-char	**ft_split(char *str, char c);
+//ft_tokenisation_utils.c
+int ft_is_quote_close(char *input, int double_quote_open, int single_quote_open);
+int ft_size_malloc(char *input, int index, char c);
 
 //utils.c
 void	ft_putstr_fd(char *s, int fd);

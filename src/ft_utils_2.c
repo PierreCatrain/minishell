@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 01:58:43 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/13 02:20:28 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/01/13 22:22:39 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ t_token *ft_lstnew(char *str)
 {
     t_token *new;
 
+    printf("%s\n", str);
     new = malloc(sizeof(t_token));
     if (new == NULL)
         return (NULL);
