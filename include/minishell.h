@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/13 22:07:25 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/01/14 05:08:58 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@
 # define WD_BUFFER_SIZE 5000
 # define OPEN 0
 # define CLOSE 1
+# define WORD 1
+# define SINGLE_QUOTES 2
+# define DOUBLE_QUOTES 3
 
 typedef struct s_data
 {
@@ -38,9 +41,20 @@ typedef struct s_data
 typedef struct s_token
 {
     char *str;
+    int type;
     struct s_token *prev;
     struct s_token *next;
 }   t_token;
+
+typedef struct s_data_token
+{
+    int double_quote_open;
+    int single_quote_open;
+    int new_word;
+    int index_str;
+    int index;
+    char *str;
+}   t_data_token;
 
 //ft_check_argc_envp.c
 int ft_check_argc_envp(int argc, char **envp);
@@ -49,11 +63,16 @@ int ft_check_argc_envp(int argc, char **envp);
 char *ft_get_prompt(void);
 
 //ft_parse.c
-int ft_parse(t_token *token, char *input);
+int ft_parse(t_token **token, char *input);
 
-//ft_tokenisation_utils.c
-int ft_is_quote_close(char *input, int double_quote_open, int single_quote_open);
-int ft_size_malloc(char *input, int index, char c);
+//ft_tokenisation.c
+int ft_tokenisation(t_token **token, char *input);
+
+//ft_token_part_1.c
+int ft_token_part_1(char *input, t_data_token *data_token, t_token **token);
+
+//ft_token_part_2.c
+int ft_token_part_2(char *input, t_data_token *data_token, t_token **token);
 
 //utils.c
 void	ft_putstr_fd(char *s, int fd);
@@ -61,11 +80,21 @@ int ft_strlen(char *str);
 int	ft_strncmp(char *s1, char *s2, int n);
 int ft_occ(char *str, char c);
 int ft_strchr(char *str, char *find);
-char *ft_get_str(char *str);
 
 //utils_2.c
+char *ft_strdup(char *str);
 t_token    *ft_lstlast(t_token *token);
-t_token *ft_lstnew(char *str);
-void    ft_lst_add_back(t_token **token, t_token *new);
+t_token *ft_lstnew(char *str, int type);
+int    ft_lst_add_back(t_token **token, t_token *new);
+char *ft_get_str(char *str);
+
+//utils_3.c
+int	ft_lstsize(t_token *token);
+void    ft_print_token(t_token **token);
+
+//free.c
+void ft_free_token(t_token **token);
+void free_tokenisation_1(char *input, t_token **token);
+void free_tokenisation_2(char *input, t_token **token, t_data_token *data_token);
 
 #endif

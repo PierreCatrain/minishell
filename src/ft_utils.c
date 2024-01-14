@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 21:39:11 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/13 00:27:55 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/01/14 02:31:22 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,4 @@ int ft_strchr(char *str, char *find)
             return (0);
     }
     return (0);
-}
-char *ft_get_str(char *str)
-{
-    return (str);
 }

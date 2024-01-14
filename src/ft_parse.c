@@ -6,104 +6,51 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 00:23:08 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/13 23:02:22 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/01/14 05:06:47 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int ft_parse(t_token *token, char *input)
+// on s'assure que les quotes ouvertes sont bien ferme sinon l'input n'est pas traitable
+int ft_is_quote_close(char *input, int double_quote_open, int single_quote_open)
 {
     int index;
-    int index_str;
-    char *str;
-    int double_quote_open;
-    int single_quote_open;
-    int new_word;
-    int size_malloc;
 
-    double_quote_open = CLOSE;
-    single_quote_open = CLOSE;
-    new_word = CLOSE;
     index = 0;
-
-    if (input[0] == '\0' || ft_is_quote_close(input, CLOSE, CLOSE) == OPEN)
-        return (free(input), WRONG_INPUT);
     while (input[index])
     {
-        index_str = 0;
         if (input[index] == '"')
-        {
-            double_quote_open = OPEN, index++;
-            size_malloc = ft_size_malloc(input, index, '"');
-            if (size_malloc >= 1)
-            {
-                str = malloc (size_malloc * sizeof(char));
-                if (str == NULL)
-                    return (ERROR_MALLOC);// free les tokens deja alloue   
-            }
-            else
-                double_quote_open = CLOSE, index++;
-        }
+            double_quote_open = OPEN;
         else if (input[index] == '\'')
-        {
-            single_quote_open = OPEN, index++;
-            size_malloc = ft_size_malloc(input, index, '\'');
-            if (size_malloc >= 1)
-            {
-                str = malloc (size_malloc * sizeof(char));
-                if (str == NULL)
-                    return (ERROR_MALLOC);// free les tokens deja alloue   
-            }
-            else
-                single_quote_open = CLOSE, index++;
-        }
-        else if (input[index] != ' ')
-        {
-            new_word = OPEN;
-            str = malloc (ft_size_malloc(input, index, ' ') * sizeof(char));
-            if (str == NULL)
-                return (ERROR_MALLOC);// free les tokens deja alloue
-        }
-        else
-            index++;
+            single_quote_open = OPEN;
+        index++;
         while (double_quote_open == OPEN && input[index])
         {
-            if (input[index] != '"')
-                str[index_str++] = input[index++];
-            else
-            {
-                double_quote_open = CLOSE, index++;
-                str[index_str] = '\0';
-                ft_lst_add_back(&token, ft_lstnew(str));
-                free(str);
-            }
+            if (input[index++] == '"')
+                double_quote_open = CLOSE;
         }
         while (single_quote_open == OPEN && input[index])
         {
-            if (input[index] != '\'')
-                str[index_str++] = input[index++];
-            else
-            {
-                single_quote_open = CLOSE, index++;
-                str[index_str] = '\0';
-                ft_lst_add_back(&token, ft_lstnew(str));
-                free(str);
-            }
-        }
-        while (new_word == OPEN && input[index])
-        {
-            str[index_str++] = input[index++];
-            if (input[index] == ' ' || input[index] == '\0')
-            {
-                new_word = CLOSE;
-                str[index_str] = '\0';
-                ft_lst_add_back(&token, ft_lstnew(str));
-                free(str);
-            }
+            if (input[index++] == '\'')
+                single_quote_open = CLOSE;
         }
     }
-    return (GOOD_INPUT);
+    if (double_quote_open == OPEN || single_quote_open == OPEN)
+        return (ft_putstr_fd("unclosed quotes\n", 2), OPEN);
+    return (CLOSE);
 }
 
-//test "" test "le grand test" "" 'bn'
+// je verifie que rien ne m'empeche de faire mes tokens (input vide ou quotes par ferme)
+// on fait les tokens et si erreur de malloc alors on cancel l'input en cours et on remet le prompt
+// on traite les tokens.
+int ft_parse(t_token **token, char *input)
+{
+    if (input[0] == '\0' || ft_is_quote_close(input, CLOSE, CLOSE) == OPEN)
+        return (free(input), WRONG_INPUT);
+    if (ft_tokenisation(token, input) == ERROR_MALLOC)
+        return (ft_putstr_fd("malloc failed\n", 2), ERROR_MALLOC);
+    ft_print_token(token);
+    ft_free_token(token);
+    return (GOOD_INPUT);
+}

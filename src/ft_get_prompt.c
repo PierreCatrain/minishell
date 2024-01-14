@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 21:50:13 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/13 00:54:27 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/01/14 04:38:29 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char *ft_at_else(char *start_prompt, char *end_prompt, char *str)
         if (str[i] == '/')
             j++;
     }
-    prompt = malloc ((ft_strlen(start_prompt) + ft_strlen(end_prompt) + ft_strlen(str) - i-- + 2) * sizeof(char));
+    prompt = malloc ((ft_strlen(start_prompt) + ft_strlen(end_prompt) + ft_strlen(str) - i-- + 3) * sizeof(char));
     if (prompt == NULL)
         return (NULL);
     j = -1;

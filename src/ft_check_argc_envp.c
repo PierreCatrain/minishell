@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 21:27:05 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/12 21:23:25 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/01/14 05:34:26 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int ft_check_minimum_path(void)
     if (ft_strncmp(path, "/usr/bin:", 9) == 1 \
     && (ft_strncmp(path, "/usr/bin", 8) == 0 && ft_strlen(path) != 8) \
     && ft_strchr(path, ":/usr/bin:") == 0 \
-    && ft_strncmp(&path[ft_strlen(path) - ft_strlen(":/usr/bin")], ":/usr/bin", ft_strlen(":/usr/bin")) == 1)
+    && ft_strncmp(&path[ft_strlen(path) - ft_strlen(":/usr/bin")], ":/usr/bin", ft_strlen(":/usr/bin")) == 1) // il faut autoriser /usr/bin/
         return (ERROR_ARGC_ENVP);
     return (SUCCESS);
 }
