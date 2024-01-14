@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/14 05:08:58 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/01/14 23:11:06 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@
 # define WORD 1
 # define SINGLE_QUOTES 2
 # define DOUBLE_QUOTES 3
+# define START_DOLLAR 0
+# define NOT_START_DOLLAR 1
 
 typedef struct s_data
 {
@@ -98,3 +100,11 @@ void free_tokenisation_1(char *input, t_token **token);
 void free_tokenisation_2(char *input, t_token **token, t_data_token *data_token);
 
 #endif
+
+/*
+    ERREUR
+    "'$USER '"
+    '' -> segfault
+    """"
+    export [] = /&*()!@#$%
+*/

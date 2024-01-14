@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 21:39:11 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/14 02:31:22 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/01/14 18:03:56 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int ft_strlen(char *str)
 {
     int index;
 
+    if (str == NULL)
+        return (0);
     index = 0;
     while (str[index])
         index++;
