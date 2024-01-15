@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 03:45:01 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/14 04:07:15 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/01/15 01:58:02 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ int	ft_lstsize(t_token *token)
 
 void    ft_print_token(t_token **token)
 {
+    if (*token == NULL)
+        return ;
     printf("size %d\n\n", ft_lstsize(*token));
     while ((*token)->next != NULL)
     {
@@ -40,4 +42,13 @@ void    ft_print_token(t_token **token)
         *token = (*token)->prev;
     }
     printf("decroissant %s\n", (*token)->str);
+}
+
+int	ft_isalphanum(int c)
+{
+    if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || (c >= '0' && c <= '9') || c == '_')
+    {
+        return (1);
+    }
+    return (0);
 }

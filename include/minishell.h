@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/14 23:11:06 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/01/15 00:56:02 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,9 @@ int ft_token_part_1(char *input, t_data_token *data_token, t_token **token);
 //ft_token_part_2.c
 int ft_token_part_2(char *input, t_data_token *data_token, t_token **token);
 
+//ft_replace_env_variable.c
+int     ft_replace_env_variable(t_token **token);
+
 //utils.c
 void	ft_putstr_fd(char *s, int fd);
 int ft_strlen(char *str);
@@ -93,6 +96,7 @@ char *ft_get_str(char *str);
 //utils_3.c
 int	ft_lstsize(t_token *token);
 void    ft_print_token(t_token **token);
+int	ft_isalphanum(int c);
 
 //free.c
 void ft_free_token(t_token **token);
