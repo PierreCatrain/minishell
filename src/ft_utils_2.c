@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 01:58:43 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/14 04:42:50 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/01/17 00:32:58 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_token    *ft_lstlast(t_token *token)
     return (token);
 }
 
-t_token *ft_lstnew(char *str, int type)
+t_token *ft_lstnew(char *str, int format, int type)
 {
     t_token *new;
 
@@ -47,6 +47,7 @@ t_token *ft_lstnew(char *str, int type)
     if (new->str == NULL)
         return (free(new), NULL);
     free(str);
+    new->format = format;
     new->type = type;
     new->prev = NULL;
     new->next = NULL;
@@ -65,6 +66,48 @@ int    ft_lst_add_back(t_token **token, t_token *new)
         ft_lstlast(*token)->next = new;
     }
     return (SUCCESS);
+}
+
+int ft_lst_insert(t_token **token, t_token *new)
+{
+    if (new == NULL)
+        return (ERROR_MALLOC);
+    if (*token == NULL)
+        *token = new;
+    else
+    {
+        if ((*token)->next != NULL)
+        {
+            (*token)->next->prev = new;
+            new->next = (*token)->next;
+        }
+        (*token)->next = new;
+        new->prev = *token;
+    }
+    return (SUCCESS);
+}
+
+void ft_lst_del(t_token **token)
+{
+    if ((*token)->next != NULL && (*token)->prev != NULL)
+    {
+        (*token)->next->prev = (*token)->prev;
+        (*token)->prev->next = (*token)->next;
+        free((*token)->str);
+        free(*token);
+    }
+    else if ((*token)->next != NULL)
+    {
+        (*token)->next->prev = NULL;
+        free((*token)->str);
+        free(*token);
+    }
+    else if ((*token)->prev != NULL)
+    {
+        (*token)->prev->next = NULL;
+        free((*token)->str);
+        free(*token);
+    }
 }
 
 char *ft_get_str(char *str)

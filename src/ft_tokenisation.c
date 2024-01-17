@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 05:06:05 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/15 01:57:13 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/01/17 00:52:52 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 // on parcourt tout l'input et on fait des tokens avec
 // token = mot ou "  " ou '  '
-// on remplace les tokens de type mot et double quotes par leur variable d'env 
+// on remplace les tokens de format mot et double quotes par leur variable d'env 
 int ft_tokenisation(t_token **token, char *input)
 {
     t_data_token data_token;
@@ -33,6 +33,10 @@ int ft_tokenisation(t_token **token, char *input)
     }
     free(input);
     if (*token == NULL)
+        return (WRONG_INPUT);
+    if (ft_isolate_operateur(token) == ERROR_MALLOC)
+        return (ERROR_MALLOC);
+    if (ft_lstlast(token)->type != TEXT)
         return (WRONG_INPUT);
     if (ft_replace_env_variable(token) == ERROR_MALLOC)
         return (ERROR_MALLOC);

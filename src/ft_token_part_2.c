@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 00:58:07 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/14 04:45:40 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/01/16 22:29:26 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int ft_complete_double(char *input, t_data_token *data_token, t_token **token)
     {
         data_token->double_quote_open = CLOSE, data_token->index++;
         data_token->str[data_token->index_str] = '\0';
-        if (ft_lst_add_back(token, ft_lstnew(data_token->str, DOUBLE_QUOTES)) == ERROR_MALLOC)
+        if (ft_lst_add_back(token, ft_lstnew(data_token->str, DOUBLE_QUOTES, TEXT)) == ERROR_MALLOC)
             return (free_tokenisation_2(input, token, data_token), ERROR_MALLOC);
     }
     return (SUCCESS);
@@ -34,7 +34,7 @@ int ft_complete_single(char *input, t_data_token *data_token, t_token **token)
     {
         data_token->single_quote_open = CLOSE, data_token->index++;
         data_token->str[data_token->index_str] = '\0';
-        if (ft_lst_add_back(token, ft_lstnew(data_token->str, SINGLE_QUOTES)) == ERROR_MALLOC)
+        if (ft_lst_add_back(token, ft_lstnew(data_token->str, SINGLE_QUOTES, TEXT)) == ERROR_MALLOC)
             return (free_tokenisation_2(input, token, data_token), ERROR_MALLOC);
     }
     return (SUCCESS);
@@ -47,7 +47,7 @@ int ft_complete_word(char *input, t_data_token *data_token, t_token **token)
     {
         data_token->new_word = CLOSE;
         data_token->str[data_token->index_str] = '\0';
-        if (ft_lst_add_back(token, ft_lstnew(data_token->str, WORD)) == ERROR_MALLOC)
+        if (ft_lst_add_back(token, ft_lstnew(data_token->str, WORD, TEXT)) == ERROR_MALLOC)
             return (free_tokenisation_2(input, token, data_token), ERROR_MALLOC);
     }
     return (SUCCESS);

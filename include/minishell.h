@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/15 00:56:02 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/01/17 00:50:12 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <fcntl.h>
 
 # define SUCCESS 0
 # define ERROR_ARGC_ENVP 1
@@ -34,15 +35,26 @@
 # define START_DOLLAR 0
 # define NOT_START_DOLLAR 1
 
-typedef struct s_data
+enum e_token_type
+{
+    TEXT = 0,
+    PIPE,
+    INFILE,
+    OUTFILE,
+    HEREDOC,
+    APPEND,
+};
+
+typedef struct s_file
 {
     int fd_in;
     int fd_out;
-}   t_data;
+}   t_file;
 
 typedef struct s_token
 {
     char *str;
+    int format;
     int type;
     struct s_token *prev;
     struct s_token *next;
@@ -76,6 +88,9 @@ int ft_token_part_1(char *input, t_data_token *data_token, t_token **token);
 //ft_token_part_2.c
 int ft_token_part_2(char *input, t_data_token *data_token, t_token **token);
 
+//ft_isolate_operateur.c
+int ft_isolate_operateur(t_token **token);
+
 //ft_replace_env_variable.c
 int     ft_replace_env_variable(t_token **token);
 
@@ -89,26 +104,31 @@ int ft_strchr(char *str, char *find);
 //utils_2.c
 char *ft_strdup(char *str);
 t_token    *ft_lstlast(t_token *token);
-t_token *ft_lstnew(char *str, int type);
+t_token *ft_lstnew(char *str, int format, int type);
 int    ft_lst_add_back(t_token **token, t_token *new);
+int ft_lst_insert(t_token **token, t_token *new);
+void ft_lst_del(t_token **token);
 char *ft_get_str(char *str);
 
 //utils_3.c
 int	ft_lstsize(t_token *token);
 void    ft_print_token(t_token **token);
 int	ft_isalphanum(int c);
+int ft_strcmp(char *str1, char *str2);
+char	*ft_itoa(int n);
 
 //free.c
 void ft_free_token(t_token **token);
 void free_tokenisation_1(char *input, t_token **token);
 void free_tokenisation_2(char *input, t_token **token, t_data_token *data_token);
 
+//ft_here_doc.c
+t_token *ft_here_doc(t_token *token);
+
 #endif
 
 /*
     ERREUR
     "'$USER '"
-    '' -> segfault
-    """"
-    export [] = /&*()!@#$%
+    $USER$@GJ --- picatraiGJ
 */

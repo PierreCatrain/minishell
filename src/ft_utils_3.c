@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 03:45:01 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/15 01:58:02 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/01/16 02:36:20 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,56 @@ int	ft_isalphanum(int c)
         return (1);
     }
     return (0);
+}
+
+int ft_strcmp(char *str1, char *str2)
+{
+    int index;
+
+    index = 0;
+    while (str1[index] && str2[index] && (str1[index] == str2[index]))
+        index++;
+    return (str1[index] - str2[index]);
+}
+
+int	ft_count_itoa(int n)
+{
+	int	count;
+
+	count = 0;
+	if (n == 0)
+		return (1);
+	if (n < 0)
+		count++;
+	while (n != 0)
+	{
+		n /= 10;
+		count++;
+	}
+	return (count);
+}
+
+char	*ft_itoa(int n)
+{
+	char	*itoa;
+	int		len;
+	long	long_n;
+
+	len = ft_count_itoa(n);
+	long_n = n;
+	itoa = (char *)malloc((len + 1) * sizeof(char));
+	if (itoa == NULL)
+		return (NULL);
+	itoa[len] = '\0';
+	if (long_n < 0)
+		long_n *= -1;
+	while (len > 0)
+	{
+		itoa[len - 1] = (long_n % 10) + '0';
+		long_n /= 10;
+		len--;
+	}
+	if (n < 0)
+	itoa[0] = '-';
+	return (itoa);
 }
