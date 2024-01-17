@@ -6,13 +6,13 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 21:32:59 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/17 00:27:02 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/01/17 02:36:15 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-t_token *ft_lstnew_no_malloc(char *str, int format, int type)
+t_token *ft_lstnew_no_malloc(char *str, int quotes, int type)
 {
     t_token *new;
 
@@ -22,7 +22,7 @@ t_token *ft_lstnew_no_malloc(char *str, int format, int type)
     new->str = ft_strdup(str);
     if (new->str == NULL)
         return (free(new), NULL);
-    new->format = format;
+    new->quotes = quotes;
     new->type = type;
     new->prev = NULL;
     new->next = NULL;
@@ -57,7 +57,7 @@ int ft_insert_operateur(t_token **token)
         return (ERROR_MALLOC);
     index = ft_strlen((*token)->str);
     index_new_str = 0;
-    while (--index >= 0 && (*token)->format == WORD)
+    while (--index >= 0 && (*token)->quotes == WORD)
     {
         if ((*token)->str[index - 1] == '<' && (*token)->str[index] == '<')
         {
@@ -140,7 +140,7 @@ int ft_isolate_operateur(t_token **token)
 {
     while (*token != NULL)
     {
-        if ((*token)->format == WORD && (*token)->type == TEXT)
+        if ((*token)->quotes == WORD && (*token)->type == TEXT)
             ft_insert_operateur(token);
         if ((*token)->next == NULL)
             break ;

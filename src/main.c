@@ -6,15 +6,15 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:52:38 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/14 04:31:33 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/01/17 06:43:51 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int ft_exec(t_token *token)
+int ft_exec(t_tree *tree)
 {
-    token = (t_token *)token;
+    tree = (t_tree *)tree;
     return (SUCCESS);
 }
 
@@ -25,11 +25,11 @@ int ft_exec(t_token *token)
 // si l'input et pas valable on le signal et on recommence a l'etape 2
 int main(int argc, char **argv, char **envp)
 {
-    t_token *token;
+    t_tree *tree;
     char *prompt;
     char *input;
 
-    token = NULL;
+    tree = NULL;
     argv = (void *)argv;
     if (ft_check_argc_envp(argc, envp) == ERROR_ARGC_ENVP)
         return (ERROR_ARGC_ENVP);
@@ -40,8 +40,8 @@ int main(int argc, char **argv, char **envp)
            return (ERROR_PROMPT);
         input = readline(prompt);
         free(prompt);
-        if (ft_parse(&token, input) == GOOD_INPUT)
-            ft_exec(token);
+        if (ft_parse(&tree, input) == GOOD_INPUT)
+            ft_exec(tree);
     }
     return (SUCCESS);
 }

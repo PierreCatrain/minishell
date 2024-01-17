@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 23:58:35 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/16 22:25:16 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/01/17 02:36:16 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ int     ft_replace_env_variable(t_token **token)
 {
     while (*token != NULL)
     {
-        if ((*token)->format != SINGLE_QUOTES && ft_occ((*token)->str, '$') != 0)
+        if ((*token)->quotes != SINGLE_QUOTES && ft_occ((*token)->str, '$') != 0)
         {
             (*token)->str = ft_replace_dollars((*token)->str);
             if ((*token)->str == NULL)
