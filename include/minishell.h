@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/17 06:43:32 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/01/18 01:08:13 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # define ERROR_MALLOC 3
 # define ERROR_PIPE 4
 # define ERROR_FILE 5
+# define ERROR 6
 # define GOOD_INPUT 0
 # define WRONG_INPUT 1
 # define WD_BUFFER_SIZE 5000
@@ -47,16 +48,35 @@ enum e_token_type
     OUTFILE,
     HEREDOC,
     APPEND,
+    INFILE_TEXT,
+    OUTFILE_TEXT,
+    HEREDOC_TEXT,
+    APPEND_TEXT,
+    AND,
+    OR,
+    OPEN_PARENTHESIS,
+    CLOSE_PARENTHESIS,
+    CMD,
+    ARGS,
 };
 
-typedef struct s_tree
+typedef struct s_lst_exec // suite d'execution
 {
-    struct s_tree *prev;
-    struct s_tree *next;
+    struct s_lst_exec *prev;
+    struct s_lst_exec *next;
     char *cmd;
     char **args;
     int fd_in;
     int fd_out;
+} t_lst_exec;
+
+typedef struct s_tree // arbre binaire
+{
+    int type;
+    struct s_tree *parent;
+    struct s_tree *left_child;
+    struct s_tree *right_child;
+    t_lst_exec *lst_exec;
 } t_tree;
 
 typedef struct s_token
@@ -101,6 +121,12 @@ int ft_isolate_operateur(t_token **token);
 
 //ft_replace_env_variable.c
 int     ft_replace_env_variable(t_token **token);
+
+//ft_set_all_grammaire.c
+void ft_set_all_grammaire(t_token **token);
+
+//ft_condtion_grammaire.c
+int ft_condition_grammaire(t_token *token);
 
 //ft_create_tree.c
 int ft_create_tree(t_tree **tree, t_token *token);

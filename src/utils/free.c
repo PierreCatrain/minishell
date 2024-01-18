@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:02:59 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/17 05:45:16 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/01/17 22:28:03 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,14 @@ void free_tokenisation_1(char *input, t_token **token)
 void    free_2d(char **str)
 {
     int index;
-    
+
+    if (str == NULL || str[0] == NULL)
+        return ;
     index = -1;
     while (str[++index])
-        free(str[index]);
+    {
+        if (str[index] != NULL)
+            free(str[index]);
+    }
     free(str);
 }

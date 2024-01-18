@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 03:45:01 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/16 02:36:20 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/01/18 01:31:16 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,12 @@ void    ft_print_token(t_token **token)
     printf("size %d\n\n", ft_lstsize(*token));
     while ((*token)->next != NULL)
     {
-        printf("croissant %s\n", (*token)->str);
+        printf("str %s, type %d\n", (*token)->str, (*token)->type);
         *token = (*token)->next;
     }
-    printf("croissant %s\n\n", (*token)->str);
+    printf("str %s, type %d\n", (*token)->str, (*token)->type);
     while ((*token)->prev != NULL)
-    {
-        printf("decroissant %s\n", (*token)->str);
         *token = (*token)->prev;
-    }
-    printf("decroissant %s\n", (*token)->str);
 }
 
 int	ft_isalphanum(int c)
@@ -59,7 +55,9 @@ int ft_strcmp(char *str1, char *str2)
 
     index = 0;
     while (str1[index] && str2[index] && (str1[index] == str2[index]))
+	{
         index++;
+	}
     return (str1[index] - str2[index]);
 }
 
