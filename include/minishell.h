@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/18 01:08:13 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/01/18 22:32:44 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ enum e_token_type
     ARGS,
 };
 
-typedef struct s_lst_exec // suite d'execution
+typedef struct s_lst_exec // suite d'execution // attention les fd peuvent etre -1 mais sont tous (sauf les -1) a fermer
 {
     struct s_lst_exec *prev;
     struct s_lst_exec *next;

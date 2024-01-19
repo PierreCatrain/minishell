@@ -1,0 +1,397 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_create_tree.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/17 02:02:25 by picatrai          #+#    #+#             */
+/*   Updated: 2024/01/19 03:43:44 by picatrai         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include <minishell.h>
+
+char **ft_strdup_2d(char **str)
+{
+    char **new;
+    int index;
+    
+    new = malloc((ft_strlen_2d(str) + 1) * sizeof(char));
+    if (new == NULL)
+        return (free_2d(str), NULL);
+    index = -1;
+    while (str[++index])
+    {
+        new[index] = ft_strdup(str[index]);
+        if (new[index] == NULL)
+            return (free_2d(str), ft_free_2d_index(new, index), NULL);
+    }
+    new[index] = NULL;
+    return (free_2d(str), new);
+}
+
+t_lst_exec  *ft_new_lst_exec(char *cmd, char **args, int fd_in, int fd_out)
+{
+    t_lst_exec *new;
+
+    new = malloc(sizeof(t_lst_exec));
+    if (new == NULL)
+        return (NULL);
+    new->cmd = ft_strdup(cmd);
+    if (new->cmd == NULL)
+        return (free(new), NULL);
+    new->args = ft_strdup_2d(args);
+    if (new->args == NULL)
+        return (free(new->cmd), free(new), NULL);
+    new->fd_in = fd_in;
+    new->fd_out = fd_out;
+    return (new);
+}
+
+t_lst_exec  *ft_lst_exec_last(t_lst_exec *lst_exec)
+{
+    if (lst_exec == NULL)
+        return (NULL);
+    while (lst_exec->next != NULL)
+        lst_exec = lst_exec->next;
+    return (lst_exec);
+}
+
+int ft_lst_exec_add_back(t_lst_exec **lst_exec, t_lst_exec *new)
+{
+    printf("\tje suis la\n");
+    if (new == NULL)
+    {
+        return (ERROR_MALLOC);
+    }
+    if (*lst_exec == NULL)
+    {
+        printf("\tje suis encore la\n");
+        *lst_exec = new;
+        printf("t'as vu %d\n", (*lst_exec)->fd_in);
+        return (SUCCESS);
+    }
+    printf("\tje suis ici\n");
+    new->prev = ft_lst_exec_last(*lst_exec);
+    ft_lst_exec_last(*lst_exec)->next = new;
+    return (SUCCESS);
+}
+
+int ft_nb_pipes(t_token *token)
+{
+    int count;
+
+    count = 0;
+    while (token != NULL)
+    {
+        if (token->type == PIPE)
+            count++;
+        token = token->next;
+    }
+    return (count);
+}
+
+void ft_printf_2d(char **str)
+{
+    int index;
+
+    printf("args-> ");
+    index = 0;
+    while (str[index])
+    {
+        printf("%s ", str[index]);
+        index++;
+    }
+    printf("\n");
+}
+
+void	ft_print_lst_exec(t_lst_exec ***lst_exec, int nb_lst)
+{
+    t_lst_exec *tmp;
+    int index_lst;
+    
+    index_lst = 0;
+    while (index_lst < nb_lst)
+    {
+        tmp = (*lst_exec[index_lst]);
+        printf("\n\nlist d'exec index %d\n\n\n", index_lst);
+        while (tmp != NULL)
+	    {
+		    printf("\ncmd -> %s\n", tmp->cmd);
+		    ft_printf_2d(tmp->args);
+		    printf("in  -> %d\n", tmp->fd_in);
+		    printf("out -> %d\n\n", tmp->fd_out);
+		    tmp = tmp->next;
+	    }
+        index_lst++;
+    }
+}
+
+void ft_print_fd_pipe(int **fd_pipes, int nb_pipes)
+{
+    int index;
+
+    index = -1;
+    printf("\n");
+    while (++index < nb_pipes)
+    {
+        printf("fd pipe n%d/0 -> %d\n", index, fd_pipes[index][0]);
+        printf("fd pipe n%d/1 -> %d\n", index, fd_pipes[index][1]);
+    }
+}
+
+int ft_create_lst_exec(t_lst_exec ***lst_exec, t_token *token)
+{
+    char *heredoc;
+    int fd_in;
+    int fd_out;
+    char *cmd_tmp;
+    char **args_tmp;
+    int index_pipes;
+    int **fd_pipes;
+    int nb_pipes;
+    int index_lst;
+
+    index_lst = 0;
+    nb_pipes = ft_nb_pipes(token);
+    fd_pipes = malloc (nb_pipes * sizeof(int *));
+    if (fd_pipes == NULL)
+        return (ERROR_MALLOC);
+    index_pipes = -1;
+    while (++index_pipes < nb_pipes)
+    {
+        fd_pipes[index_pipes] = malloc(2 * sizeof(int));
+        if (fd_pipes[index_pipes] == NULL)
+            return (ERROR_MALLOC);
+        if (pipe(fd_pipes[index_pipes]) == -1)
+            return (ERROR_PIPE);
+    }
+    ft_print_fd_pipe(fd_pipes, nb_pipes);
+    index_pipes = 0;
+    fd_in = 0;
+    fd_out = 1;
+    cmd_tmp = NULL;
+    args_tmp = NULL;
+    *lst_exec[0] = NULL;
+    while (token != NULL)
+    {
+        if (token->type == OPEN_PARENTHESIS)
+        {
+            if (cmd_tmp != NULL)
+            {
+                printf("\t(  index %d\n", index_lst);
+                if (ft_lst_exec_add_back(&(*lst_exec[index_lst]), ft_new_lst_exec(cmd_tmp, args_tmp, fd_in, fd_out)) == ERROR_MALLOC)
+                    return (ERROR_MALLOC);
+                printf("et la\n");
+                printf("t'as vu %d\n", (*lst_exec[index_lst])->fd_in);
+                free(cmd_tmp);
+                cmd_tmp = NULL;
+                //free_2d(args_tmp);
+                args_tmp = NULL;
+                fd_in = 0;
+                fd_out = 1;
+            }
+        }
+        else if (token->type == CLOSE_PARENTHESIS)
+        {
+            if (cmd_tmp != NULL)
+            {
+                printf("\t)  index %d\n", index_lst);
+                if (ft_lst_exec_add_back(&(*lst_exec[index_lst]), ft_new_lst_exec(cmd_tmp, args_tmp, fd_in, fd_out)) == ERROR_MALLOC)
+                    return (ERROR_MALLOC);
+                printf("et la\n");
+                printf("t'as vu %d\n", (*lst_exec[index_lst])->fd_in);
+                free(cmd_tmp);
+                cmd_tmp = NULL;
+                //free_2d(args_tmp);
+                args_tmp = NULL;
+                fd_in = 0;
+                fd_out = 1;
+            }
+        }
+        else if (token->type == OR)
+        {
+            if (cmd_tmp != NULL)
+            {
+                printf("\t|| index %d\n", index_lst);
+                if (ft_lst_exec_add_back(&(*lst_exec[index_lst]), ft_new_lst_exec(cmd_tmp, args_tmp, fd_in, fd_out)) == ERROR_MALLOC)
+                    return (ERROR_MALLOC);
+                printf("et la\n");
+                printf("t'as vu %d\n", (*lst_exec[index_lst])->fd_in);
+                free(cmd_tmp);
+                cmd_tmp = NULL;
+                //free_2d(args_tmp);
+                args_tmp = NULL;
+                fd_in = 0;
+                fd_out = 1;
+            }
+            index_lst++;
+            *lst_exec[index_lst] = NULL;
+            printf("\tindex +1 -> new index = %d\n", index_lst);
+        }
+        else if (token->type == AND)
+        {
+            if (cmd_tmp != NULL)
+            {
+                printf("\t&& index %d\n", index_lst);
+                if (ft_lst_exec_add_back(&(*lst_exec[index_lst]), ft_new_lst_exec(cmd_tmp, args_tmp, fd_in, fd_out)) == ERROR_MALLOC)
+                    return (ERROR_MALLOC);
+                printf("et la\n");
+                printf("t'as vu %d\n", (*lst_exec[index_lst])->fd_in);
+                free(cmd_tmp);
+                cmd_tmp = NULL;
+                //free_2d(args_tmp);
+                args_tmp = NULL;
+                fd_in = 0;
+                fd_out = 1;
+            }
+            index_lst++;
+            *lst_exec[index_lst] = NULL;
+            printf("\tindex +1 -> new index = %d\n", index_lst);
+        }
+        else if (token->type == INFILE)
+        {
+            if (fd_in != 0 && fd_in != -1)
+                close(fd_in);
+            token = token->next;
+            fd_in = open(token->str, O_RDONLY, 0644);
+            printf("fd in -> %d\n", fd_in);
+        }
+        else if (token->type == OUTFILE)
+        {
+            if (fd_out != 1 && fd_out != -1)
+                close(fd_out);
+            token = token->next;
+            fd_out = open(token->str, O_CREAT, O_WRONLY, O_TRUNC, 0644);
+            printf("fd out-> %d\n", fd_out);
+        }
+        else if (token->type == APPEND)
+        {
+            if (fd_out != 1 && fd_out != -1)
+                close(fd_out);
+            token = token->next;
+            fd_out = open(token->str, O_CREAT, O_WRONLY, O_APPEND, 0644);
+            printf("fd out-> %d\n", fd_out);
+        }
+        else if (token->type == HEREDOC)// gerer si on ctrl c ou d depuis le remplissage du here_doc et attention on a open mais pas re close puis re open
+        {
+            if (fd_in != 0 && fd_in != -1)
+                close(fd_in);
+            token = token->next;
+            heredoc = ft_here_doc();
+            if (heredoc == NULL)
+                return (ERROR_FILE);
+            fd_in = open(heredoc, O_CREAT, O_RDWR, O_TRUNC, 0644);
+            ft_complete(fd_in, token);
+            unlink(heredoc);
+            free(heredoc);
+            printf("fd in -> %d\n", fd_in);
+        }
+        else if (token->type == PIPE)
+        {
+            if (fd_out != 1)
+                close(fd_pipes[index_pipes][1]);
+            else
+                fd_out = fd_pipes[index_pipes][1];
+            if (ft_lst_exec_add_back(&(*lst_exec[index_lst]), ft_new_lst_exec(cmd_tmp, args_tmp, fd_in, fd_out)) == ERROR_MALLOC)
+                    return (ERROR_MALLOC);
+            printf("et la\n");
+            printf("t'as vu %d\n", (*lst_exec[index_lst])->fd_in);
+            free(cmd_tmp);
+            cmd_tmp = NULL;
+            //free_2d(args_tmp);
+            args_tmp = NULL;
+            fd_in = fd_pipes[index_pipes++][0];
+            fd_out = 1;
+        }
+        else
+        {
+            if (cmd_tmp == NULL)
+            {
+                cmd_tmp = ft_strdup(token->str);
+                if (cmd_tmp == NULL)
+                    return (ERROR_MALLOC);
+            }
+            args_tmp = ft_join_2d(args_tmp, token->str);
+            if (args_tmp == NULL)
+                return (ERROR_MALLOC);
+        }
+        // on passe au suivant
+        if (token->next == NULL)
+            break;
+        token = token->next;
+    }
+    if (cmd_tmp != NULL)
+    {
+        printf("\tindex %d\n", index_lst);
+        if (ft_lst_exec_add_back(&(*lst_exec[index_lst]), ft_new_lst_exec(cmd_tmp, args_tmp, fd_in, fd_out)) == ERROR_MALLOC)
+            return (ERROR_MALLOC);
+        printf("et la\n");
+        printf("t'as vu %d\n", (*lst_exec[index_lst])->fd_in);
+        free(cmd_tmp);
+        cmd_tmp = NULL;
+        //free_2d(args_tmp);
+        args_tmp = NULL;
+        fd_in = 0;
+        fd_out = 1;
+    }
+    free(cmd_tmp);
+    cmd_tmp = NULL;
+    //free_2d(args_tmp);
+    args_tmp = NULL;
+    fd_in = 0;
+    fd_out = 1;
+    return (SUCCESS);
+}
+
+int ft_nb_lst_exec(t_token *token)
+{
+    int count;
+
+    count = 1;
+    while (token != NULL)
+    {
+        if (token->type == AND || token->type == OR)
+            count++;
+        token = token->next;
+    }
+    return (count);
+}
+
+int ft_create_tree(t_tree **tree, t_token *token)
+{
+    t_lst_exec **lst_exec;
+    int nb_lst;
+    //int index;
+
+    tree = (t_tree **)tree;
+    nb_lst = ft_nb_lst_exec(token);
+    lst_exec = malloc(nb_lst * sizeof(t_lst_exec *));
+    if (lst_exec == NULL)
+        return (ERROR_MALLOC);
+    // index = -1;
+    // while (++index < nb_lst)
+    // {
+    //     printf("%d\n", index);
+    //     lst_exec[index] = NULL;
+    // }
+    if (ft_create_lst_exec(&lst_exec, token) != SUCCESS)
+        return (ERROR);
+    printf("\t\t\tet la %d\n", lst_exec[0]->fd_in);
+    ft_print_lst_exec(&lst_exec, nb_lst);
+    return (SUCCESS);
+}
+
+/*
+cat <file1 <file2 >file3                            in 2 out 3
+cat <file1 <file2 >file3 >file4                     in 2 out 4
+cat <file1 >file3 <file2 >file4                     in 2 out 4
+cat <file1 >file3 <file2 >file4 | cat <file1        in 2 out 4 et in 1 out stdout
+<file1 cat >file3 | cat                             in 1 out 3 et in pipe[0] out stdout
+
+
+
+
+(cat <file1 || cat <file2) && cat <file3
+*/
