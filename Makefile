@@ -6,7 +6,7 @@
 #    By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/11 18:47:20 by picatrai          #+#    #+#              #
-#    Updated: 2024/01/19 05:32:42 by picatrai         ###   ########.fr        #
+#    Updated: 2024/01/19 06:20:49 by picatrai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,16 +22,22 @@ INCLUDE = -I include
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	$(CC) $(CFLAGS) -c -o $@ $< $(INCLUDE)
+	@echo "\033[1;32m COMPILED \033[1;37m->\033[4;32m $< \033[0m"
 
 $(NAME): $(OBJ)
+	@echo "\n\033[1;33mAll objects have been created\033[0m"
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(RFLAGS)
 
 all: $(OBJDIR) $(NAME)
 
 clean:
 	rm -f $(OBJ)
+	@echo "\033[1;33mAll objects have been deleted\033[0m\n"
 
 fclean: clean
 	rm -f $(NAME)
+	@echo "\033[1;33mExecutable have been deleted\033[0m\n"
 
 re: fclean all
+
+.PHONY: all clean
