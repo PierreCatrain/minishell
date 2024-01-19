@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 02:02:25 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/19 03:43:44 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/01/19 04:24:41 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,19 +60,15 @@ t_lst_exec  *ft_lst_exec_last(t_lst_exec *lst_exec)
 
 int ft_lst_exec_add_back(t_lst_exec **lst_exec, t_lst_exec *new)
 {
-    printf("\tje suis la\n");
     if (new == NULL)
     {
         return (ERROR_MALLOC);
     }
     if (*lst_exec == NULL)
     {
-        printf("\tje suis encore la\n");
         *lst_exec = new;
-        printf("t'as vu %d\n", (*lst_exec)->fd_in);
         return (SUCCESS);
     }
-    printf("\tje suis ici\n");
     new->prev = ft_lst_exec_last(*lst_exec);
     ft_lst_exec_last(*lst_exec)->next = new;
     return (SUCCESS);
@@ -112,10 +108,11 @@ void	ft_print_lst_exec(t_lst_exec ***lst_exec, int nb_lst)
     int index_lst;
     
     index_lst = 0;
+    printf("\n");
     while (index_lst < nb_lst)
     {
         tmp = (*lst_exec[index_lst]);
-        printf("\n\nlist d'exec index %d\n\n\n", index_lst);
+        printf("list d'exec index %d\n", index_lst);
         while (tmp != NULL)
 	    {
 		    printf("\ncmd -> %s\n", tmp->cmd);
@@ -167,7 +164,7 @@ int ft_create_lst_exec(t_lst_exec ***lst_exec, t_token *token)
         if (pipe(fd_pipes[index_pipes]) == -1)
             return (ERROR_PIPE);
     }
-    ft_print_fd_pipe(fd_pipes, nb_pipes);
+    //ft_print_fd_pipe(fd_pipes, nb_pipes);
     index_pipes = 0;
     fd_in = 0;
     fd_out = 1;
@@ -180,11 +177,8 @@ int ft_create_lst_exec(t_lst_exec ***lst_exec, t_token *token)
         {
             if (cmd_tmp != NULL)
             {
-                printf("\t(  index %d\n", index_lst);
                 if (ft_lst_exec_add_back(&(*lst_exec[index_lst]), ft_new_lst_exec(cmd_tmp, args_tmp, fd_in, fd_out)) == ERROR_MALLOC)
                     return (ERROR_MALLOC);
-                printf("et la\n");
-                printf("t'as vu %d\n", (*lst_exec[index_lst])->fd_in);
                 free(cmd_tmp);
                 cmd_tmp = NULL;
                 //free_2d(args_tmp);
@@ -197,11 +191,8 @@ int ft_create_lst_exec(t_lst_exec ***lst_exec, t_token *token)
         {
             if (cmd_tmp != NULL)
             {
-                printf("\t)  index %d\n", index_lst);
                 if (ft_lst_exec_add_back(&(*lst_exec[index_lst]), ft_new_lst_exec(cmd_tmp, args_tmp, fd_in, fd_out)) == ERROR_MALLOC)
                     return (ERROR_MALLOC);
-                printf("et la\n");
-                printf("t'as vu %d\n", (*lst_exec[index_lst])->fd_in);
                 free(cmd_tmp);
                 cmd_tmp = NULL;
                 //free_2d(args_tmp);
@@ -214,11 +205,8 @@ int ft_create_lst_exec(t_lst_exec ***lst_exec, t_token *token)
         {
             if (cmd_tmp != NULL)
             {
-                printf("\t|| index %d\n", index_lst);
                 if (ft_lst_exec_add_back(&(*lst_exec[index_lst]), ft_new_lst_exec(cmd_tmp, args_tmp, fd_in, fd_out)) == ERROR_MALLOC)
                     return (ERROR_MALLOC);
-                printf("et la\n");
-                printf("t'as vu %d\n", (*lst_exec[index_lst])->fd_in);
                 free(cmd_tmp);
                 cmd_tmp = NULL;
                 //free_2d(args_tmp);
@@ -228,17 +216,13 @@ int ft_create_lst_exec(t_lst_exec ***lst_exec, t_token *token)
             }
             index_lst++;
             *lst_exec[index_lst] = NULL;
-            printf("\tindex +1 -> new index = %d\n", index_lst);
         }
         else if (token->type == AND)
         {
             if (cmd_tmp != NULL)
             {
-                printf("\t&& index %d\n", index_lst);
                 if (ft_lst_exec_add_back(&(*lst_exec[index_lst]), ft_new_lst_exec(cmd_tmp, args_tmp, fd_in, fd_out)) == ERROR_MALLOC)
                     return (ERROR_MALLOC);
-                printf("et la\n");
-                printf("t'as vu %d\n", (*lst_exec[index_lst])->fd_in);
                 free(cmd_tmp);
                 cmd_tmp = NULL;
                 //free_2d(args_tmp);
@@ -248,7 +232,6 @@ int ft_create_lst_exec(t_lst_exec ***lst_exec, t_token *token)
             }
             index_lst++;
             *lst_exec[index_lst] = NULL;
-            printf("\tindex +1 -> new index = %d\n", index_lst);
         }
         else if (token->type == INFILE)
         {
@@ -256,7 +239,6 @@ int ft_create_lst_exec(t_lst_exec ***lst_exec, t_token *token)
                 close(fd_in);
             token = token->next;
             fd_in = open(token->str, O_RDONLY, 0644);
-            printf("fd in -> %d\n", fd_in);
         }
         else if (token->type == OUTFILE)
         {
@@ -264,7 +246,6 @@ int ft_create_lst_exec(t_lst_exec ***lst_exec, t_token *token)
                 close(fd_out);
             token = token->next;
             fd_out = open(token->str, O_CREAT, O_WRONLY, O_TRUNC, 0644);
-            printf("fd out-> %d\n", fd_out);
         }
         else if (token->type == APPEND)
         {
@@ -272,7 +253,6 @@ int ft_create_lst_exec(t_lst_exec ***lst_exec, t_token *token)
                 close(fd_out);
             token = token->next;
             fd_out = open(token->str, O_CREAT, O_WRONLY, O_APPEND, 0644);
-            printf("fd out-> %d\n", fd_out);
         }
         else if (token->type == HEREDOC)// gerer si on ctrl c ou d depuis le remplissage du here_doc et attention on a open mais pas re close puis re open
         {
@@ -286,7 +266,6 @@ int ft_create_lst_exec(t_lst_exec ***lst_exec, t_token *token)
             ft_complete(fd_in, token);
             unlink(heredoc);
             free(heredoc);
-            printf("fd in -> %d\n", fd_in);
         }
         else if (token->type == PIPE)
         {
@@ -296,8 +275,6 @@ int ft_create_lst_exec(t_lst_exec ***lst_exec, t_token *token)
                 fd_out = fd_pipes[index_pipes][1];
             if (ft_lst_exec_add_back(&(*lst_exec[index_lst]), ft_new_lst_exec(cmd_tmp, args_tmp, fd_in, fd_out)) == ERROR_MALLOC)
                     return (ERROR_MALLOC);
-            printf("et la\n");
-            printf("t'as vu %d\n", (*lst_exec[index_lst])->fd_in);
             free(cmd_tmp);
             cmd_tmp = NULL;
             //free_2d(args_tmp);
@@ -324,11 +301,8 @@ int ft_create_lst_exec(t_lst_exec ***lst_exec, t_token *token)
     }
     if (cmd_tmp != NULL)
     {
-        printf("\tindex %d\n", index_lst);
         if (ft_lst_exec_add_back(&(*lst_exec[index_lst]), ft_new_lst_exec(cmd_tmp, args_tmp, fd_in, fd_out)) == ERROR_MALLOC)
             return (ERROR_MALLOC);
-        printf("et la\n");
-        printf("t'as vu %d\n", (*lst_exec[index_lst])->fd_in);
         free(cmd_tmp);
         cmd_tmp = NULL;
         //free_2d(args_tmp);
@@ -363,23 +337,16 @@ int ft_create_tree(t_tree **tree, t_token *token)
 {
     t_lst_exec **lst_exec;
     int nb_lst;
-    //int index;
 
-    tree = (t_tree **)tree;
     nb_lst = ft_nb_lst_exec(token);
     lst_exec = malloc(nb_lst * sizeof(t_lst_exec *));
     if (lst_exec == NULL)
         return (ERROR_MALLOC);
-    // index = -1;
-    // while (++index < nb_lst)
-    // {
-    //     printf("%d\n", index);
-    //     lst_exec[index] = NULL;
-    // }
     if (ft_create_lst_exec(&lst_exec, token) != SUCCESS)
         return (ERROR);
-    printf("\t\t\tet la %d\n", lst_exec[0]->fd_in);
     ft_print_lst_exec(&lst_exec, nb_lst);
+    if (ft_complete_tree(tree, lst_exec, token) != SUCCESS)
+        return (ERROR);
     return (SUCCESS);
 }
 

@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/18 22:32:44 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/01/19 04:34:04 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,13 @@ enum e_token_type
     CLOSE_PARENTHESIS,
     CMD,
     ARGS,
+};
+
+enum e_tree_type
+{
+    EXEC_LIST = 0,
+    OPPERATOR_AND,
+    OPPERATOR_OR,
 };
 
 typedef struct s_lst_exec // suite d'execution // attention les fd peuvent etre -1 mais sont tous (sauf les -1) a fermer
