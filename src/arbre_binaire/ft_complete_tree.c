@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 04:18:52 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/19 04:39:54 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/01/19 05:35:57 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,9 @@ t_tree *ft_tree_new(int type)
 
 int ft_complete_tree(t_tree **tree, t_lst_exec **lst_exec, t_token *token)
 {
+    lst_exec = (t_lst_exec **)lst_exec;
+    tree = (t_tree **)tree;
+    token = (t_token *)token;
     
     return (SUCCESS);
 }

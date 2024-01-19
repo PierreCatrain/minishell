@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/19 04:34:04 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/01/19 05:36:19 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,9 @@ int ft_condition_grammaire(t_token *token);
 
 //ft_create_tree.c
 int ft_create_tree(t_tree **tree, t_token *token);
+
+//ft_complete_tree.c
+int ft_complete_tree(t_tree **tree, t_lst_exec **lst_exec, t_token *token);
 
 //ft_here_doc.c
 char *ft_here_doc(void);
