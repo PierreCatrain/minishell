@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 03:45:01 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/18 01:31:16 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/01/22 13:58:48 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,27 @@ int	ft_lstsize(t_token *token)
 void    ft_print_token(t_token **token)
 {
     if (*token == NULL)
+	{
         return ;
-    printf("size %d\n\n", ft_lstsize(*token));
+	}
+	printf("size %d\n\n", ft_lstsize(*token));
     while ((*token)->next != NULL)
     {
-        printf("str %s, type %d\n", (*token)->str, (*token)->type);
+        printf("%s\n", (*token)->str);
         *token = (*token)->next;
     }
-    printf("str %s, type %d\n", (*token)->str, (*token)->type);
+    printf("%s\n", (*token)->str);
     while ((*token)->prev != NULL)
         *token = (*token)->prev;
+    // printf("size %d\n\n", ft_lstsize(*token));
+    // while ((*token)->next != NULL)
+    // {
+    //     printf("str %s, type %d\n", (*token)->str, (*token)->type);
+    //     *token = (*token)->next;
+    // }
+    // printf("str %s, type %d\n", (*token)->str, (*token)->type);
+    // while ((*token)->prev != NULL)
+    //     *token = (*token)->prev;
 }
 
 int	ft_isalphanum(int c)
@@ -55,9 +66,7 @@ int ft_strcmp(char *str1, char *str2)
 
     index = 0;
     while (str1[index] && str2[index] && (str1[index] == str2[index]))
-	{
         index++;
-	}
     return (str1[index] - str2[index]);
 }
 

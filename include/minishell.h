@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/19 05:36:19 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/01/22 18:58:04 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@
 # define NOT_START_DOLLAR 1
 # define NOT_YET 0
 # define YES 1
+# define ADD 0
+# define DONT_ADD 1
 
 enum e_token_type
 {
@@ -95,7 +97,7 @@ typedef struct s_token
     struct s_token *next;
 }   t_token;
 
-typedef struct s_data_token
+typedef struct s_data_parse
 {
     int double_quote_open;
     int single_quote_open;
@@ -103,25 +105,28 @@ typedef struct s_data_token
     int index_str;
     int index;
     char *str;
-}   t_data_token;
+    
+    char *prompt;
+    char *input;
+}   t_data_parse;
 
 //ft_check_argc_envp.c
-int ft_check_argc_envp(int argc, char **envp);
+int ft_check_argc_envp(int argc, char **argv);
 
 //ft_get_prompt.c
 char *ft_get_prompt(void);
 
 //ft_parse.c
-int ft_parse(t_tree **tree, char *input);
+int ft_parse(t_tree **tree, t_data_parse *data_parse);
 
 //ft_tokenisation.c
-int ft_tokenisation(t_token **token, char *input);
+int ft_tokenisation(t_token **token, t_data_parse *data_parse);
 
 //ft_token_part_1.c
-int ft_token_part_1(char *input, t_data_token *data_token, t_token **token);
+int ft_token_part_1(t_data_parse *data_parse, t_token **token);
 
 //ft_token_part_2.c
-int ft_token_part_2(char *input, t_data_token *data_token, t_token **token);
+int ft_token_part_2(t_data_parse *data_parse, t_token **token);
 
 //ft_isolate_operateur.c
 int ft_isolate_operateur(t_token **token);
@@ -137,9 +142,10 @@ int ft_condition_grammaire(t_token *token);
 
 //ft_create_tree.c
 int ft_create_tree(t_tree **tree, t_token *token);
+int ft_lst_exec(t_token *token, t_lst_exec **lst_exec);
 
 //ft_complete_tree.c
-int ft_complete_tree(t_tree **tree, t_lst_exec **lst_exec, t_token *token);
+int ft_complete_tree(t_tree **tree, t_token *token);
 
 //ft_here_doc.c
 char *ft_here_doc(void);
@@ -172,11 +178,13 @@ char	*ft_itoa(int n);
 void    ft_free_2d_index(char **str, int index);
 int ft_strlen_2d(char **str);
 char **ft_join_2d(char **args_cmd, char *str);
+void    ft_print_tree(t_tree *tree);
+void	ft_print_lst_exec(t_lst_exec *lst_exec);
 
 //free.c
 void ft_free_token(t_token **token);
 void free_tokenisation_1(char *input, t_token **token);
-void free_tokenisation_2(char *input, t_token **token, t_data_token *data_token);
+void free_tokenisation_2(char *input, t_token **token, t_data_parse *data_parse);
 void    free_2d(char **str);
 
 #endif

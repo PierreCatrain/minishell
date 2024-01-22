@@ -6,11 +6,61 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 05:46:43 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/17 07:00:59 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/01/22 17:24:29 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+void ft_printf_2d(char **str)
+{
+    int index;
+
+    printf("args-> ");
+    index = 0;
+    while (str[index])
+    {
+        printf("%s ", str[index]);
+        index++;
+    }
+    printf("\n");
+}
+
+void	ft_print_lst_exec(t_lst_exec *lst_exec)
+{
+    printf("exec\n");
+    while (lst_exec != NULL)
+	{
+	    printf("\ncmd -> %s\n", lst_exec->cmd);
+		ft_printf_2d(lst_exec->args);
+	    printf("in  -> %d\n", lst_exec->fd_in);
+	    printf("out -> %d\n\n", lst_exec->fd_out);
+		lst_exec = lst_exec->next;
+	}
+}
+
+void    ft_print_tree(t_tree *tree)
+{
+    if (tree == NULL)
+        return ;
+    if (tree->type == EXEC_LIST)
+    {
+        ft_print_lst_exec(tree->lst_exec);
+    }
+    else if (tree->type == OPPERATOR_AND)
+    {
+        printf("AND\n");
+    }
+    else if (tree->type == OPPERATOR_OR)
+    {
+        printf("OR\n");
+    }
+    if (tree->left_child != NULL)
+        ft_print_tree(tree->left_child);
+    if (tree->right_child != NULL)
+        ft_print_tree(tree->right_child);
+    return ;
+}
 
 void    ft_free_2d_index(char **str, int index)
 {

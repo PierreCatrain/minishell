@@ -6,15 +6,16 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:52:38 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/17 06:43:51 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/01/22 18:32:51 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int ft_exec(t_tree *tree)
+int ft_exec(t_tree *tree, char **envp)
 {
     tree = (t_tree *)tree;
+    envp = (char **)envp;
     return (SUCCESS);
 }
 
@@ -25,23 +26,34 @@ int ft_exec(t_tree *tree)
 // si l'input et pas valable on le signal et on recommence a l'etape 2
 int main(int argc, char **argv, char **envp)
 {
+    t_data_parse data_parse;
     t_tree *tree;
-    char *prompt;
-    char *input;
 
     tree = NULL;
-    argv = (void *)argv;
-    if (ft_check_argc_envp(argc, envp) == ERROR_ARGC_ENVP)
+    if (ft_check_argc_envp(argc, argv) == ERROR_ARGC_ENVP)
         return (ERROR_ARGC_ENVP);
+    if (argc == 3)
+    {
+        data_parse.input = ft_strdup(argv[2]);
+        if (data_parse.input == NULL)
+            return (ERROR_MALLOC);
+        if (ft_parse(&tree, &data_parse) == GOOD_INPUT)
+            ft_exec(tree, envp);
+        return (SUCCESS);
+    }
     while (1)
     {
-        prompt = ft_get_prompt();
-        if (prompt == NULL)
+        data_parse.prompt = ft_get_prompt();
+        if (data_parse.prompt == NULL)
            return (ERROR_PROMPT);
-        input = readline(prompt);
-        free(prompt);
-        if (ft_parse(&tree, input) == GOOD_INPUT)
-            ft_exec(tree);
+        data_parse.input = readline(data_parse.prompt);
+        free(data_parse.prompt);
+        if (ft_parse(&tree, &data_parse) == GOOD_INPUT)
+            ft_exec(tree, envp);
     }
     return (SUCCESS);
 }
+
+/*
+cat && test || (cattt && dsdf)
+*/

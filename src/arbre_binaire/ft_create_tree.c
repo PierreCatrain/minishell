@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 02:02:25 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/19 04:24:41 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/01/22 17:51:24 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char **ft_strdup_2d(char **str)
     char **new;
     int index;
     
-    new = malloc((ft_strlen_2d(str) + 1) * sizeof(char));
+    new = malloc((ft_strlen_2d(str) + 1) * sizeof(char *));
     if (new == NULL)
         return (free_2d(str), NULL);
     index = -1;
@@ -27,7 +27,7 @@ char **ft_strdup_2d(char **str)
         if (new[index] == NULL)
             return (free_2d(str), ft_free_2d_index(new, index), NULL);
     }
-    new[index] = NULL;
+    new[index] = NULL; 
     return (free_2d(str), new);
 }
 
@@ -43,7 +43,7 @@ t_lst_exec  *ft_new_lst_exec(char *cmd, char **args, int fd_in, int fd_out)
         return (free(new), NULL);
     new->args = ft_strdup_2d(args);
     if (new->args == NULL)
-        return (free(new->cmd), free(new), NULL);
+        return (NULL);
     new->fd_in = fd_in;
     new->fd_out = fd_out;
     return (new);
@@ -88,43 +88,6 @@ int ft_nb_pipes(t_token *token)
     return (count);
 }
 
-void ft_printf_2d(char **str)
-{
-    int index;
-
-    printf("args-> ");
-    index = 0;
-    while (str[index])
-    {
-        printf("%s ", str[index]);
-        index++;
-    }
-    printf("\n");
-}
-
-void	ft_print_lst_exec(t_lst_exec ***lst_exec, int nb_lst)
-{
-    t_lst_exec *tmp;
-    int index_lst;
-    
-    index_lst = 0;
-    printf("\n");
-    while (index_lst < nb_lst)
-    {
-        tmp = (*lst_exec[index_lst]);
-        printf("list d'exec index %d\n", index_lst);
-        while (tmp != NULL)
-	    {
-		    printf("\ncmd -> %s\n", tmp->cmd);
-		    ft_printf_2d(tmp->args);
-		    printf("in  -> %d\n", tmp->fd_in);
-		    printf("out -> %d\n\n", tmp->fd_out);
-		    tmp = tmp->next;
-	    }
-        index_lst++;
-    }
-}
-
 void ft_print_fd_pipe(int **fd_pipes, int nb_pipes)
 {
     int index;
@@ -138,7 +101,7 @@ void ft_print_fd_pipe(int **fd_pipes, int nb_pipes)
     }
 }
 
-int ft_create_lst_exec(t_lst_exec ***lst_exec, t_token *token)
+int ft_lst_exec(t_token *token, t_lst_exec **lst_exec)
 {
     char *heredoc;
     int fd_in;
@@ -148,9 +111,8 @@ int ft_create_lst_exec(t_lst_exec ***lst_exec, t_token *token)
     int index_pipes;
     int **fd_pipes;
     int nb_pipes;
-    int index_lst;
-
-    index_lst = 0;
+    
+    //*lst_exec = malloc(sizeof(t_lst_exec));
     nb_pipes = ft_nb_pipes(token);
     fd_pipes = malloc (nb_pipes * sizeof(int *));
     if (fd_pipes == NULL)
@@ -170,14 +132,14 @@ int ft_create_lst_exec(t_lst_exec ***lst_exec, t_token *token)
     fd_out = 1;
     cmd_tmp = NULL;
     args_tmp = NULL;
-    *lst_exec[0] = NULL;
+    *lst_exec = NULL;
     while (token != NULL)
     {
         if (token->type == OPEN_PARENTHESIS)
         {
             if (cmd_tmp != NULL)
             {
-                if (ft_lst_exec_add_back(&(*lst_exec[index_lst]), ft_new_lst_exec(cmd_tmp, args_tmp, fd_in, fd_out)) == ERROR_MALLOC)
+                if (ft_lst_exec_add_back(lst_exec, ft_new_lst_exec(cmd_tmp, args_tmp, fd_in, fd_out)) == ERROR_MALLOC)
                     return (ERROR_MALLOC);
                 free(cmd_tmp);
                 cmd_tmp = NULL;
@@ -191,7 +153,7 @@ int ft_create_lst_exec(t_lst_exec ***lst_exec, t_token *token)
         {
             if (cmd_tmp != NULL)
             {
-                if (ft_lst_exec_add_back(&(*lst_exec[index_lst]), ft_new_lst_exec(cmd_tmp, args_tmp, fd_in, fd_out)) == ERROR_MALLOC)
+                if (ft_lst_exec_add_back(lst_exec, ft_new_lst_exec(cmd_tmp, args_tmp, fd_in, fd_out)) == ERROR_MALLOC)
                     return (ERROR_MALLOC);
                 free(cmd_tmp);
                 cmd_tmp = NULL;
@@ -205,7 +167,7 @@ int ft_create_lst_exec(t_lst_exec ***lst_exec, t_token *token)
         {
             if (cmd_tmp != NULL)
             {
-                if (ft_lst_exec_add_back(&(*lst_exec[index_lst]), ft_new_lst_exec(cmd_tmp, args_tmp, fd_in, fd_out)) == ERROR_MALLOC)
+                if (ft_lst_exec_add_back(lst_exec, ft_new_lst_exec(cmd_tmp, args_tmp, fd_in, fd_out)) == ERROR_MALLOC)
                     return (ERROR_MALLOC);
                 free(cmd_tmp);
                 cmd_tmp = NULL;
@@ -214,14 +176,12 @@ int ft_create_lst_exec(t_lst_exec ***lst_exec, t_token *token)
                 fd_in = 0;
                 fd_out = 1;
             }
-            index_lst++;
-            *lst_exec[index_lst] = NULL;
         }
         else if (token->type == AND)
         {
             if (cmd_tmp != NULL)
             {
-                if (ft_lst_exec_add_back(&(*lst_exec[index_lst]), ft_new_lst_exec(cmd_tmp, args_tmp, fd_in, fd_out)) == ERROR_MALLOC)
+                if (ft_lst_exec_add_back(lst_exec, ft_new_lst_exec(cmd_tmp, args_tmp, fd_in, fd_out)) == ERROR_MALLOC)
                     return (ERROR_MALLOC);
                 free(cmd_tmp);
                 cmd_tmp = NULL;
@@ -230,8 +190,6 @@ int ft_create_lst_exec(t_lst_exec ***lst_exec, t_token *token)
                 fd_in = 0;
                 fd_out = 1;
             }
-            index_lst++;
-            *lst_exec[index_lst] = NULL;
         }
         else if (token->type == INFILE)
         {
@@ -273,7 +231,7 @@ int ft_create_lst_exec(t_lst_exec ***lst_exec, t_token *token)
                 close(fd_pipes[index_pipes][1]);
             else
                 fd_out = fd_pipes[index_pipes][1];
-            if (ft_lst_exec_add_back(&(*lst_exec[index_lst]), ft_new_lst_exec(cmd_tmp, args_tmp, fd_in, fd_out)) == ERROR_MALLOC)
+            if (ft_lst_exec_add_back(lst_exec, ft_new_lst_exec(cmd_tmp, args_tmp, fd_in, fd_out)) == ERROR_MALLOC)
                     return (ERROR_MALLOC);
             free(cmd_tmp);
             cmd_tmp = NULL;
@@ -301,7 +259,7 @@ int ft_create_lst_exec(t_lst_exec ***lst_exec, t_token *token)
     }
     if (cmd_tmp != NULL)
     {
-        if (ft_lst_exec_add_back(&(*lst_exec[index_lst]), ft_new_lst_exec(cmd_tmp, args_tmp, fd_in, fd_out)) == ERROR_MALLOC)
+        if (ft_lst_exec_add_back(lst_exec, ft_new_lst_exec(cmd_tmp, args_tmp, fd_in, fd_out)) == ERROR_MALLOC)
             return (ERROR_MALLOC);
         free(cmd_tmp);
         cmd_tmp = NULL;
@@ -310,12 +268,12 @@ int ft_create_lst_exec(t_lst_exec ***lst_exec, t_token *token)
         fd_in = 0;
         fd_out = 1;
     }
-    free(cmd_tmp);
-    cmd_tmp = NULL;
-    //free_2d(args_tmp);
-    args_tmp = NULL;
-    fd_in = 0;
-    fd_out = 1;
+    // free(cmd_tmp);
+    // cmd_tmp = NULL;
+    // free_2d(args_tmp);
+    // args_tmp = NULL;
+    // fd_in = 0;
+    // fd_out = 1;
     return (SUCCESS);
 }
 
@@ -335,17 +293,7 @@ int ft_nb_lst_exec(t_token *token)
 
 int ft_create_tree(t_tree **tree, t_token *token)
 {
-    t_lst_exec **lst_exec;
-    int nb_lst;
-
-    nb_lst = ft_nb_lst_exec(token);
-    lst_exec = malloc(nb_lst * sizeof(t_lst_exec *));
-    if (lst_exec == NULL)
-        return (ERROR_MALLOC);
-    if (ft_create_lst_exec(&lst_exec, token) != SUCCESS)
-        return (ERROR);
-    ft_print_lst_exec(&lst_exec, nb_lst);
-    if (ft_complete_tree(tree, lst_exec, token) != SUCCESS)
+    if (ft_complete_tree(tree, token) != SUCCESS)
         return (ERROR);
     return (SUCCESS);
 }

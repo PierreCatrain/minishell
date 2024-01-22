@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 00:23:08 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/19 01:33:43 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/01/22 18:49:11 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,21 +43,22 @@ int ft_is_quote_close(char *input, int double_quote_open, int single_quote_open)
 
 // je verifie que rien ne m'empeche de faire mes tokens (input vide ou quotes par ferme)
 // on fait les tokens et si erreur de malloc alors on cancel l'input en cours et on remet le prompt
-// on traite les tokens.
-int ft_parse(t_tree **tree, char *input)
+// on traite les tokens
+int ft_parse(t_tree **tree, t_data_parse *data_parse)
 {
     t_token *token;
 
     token = NULL;
-    if (input[0] == '\0' || ft_is_quote_close(input, CLOSE, CLOSE) == OPEN)
-        return (free(input), WRONG_INPUT);
-    if (ft_tokenisation(&token, input) == ERROR_MALLOC)
+    if (data_parse->input[0] == '\0' || ft_is_quote_close(data_parse->input, CLOSE, CLOSE) == OPEN)
+        return (free(data_parse->input), WRONG_INPUT);
+    if (ft_tokenisation(&token, data_parse) == ERROR_MALLOC)
         return (ft_putstr_fd("malloc failed\n", 2), ERROR_MALLOC);
     if (ft_condition_grammaire(token) == WRONG_INPUT)
         return (ft_free_token(&token), WRONG_INPUT);
     //ft_print_token(&token);
     if (ft_create_tree(tree, token) != SUCCESS)
         return (ft_free_token(&token), ERROR_MALLOC);
-    ft_free_token(&token);
+    //ft_free_token(&token);
+    ft_print_tree(*tree);
     return (GOOD_INPUT);
 }
