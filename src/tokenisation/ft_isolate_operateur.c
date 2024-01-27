@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 21:32:59 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/17 21:58:36 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/01/27 15:04:45 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,41 @@ char *ft_str_rev(char *str)
     return (free(str), new_str);
 }
 
+// on s'assure juste que il y ai pas 3 & ou | qui se suivent
+int is_token_valid(char *str)
+{
+    int index;
+    int count;
+
+    index = 0;
+    count = 0;
+    while (str[index])
+    {
+        if (str[index] == '&' || str[index] == '|')
+            count++;
+        else
+            count = 0;
+        if (count == 3)
+        {
+            if (str[index - 2] == '&')
+                ft_putstr_fd("minishell: syntax error near unexpected token `&'\n", 2);
+            if (str[index - 2] == '|')
+                ft_putstr_fd("minishell: syntax error near unexpected token `|'\n", 2);
+            return (WRONG_INPUT);
+        }
+        index++;
+    }
+    return (SUCCESS);
+}
+
 int ft_insert_operateur(t_token **token)
 {
     int index;
     int index_new_str;
     char *str;
 
+    if (is_token_valid((*token)->str) == WRONG_INPUT)
+        return (WRONG_INPUT);
     str = malloc((ft_strlen((*token)->str) + 1) * sizeof(char));
     if (str == NULL)
         return (ERROR_MALLOC);
@@ -195,7 +224,10 @@ int ft_isolate_operateur(t_token **token)
     while (*token != NULL)
     {
         if ((*token)->quotes == WORD && (*token)->type == TEXT)
-            ft_insert_operateur(token);
+        {
+            if (ft_insert_operateur(token) != SUCCESS)
+                return (ERROR);
+        }
         if ((*token)->next == NULL)
             break ;
         else

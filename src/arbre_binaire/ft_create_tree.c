@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 02:02:25 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/22 17:51:24 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/01/27 16:47:53 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ t_lst_exec  *ft_new_lst_exec(char *cmd, char **args, int fd_in, int fd_out)
     new->args = ft_strdup_2d(args);
     if (new->args == NULL)
         return (NULL);
+    new->next = NULL;
+    new->prev = NULL;
     new->fd_in = fd_in;
     new->fd_out = fd_out;
     return (new);

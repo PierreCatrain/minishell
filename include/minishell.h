@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/22 18:58:04 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/01/27 16:10:42 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ typedef struct s_lst_exec // suite d'execution // attention les fd peuvent etre 
     char **args;
     int fd_in;
     int fd_out;
+    int builtin;
 } t_lst_exec;
 
 typedef struct s_tree // arbre binaire
@@ -151,6 +152,9 @@ int ft_complete_tree(t_tree **tree, t_token *token);
 char *ft_here_doc(void);
 void	ft_complete(int fd_in, t_token *token);
 
+//ft_add_num_builtins.c
+void ft_add_num_builtins(t_lst_exec **lst_exec);
+
 //ft_utils.c
 void	ft_putstr_fd(char *s, int fd);
 int ft_strlen(char *str);
@@ -186,6 +190,7 @@ void ft_free_token(t_token **token);
 void free_tokenisation_1(char *input, t_token **token);
 void free_tokenisation_2(char *input, t_token **token, t_data_parse *data_parse);
 void    free_2d(char **str);
+void free_tree(t_tree *tree);
 
 #endif
 

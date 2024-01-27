@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 05:06:05 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/22 18:28:37 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/01/27 16:24:22 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ int ft_tokenisation(t_token **token, t_data_parse *data_parse)
     free(data_parse->input);
     if (*token == NULL)
         return (WRONG_INPUT);
-    if (ft_isolate_operateur(token) == ERROR_MALLOC)
-        return (ERROR_MALLOC);
+    if (ft_isolate_operateur(token) != SUCCESS)
+        return (ERROR);
     if (ft_replace_env_variable(token) == ERROR_MALLOC)
         return (ERROR_MALLOC);
     ft_set_all_grammaire(token);

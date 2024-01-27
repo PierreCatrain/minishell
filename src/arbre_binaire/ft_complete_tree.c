@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 04:18:52 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/22 18:41:46 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/01/27 16:49:15 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,7 @@ int ft_add_tree(t_tree **tree, t_tree *new, t_token *token, int add)
         {
             if (ft_lst_exec(token, &(*tree)->lst_exec) != SUCCESS)
                 return (ERROR);
+            ft_add_num_builtins(&(*tree)->lst_exec);
         }
     }
     else if ((*tree)->left_child == NULL)
@@ -156,6 +157,7 @@ int ft_add_tree(t_tree **tree, t_tree *new, t_token *token, int add)
         {
             if (ft_lst_exec(token, &(*tree)->left_child->lst_exec) != SUCCESS)
                 return (ERROR);
+            ft_add_num_builtins(&(*tree)->left_child->lst_exec);
         }
     }
     else if ((*tree)->right_child == NULL)
@@ -166,6 +168,7 @@ int ft_add_tree(t_tree **tree, t_tree *new, t_token *token, int add)
         {
             if (ft_lst_exec(token, &(*tree)->right_child->lst_exec) != SUCCESS)
                 return (ERROR);
+            ft_add_num_builtins(&(*tree)->right_child->lst_exec);
         }
     }
     while ((*tree)->parent != NULL)

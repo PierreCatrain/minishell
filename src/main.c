@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:52:38 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/22 18:32:51 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/01/27 17:38:56 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int ft_exec(t_tree *tree, char **envp)
 {
     tree = (t_tree *)tree;
     envp = (char **)envp;
+    free_tree(tree);
     return (SUCCESS);
 }
 
@@ -48,6 +49,7 @@ int main(int argc, char **argv, char **envp)
            return (ERROR_PROMPT);
         data_parse.input = readline(data_parse.prompt);
         free(data_parse.prompt);
+        tree = NULL;
         if (ft_parse(&tree, &data_parse) == GOOD_INPUT)
             ft_exec(tree, envp);
     }
@@ -56,4 +58,23 @@ int main(int argc, char **argv, char **envp)
 
 /*
 cat && test || (cattt && dsdf)
+cat || test || (cattt && dsdf)
+*/
+
+/*
+a faire
+
+leak en cas d'erreurs de malloc ou pipe
+leak en cas d'erreurs de grammaire
+signaux
+$?
+*
+
+
+ameliorer
+
+les erreurs d'invalide tokens
+le variable d'env
+bollean garif
+les prios dans l'abre binaire
 */
