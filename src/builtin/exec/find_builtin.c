@@ -6,11 +6,11 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 09:32:17 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/01/27 18:59:40 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/01/29 07:51:35 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../include/exec.h"
+# include "minishell.h"
 
 /*
 ◦ echo with option -n

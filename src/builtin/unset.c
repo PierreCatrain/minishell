@@ -6,11 +6,11 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 16:01:18 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/01/27 18:59:06 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/01/29 07:51:29 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtin.h"
+# include "minishell.h"
 
 int	ft_find_unset_index(char **env, char *unset_str)
 {

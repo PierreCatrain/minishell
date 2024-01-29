@@ -6,11 +6,11 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 22:17:53 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/01/26 09:43:09 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/01/29 07:51:04 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtin.h"
+# include "minishell.h"
 
 // echo affiche un retour a la ligne
 // echo -n affiche sans le retour a la ligne final

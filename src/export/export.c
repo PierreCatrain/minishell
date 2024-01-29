@@ -6,26 +6,11 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 22:51:52 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/01/27 19:02:47 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/01/29 07:56:56 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtin.h"
-
-int	ft_strlen(char *str)
-{
-	int	i;
-
-	i = 0;
-	if (!str)
-	{
-		write(1, "strlen vide\n", 13);
-		return (0);
-	}
-	while (str[i])
-		i++;
-	return (i);
-}
+# include "minishell.h"
 
 int	ft_is_ascii(char c)
 {
@@ -42,16 +27,6 @@ void	free_tab_tab(char **tab)
 	free(tab);
 }
 
-int	ft_strcmp(char *s1, char *s2)
-{
-	int	i;
-
-	i = 0;
-	while ((s1[i] || s2[i]) && s1[i] == s2[i])
-		i++;
-	return ( s1[i] - s2[i]);
-}
-
 int	ft_strcmp_ascii_order(char *s1, char *s2)
 {
 	int	i;
@@ -62,20 +37,6 @@ int	ft_strcmp_ascii_order(char *s1, char *s2)
 	while ((s1[i] || s2[i]) && s1[i] == s2[i])
 		i++;
 	return (s1[i] - s2[i]);
-}
-
-int	ft_strncmp(char *s1, char *s2, size_t size)
-{
-	int	i;
-
-	i = 0;
-	while ((s1[i] || s2[i]) && (i < (int) size))
-	{
-		if (s1[i] != s2[i])
-			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-		i++;
-	}
-	return (0);
 }
 
 void	print_tab_tab(char **tab)

@@ -6,11 +6,11 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 21:52:06 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/01/27 18:57:12 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/01/29 07:51:17 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtin.h"
+# include "minishell.h"
 
 // msg d'err "bash: exit: too many arguments\n" ou "bash: exit: arg pas valid: too many arguments\n" arg pas valide = qwer2
 // exit a besoin uniquement de chiffre valide positif ou negatif avec un seul signe

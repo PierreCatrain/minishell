@@ -6,11 +6,11 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:42:46 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/01/27 18:57:20 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/01/29 07:50:54 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "builtin.h"
+# include "minishell.h"
 
 char	*ft_str_join_export_name_with_equal_value(char *s1, char *s2)
 {

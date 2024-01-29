@@ -6,11 +6,11 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 22:28:44 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/01/11 22:50:52 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/01/29 07:51:13 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+# include "minishell.h"
 
 void	ft_env(char **env)
 {
