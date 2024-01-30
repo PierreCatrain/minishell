@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 01:58:43 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/17 06:49:21 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/01/29 19:56:05 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,24 +89,30 @@ int ft_lst_insert(t_token **token, t_token *new)
 
 void ft_lst_del(t_token **token)
 {
+    t_token *tmp;
+    
+    tmp = *token;
     if ((*token)->next != NULL && (*token)->prev != NULL)
     {
         (*token)->next->prev = (*token)->prev;
         (*token)->prev->next = (*token)->next;
-        free((*token)->str);
-        free(*token);
+        *token = (*token)->next;
+        free(tmp->str);
+        free(tmp);
     }
     else if ((*token)->next != NULL)
     {
         (*token)->next->prev = NULL;
-        free((*token)->str);
-        free(*token);
+        *token = (*token)->next;
+        free(tmp->str);
+        free(tmp);
     }
     else if ((*token)->prev != NULL)
     {
         (*token)->prev->next = NULL;
-        free((*token)->str);
-        free(*token);
+        *token = (*token)->prev;
+        free(tmp->str);
+        free(tmp);
     }
 }
 

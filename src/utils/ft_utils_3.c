@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 03:45:01 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/22 13:58:48 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/01/29 19:57:43 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void    ft_print_token(t_token **token)
 	{
         return ;
 	}
+	while ((*token)->prev != NULL)
+        *token = (*token)->prev;
 	printf("size %d\n\n", ft_lstsize(*token));
     while ((*token)->next != NULL)
     {
@@ -40,15 +42,6 @@ void    ft_print_token(t_token **token)
     printf("%s\n", (*token)->str);
     while ((*token)->prev != NULL)
         *token = (*token)->prev;
-    // printf("size %d\n\n", ft_lstsize(*token));
-    // while ((*token)->next != NULL)
-    // {
-    //     printf("str %s, type %d\n", (*token)->str, (*token)->type);
-    //     *token = (*token)->next;
-    // }
-    // printf("str %s, type %d\n", (*token)->str, (*token)->type);
-    // while ((*token)->prev != NULL)
-    //     *token = (*token)->prev;
 }
 
 int	ft_isalphanum(int c)

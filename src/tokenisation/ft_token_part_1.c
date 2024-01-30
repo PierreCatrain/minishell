@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 00:53:58 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/22 18:30:37 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/01/27 19:01:55 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int ft_open_double(t_data_parse *data_parse, t_token **token)
     size_malloc = ft_size_malloc(data_parse->input, data_parse->index, '"');
     if (size_malloc >= 1)
     {
-        data_parse->str = malloc (size_malloc * sizeof(char));
+        data_parse->str = malloc ((size_malloc + 1) * sizeof(char));
         if (data_parse->str == NULL)
             return (free_tokenisation_1(data_parse->input, token), ERROR_MALLOC); 
     }
@@ -52,7 +52,7 @@ int ft_open_single(t_data_parse *data_parse, t_token **token)
     size_malloc = ft_size_malloc(data_parse->input, data_parse->index, '\'');
     if (size_malloc >= 1)
     {
-        data_parse->str = malloc (size_malloc * sizeof(char));
+        data_parse->str = malloc ((size_malloc + 1) * sizeof(char));
         if (data_parse->str == NULL)
             return (free_tokenisation_1(data_parse->input, token), ERROR_MALLOC);
     }
@@ -64,7 +64,7 @@ int ft_open_single(t_data_parse *data_parse, t_token **token)
 int ft_open_word(t_data_parse *data_parse, t_token **token)
 {
     data_parse->new_word = OPEN;
-    data_parse->str = malloc (ft_size_malloc(data_parse->input, data_parse->index, ' ') * sizeof(char));
+    data_parse->str = malloc ((ft_size_malloc(data_parse->input, data_parse->index, ' ') + 1) * sizeof(char));
     if (data_parse->str == NULL)
         return (free_tokenisation_1(data_parse->input, token), ERROR_MALLOC);
     return (SUCCESS);

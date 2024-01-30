@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 02:02:25 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/27 16:47:53 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/01/30 00:18:14 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ char **ft_strdup_2d(char **str)
         if (new[index] == NULL)
             return (free_2d(str), ft_free_2d_index(new, index), NULL);
     }
-    new[index] = NULL; 
-    return (free_2d(str), new);
+    new[index] = NULL;
+    return (new);
 }
 
 t_lst_exec  *ft_new_lst_exec(char *cmd, char **args, int fd_in, int fd_out)
@@ -145,7 +145,7 @@ int ft_lst_exec(t_token *token, t_lst_exec **lst_exec)
                     return (ERROR_MALLOC);
                 free(cmd_tmp);
                 cmd_tmp = NULL;
-                //free_2d(args_tmp);
+                free_2d(args_tmp);
                 args_tmp = NULL;
                 fd_in = 0;
                 fd_out = 1;
@@ -159,7 +159,7 @@ int ft_lst_exec(t_token *token, t_lst_exec **lst_exec)
                     return (ERROR_MALLOC);
                 free(cmd_tmp);
                 cmd_tmp = NULL;
-                //free_2d(args_tmp);
+                free_2d(args_tmp);
                 args_tmp = NULL;
                 fd_in = 0;
                 fd_out = 1;
@@ -173,7 +173,7 @@ int ft_lst_exec(t_token *token, t_lst_exec **lst_exec)
                     return (ERROR_MALLOC);
                 free(cmd_tmp);
                 cmd_tmp = NULL;
-                //free_2d(args_tmp);
+                free_2d(args_tmp);
                 args_tmp = NULL;
                 fd_in = 0;
                 fd_out = 1;
@@ -187,7 +187,7 @@ int ft_lst_exec(t_token *token, t_lst_exec **lst_exec)
                     return (ERROR_MALLOC);
                 free(cmd_tmp);
                 cmd_tmp = NULL;
-                //free_2d(args_tmp);
+                free_2d(args_tmp);
                 args_tmp = NULL;
                 fd_in = 0;
                 fd_out = 1;
@@ -237,7 +237,7 @@ int ft_lst_exec(t_token *token, t_lst_exec **lst_exec)
                     return (ERROR_MALLOC);
             free(cmd_tmp);
             cmd_tmp = NULL;
-            //free_2d(args_tmp);
+            free_2d(args_tmp);
             args_tmp = NULL;
             fd_in = fd_pipes[index_pipes++][0];
             fd_out = 1;
@@ -254,7 +254,6 @@ int ft_lst_exec(t_token *token, t_lst_exec **lst_exec)
             if (args_tmp == NULL)
                 return (ERROR_MALLOC);
         }
-        // on passe au suivant
         if (token->next == NULL)
             break;
         token = token->next;
@@ -265,7 +264,7 @@ int ft_lst_exec(t_token *token, t_lst_exec **lst_exec)
             return (ERROR_MALLOC);
         free(cmd_tmp);
         cmd_tmp = NULL;
-        //free_2d(args_tmp);
+        free_2d(args_tmp);
         args_tmp = NULL;
         fd_in = 0;
         fd_out = 1;
@@ -276,6 +275,10 @@ int ft_lst_exec(t_token *token, t_lst_exec **lst_exec)
     // args_tmp = NULL;
     // fd_in = 0;
     // fd_out = 1;
+    index_pipes = -1;
+    while (++index_pipes < nb_pipes)
+        free(fd_pipes[index_pipes]);
+    free(fd_pipes);
     return (SUCCESS);
 }
 
@@ -297,6 +300,7 @@ int ft_create_tree(t_tree **tree, t_token *token)
 {
     if (ft_complete_tree(tree, token) != SUCCESS)
         return (ERROR);
+    ft_free_token(&token);
     return (SUCCESS);
 }
 

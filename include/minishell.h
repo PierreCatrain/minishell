@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/27 16:10:42 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/01/30 02:06:27 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ typedef struct s_lst_exec // suite d'execution // attention les fd peuvent etre 
     char **args;
     int fd_in;
     int fd_out;
-    int builtin;
 } t_lst_exec;
 
 typedef struct s_tree // arbre binaire
@@ -131,12 +130,14 @@ int ft_token_part_2(t_data_parse *data_parse, t_token **token);
 
 //ft_isolate_operateur.c
 int ft_isolate_operateur(t_token **token);
+t_token *ft_lstnew_no_malloc(char *str, int quotes, int type);
 
 //ft_replace_env_variable.c
 int     ft_replace_env_variable(t_token **token);
 
 //ft_set_all_grammaire.c
 void ft_set_all_grammaire(t_token **token);
+int ft_is_quote_close(char *input, int double_quote_open, int single_quote_open);
 
 //ft_condtion_grammaire.c
 int ft_condition_grammaire(t_token *token);
@@ -151,9 +152,6 @@ int ft_complete_tree(t_tree **tree, t_token *token);
 //ft_here_doc.c
 char *ft_here_doc(void);
 void	ft_complete(int fd_in, t_token *token);
-
-//ft_add_num_builtins.c
-void ft_add_num_builtins(t_lst_exec **lst_exec);
 
 //ft_utils.c
 void	ft_putstr_fd(char *s, int fd);
@@ -184,6 +182,7 @@ int ft_strlen_2d(char **str);
 char **ft_join_2d(char **args_cmd, char *str);
 void    ft_print_tree(t_tree *tree);
 void	ft_print_lst_exec(t_lst_exec *lst_exec);
+int is_input_only_whitespace(char *str);
 
 //free.c
 void ft_free_token(t_token **token);

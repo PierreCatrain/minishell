@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 05:06:05 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/27 16:24:22 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/01/30 01:46:29 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 // on remplace les tokens de quotes mot et double quotes par leur variable d'env 
 int ft_tokenisation(t_token **token, t_data_parse *data_parse)
 {
+    if (ft_is_quote_close(data_parse->input, CLOSE, CLOSE) == OPEN)
+        return (free(data_parse->input), WRONG_INPUT);
     data_parse->double_quote_open = CLOSE;
     data_parse->single_quote_open = CLOSE;
     data_parse->new_word = CLOSE;
@@ -25,17 +27,17 @@ int ft_tokenisation(t_token **token, t_data_parse *data_parse)
     {
         data_parse->index_str = 0;
         if (ft_token_part_1(data_parse, token) == ERROR_MALLOC)
-            return (ERROR_MALLOC);
+            return (free(data_parse->input), ERROR_MALLOC);
         if (ft_token_part_2(data_parse, token) == ERROR_MALLOC)
-            return (ERROR_MALLOC);
+            return (free(data_parse->input), ERROR_MALLOC);
     }
     free(data_parse->input);
     if (*token == NULL)
         return (WRONG_INPUT);
     if (ft_isolate_operateur(token) != SUCCESS)
-        return (ERROR);
+        return (ft_free_token(token), ERROR);
     if (ft_replace_env_variable(token) == ERROR_MALLOC)
-        return (ERROR_MALLOC);
+        return (ft_free_token(token), ERROR_MALLOC);
     ft_set_all_grammaire(token);
     return (GOOD_INPUT);
 }

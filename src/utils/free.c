@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:02:59 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/27 16:11:29 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/01/29 19:19:17 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void ft_free_token(t_token **token)
         *token = (*token)->prev;
     while(*token != NULL)
     {
+        //printf("\tstr %s\n", (*token)->str);
         free((*token)->str);
         tmp = *token;
         *token = (*token)->next;
@@ -65,10 +66,10 @@ void    free_2d(char **str)
     index = -1;
     while (str[++index])
     {
-        if (str[index] != NULL)
+        if (str[index] != NULL && str[index][0] != '\0')
             free(str[index]);
     }
-    //free(str);
+    free(str);
 }
 
 void free_exec_list(t_lst_exec *exec)
