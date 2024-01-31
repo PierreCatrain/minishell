@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:41:55 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/31 01:15:24 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/01/31 01:20:19 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,10 @@ int ft_lst_wildcard_add_back(t_wildcard **ls, t_wildcard *new)
 
 int set_ls(t_wildcard **ls)
 {
-    DIR *directory = opendir(".");
+    DIR *directory;
     struct dirent *entry;
 
+    directory = opendir(".");
     if (directory == NULL)
         return (ERROR);
     while ((entry = readdir(directory)) != NULL)
