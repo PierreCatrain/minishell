@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/30 02:06:27 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/01/30 20:11:47 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <fcntl.h>
+#include <sys/types.h>
+#include <dirent.h>
 
 # define SUCCESS 0
 # define ERROR_ARGC_ENVP 1
@@ -110,6 +112,13 @@ typedef struct s_data_parse
     char *input;
 }   t_data_parse;
 
+typedef struct s_wildcard
+{
+    struct s_wildcard *prev;
+    struct s_wildcard *next;
+    char *str;
+} t_wildcard;
+
 //ft_check_argc_envp.c
 int ft_check_argc_envp(int argc, char **argv);
 
@@ -134,6 +143,9 @@ t_token *ft_lstnew_no_malloc(char *str, int quotes, int type);
 
 //ft_replace_env_variable.c
 int     ft_replace_env_variable(t_token **token);
+
+//ft_replace_wildcard.c
+int ft_replace_wildcard(t_token **token);
 
 //ft_set_all_grammaire.c
 void ft_set_all_grammaire(t_token **token);

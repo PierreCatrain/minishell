@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 05:06:05 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/30 01:46:29 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/01/30 18:41:20 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ int ft_tokenisation(t_token **token, t_data_parse *data_parse)
         return (ft_free_token(token), ERROR);
     if (ft_replace_env_variable(token) == ERROR_MALLOC)
         return (ft_free_token(token), ERROR_MALLOC);
+    if (ft_replace_wildcard(token) != SUCCESS)
+        return (ft_free_token(token), ERROR);
     ft_set_all_grammaire(token);
     return (GOOD_INPUT);
 }

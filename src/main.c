@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:52:38 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/30 01:48:51 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/01/31 01:16:01 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,14 +70,13 @@ cat || test || (cattt && dsdf)
 /*
 a faire
 
-leak en cas d'erreurs de malloc ou pipe
+leak en cas d'erreurs de malloc ou pipe opendir
 signaux
 $?
-*
-
 
 ameliorer
 
+plus cmd dans les lst_exec
 les erreurs d'invalide tokens
 le variable d'env
 */

@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 02:23:35 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/17 22:54:18 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/01/30 21:35:23 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ char *ft_strjoin(char *str1, char *str2)
     char *join;
     int i;
     int j;
-    
+
     if (str2 == NULL)
         return (str1);
-    join = malloc ((ft_strlen(str2) + 1) * sizeof(char));
+    join = malloc ((ft_strlen(str1) + ft_strlen(str2) + 1) * sizeof(char));
     if (join == NULL)
         return (NULL);
     i = -1;
