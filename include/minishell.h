@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/31 01:59:37 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/01/31 02:17:26 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,11 +124,11 @@ typedef struct s_wildcard
     char *str;
 } t_wildcard;
 
-enum 
+enum bool
 {
     FALSE = 0,
     TRUE
-}   bool;
+};
 
 //ft_check_argc_envp.c
 int ft_check_argc_envp(int argc, char **argv);

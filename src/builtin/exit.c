@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 21:52:06 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/01/29 07:51:17 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/01/31 02:17:40 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 // dans l'ordre de check d'erreur exit regarde dabord si le premier arg est correctement entre s'il ne l'est pas il execute exit et affiche le message d'erreur
 // que arg n'a pas ete correctement entre et le retour est de 2
 
-bool 	ft_atoi(char *str, long long int *res)
+enum bool 	ft_atoi(char *str, long long int *res)
 {
 	int	i;
 	int	s;
