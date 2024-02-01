@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/31 02:17:26 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/01 01:28:36 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ typedef struct s_lst_exec // suite d'execution // attention les fd peuvent etre 
 {
     struct s_lst_exec *prev;
     struct s_lst_exec *next;
-    char *cmd;
     char **args;
     int fd_in;
     int fd_out;
@@ -281,9 +280,10 @@ char	*ft_strjoin_path(char *s1, char *s2);
 
 void ft_free_token(t_token **token);
 void free_tokenisation_1(char *input, t_token **token);
-void free_tokenisation_2(char *input, t_token **token, t_data_parse *data_parse);
+void free_tokenisation_2(t_token **token, t_data_parse *data_parse);
 void    free_2d(char **str);
-void free_tree(t_tree *tree);
+void free_close_tree(t_tree *tree);
+void ft_print_error_malloc(void);
 
 // # ====================================================== #
 // |														|

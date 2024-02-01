@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 21:39:11 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/14 18:03:56 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/01 02:08:25 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,10 @@ int	ft_strncmp(char *s1, char *s2, int n)
 	int	i;
 
 	i = 0;
+    if (s1 == NULL || s2 == NULL)
+    {
+        return (1);
+    }
 	while ((s1[i] || s2[i]) && i < n)
 	{
 		if (s1[i] != s2[i])

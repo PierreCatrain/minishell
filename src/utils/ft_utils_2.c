@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 01:58:43 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/29 19:56:05 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/01 00:44:17 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,10 @@ t_token *ft_lstnew(char *str, int quotes, int type)
 
     new = malloc(sizeof(t_token));
     if (new == NULL)
-        return (NULL);
+        return (free(str), NULL);
     new->str = ft_strdup(str);
     if (new->str == NULL)
-        return (free(new), NULL);
+        return (free(new), free(str), NULL);
     free(str);
     new->quotes = quotes;
     new->type = type;
@@ -90,7 +90,7 @@ int ft_lst_insert(t_token **token, t_token *new)
 void ft_lst_del(t_token **token)
 {
     t_token *tmp;
-    
+
     tmp = *token;
     if ((*token)->next != NULL && (*token)->prev != NULL)
     {

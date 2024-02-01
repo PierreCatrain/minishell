@@ -6,34 +6,34 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 02:23:35 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/30 21:35:23 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/01/31 21:18:48 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-char *ft_strjoin(char *str1, char *str2)
+char	*ft_strjoin(char *str1, char *str2)
 {
-    char *join;
-    int i;
-    int j;
+	char	*join;
+	int			i;
+	int			j;
 
-    if (str2 == NULL)
-        return (str1);
-    join = malloc ((ft_strlen(str1) + ft_strlen(str2) + 1) * sizeof(char));
-    if (join == NULL)
-        return (NULL);
-    i = -1;
-    while (str1[++i])
-        join[i] = str1[i];
-    j = -1;
-    while (str2[++j])
-        join[i + j] = str2[j];
-    join[i + j] = '\0';
-    return (join);
+	if (str2 == NULL)
+		return (str1);
+	join = malloc ((ft_strlen(str1) + ft_strlen(str2) + 1) * sizeof(char));
+	if (join == NULL)
+		return (NULL);
+	i = -1;
+	while (str1[++i])
+		join[i] = str1[i];
+	j = -1;
+	while (str2[++j])
+		join[i + j] = str2[j];
+	join[i + j] = '\0';
+	return (join);
 }
 
-int is_pipe_in_suite_exec(t_token *token)
+int	is_pipe_in_suite_exec(t_token *token)
 {
 	while (token != NULL)
 	{
@@ -48,7 +48,7 @@ int is_pipe_in_suite_exec(t_token *token)
 
 void	ft_complete(int fd_in, t_token *token)
 {
-	char *str;
+	char	*str;
 	char	*line;
 
 	if (is_pipe_in_suite_exec(token) == PIPE)
@@ -68,10 +68,10 @@ void	ft_complete(int fd_in, t_token *token)
 
 char *ft_here_doc(void)
 {
-	char *here_doc;
-    char *str;
-	char *str_index;
-	int index;
+	char	*here_doc;
+	char	*str;
+	char	*str_index;
+	int		index;
 	
 	str = ft_get_str(".here_doc");
 	index = 1;
@@ -90,5 +90,5 @@ char *ft_here_doc(void)
 			free(here_doc);
 		index++;
 	}
-    return (NULL);
+	return (NULL);
 }
