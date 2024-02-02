@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 21:39:11 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/01 02:08:25 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/02 00:54:09 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,4 +90,11 @@ int ft_strchr(char *str, char *find)
             return (0);
     }
     return (0);
+}
+
+void print_invalid_token(char *str)
+{
+    ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
+    ft_putstr_fd(str, 2);
+    ft_putstr_fd("'\n", 2);
 }

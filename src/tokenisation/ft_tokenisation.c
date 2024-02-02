@@ -6,15 +6,13 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 05:06:05 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/01 00:08:10 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/02 03:16:11 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
 // on parcourt tout l'input et on fait des tokens avec
-// token = mot ou "  " ou '  '
-// on remplace les tokens de quotes mot et double quotes par leur variable d'env 
 int	ft_tokenisation(t_token **token, t_data_parse *data_parse)
 {
 	if (ft_is_quote_close(data_parse->input, CLOSE, CLOSE) == OPEN)

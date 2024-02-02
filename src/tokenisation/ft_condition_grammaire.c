@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 19:36:25 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/01 02:38:28 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/02 01:11:09 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,22 @@ int	ft_check_parenthesis(t_token *token)
 		if (token->type == CLOSE_PARENTHESIS)
 			count_close++;
 		if (count_close > count_open)
-			return (ft_putstr_fd("minishell: syntax error near unexpected token `)'\n", 2), WRONG_INPUT);
+			return (print_invalid_token(")"), WRONG_INPUT);
 		token = token->next;
 	}
 	if (count_close != count_open)
-		return (ft_putstr_fd("minishell: syntax error near unexpected token `('\n", 2), WRONG_INPUT);
+		return (print_invalid_token("("), WRONG_INPUT);
+	return (GOOD_INPUT);
+}
+
+int	ft_check_proximity_opperator_bonus_suite(t_token *token)
+{
+	if (token->type == OPEN_PARENTHESIS && token->next == NULL)
+		return (print_invalid_token("("), WRONG_INPUT);
+	if (token->type == AND && token->next == NULL)
+		return (print_invalid_token("&&"), WRONG_INPUT);
+	if (token->type == OR && token->next == NULL)
+		return (print_invalid_token("||"), WRONG_INPUT);
 	return (GOOD_INPUT);
 }
 
@@ -38,25 +49,27 @@ int	ft_check_proximity_opperator_bonus(t_token *token)
 {
 	while (token->next != NULL)
 	{
-		if (token->type == OPEN_PARENTHESIS && (token->next->type == CLOSE_PARENTHESIS || token->next->type == OR || token->next->type == AND))
-			return (ft_putstr_fd("minishell: syntax error near unexpected token `('\n", 2), WRONG_INPUT);
-		if (token->type == AND && (token->next->type == OR || token->next->type == CLOSE_PARENTHESIS))
-			return (ft_putstr_fd("minishell: syntax error near unexpected token `&&'\n", 2), WRONG_INPUT);
-		if (token->type == OR && (token->next->type == AND || token->next->type == CLOSE_PARENTHESIS))
-			return (ft_putstr_fd("minishell: syntax error near unexpected token `||'\n", 2), WRONG_INPUT);
-		if (token->type == CLOSE_PARENTHESIS && (token->next != NULL && token->next->type != OR && token->next->type != AND && token->next->type != CLOSE_PARENTHESIS))
-			return (ft_putstr_fd("minishell: syntax error near unexpected token `)'\n", 2), WRONG_INPUT);
-		if ((token->type != AND && token->type != OR && token->type != OPEN_PARENTHESIS) && (token->next->type == OPEN_PARENTHESIS))
-			return (ft_putstr_fd("minishell: syntax error near unexpected token `('\n", 2), WRONG_INPUT);
+		if (token->type == OPEN_PARENTHESIS && \
+		(token->next->type == CLOSE_PARENTHESIS || token->next->type == OR \
+		|| token->next->type == AND))
+			return (print_invalid_token("("), WRONG_INPUT);
+		if (token->type == AND && (token->next->type == OR \
+		|| token->next->type == CLOSE_PARENTHESIS))
+			return (print_invalid_token("&&"), WRONG_INPUT);
+		if (token->type == OR && (token->next->type == AND \
+		|| token->next->type == CLOSE_PARENTHESIS))
+			return (print_invalid_token("||"), WRONG_INPUT);
+		if (token->type == CLOSE_PARENTHESIS && (token->next != NULL \
+		&& token->next->type != OR && token->next->type != AND \
+		&& token->next->type != CLOSE_PARENTHESIS))
+			return (print_invalid_token(")"), WRONG_INPUT);
+		if ((token->type != AND && token->type != OR \
+		&& token->type != OPEN_PARENTHESIS) \
+		&& (token->next->type == OPEN_PARENTHESIS))
+			return (print_invalid_token("("), WRONG_INPUT);
 		token = token->next;
 	}
-	if (token->type == OPEN_PARENTHESIS && token->next == NULL)
-		return (ft_putstr_fd("minishell: syntax error near unexpected token `('\n", 2), WRONG_INPUT);
-	if (token->type == AND && token->next == NULL)
-		return (ft_putstr_fd("minishell: syntax error near unexpected token `&&'\n", 2), WRONG_INPUT);
-	if (token->type == OR && token->next == NULL)
-		return (ft_putstr_fd("minishell: syntax error near unexpected token `||'\n", 2), WRONG_INPUT);
-	return (GOOD_INPUT);
+	return (ft_check_proximity_opperator_bonus_suite(token));
 }
 
 int	is_cmd_between_bonus_opperator(t_token *token)
@@ -73,9 +86,9 @@ int	is_cmd_between_bonus_opperator(t_token *token)
 			if (cmd_or_not == 0)
 			{
 				if (token->type == AND)
-					ft_putstr_fd("minishell: syntax error near unexpected token `&&'\n", 2);
+					print_invalid_token("&&");
 				if (token->type == OR)
-					ft_putstr_fd("minishell: syntax error near unexpected token `||'\n", 2);
+					print_invalid_token("||");
 				return (WRONG_INPUT);
 			}
 			cmd_or_not = 0;
@@ -85,63 +98,21 @@ int	is_cmd_between_bonus_opperator(t_token *token)
 	return (GOOD_INPUT);
 }
 
-int	ft_check_pipes(t_token *token) // a voir si on gere les inputs termines par une pipe
-{
-	if (token->type == PIPE || ft_lstlast(token)->type == PIPE)
-		return (WRONG_INPUT);
-	while (token->next != NULL)
-	{
-		if (token->type == PIPE && (token->next->type == OR || token->next->type == AND || token->next->type == OPEN_PARENTHESIS || token->next->type == CLOSE_PARENTHESIS || token->next->type == INFILE || token->next->type == OUTFILE || token->next->type == HEREDOC || token->next->type == APPEND))
-			return (WRONG_INPUT);
-		if ((token->type == OR || token->type == AND || token->type == OPEN_PARENTHESIS || token->type == CLOSE_PARENTHESIS || token->type == INFILE || token->type == OUTFILE || token->type == HEREDOC || token->type == APPEND) && token->next->type == PIPE)
-			return (WRONG_INPUT);
-		if (token->type == PIPE && token->next->type == PIPE)
-			return (WRONG_INPUT);
-		token = token->next;
-	}
-	return (GOOD_INPUT);
-}
-
-int	is_redirection_well_followed(t_token *token)
-{
-	while (token->next != NULL)
-	{
-		if (token->type == INFILE && token->next->type != INFILE_TEXT)
-			return (ft_putstr_fd("minishell: syntax error near unexpected token `<'\n", 2), WRONG_INPUT);
-		else if (token->type == OUTFILE && token->next->type != OUTFILE_TEXT)
-			return (ft_putstr_fd("minishell: syntax error near unexpected token `>'\n", 2), WRONG_INPUT);
-		else if (token->type == HEREDOC && token->next->type != HEREDOC_TEXT)
-			return (ft_putstr_fd("minishell: syntax error near unexpected token `<<'\n", 2), WRONG_INPUT);
-		else if (token->type == APPEND && token->next->type != APPEND_TEXT)
-			return (ft_putstr_fd("minishell: syntax error near unexpected token `>>'\n", 2), WRONG_INPUT);
-		token = token->next;
-	}
-	if (token->type == INFILE && token->next == NULL)
-		return (ft_putstr_fd("minishell: syntax error near unexpected token `<'\n", 2), WRONG_INPUT);
-	else if (token->type == OUTFILE && token->next == NULL)
-		return (ft_putstr_fd("minishell: syntax error near unexpected token `>'\n", 2), WRONG_INPUT);
-	else if (token->type == HEREDOC && token->next == NULL)
-		return (ft_putstr_fd("minishell: syntax error near unexpected token `<<'\n", 2), WRONG_INPUT);
-	else if (token->type == APPEND && token->next == NULL)
-		return (ft_putstr_fd("minishell: syntax error near unexpected token `>>'\n", 2), WRONG_INPUT);
-	return (GOOD_INPUT);
-}
-
-// que le premier token n'est pas une pipe ni le dernier et que les pipes ne soit pas colle a des operateur bonus et redirection et pipe
-// que les ( sont autant que les ) et que les ) ne soit jamais devant au score face au (
-// que les ( ne soit pas colle avec && || )
-// que les && ne soit pas colle avec || )
-// que les || ne soit pas colle avec && )
-// que les ) ne soit pas colle avec (
-// qu'il y a bien au moins une commande autour de chaque && et || (pas forcemment colle)
-// que les ) soit suivi par rien ou && || )
-// que les ( soit precede par rien ou && || (
-// on verifie que les operateur de redirections sont bien suivi par un mot
-
+/* que le premier token n'est pas une pipe ni le dernier
+que les pipes ne soit pas colle a des operateur bonus et redirection et pipe
+que les ( sont autant que les ) et que les ) ne soit jamais plus que les (
+que les ( ne soit pas colle avec && || )
+que les && ne soit pas colle avec || )
+que les || ne soit pas colle avec && )
+que les ) ne soit pas colle avec (
+qu'il y au moins une commande autour de chaque && et || (pas forcemment colle)
+que les ) soit suivi par rien ou && || )
+que les ( soit precede par rien ou && || (
+on verifie que les operateur de redirections sont bien suivi par un mot */
 int	ft_condition_grammaire(t_token *token)
 {
 	if (ft_check_pipes(token) == WRONG_INPUT)
-		return (ft_putstr_fd("minishell: syntax error near unexpected token `|'\n", 2), WRONG_INPUT);
+		return (print_invalid_token("|"), WRONG_INPUT);
 	if (ft_check_parenthesis(token) == WRONG_INPUT)
 		return (WRONG_INPUT);
 	if (ft_check_proximity_opperator_bonus(token) == WRONG_INPUT)

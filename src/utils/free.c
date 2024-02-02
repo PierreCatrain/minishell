@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:02:59 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/01 01:29:05 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/02 00:54:48 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,5 +107,5 @@ void free_close_tree(t_tree *tree)
 
 void ft_print_error_malloc(void)
 {
-    printf("minishell: malloc failed\n");
+    ft_putstr_fd("minishell: malloc failed\n", 2);
 }

@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/01 01:28:36 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/02 02:54:47 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,8 @@ typedef struct s_data_parse
     
     char *prompt;
     char *input;
+
+    int index_new_str;
 }   t_data_parse;
 
 typedef struct s_wildcard
@@ -149,7 +151,18 @@ int ft_token_part_2(t_data_parse *data_parse, t_token **token);
 
 //ft_isolate_operateur.c
 int ft_isolate_operateur(t_token **token);
-t_token *ft_lstnew_no_malloc(char *str, int quotes, int type);
+
+//ft_isolate_operateur_2.c
+int ft_is_type_2(t_token **token, t_data_parse *data_parse);
+int ft_insert_operateur_type_2(t_token **token, t_data_parse *data_parse);
+int ft_is_type_1(t_token **token, t_data_parse *data_parse);
+int ft_insert_operateur_type_1(t_token **token, t_data_parse *data_parse);
+
+//ft_isolate_operateur_3.c
+t_token	*ft_lstnew_no_malloc(char *str, int quotes, int type);
+char	*ft_str_rev(char *str);
+int	is_token_valid(char *str);
+int ft_do_insert(t_token **token, t_data_parse *data_parse, char *opperator, int type);
 
 // # ====================================================== #
 // |														|
@@ -178,6 +191,10 @@ int ft_is_quote_close(char *input, int double_quote_open, int single_quote_open)
 // |														|
 // # ====================================================== #
 int ft_condition_grammaire(t_token *token);
+
+// ft_condition_grammaire_2.c
+int	ft_check_pipes(t_token *token);
+int	is_redirection_well_followed(t_token *token);
 
 // # ====================================================== #
 // |														|
@@ -223,6 +240,7 @@ int ft_strlen(char *str);
 int	ft_strncmp(char *s1, char *s2, int n);
 int ft_occ(char *str, char c);
 int ft_strchr(char *str, char *find);
+void print_invalid_token(char *str);
 
 // # ====================================================== #
 // |														|
