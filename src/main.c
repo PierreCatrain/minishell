@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:52:38 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/02 01:19:43 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/03 04:32:53 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	ft_exec(t_tree *tree, char **envp)
 {
 	tree = (t_tree *)tree;
 	envp = (char **)envp;
-	free_close_tree(tree);
+	free_and_close_tree(tree);
 	//rl_clear_history();
 	return (SUCCESS);
 }
@@ -68,9 +68,8 @@ int	main(int argc, char **argv, char **envp)
 /*
 a faire
 
-leak en cas d'erreurs de malloc ou pipe opendir (a partir de l'arbre binaire)
 le leak de l'historique
-signaux
+signaux + gerer si on ctrl c ou d depuis le remplissage du here_doc et attention on a open mais pas re close puis re open
 $?
 
 ameliorer

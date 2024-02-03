@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/02 02:54:47 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/03 04:24:31 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,19 @@ typedef struct s_data_parse
     char *input;
 
     int index_new_str;
+
+    char	*before;
+	char	*after;
+	int	i;
+	int	part;
+
+    char	*heredoc;
+	int			fd_in;
+	int			fd_out;
+	char	**args_tmp;
+	int			index_pipes;
+	int		**fd_pipes;
+	int			nb_pipes;
 }   t_data_parse;
 
 typedef struct s_wildcard
@@ -175,6 +188,26 @@ int     ft_replace_env_variable(t_token **token);
 //ft_replace_wildcard.c
 int ft_replace_wildcard(t_token **token);
 
+//ft_replace_wildcard_2.c
+void	ft_complete_before_after(t_data_parse *data_parse, t_token **token);
+int ft_insert_wildcard_before_after(t_wildcard *ls, t_data_parse *data_parse, t_token **token, int *find);
+int	ft_wildcard_before_and_after(t_token **token, t_wildcard *ls, int *find);
+int ft_wildcard_no_before_no_after(t_wildcard **ls, t_token **token, int *find);
+
+//ft_replace_wildcard_3.c
+void	ft_free_wildcard(t_wildcard **ls);
+int	ft_strlen_before(char *str);
+int	ft_strlen_after(char *str);
+char	*ft_only_end_str(char *str, int size);
+int	match_with_wildcard(char *before, char *after, char *str);
+
+//ft_replace_wildcard_4.c
+char	*ft_strjoin_1_malloc(char *str1, char *str2);
+t_wildcard	*ft_lst_wildcard_new(char *str);
+t_wildcard	*ft_lst_wildcard_last(t_wildcard *ls);
+int	ft_lst_wildcard_add_back(t_wildcard **ls, t_wildcard *new);
+int	set_ls(t_wildcard **ls);
+
 //ft_set_all_grammaire.c
 // # ====================================================== #
 // |														|
@@ -204,13 +237,43 @@ int	is_redirection_well_followed(t_token *token);
 int ft_create_tree(t_tree **tree, t_token *token);
 int ft_lst_exec(t_token *token, t_lst_exec **lst_exec);
 
-// # ====================================================== #
-// |														|
-// |					FT_COMPLETE_TREE.C					|
-// |														|
-// # ====================================================== #
-
+//ft_create_tree_2.c
 int ft_complete_tree(t_tree **tree, t_token *token);
+
+//ft_create_tree_3.c
+char	**ft_strdup_2d(char **str);
+t_lst_exec	*ft_new_lst_exec(char **args, int fd_in, int fd_out);
+t_lst_exec	*ft_lst_exec_last(t_lst_exec *lst_exec);
+int	ft_lst_exec_add_back(t_lst_exec **lst_exec, t_lst_exec *new);
+int	ft_nb_pipes(t_token *token);
+
+//ft_create_tree_4.c
+void	ft_free_pipes(int **fd_pipes, int nb_pipes);
+void	ft_pipes_fail(int **fd_pipes, int index_pipes);
+int	ft_one_more_exec(t_data_parse *data_parse, t_lst_exec **lst_exec);
+int	ft_set_exec(t_data_parse *data_parse, t_lst_exec **lst_exec, t_token *token);
+int	ft_exec_token_type_1(t_data_parse *data_parse, t_lst_exec **lst_exec, t_token *token);
+
+//ft_create_tree_5.c
+void	ft_exec_token_type_2(t_data_parse *data_parse, t_token *token);
+int	ft_exec_token_type_heredoc(t_data_parse *data_parse, t_token *token);
+int	ft_exec_token_type_pipe(t_data_parse *data_parse, t_lst_exec **lst_exec);
+int ft_is_token_type_1(t_token *token);
+int ft_is_token_type_2(t_token *token);
+
+//ft_create_tree_6.c
+int	ft_add_left_child(t_tree **tree, t_tree *new);
+int	ft_add_right_child(t_tree **tree, t_tree *new);
+t_tree	*ft_tree_new(int type);
+t_token	*before_token(t_token *token);
+t_token	*after_token(t_token *token);
+
+//ft_create_tree_7.c
+int	ft_is_there_parenthesis(t_token *token);
+t_token	*without_parenthesis(t_token *token);
+t_tree	*ft_first_empty_child(t_tree *tree);
+int	ft_add_tree_null(t_tree **tree, t_tree *new, t_token *token);
+int	ft_add_tree_no_null(t_tree **tree, t_tree *new, t_token *token);
 
 // # ====================================================== #
 // |														|
@@ -221,13 +284,6 @@ int ft_complete_tree(t_tree **tree, t_token *token);
 char *ft_here_doc(void);
 void	ft_complete(int fd_in, t_token *token);
 
-// # ====================================================== #
-// |														|
-// |					FT_ADD_NUM_BUILTIN.C				|
-// |														|
-// # ====================================================== #
-
-void ft_add_num_builtins(t_lst_exec **lst_exec);
 
 // # ====================================================== #
 // |														|
@@ -240,7 +296,6 @@ int ft_strlen(char *str);
 int	ft_strncmp(char *s1, char *s2, int n);
 int ft_occ(char *str, char c);
 int ft_strchr(char *str, char *find);
-void print_invalid_token(char *str);
 
 // # ====================================================== #
 // |														|
@@ -248,13 +303,11 @@ void print_invalid_token(char *str);
 // |														|
 // # ====================================================== #
 
-char *ft_strdup(char *str);
 t_token    *ft_lstlast(t_token *token);
 t_token *ft_lstnew(char *str, int quotes, int type);
 int    ft_lst_add_back(t_token **token, t_token *new);
 int ft_lst_insert(t_token **token, t_token *new);
 void ft_lst_del(t_token **token);
-char *ft_get_str(char *str);
 
 // # ====================================================== #
 // |														|
@@ -266,7 +319,7 @@ int	ft_lstsize(t_token *token);
 void    ft_print_token(t_token **token);
 int	ft_isalphanum(int c);
 int ft_strcmp(char *str1, char *str2);
-char	*ft_itoa(int n);
+void	ft_printf_2d(char **str);
 
 // # ====================================================== #
 // |														|
@@ -276,9 +329,8 @@ char	*ft_itoa(int n);
 
 void    ft_free_2d_index(char **str, int index);
 int ft_strlen_2d(char **str);
+char **ft_join_2d_args_null(char *str, char **new);
 char **ft_join_2d(char **args_cmd, char *str);
-void    ft_print_tree(t_tree *tree);
-void	ft_print_lst_exec(t_lst_exec *lst_exec);
 int is_input_only_whitespace(char *str);
 
 // # ====================================================== #
@@ -290,6 +342,18 @@ int is_input_only_whitespace(char *str);
 char	**ft_split(char *s, char c);
 char	*ft_strjoin_path(char *s1, char *s2);
 
+//ft_utils_6.c
+void    ft_print_tree(t_tree *tree);
+void	ft_print_lst_exec(t_lst_exec *lst_exec);
+char *ft_get_str(char *str);
+int	ft_count_itoa(int n);
+char	*ft_itoa(int n);
+
+//ft_utils_7.c
+void print_invalid_token(char *str);
+char *ft_strdup(char *str);
+void	ft_print_fd_pipe(int **fd_pipes, int nb_pipes);
+
 // # ====================================================== #
 // |														|
 // |					FREE.C								|
@@ -300,8 +364,11 @@ void ft_free_token(t_token **token);
 void free_tokenisation_1(char *input, t_token **token);
 void free_tokenisation_2(t_token **token, t_data_parse *data_parse);
 void    free_2d(char **str);
-void free_close_tree(t_tree *tree);
 void ft_print_error_malloc(void);
+
+//free_2.c
+void    free_and_close_tree(t_tree *tree);
+
 
 // # ====================================================== #
 // |														|

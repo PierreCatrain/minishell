@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 02:23:35 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/31 21:18:48 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/03 03:52:33 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 char	*ft_strjoin(char *str1, char *str2)
 {
 	char	*join;
-	int			i;
-	int			j;
+	int		i;
+	int		j;
 
 	if (str2 == NULL)
 		return (str1);
@@ -37,7 +37,8 @@ int	is_pipe_in_suite_exec(t_token *token)
 {
 	while (token != NULL)
 	{
-		if (token->type == AND || token->type == OR || token->type == CLOSE_PARENTHESIS)// normalement pas possible qu'il y ai (
+		if (token->type == AND || token->type == OR \
+		|| token->type == CLOSE_PARENTHESIS)
 			return (0);
 		if (token->type == PIPE)
 			return (PIPE);
@@ -66,23 +67,23 @@ void	ft_complete(int fd_in, t_token *token)
 		free(line);
 }
 
-char *ft_here_doc(void)
+char	*ft_here_doc(void)
 {
 	char	*here_doc;
 	char	*str;
 	char	*str_index;
 	int		index;
-	
-	str = ft_get_str(".here_doc");
+
+	str = ft_get_str("/tmp/.here_doc");
 	index = 1;
 	while (index <= 99999)
 	{
 		str_index = ft_itoa(index);
 		if (str_index == NULL)
-			return (NULL);
+			return (ft_print_error_malloc(), NULL);
 		here_doc = ft_strjoin(str, str_index);
 		if (here_doc == NULL)
-			return (free(str_index), NULL);
+			return (free(str_index), ft_print_error_malloc(), NULL);
 		free(str_index);
 		if (access(here_doc, 0) != 0)
 			return (here_doc);
@@ -90,5 +91,6 @@ char *ft_here_doc(void)
 			free(here_doc);
 		index++;
 	}
+	ft_putstr_fd("minishell: heredoc failed\n", 2);
 	return (NULL);
 }
