@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 05:46:43 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/31 02:14:25 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/07 20:42:29 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void ft_printf_2d(char **str)
 
 void	ft_print_lst_exec(t_lst_exec *lst_exec)
 {
-    printf("exec\n");
+    printf("lst exec\n");
     while (lst_exec != NULL)
 	{
 	    printf("\ncmd -> %s\n", lst_exec->cmd);
@@ -56,9 +56,15 @@ void    ft_print_tree(t_tree *tree)
         printf("OR\n");
     }
     if (tree->left_child != NULL)
+    {
+        printf("1\n");
         ft_print_tree(tree->left_child);
+    }
     if (tree->right_child != NULL)
+    {
+        printf("2\n");
         ft_print_tree(tree->right_child);
+    }
     return ;
 }
 

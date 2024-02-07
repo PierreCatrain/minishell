@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:52:38 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/31 01:56:23 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/07 20:42:37 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,9 @@ int main(int argc, char **argv, char **envp)
         {
             add_history(data_parse.input);
             if (ft_parse(&tree, &data_parse) == GOOD_INPUT)
+            {
                 ft_exec(tree, envp);
+            }
         }
     }
     return (SUCCESS);

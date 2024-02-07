@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/31 02:17:26 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/07 19:57:45 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,15 @@ enum bool
     FALSE = 0,
     TRUE
 };
+
+typedef struct s_exec
+{
+    char *path;
+    char *path_split;
+    int  exit_status;
+    int  status;
+    pid_t pid;
+} t_exec;
 
 //ft_check_argc_envp.c
 int ft_check_argc_envp(int argc, char **argv);
@@ -387,6 +396,9 @@ void	ft_env(char **env);
 
 int	ft_find_builtin(char *cmd, char **cmd_tab, char **env);
 void	find_cmd(char **env, char **cmd);
+// void	test_tree(t_tree *tree);
+
+
 
 #endif
 

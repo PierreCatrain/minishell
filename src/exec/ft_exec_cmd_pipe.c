@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 10:10:03 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/01/30 19:13:31 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/07 20:14:40 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int	ft_execve_cmd(char **cmd, char **path_split, char **env)
 		}
 		free (cmd_path);
 	}
-	free_tab_tab(path_split);
 	free_tab_tab(cmd);
 	return (1);
 }
@@ -49,10 +48,7 @@ void	find_cmd(char **env, char **cmd)
 	if (ft_find_builtin(cmd[0], cmd, cmd) == 1)
 		return ;
 	if (access(cmd[0], F_OK | X_OK) == 0)
-	{
-		printf("bonjour\n");
 		execve(cmd[0], cmd, env);
-	}
 	path = getenv("PATH");
 	if (!path)
 	{
