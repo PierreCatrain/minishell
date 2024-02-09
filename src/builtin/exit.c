@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 21:52:06 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/01/31 02:17:40 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/09 17:04:17 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,22 +91,25 @@ int	ft_exit_parsing(char **arg, long long int *exit_value)
 // modifier le shlvl
 int	ft_exit(char **arg)
 {
-	long long int	exit_value;
+	// long long int	exit_value;
 
+	printf("1\n");
 	if (arg[1] == NULL)
 		exit (0);
-	if (!ft_atoi(arg[1], &exit_value))
+	printf("2\n");
+	if (!ft_atoi(arg[1], &g_exit_status))
 	{
 		printf("bash: exit: %s: numeric argument required\n", arg[1]);
-		exit_value = 2;
+		g_exit_status = 2;
 	}
-	else if (!ft_exit_parsing(arg, &exit_value))
+	else if (!ft_exit_parsing(arg, &g_exit_status))
 		return (0); // gestion d'erreur
 	else if (!ft_check_exit_char(arg[1]))
 	{
 		printf("bash: exit: %s: numeric argument required\n", arg[1]);
-		exit_value = 2;
+		g_exit_status = 2;
 	}
-	exit(exit_value);
+	printf("2\n");
+	exit(g_exit_status);
 }
 

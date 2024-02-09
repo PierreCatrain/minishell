@@ -6,41 +6,44 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 17:38:07 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/07 23:27:04 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/09 17:46:19 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "minishell.h"
 
+// recois une liste chaine si la liste en plus grande que 1, alors il y a des pipes et donc faire 
+// la fonction qui
 int	ft_exec_cmd_fork(t_tree *tree, char **env)
 {
-	t_exec	exec;
+	pid_t	pid;
+	int		status;
 
-	exec.exit_status = 0;
 	if (tree->lst_exec->fd_in == -1 || tree->lst_exec->fd_out == -1)
 	{
 		// gestion d'erreur
-		return (2);
+		return (EXIT_FAILURE);
 	}
-	exec.pid = fork();
-	if (exec.pid == -1)
+	pid = fork();
+	if (pid == -1)
 	{
 		printf("bash: err:%d (fork)", errno);
-		return (2);
+		return (EXIT_FAILURE);
+		// gestion d'err
 	}
-	if (exec.pid == 0)
+	if (pid == 0)
 	{
 		dup2(tree->lst_exec->fd_in, 0);
 		dup2(tree->lst_exec->fd_out, 1);
-		find_cmd(env, &tree->lst_exec->cmd);
+		find_cmd(env, tree->lst_exec->args);
 	}
 	else
 	{
-		waitpid(0, &exec.status, 0);
-		if (WIFEXITED(exec.status))
-			exec.exit_status = WEXITSTATUS(exec.status);
+		waitpid(0, &status, 0);
+		if (WIFEXITED(status))
+			g_exit_status = WEXITSTATUS(status);
 	}
-	return (exec.exit_status);
+	return (g_exit_status);
 }
 
 // int	main(int ac, char **av, char **env)

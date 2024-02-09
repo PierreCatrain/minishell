@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 03:45:01 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/29 19:57:43 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/02 23:20:50 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,82 +25,55 @@ int	ft_lstsize(t_token *token)
 	return (count);
 }
 
-void    ft_print_token(t_token **token)
+void	ft_print_token(t_token **token)
 {
-    if (*token == NULL)
+	if (*token == NULL)
 	{
-        return ;
+		return ;
 	}
 	while ((*token)->prev != NULL)
-        *token = (*token)->prev;
+		*token = (*token)->prev;
 	printf("size %d\n\n", ft_lstsize(*token));
-    while ((*token)->next != NULL)
-    {
-        printf("%s\n", (*token)->str);
-        *token = (*token)->next;
-    }
-    printf("%s\n", (*token)->str);
-    while ((*token)->prev != NULL)
-        *token = (*token)->prev;
+	while ((*token)->next != NULL)
+	{
+		printf("%s\n", (*token)->str);
+		*token = (*token)->next;
+	}
+	printf("%s\n", (*token)->str);
+	while ((*token)->prev != NULL)
+		*token = (*token)->prev;
 }
 
 int	ft_isalphanum(int c)
 {
-    if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || (c >= '0' && c <= '9') || c == '_')
-    {
-        return (1);
-    }
-    return (0);
-}
-
-int ft_strcmp(char *str1, char *str2)
-{
-    int index;
-
-    index = 0;
-    while (str1[index] && str2[index] && (str1[index] == str2[index]))
-        index++;
-    return (str1[index] - str2[index]);
-}
-
-int	ft_count_itoa(int n)
-{
-	int	count;
-
-	count = 0;
-	if (n == 0)
+	if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') \
+			|| (c >= '0' && c <= '9') || c == '_')
+	{
 		return (1);
-	if (n < 0)
-		count++;
-	while (n != 0)
-	{
-		n /= 10;
-		count++;
 	}
-	return (count);
+	return (0);
 }
 
-char	*ft_itoa(int n)
+int	ft_strcmp(char *str1, char *str2)
 {
-	char	*itoa;
-	int		len;
-	long	long_n;
+	int	index;
 
-	len = ft_count_itoa(n);
-	long_n = n;
-	itoa = (char *)malloc((len + 1) * sizeof(char));
-	if (itoa == NULL)
-		return (NULL);
-	itoa[len] = '\0';
-	if (long_n < 0)
-		long_n *= -1;
-	while (len > 0)
+	index = 0;
+	while (str1[index] && str2[index] && (str1[index] == str2[index]))
+		index++;
+	return (str1[index] - str2[index]);
+}
+
+void	ft_printf_2d(char **str)
+{
+	int	index;
+
+	printf("args-> ");
+	index = 0;
+	while (str[index])
 	{
-		itoa[len - 1] = (long_n % 10) + '0';
-		long_n /= 10;
-		len--;
+		printf("%s ", str[index]);
+		index++;
 	}
-	if (n < 0)
-	itoa[0] = '-';
-	return (itoa);
+	printf("\n");
 }
