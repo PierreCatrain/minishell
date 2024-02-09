@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 01:19:42 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/07 21:11:10 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/07 23:26:17 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,26 @@
 
 // fonction qui execute commande par commande : 
 
-int	exec_and(t_tree *parent)
-{
-	
-}
+// int	exec_and(t_tree *tree, char **env)
+// {
+// 	if (ft_exec_cmd_fork(tree, env) == 0)
+// 	{
+// 		ft_exec_cmd_fork(tree->parent, env);
+// 	}
+// }
 
-void	ft_tree_exec(t_tree *tree, char **env)
-{
-	t_tree	*tmp;
-	tmp = tree;
-	while (tmp->left_child->left_child)
-		tmp = tmp->left_child;
-	while (tmp->parent)
-	{
-		if (tmp->type == OPPERATOR_AND)
-			exec_and(tmp->right_child->lst_exec);
-		else if (tmp->type == OPPERATOR_OR)
-			exec_or(tmp->right_child);
-	}
-}
+// void	ft_tree_exec(t_tree *tree, char **env)
+// {
+// 	t_tree	*tmp;
+// 	tmp = tree;
+
+// 	while (tmp->left_child->left_child)
+// 		tmp = tmp->left_child;
+// 	while (tmp->parent)
+// 	{
+// 		if (tmp->type == OPPERATOR_AND)
+// 			exec_and(tmp->right_child->lst_exec);
+// 		else if (tmp->type == OPPERATOR_OR)
+// 			exec_or(tmp->right_child);
+// 	}
+// }

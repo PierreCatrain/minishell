@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/07 19:57:45 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/07 23:15:25 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,6 @@ typedef struct s_data_parse
     int index_str;
     int index;
     char *str;
-    
     char *prompt;
     char *input;
 }   t_data_parse;

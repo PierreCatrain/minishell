@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 17:38:07 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/07 21:08:16 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/07 23:27:04 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	ft_exec_cmd_fork(t_tree *tree, char **env)
 	{
 		dup2(tree->lst_exec->fd_in, 0);
 		dup2(tree->lst_exec->fd_out, 1);
-		find_cmd(env, tree->lst_exec->cmd);
+		find_cmd(env, &tree->lst_exec->cmd);
 	}
 	else
 	{
