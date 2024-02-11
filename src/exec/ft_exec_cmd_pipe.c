@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 10:10:03 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/09 16:58:23 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/09 19:10:49 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	ft_execve_cmd(char **cmd, char **path_split, char **env)
 		}
 		if (!access(cmd_path, F_OK | X_OK))
 		{
-			print_tab_tab(cmd);
 			if (execve(cmd_path, cmd, env) == -1)
 			{
 				return (2); // gestion d'erreur

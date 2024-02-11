@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 01:19:42 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/09 17:34:26 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/09 19:07:11 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,25 +19,37 @@
 
 // fonction qui execute commande par commande : 
 
+void	print_linked_list(t_lst_exec *lst_exec)
+{
+	t_lst_exec *tmp;
+
+	tmp = lst_exec;
+	while (tmp)
+	{
+		print_tab_tab(tmp->args);
+		tmp = tmp->next;
+	}
+}
+
 void	ft_tree_exec(t_tree *tree, char **env)
 {
 	if (tree->left_child)
 		ft_tree_exec(tree->left_child, env);
 	if (tree->type == OPPERATOR_AND && g_exit_status == 0)
-	{
 		ft_exec_cmd_fork(tree->right_child, env);
-		printf("1\n");
-	}
 	else if (tree->type == OPPERATOR_OR && g_exit_status != 0)
-	{
 		ft_exec_cmd_fork(tree->right_child, env);
-		printf("2\n");
-	}
 	else if (tree->type == EXEC_LIST)
 	{
-		ft_exec_cmd_fork(tree, env);
-		printf("commande = %s\n", tree->lst_exec->args[0]);
-		printf("exit status = %lld\n", g_exit_status);
+		while (tree->lst_exec != NULL)
+		{
+			printf("lst exec wwwww:\n");
+			print_linked_list(tree->lst_exec);
+			printf("1\n");
+			ft_exec_cmd_fork(tree, env);
+			printf("2\n");
+			tree->lst_exec = tree->lst_exec->next;
+		}
 	}
 	// else
 	// 	ft_tree_exec(tree->right_child, env);
