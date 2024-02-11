@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 23:13:46 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/11 01:03:19 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/12 00:39:58 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	ft_print_fd_pipe(int **fd_pipes, int nb_pipes)
 
 	index = -1;
 	printf("\n");
+	printf("nb pipes = %d\n", nb_pipes);
 	while (++index < nb_pipes)
 	{
 		printf("fd pipe n%d/0 -> %d\n", index, fd_pipes[index][0]);

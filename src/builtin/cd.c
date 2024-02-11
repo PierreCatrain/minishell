@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:42:46 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/01/29 07:50:54 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/11 21:57:23 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ char	**ft_cd(char **path_tab, char **env)
 	if (getcwd(current_path, PATH_MAX) != NULL)
 	{
 		printf("Error (%d): %s\n", errno, strerror(errno));
-		// getion d'erreur
+		// gestion
 	}
 	if (!path_tab[1] || ft_strcmp(path_tab[1], "~") == 0 || ft_strcmp(path_tab[1], "~") == 0)
 	{
@@ -142,18 +142,22 @@ char	**ft_cd(char **path_tab, char **env)
 	if (len_path_tab > 2)
 	{
 		printf("bash: cd: too many arguments\n");
-		exit (1);
+		g_exit_status = 1;
+		return (NULL);
+		// gestion d'erreur
 	}
 	// free ancien env;
 	// faire de new_env une variable de structure et return le bon status
 	if (ft_strcmp(path_tab[1], "-"))
 	{
-		printf("cd vers le home\n");
+		printf("cd vers le OLD PWD\n");
 	}
 	if (chdir(path_tab[1]) != 0)
 	{
 		printf("Erreur (%d): %s\n", errno, strerror(errno));
-		exit (2);
+		g_exit_status = 1;
+		return (NULL);
+		// gestion d'erreur
 	}
 	return (ft_chang_env_path_and_old_path(path_tab, env));
 }

@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/11 05:14:15 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/12 00:38:09 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include <linux/limits.h>
 # include <sys/wait.h>
 
+extern long long int g_exit_status;
 
 # define SUCCESS 0
 # define ERROR_ARGC_ENVP 1
@@ -112,7 +113,6 @@ typedef struct s_data_parse
     int index_str;
     int index;
     char *str;
-    
     char *prompt;
     char *input;
 
@@ -477,8 +477,12 @@ void	ft_env(char **env);
 // |														|
 // # ====================================================== #
 
-int	ft_find_builtin(char *cmd, char **cmd_tab, char **env);
+int 	ft_find_builtin(char *cmd, char **cmd_tab, char **env);
+int 	ft_exec_cmd_fork(t_tree *tree, char **env);
 void	find_cmd(char **env, char **cmd);
+void	ft_tree_exec(t_tree *tree, char **env);
+
+
 
 #endif
 
