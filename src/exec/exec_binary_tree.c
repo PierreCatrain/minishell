@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 01:19:42 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/09 19:07:11 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/11 22:02:52 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,7 @@ void	ft_tree_exec(t_tree *tree, char **env)
 	{
 		while (tree->lst_exec != NULL)
 		{
-			printf("lst exec wwwww:\n");
-			print_linked_list(tree->lst_exec);
-			printf("1\n");
 			ft_exec_cmd_fork(tree, env);
-			printf("2\n");
 			tree->lst_exec = tree->lst_exec->next;
 		}
 	}

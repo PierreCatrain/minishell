@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:42:46 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/09 16:09:50 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/11 21:57:23 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,8 +127,6 @@ char	**ft_cd(char **path_tab, char **env)
 	char	current_path[PATH_MAX + 1];
 	int		len_path_tab;
 
-	printf("affichage de tab de tab\n");
-	print_tab_tab(path_tab);
 	if (getcwd(current_path, PATH_MAX) != NULL)
 	{
 		printf("Error (%d): %s\n", errno, strerror(errno));

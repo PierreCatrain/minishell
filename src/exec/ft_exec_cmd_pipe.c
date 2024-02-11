@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 10:10:03 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/09 19:10:49 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/11 21:18:32 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,6 @@ void	find_cmd(char **env, char **cmd)
 	}
 	ft_execve_cmd(cmd, path_split, env);
 }
-
-// void	ft_exec_cmd(char **env, char **cmd, int fd_in, int fd_out, int pipe_1, int pipe_2)
-// {
-
-// }
 
 // int	main(int ac, char **av, char **env)
 // {
