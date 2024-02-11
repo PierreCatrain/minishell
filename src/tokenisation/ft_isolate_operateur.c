@@ -6,326 +6,107 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 21:32:59 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/29 19:57:49 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/02 03:08:29 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-t_token *ft_lstnew_no_malloc(char *str, int quotes, int type)
+int	ft_loop_insert(t_token **token, t_data_parse *data_parse)
 {
-    t_token *new;
-
-    new = malloc(sizeof(t_token));
-    if (new == NULL)
-        return (NULL);
-    new->str = ft_strdup(str);
-    if (new->str == NULL)
-        return (free(new), NULL);
-    new->quotes = quotes;
-    new->type = type;
-    new->prev = NULL;
-    new->next = NULL;
-    return (new);
+	if (ft_is_type_2(token, data_parse) == SUCCESS)
+	{
+		if (ft_insert_operateur_type_2(token, data_parse) == ERROR_MALLOC)
+			return (ERROR_MALLOC);
+	}
+	else if (ft_is_type_1(token, data_parse) == SUCCESS)
+	{
+		if (ft_insert_operateur_type_1(token, data_parse) == ERROR_MALLOC)
+			return (ERROR_MALLOC);
+	}
+	else
+		data_parse->str[data_parse->index_new_str++] \
+		= (*token)->str[data_parse->index];
+	return (SUCCESS);
 }
 
-char *ft_str_rev(char *str)
+int	ft_after_loop_insert(t_token **token, t_data_parse *data_parse)
 {
-    char *new_str;
-    int index;
-    int index_new_str;
-
-    new_str = malloc ((ft_strlen(str) + 1) * sizeof(char));
-    if (new_str == NULL)
-        return (free(str), NULL);
-    index = ft_strlen(str);
-    index_new_str = 0;
-    while (--index >= 0)
-        new_str[index_new_str++] = str[index];
-    new_str[index_new_str] = '\0'; 
-    return (free(str), new_str);
+	if (ft_is_type_1(token, data_parse) == SUCCESS)
+	{
+		if (ft_insert_operateur_type_1(token, data_parse) == ERROR_MALLOC)
+			return (ERROR_MALLOC);
+	}
+	else
+		data_parse->str[data_parse->index_new_str++] \
+		= (*token)->str[data_parse->index];
+	return (SUCCESS);
 }
 
-// on s'assure juste que il y ai pas 3 & ou | qui se suivent
-int is_token_valid(char *str)
+int	ft_insert_operateur(t_token **token)
 {
-    int index;
-    int count;
+	t_data_parse	data_parse;
 
-    index = 0;
-    count = 0;
-    while (str[index])
-    {
-        if (str[index] == '&' || str[index] == '|')
-            count++;
-        else
-            count = 0;
-        if (count == 3)
-        {
-            if (str[index - 2] == '&')
-                ft_putstr_fd("minishell: syntax error near unexpected token `&'\n", 2);
-            if (str[index - 2] == '|')
-                ft_putstr_fd("minishell: syntax error near unexpected token `|'\n", 2);
-            return (WRONG_INPUT);
-        }
-        index++;
-    }
-    return (SUCCESS);
+	if (is_token_valid((*token)->str) == WRONG_INPUT)
+		return (WRONG_INPUT);
+	data_parse.str = malloc((ft_strlen((*token)->str) + 1) * sizeof(char));
+	if (data_parse.str == NULL)
+		return (ft_print_error_malloc(), ERROR_MALLOC);
+	data_parse.index = ft_strlen((*token)->str);
+	data_parse.index_new_str = 0;
+	while (--data_parse.index > 0 && (*token)->quotes == WORD)
+	{
+		if (ft_loop_insert(token, &data_parse) == ERROR_MALLOC)
+			return (ERROR_MALLOC);
+	}
+	if (data_parse.index == 0)
+	{
+		if (ft_after_loop_insert(token, &data_parse) == ERROR_MALLOC)
+			return (ERROR_MALLOC);
+	}
+	data_parse.str[data_parse.index_new_str] = '\0';
+	free((*token)->str);
+	(*token)->str = ft_str_rev(data_parse.str);
+	if ((*token)->str == NULL)
+		return (ft_print_error_malloc(), ERROR_MALLOC);
+	return (SUCCESS);
 }
 
-int ft_insert_operateur(t_token **token)
+void	ft_token_beginning(t_token **token)
 {
-    int index;
-    int index_new_str;
-    char *str;
-
-    if (is_token_valid((*token)->str) == WRONG_INPUT)
-        return (WRONG_INPUT);
-    str = malloc((ft_strlen((*token)->str) + 1) * sizeof(char));
-    if (str == NULL)
-        return (ERROR_MALLOC);
-    index = ft_strlen((*token)->str);
-    index_new_str = 0;
-    while (--index > 0 && (*token)->quotes == WORD)
-    {
-        if ((*token)->str[index - 1] == '<' && (*token)->str[index] == '<')
-        {
-            str[index_new_str] = '\0';
-            str = ft_str_rev(str);
-            if (str == NULL)
-                return (ERROR_MALLOC);
-            ft_lst_insert(token, ft_lstnew(str, WORD, TEXT));
-            ft_lst_insert(token, ft_lstnew_no_malloc("<<", WORD, HEREDOC));
-            str = malloc((ft_strlen((*token)->str) + 1) * sizeof(char));
-            if (str == NULL)
-                return (ERROR_MALLOC);
-            index_new_str = 0;
-            index--;
-        }
-        else if ((*token)->str[index - 1] == '>' && (*token)->str[index] == '>')
-        {
-            str[index_new_str] = '\0';
-            str = ft_str_rev(str);
-            if (str == NULL)
-                return (ERROR_MALLOC);
-            ft_lst_insert(token, ft_lstnew(str, WORD, TEXT));
-            ft_lst_insert(token, ft_lstnew_no_malloc(">>", WORD, APPEND));
-            str = malloc((ft_strlen((*token)->str) + 1) * sizeof(char));
-            if (str == NULL)
-                return (ERROR_MALLOC);
-            index_new_str = 0;
-            index--;
-        }
-        else if ((*token)->str[index - 1] == '&' && (*token)->str[index] == '&')
-        {
-            str[index_new_str] = '\0';
-            str = ft_str_rev(str);
-            if (str == NULL)
-                return (ERROR_MALLOC);
-            ft_lst_insert(token, ft_lstnew(str, WORD, TEXT));
-            ft_lst_insert(token, ft_lstnew_no_malloc("&&", WORD, AND));
-            str = malloc((ft_strlen((*token)->str) + 1) * sizeof(char));
-            if (str == NULL)
-                return (ERROR_MALLOC);
-            index_new_str = 0;
-            index--;
-        }
-        else if ((*token)->str[index - 1] == '|' && (*token)->str[index] == '|')
-        {
-            str[index_new_str] = '\0';
-            str = ft_str_rev(str);
-            if (str == NULL)
-                return (ERROR_MALLOC);
-            ft_lst_insert(token, ft_lstnew(str, WORD, TEXT));
-            ft_lst_insert(token, ft_lstnew_no_malloc("||", WORD, OR));
-            str = malloc((ft_strlen((*token)->str) + 1) * sizeof(char));
-            if (str == NULL)
-                return (ERROR_MALLOC);
-            index_new_str = 0;
-            index--;
-        }
-        else if ((*token)->str[index] == '(')
-        {
-            str[index_new_str] = '\0';
-            str = ft_str_rev(str);
-            if (str == NULL)
-                return (ERROR_MALLOC);
-            ft_lst_insert(token, ft_lstnew(str, WORD, TEXT));
-            ft_lst_insert(token, ft_lstnew_no_malloc("(", WORD, OPEN_PARENTHESIS));
-            str = malloc((ft_strlen((*token)->str) + 1) * sizeof(char));
-            if (str == NULL)
-                return (ERROR_MALLOC);
-            index_new_str = 0;
-        }
-        else if ((*token)->str[index] == ')')
-        {
-            str[index_new_str] = '\0';
-            str = ft_str_rev(str);
-            if (str == NULL)
-                return (ERROR_MALLOC);
-            ft_lst_insert(token, ft_lstnew(str, WORD, TEXT));
-            ft_lst_insert(token, ft_lstnew_no_malloc(")", WORD, CLOSE_PARENTHESIS));
-            str = malloc((ft_strlen((*token)->str) + 1) * sizeof(char));
-            if (str == NULL)
-                return (ERROR_MALLOC);
-            index_new_str = 0;
-        }
-        else if ((*token)->str[index] == '<')
-        {
-            str[index_new_str] = '\0';
-            str = ft_str_rev(str);
-            if (str == NULL)
-                return (ERROR_MALLOC);
-            ft_lst_insert(token, ft_lstnew(str, WORD, TEXT));
-            ft_lst_insert(token, ft_lstnew_no_malloc("<", WORD, INFILE));
-            str = malloc((ft_strlen((*token)->str) + 1) * sizeof(char));
-            if (str == NULL)
-                return (ERROR_MALLOC);
-            index_new_str = 0;
-        }
-        else if ((*token)->str[index] == '>')
-        {
-            str[index_new_str] = '\0';
-            str = ft_str_rev(str);
-            if (str == NULL)
-                return (ERROR_MALLOC);
-            ft_lst_insert(token, ft_lstnew(str, WORD, TEXT));
-            ft_lst_insert(token, ft_lstnew_no_malloc(">", WORD, OUTFILE));
-            str = malloc((ft_strlen((*token)->str) + 1) * sizeof(char));
-            if (str == NULL)
-                return (ERROR_MALLOC);
-            index_new_str = 0;
-        }
-        else if ((*token)->str[index] == '|')
-        {
-            str[index_new_str] = '\0';
-            str = ft_str_rev(str);
-            if (str == NULL)
-                return (ERROR_MALLOC);
-            ft_lst_insert(token, ft_lstnew(str, WORD, TEXT));
-            ft_lst_insert(token, ft_lstnew_no_malloc("|", WORD, PIPE));
-            str = malloc((ft_strlen((*token)->str) + 1) * sizeof(char));
-            if (str == NULL)
-                return (ERROR_MALLOC);
-            index_new_str = 0;
-        }
-        else
-            str[index_new_str++] = (*token)->str[index];
-    }
-    if (index == 0)
-    {
-            if ((*token)->str[index] == '(')
-            {
-                str[index_new_str] = '\0';
-                str = ft_str_rev(str);
-                if (str == NULL)
-                    return (ERROR_MALLOC);
-                ft_lst_insert(token, ft_lstnew(str, WORD, TEXT));
-                ft_lst_insert(token, ft_lstnew_no_malloc("(", WORD, OPEN_PARENTHESIS));
-                str = malloc((ft_strlen((*token)->str) + 1) * sizeof(char));
-                if (str == NULL)
-                    return (ERROR_MALLOC);
-                index_new_str = 0;
-            }
-            else if ((*token)->str[index] == ')')
-            {
-                str[index_new_str] = '\0';
-                str = ft_str_rev(str);
-                if (str == NULL)
-                    return (ERROR_MALLOC);
-                ft_lst_insert(token, ft_lstnew(str, WORD, TEXT));
-                ft_lst_insert(token, ft_lstnew_no_malloc(")", WORD, CLOSE_PARENTHESIS));
-                str = malloc((ft_strlen((*token)->str) + 1) * sizeof(char));
-                if (str == NULL)
-                    return (ERROR_MALLOC);
-                index_new_str = 0;
-            }
-            else if ((*token)->str[index] == '<')
-            {
-                str[index_new_str] = '\0';
-                str = ft_str_rev(str);
-                if (str == NULL)
-                    return (ERROR_MALLOC);
-                ft_lst_insert(token, ft_lstnew(str, WORD, TEXT));
-                ft_lst_insert(token, ft_lstnew_no_malloc("<", WORD, INFILE));
-                str = malloc((ft_strlen((*token)->str) + 1) * sizeof(char));
-                if (str == NULL)
-                    return (ERROR_MALLOC);
-                index_new_str = 0;
-            }
-            else if ((*token)->str[index] == '>')
-            {
-                str[index_new_str] = '\0';
-                str = ft_str_rev(str);
-                if (str == NULL)
-                    return (ERROR_MALLOC);
-                ft_lst_insert(token, ft_lstnew(str, WORD, TEXT));
-                ft_lst_insert(token, ft_lstnew_no_malloc(">", WORD, OUTFILE));
-                str = malloc((ft_strlen((*token)->str) + 1) * sizeof(char));
-                if (str == NULL)
-                    return (ERROR_MALLOC);
-                index_new_str = 0;
-            }
-            else if ((*token)->str[index] == '|')
-            {
-                str[index_new_str] = '\0';
-                str = ft_str_rev(str);
-                if (str == NULL)
-                    return (ERROR_MALLOC);
-                ft_lst_insert(token, ft_lstnew(str, WORD, TEXT));
-                ft_lst_insert(token, ft_lstnew_no_malloc("|", WORD, PIPE));
-                str = malloc((ft_strlen((*token)->str) + 1) * sizeof(char));
-                if (str == NULL)
-                    return (ERROR_MALLOC);
-                index_new_str = 0;
-            }
-            else
-                str[index_new_str++] = (*token)->str[index];
-    }
-    str[index_new_str] = '\0';
-    free((*token)->str);
-    (*token)->str = ft_str_rev(str);
-    if ((*token)->str == NULL)
-        return (ERROR_MALLOC);
-    return (SUCCESS);
+	while (token != NULL)
+	{
+		if ((*token)->prev == NULL)
+			break ;
+		else
+			*token = (*token)->prev;
+	}
 }
 
-int ft_isolate_operateur(t_token **token)
+int	ft_isolate_operateur(t_token **token)
 {
-    while (*token != NULL)
-    {
-        if ((*token)->quotes == WORD && (*token)->type == TEXT)
-        {
-            if (ft_insert_operateur(token) != SUCCESS)
-                return (ERROR);
-        }
-        if ((*token)->next == NULL)
-            break ;
-        else
-            *token = (*token)->next;
-    }
-    while (token != NULL)
-    {
-        if ((*token)->prev == NULL)
-            break ;
-        else
-            *token = (*token)->prev;
-    }
-    while ((*token)->next != NULL)
-    {
-        if ((*token)->str[0] == '\0')
-            ft_lst_del(token);
-        else
-            *token = (*token)->next;
-    }
-    if ((*token)->str[0] == '\0')
-        ft_lst_del(token);
-    while (token != NULL)
-    {
-        if ((*token)->prev == NULL)
-            break ;
-        else
-            *token = (*token)->prev;
-    }
-    return (SUCCESS);
+	while (*token != NULL)
+	{
+		if ((*token)->quotes == WORD && (*token)->type == TEXT)
+		{
+			if (ft_insert_operateur(token) != SUCCESS)
+				return (ERROR);
+		}
+		if ((*token)->next == NULL)
+			break ;
+		else
+			*token = (*token)->next;
+	}
+	ft_token_beginning(token);
+	while ((*token)->next != NULL)
+	{
+		if ((*token)->str[0] == '\0')
+			ft_lst_del(token);
+		else
+			*token = (*token)->next;
+	}
+	if ((*token)->str[0] == '\0')
+		ft_lst_del(token);
+	ft_token_beginning(token);
+	return (SUCCESS);
 }
