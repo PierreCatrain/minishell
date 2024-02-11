@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:52:38 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/11 22:30:22 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/11 22:33:53 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	main(int argc, char **argv, char **envp)
 	return (SUCCESS);
 }
 
-//sdf"sadfa"
+//echo bonjour"v"sfa
 
 /*
 a faire

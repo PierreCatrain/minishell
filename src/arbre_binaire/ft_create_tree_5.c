@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 04:13:45 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/03 04:30:08 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/11 05:14:58 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,20 +38,12 @@ void	ft_exec_token_type_2(t_data_parse *data_parse, t_token *token)
 	}
 }
 
-int	ft_exec_token_type_heredoc(t_data_parse *data_parse, t_token *token)
+int	ft_exec_token_type_heredoc(t_data_parse *data_parse, t_token **token)
 {
 	if (data_parse->fd_in != 0 && data_parse->fd_in != -1)
 		close(data_parse->fd_in);
-	token = token->next;
-	data_parse->heredoc = ft_here_doc();
-	if (data_parse->heredoc == NULL)
-		return (ft_free_pipes(data_parse->fd_pipes, data_parse->nb_pipes), \
-				free_2d(data_parse->args_tmp), ERROR);
-	data_parse->fd_in = open(data_parse->heredoc, \
-			O_CREAT, O_RDWR, O_TRUNC, 0644);
-	ft_complete(data_parse->fd_in, token);
-	unlink(data_parse->heredoc);
-	free(data_parse->heredoc);
+	*token = (*token)->next;
+	data_parse->fd_in = data_parse->array_here_doc[data_parse->index_here_doc--];
 	return (SUCCESS);
 }
 

@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/09 18:26:53 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/11 22:33:39 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ typedef struct s_token
 
 typedef struct s_data_parse
 {
+    t_token *token;
     int double_quote_open;
     int single_quote_open;
     int new_word;
@@ -129,6 +130,9 @@ typedef struct s_data_parse
 	int			index_pipes;
 	int		**fd_pipes;
 	int			nb_pipes;
+    
+    int *array_here_doc;
+    int index_here_doc;
 }   t_data_parse;
 
 typedef struct s_wildcard
@@ -234,11 +238,11 @@ int	is_redirection_well_followed(t_token *token);
 // |			    FT_CREATE_TREE,C    			        |
 // |		        										|
 // # ====================================================== #
-int ft_create_tree(t_tree **tree, t_token *token);
-int ft_lst_exec(t_token *token, t_lst_exec **lst_exec);
+int ft_create_tree(t_tree **tree, t_token *token, t_data_parse *data_parse);
+int ft_lst_exec(t_token *token, t_lst_exec **lst_exec, t_data_parse *data_parse);
 
 //ft_create_tree_2.c
-int ft_complete_tree(t_tree **tree, t_token *token);
+int ft_complete_tree(t_tree **tree, t_token *token, t_data_parse *data_parse);
 
 //ft_create_tree_3.c
 char	**ft_strdup_2d(char **str);
@@ -256,7 +260,7 @@ int	ft_exec_token_type_1(t_data_parse *data_parse, t_lst_exec **lst_exec, t_toke
 
 //ft_create_tree_5.c
 void	ft_exec_token_type_2(t_data_parse *data_parse, t_token *token);
-int	ft_exec_token_type_heredoc(t_data_parse *data_parse, t_token *token);
+int	ft_exec_token_type_heredoc(t_data_parse *data_parse, t_token **token);
 int	ft_exec_token_type_pipe(t_data_parse *data_parse, t_lst_exec **lst_exec);
 int ft_is_token_type_1(t_token *token);
 int ft_is_token_type_2(t_token *token);
@@ -272,8 +276,8 @@ t_token	*after_token(t_token *token);
 int	ft_is_there_parenthesis(t_token *token);
 t_token	*without_parenthesis(t_token *token);
 t_tree	*ft_first_empty_child(t_tree *tree);
-int	ft_add_tree_null(t_tree **tree, t_tree *new, t_token *token);
-int	ft_add_tree_no_null(t_tree **tree, t_tree *new, t_token *token);
+int	ft_add_tree_null(t_tree **tree, t_tree *new, t_token *token, t_data_parse *data_parse);
+int	ft_add_tree_no_null(t_tree **tree, t_tree *new, t_token *token, t_data_parse *data_parse);
 
 // # ====================================================== #
 // |														|
@@ -283,6 +287,9 @@ int	ft_add_tree_no_null(t_tree **tree, t_tree *new, t_token *token);
 
 char *ft_here_doc(void);
 void	ft_complete(int fd_in, t_token *token);
+
+//ft_complete_here_doc.c
+int ft_complete_here_doc(t_data_parse *data_parse, t_token *token);
 
 
 // # ====================================================== #

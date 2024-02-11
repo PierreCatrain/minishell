@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 04:21:19 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/03 04:21:49 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/11 04:05:56 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,19 +72,19 @@ t_tree	*ft_first_empty_child(t_tree *tree)
 	return (NULL);
 }
 
-int	ft_add_tree_null(t_tree **tree, t_tree *new, t_token *token)
+int	ft_add_tree_null(t_tree **tree, t_tree *new, t_token *token, t_data_parse *data_parse)
 {
 	if (ft_add_left_child(tree, new) == ERROR_MALLOC)
 		return (ft_print_error_malloc(), ERROR_MALLOC);
 	if ((*tree)->type == EXEC_LIST)
 	{
-		if (ft_lst_exec(token, &(*tree)->lst_exec) != SUCCESS)
+		if (ft_lst_exec(token, &(*tree)->lst_exec, data_parse) != SUCCESS)
 			return (ERROR);
 	}
 	return (SUCCESS);
 }
 
-int	ft_add_tree_no_null(t_tree **tree, t_tree *new, t_token *token)
+int	ft_add_tree_no_null(t_tree **tree, t_tree *new, t_token *token, t_data_parse *data_parse)
 {
 	if ((*tree)->right_child == NULL)
 	{
@@ -92,7 +92,7 @@ int	ft_add_tree_no_null(t_tree **tree, t_tree *new, t_token *token)
 			return (ft_print_error_malloc(), ERROR_MALLOC);
 		if ((*tree)->right_child->type == EXEC_LIST)
 		{
-			if (ft_lst_exec(token, &(*tree)->right_child->lst_exec) != SUCCESS)
+			if (ft_lst_exec(token, &(*tree)->right_child->lst_exec, data_parse) != SUCCESS)
 				return (ERROR);
 		}
 	}
@@ -102,7 +102,7 @@ int	ft_add_tree_no_null(t_tree **tree, t_tree *new, t_token *token)
 			return (ft_print_error_malloc(), ERROR_MALLOC);
 		if ((*tree)->left_child->type == EXEC_LIST)
 		{
-			if (ft_lst_exec(token, &(*tree)->left_child->lst_exec) != SUCCESS)
+			if (ft_lst_exec(token, &(*tree)->left_child->lst_exec, data_parse) != SUCCESS)
 				return (ERROR);
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 00:58:07 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/02 01:17:52 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/11 01:42:20 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	ft_complete_word(t_data_parse *data_parse, t_token **token)
 	data_parse->str[data_parse->index_str++] = \
 	data_parse->input[data_parse->index++];
 	if (data_parse->input[data_parse->index] == ' ' \
-	|| data_parse->input[data_parse->index] == '\0')
+	|| data_parse->input[data_parse->index] == '\0' || data_parse->input[data_parse->index] == '\'' || data_parse->input[data_parse->index] == '"')
 	{
 		data_parse->new_word = CLOSE;
 		data_parse->str[data_parse->index_str] = '\0';

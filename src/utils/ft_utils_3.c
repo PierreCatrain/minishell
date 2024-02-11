@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 03:45:01 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/02 23:20:50 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/11 04:25:41 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ void	ft_print_token(t_token **token)
 	printf("size %d\n\n", ft_lstsize(*token));
 	while ((*token)->next != NULL)
 	{
-		printf("%s\n", (*token)->str);
+		printf("%s\t%d\n", (*token)->str, (*token)->type);
 		*token = (*token)->next;
 	}
-	printf("%s\n", (*token)->str);
+	printf("%s\t%d\n", (*token)->str, (*token)->type);
 	while ((*token)->prev != NULL)
 		*token = (*token)->prev;
 }
