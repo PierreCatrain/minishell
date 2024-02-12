@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utils_4.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 05:46:43 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/09 10:46:51 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/12 06:34:35 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,5 @@ int	is_input_only_whitespace(char *str)
 			return (1);
 		index++;
 	}
-	return (free(str), 0);
+	return (0);
 }

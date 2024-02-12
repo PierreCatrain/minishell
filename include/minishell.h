@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/12 02:50:18 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/12 06:11:30 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,13 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <fcntl.h>
-#include <sys/types.h>
-#include <dirent.h>
+# include <sys/types.h>
+# include <dirent.h>
 # include <errno.h>
 # include <limits.h>
 # include <linux/limits.h>
 # include <sys/wait.h>
+# include <signal.h>
 
 extern long long int g_exit_status;
 
@@ -153,6 +154,9 @@ int ft_check_argc_envp(int argc, char **argv);
 
 //ft_get_prompt.c
 char *ft_get_prompt(void);
+
+//signaux.c
+int ft_set_sig(void);
 
 //ft_parse.c
 int ft_parse(t_tree **tree, t_data_parse *data_parse);
@@ -486,9 +490,3 @@ void	ft_tree_exec(t_tree *tree, char **env);
 
 
 #endif
-
-/*
-    ERREUR
-    "'$USER '"
-    $USER$@GJ --- picatraiGJ
-*/

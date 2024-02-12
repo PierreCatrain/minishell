@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:52:38 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/12 02:40:41 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/12 06:38:29 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,20 @@ int	only_one_cmd(t_tree *tree, char **argv, char **envp)
 	return (SUCCESS);
 }
 
+void	sig_int(int signal)
+{
+	(void)signal;
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_data_parse	data_parse;
 	t_tree			*tree;
-
+	
 	tree = NULL;
 	g_exit_status = 0;
+	if (ft_set_sig() == ERROR)
+		return (ERROR);
 	if (ft_check_argc_envp(argc, argv) == ERROR_ARGC_ENVP)
 		return (ERROR_ARGC_ENVP);
 	if (argc == 3)
@@ -47,14 +54,14 @@ int	main(int argc, char **argv, char **envp)
 		data_parse.input = readline(data_parse.prompt);
 		free(data_parse.prompt);
 		tree = NULL;
+		if (data_parse.input == NULL)
+			exit(EXIT_SUCCESS);
 		if (is_input_only_whitespace(data_parse.input))
-		{
 			add_history(data_parse.input);
-			if (ft_parse(&tree, &data_parse) == GOOD_INPUT)
-			{
-				ft_print_fd_pipe(data_parse.fd_pipes, data_parse.nb_pipes);
-				ft_tree_exec(tree, envp);
-			}
+		if (ft_parse(&tree, &data_parse) == GOOD_INPUT)
+		{
+			ft_print_fd_pipe(data_parse.fd_pipes, data_parse.nb_pipes);
+			ft_tree_exec(tree, envp);
 		}
 	}
 	return (SUCCESS);
