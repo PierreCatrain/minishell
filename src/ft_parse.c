@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 00:23:08 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/12 00:38:39 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/12 01:46:17 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int	ft_parse(t_tree **tree, t_data_parse *data_parse)
 	if (ft_condition_grammaire(token) == WRONG_INPUT)
 		return (ft_free_token(&token), WRONG_INPUT);
 	// ft_print_token(&token);
-	if (ft_create_tree(tree, token) != SUCCESS)
+	if (ft_create_tree(tree, token, data_parse) != SUCCESS)
 		return (ft_free_token(&token), ERROR_MALLOC);
-	// ft_print_tree(*tree);
+	ft_print_tree(*tree);
 	return (GOOD_INPUT);
 }
