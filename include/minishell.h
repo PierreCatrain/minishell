@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/11 22:33:39 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/11 22:57:38 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ typedef struct s_data_parse
 	int			index_pipes;
 	int		**fd_pipes;
 	int			nb_pipes;
-    
+
     int *array_here_doc;
     int index_here_doc;
 }   t_data_parse;

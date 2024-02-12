@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 22:51:52 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/07 18:41:29 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/12 02:52:07 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	print_tab_tab(char **tab)
 	i = 0;
 	while (tab[i])
 	{
-		printf("%s\n", tab[i]);
+		printf("tab[%d] = %s\n", i, tab[i]);
 		i++;
 	}
 }

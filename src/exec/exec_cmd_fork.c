@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 17:38:07 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/11 22:08:26 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/12 02:49:09 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	ft_exec_cmd_fork(t_tree *tree, char **env)
 	if (tree->lst_exec->fd_in == -1 || tree->lst_exec->fd_out == -1)
 	{
 		// gestion d'erreur
+		g_exit_status = 2;
 		return (EXIT_FAILURE);
 	}
 	pid = fork();
@@ -35,6 +36,8 @@ int	ft_exec_cmd_fork(t_tree *tree, char **env)
 	{
 		dup2(tree->lst_exec->fd_in, 0);
 		dup2(tree->lst_exec->fd_out, 1);
+
+		free_and_close_tree(tree);
 		find_cmd(env, tree->lst_exec->args);
 	}
 	else

@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 01:19:42 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/11 22:02:52 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/12 02:50:27 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,11 @@ void	ft_tree_exec(t_tree *tree, char **env)
 		ft_exec_cmd_fork(tree->right_child, env);
 	else if (tree->type == EXEC_LIST)
 	{
+		printf("arg = :");
+		print_linked_list(tree->lst_exec);
 		while (tree->lst_exec != NULL)
 		{
+			printf("1\n");
 			ft_exec_cmd_fork(tree, env);
 			tree->lst_exec = tree->lst_exec->next;
 		}
