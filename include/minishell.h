@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/11 22:57:38 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/12 02:55:36 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -360,6 +360,7 @@ char	*ft_itoa(int n);
 void print_invalid_token(char *str);
 char *ft_strdup(char *str);
 void	ft_print_fd_pipe(int **fd_pipes, int nb_pipes);
+char **new_args(char **args);
 
 // # ====================================================== #
 // |														|

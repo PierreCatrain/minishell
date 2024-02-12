@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 17:38:07 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/12 02:49:09 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/12 07:04:00 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 int	ft_exec_cmd_fork(t_tree *tree, char **env)
 {
 	pid_t	pid;
-	int		status;
+	char	**arg;
 
 	if (tree->lst_exec->fd_in == -1 || tree->lst_exec->fd_out == -1)
 	{
@@ -34,17 +34,17 @@ int	ft_exec_cmd_fork(t_tree *tree, char **env)
 	}
 	if (pid == 0)
 	{
+		printf("fd in = %d\nfd out = %d\n", tree->lst_exec->fd_in, tree->lst_exec->fd_out);
+		arg = new_args(tree->lst_exec->args);
 		dup2(tree->lst_exec->fd_in, 0);
 		dup2(tree->lst_exec->fd_out, 1);
-
 		free_and_close_tree(tree);
-		find_cmd(env, tree->lst_exec->args);
+		find_cmd(env, arg);
 	}
 	else
 	{
-		waitpid(0, &status, 0);
-		if (WIFEXITED(status))
-			g_exit_status = WEXITSTATUS(status);
+		if (tree->lst_exec->fd_out > 2)
+			close(tree->lst_exec->fd_out);
 	}
 	return (g_exit_status);
 }
