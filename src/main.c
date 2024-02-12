@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:52:38 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/12 07:25:40 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/12 08:25:35 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,6 @@ int	only_one_cmd(t_tree *tree, char **argv, char **envp)
 		ft_tree_exec(tree, envp);
 	rl_clear_history();
 	return (SUCCESS);
-}
-
-void	sig_int(int signal)
-{
-	(void)signal;
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -55,7 +50,10 @@ int	main(int argc, char **argv, char **envp)
 		free(data_parse.prompt);
 		tree = NULL;
 		if (data_parse.input == NULL)
-			exit(EXIT_SUCCESS);
+		{
+			ft_putstr_fd("exit\n", 1);
+			exit(0);
+		}
 		if (is_input_only_whitespace(data_parse.input))
 			add_history(data_parse.input);
 		if (ft_parse(&tree, &data_parse) == GOOD_INPUT)
@@ -71,10 +69,13 @@ a faire
 
 le leak de l'historique
 signaux + gerer si on ctrl c ou d depuis le remplissage du here_doc et attention on a open mais pas re close puis re open
-$?
+ctrl c depuis une commande
+
 
 ameliorer
 
+echo cd exit
 les erreurs d'invalide tokens
-le variable d'env
+message pour les cmd not found
+on fait un wait de moin que necessaire et on attend toujours la meme chose (peut etre stocker les pid pour tous les attendres)
 */

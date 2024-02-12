@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 06:02:52 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/12 07:31:55 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/12 08:26:53 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,6 @@ void ft_display_new_prompt(int signal)
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
-}
-
-void ft_test(int sig)
-{
-    (void)sig;
-    printf("test\n");
 }
 
 int ft_set_sig(void)
@@ -44,6 +38,5 @@ int ft_set_sig(void)
 		ft_putstr_fd("minishell: error with sigaction\n", 2);
         return (ERROR);
 	}
-	// signal(3, &sig_quit);
     return (SUCCESS);
 }
