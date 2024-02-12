@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utils_7.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 23:13:46 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/12 02:50:30 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/12 04:54:14 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,11 +176,22 @@ char **new_args(char **args)
 	if (new_args == NULL)
 		return (NULL);
 	index = -1;
-	while (new_args[++index])
+	while (args[++index])
 	{
 		new_args[index] = ft_replace_exit_status(args[index]);
 		if (new_args[index] == NULL)
 			return (ft_free_index_new_args(new_args, index), NULL);
 	}
+	new_args[index] = NULL;
 	return (new_args);
 }
+
+// int	main(int ac, char **av)
+// {
+// 	char **args;
+
+// 	(void)ac;
+// 	args = new_args(av + 1);
+// 	print_tab_tab(args);
+// 	return (0);
+// }

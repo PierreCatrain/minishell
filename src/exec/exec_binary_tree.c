@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 01:19:42 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/11 22:02:52 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/12 07:04:57 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,19 @@
 // si oui qu'est ce que lst_exec
 
 // fonction qui execute commande par commande : 
+
+int	ft_linked_list_size(t_lst_exec *lst)
+{
+	int	len;
+
+	len = 0;
+	while (lst != NULL)
+	{
+		len++;
+		lst = lst->next;
+	}
+	return (len);
+}
 
 void	print_linked_list(t_lst_exec *lst_exec)
 {
@@ -33,6 +46,9 @@ void	print_linked_list(t_lst_exec *lst_exec)
 
 void	ft_tree_exec(t_tree *tree, char **env)
 {
+	int	status;
+	int	ll_len;
+
 	if (tree->left_child)
 		ft_tree_exec(tree->left_child, env);
 	if (tree->type == OPPERATOR_AND && g_exit_status == 0)
@@ -41,10 +57,18 @@ void	ft_tree_exec(t_tree *tree, char **env)
 		ft_exec_cmd_fork(tree->right_child, env);
 	else if (tree->type == EXEC_LIST)
 	{
+		ll_len = ft_linked_list_size(tree->lst_exec);
 		while (tree->lst_exec != NULL)
 		{
 			ft_exec_cmd_fork(tree, env);
 			tree->lst_exec = tree->lst_exec->next;
+		}
+		while (ll_len > 0)
+		{
+			waitpid(0, &status, 0);
+			if (WIFEXITED(status))
+				g_exit_status = WEXITSTATUS(status);
+			ll_len--;
 		}
 	}
 	// else

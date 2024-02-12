@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 06:02:52 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/12 06:41:40 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/12 07:31:55 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,6 @@ void ft_display_new_prompt(int signal)
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
-
-    // write(STDERR_FILENO, "\n", 1);
-	// 	rl_replace_line("", 0);
-	// 	rl_on_new_line();
-	// 	rl_redisplay();
 }
 
 void ft_test(int sig)
@@ -37,7 +32,7 @@ int ft_set_sig(void)
     struct sigaction s_int;
     struct sigaction s_quit;
     s_int.sa_handler = &ft_display_new_prompt;
-    s_quit.sa_handler = &ft_test;
+    s_quit.sa_handler = SIG_IGN;
 
     if (sigaction(SIGINT, &s_int, NULL) == -1)
 	{

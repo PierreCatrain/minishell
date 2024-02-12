@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:52:38 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/12 06:38:29 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/12 07:25:40 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,7 @@ int	main(int argc, char **argv, char **envp)
 		if (is_input_only_whitespace(data_parse.input))
 			add_history(data_parse.input);
 		if (ft_parse(&tree, &data_parse) == GOOD_INPUT)
-		{
-			ft_print_fd_pipe(data_parse.fd_pipes, data_parse.nb_pipes);
 			ft_tree_exec(tree, envp);
-		}
 	}
 	return (SUCCESS);
 }
