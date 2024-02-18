@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:52:38 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/12 08:25:35 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/18 17:11:43 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 long long int	g_exit_status;
 
-int	only_one_cmd(t_tree *tree, char **argv, char **envp)
+int	only_one_cmd(t_tree *tree, char **argv, char ***env)
 {
 	t_data_parse	data_parse;
 
@@ -23,7 +23,7 @@ int	only_one_cmd(t_tree *tree, char **argv, char **envp)
 		return (ERROR_MALLOC);
 	add_history(data_parse.input);
 	if (ft_parse(&tree, &data_parse) == GOOD_INPUT)
-		ft_tree_exec(tree, envp);
+		ft_tree_exec(tree, env);
 	rl_clear_history();
 	return (SUCCESS);
 }
@@ -32,15 +32,21 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_data_parse	data_parse;
 	t_tree			*tree;
+	char			**env;
 	
+	printf("debut de minishell\n");
 	tree = NULL;
 	g_exit_status = 0;
 	if (ft_set_sig() == ERROR)
 		return (ERROR);
 	if (ft_check_argc_envp(argc, argv) == ERROR_ARGC_ENVP)
 		return (ERROR_ARGC_ENVP);
+	
+	env = dup_env(envp);
+	printf("affichage de env\n");
+	print_tab_tab(env);
 	if (argc == 3)
-		return (only_one_cmd(tree, argv, envp));
+		return (only_one_cmd(tree, argv, &env));
 	while (1)
 	{
 		data_parse.prompt = ft_get_prompt();
@@ -57,7 +63,7 @@ int	main(int argc, char **argv, char **envp)
 		if (is_input_only_whitespace(data_parse.input))
 			add_history(data_parse.input);
 		if (ft_parse(&tree, &data_parse) == GOOD_INPUT)
-			ft_tree_exec(tree, envp);
+			ft_tree_exec(tree, &env);
 	}
 	return (SUCCESS);
 }

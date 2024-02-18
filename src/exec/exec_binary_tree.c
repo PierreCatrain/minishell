@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_binary_tree.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 01:19:42 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/12 08:19:11 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/18 17:14:34 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	print_linked_list(t_lst_exec *lst_exec)
 	}
 }
 
-void	ft_tree_exec(t_tree *tree, char **env)
+void	ft_tree_exec(t_tree *tree, char ***env)
 {
 	int	status;
 	int	ll_len;
@@ -63,7 +63,7 @@ void	ft_tree_exec(t_tree *tree, char **env)
 			ft_exec_cmd_fork(tree, env);
 			tree->lst_exec = tree->lst_exec->next;
 		}
-		while (ll_len > 0)
+		while (ll_len >= 0)
 		{
 			waitpid(0, &status, 0);
 			if (WIFEXITED(status))
@@ -71,8 +71,4 @@ void	ft_tree_exec(t_tree *tree, char **env)
 			ll_len--;
 		}
 	}
-	// else
-	// 	ft_tree_exec(tree->right_child, env);
-	return;
-	// executer l'enfant de droite en fonction du type du parent et du retour de la commande de l'enfant de droite
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd_fork.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 17:38:07 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/12 07:38:40 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/18 17:14:58 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 // recois une liste chaine si la liste en plus grande que 1, alors il y a des pipes et donc faire 
 // la fonction qui
-int	ft_exec_cmd_fork(t_tree *tree, char **env)
+int	ft_exec_cmd_fork(t_tree *tree, char ***env)
 {
 	pid_t	pid;
 	char	**arg;

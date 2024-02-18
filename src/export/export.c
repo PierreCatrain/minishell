@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 22:51:52 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/12 02:52:07 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/18 19:26:38 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,11 @@ void	print_tab_tab(char **tab)
 	int	i;
 
 	i = 0;
+	if (!tab)
+	{
+		printf("tab vide\n");
+		return ;
+	}
 	while (tab[i])
 	{
 		printf("tab[%d] = %s\n", i, tab[i]);
@@ -128,6 +133,8 @@ int	ft_find_export_index(char **env, char *str)
 	i = 0;
 	export_name = ft_find_export_name(str);
 	len_str = ft_strlen(export_name);
+	if (len_str == 1)
+		len_str += 1;
 	while (env[i])
 	{
 		if (ft_strncmp(env[i], str, len_str -1) == 0)
@@ -210,21 +217,19 @@ char	**dup_env_ascii_order(char **env)
 	return (new_env);
 }
 
-char	**ft_change_export(char **env, char *str, char **new_env)
+void	ft_change_export(char ***env, char *str)
 {
 	int	index_export;
 	int	i;
 
-	new_env = dup_env(env);
-	index_export = ft_find_export_index(env, str);
+	index_export = ft_find_export_index(*env, str);
 	if (index_export == -1)
-		return (NULL);
+		return ;
 	i = 0;
 	while (i < index_export)
 		i++;
-	free(new_env[i]);
-	ft_str_dup_env(str, new_env[i]);
-	return (new_env);
+	free((*env)[i]);
+	(*env)[i] = ft_str_dup_env(str, (*env)[i]);
 }
 
 int	ft_check_export_name(char *str)
@@ -562,18 +567,37 @@ void	ft_print_env_ascii_order(char **env)
 	free_tab_tab(new_env);
 }
 
+int ft_realloc_env(char ***env, int size)
+{
+	char **cp_env;
+	int	i;
+
+	i = 0;
+	cp_env = dup_env(*env);
+	free_tab_tab(*env);
+	*env = (char **) malloc (sizeof(char *) * ft_len_tab_tab(cp_env) + size + 1);
+	if ((*env) == NULL)
+		return (-1);
+	// gestion d'erreur;
+	while (cp_env[i])
+	{
+		ft_str_dup_env(cp_env[i], (*env)[i]);
+		i++;
+	}
+	free_tab_tab(cp_env);
+	return (1);
+}
 
 // faire de new env un valeur 
-char	**ft_export(char **env, char *export_str)
+void	ft_export(char ***env, char *export_str)
 {
-	char	**new_env = NULL;
 	char	*export = NULL;
 	int		i;
 	int		empty;
 
-	if (!export_str)
+	if (!export_str) // tableau de tableau uniquement
 	{
-		ft_print_env_ascii_order(env);
+		ft_print_env_ascii_order(*env);
 		exit (0); // gestion d'erreur
 	}
 	if (export_str[0] == '=' || !ft_check_export_name(export_str))
@@ -597,21 +621,18 @@ char	**ft_export(char **env, char *export_str)
 			export = add_null(export);
 	}
 	// chck a faire l'export se fait avec le nom de l'export pas le total
-	if (ft_is_export_in_env(env, export))
+	if (ft_is_export_in_env(*env, export))
 	{
-		new_env = ft_change_export(env, export, new_env);
-		return (new_env);
+		ft_change_export(env, export);
+		{
+			free(export);
+			return ;
+		}
 	}
-	new_env = dup_env(env);
-	if (!new_env)
-		return (0);
-	i = 0;
-	while (new_env[i])
-		i++;
-	new_env[i] = ft_str_dup_env(export, new_env[i]);
-	new_env[++i] = NULL;
+	i = ft_realloc_env(env, 1);
+	(*env)[++i] = NULL;
 	free(export);
-	return (new_env);
+	return ;
 }
 
 // ajouter l'export de plusieur choix possible export a=qwer b=qwer ... (voir sil y a des cas d'erreurs)
@@ -620,6 +641,8 @@ char	**ft_export(char **env, char *export_str)
 // {
 // 	char	**new_env;
 
+// 	if (ac < 2)
+// 		return (1);
 // 	new_env = ft_export(env, av[1]);
 // 	if (!new_env)
 // 		return (0);
