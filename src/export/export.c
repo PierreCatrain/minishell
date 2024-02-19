@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 22:51:52 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/19 16:34:33 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/19 19:14:50 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,7 +228,6 @@ void	ft_change_export(char ***env, char *str)
 	i = 0;
 	while (i < index_export)
 		i++;
-	printf("i de l'export est de %d\n", i);
 	free((*env)[i]);
 	(*env)[i] = ft_str_dup_env(str, (*env)[i]);
 }
@@ -625,7 +624,6 @@ void	ft_export(char ***env, char *export_str)
 	// chck a faire l'export se fait avec le nom de l'export pas le total
 	if (ft_is_export_in_env(*env, export))
 	{
-		printf("oui l'export est dans l'env\n");
 		ft_change_export(env, export);
 		{
 			free(export);
