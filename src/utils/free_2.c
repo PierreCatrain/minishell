@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 22:48:14 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/12 02:27:09 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/18 20:20:06 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	free_close_tree(t_tree *tree)
 
 void	free_and_close_tree(t_tree *tree)
 {
-	rl_clear_history();
+	// rl_clear_history();
 	if (tree == NULL)
 		return ;
 	while (tree->parent != NULL)

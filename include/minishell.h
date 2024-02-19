@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/18 18:58:27 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/19 15:54:12 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -365,6 +365,7 @@ void print_invalid_token(char *str);
 char *ft_strdup(char *str);
 void	ft_print_fd_pipe(int **fd_pipes, int nb_pipes);
 char **new_args(char **args);
+int	ft_linked_list_size(t_lst_exec *lst);
 
 // # ====================================================== #
 // |														|
@@ -485,7 +486,7 @@ void	ft_env(char **env);
 
 int 	ft_find_builtin(char *cmd, char **cmd_tab, char ***env);
 int 	ft_exec_cmd_fork(t_tree *tree, char ***env);
-void	find_cmd(char ***env, char **cmd);
+int 	find_cmd(char ***env, char **cmd);
 void	ft_tree_exec(t_tree *tree, char ***env);
 
 

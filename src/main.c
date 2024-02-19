@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:52:38 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/18 17:11:43 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/19 16:31:13 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,13 @@ int	main(int argc, char **argv, char **envp)
 	t_tree			*tree;
 	char			**env;
 	
-	printf("debut de minishell\n");
 	tree = NULL;
 	g_exit_status = 0;
 	if (ft_set_sig() == ERROR)
 		return (ERROR);
 	if (ft_check_argc_envp(argc, argv) == ERROR_ARGC_ENVP)
 		return (ERROR_ARGC_ENVP);
-	
 	env = dup_env(envp);
-	printf("affichage de env\n");
-	print_tab_tab(env);
 	if (argc == 3)
 		return (only_one_cmd(tree, argv, &env));
 	while (1)
@@ -58,12 +54,16 @@ int	main(int argc, char **argv, char **envp)
 		if (data_parse.input == NULL)
 		{
 			ft_putstr_fd("exit\n", 1);
-			exit(0);
+			break ;
 		}
 		if (is_input_only_whitespace(data_parse.input))
 			add_history(data_parse.input);
 		if (ft_parse(&tree, &data_parse) == GOOD_INPUT)
+		{
 			ft_tree_exec(tree, &env);
+			free_and_close_tree(tree);
+		}
+		printf("exit status = %lld\n", g_exit_status);
 	}
 	return (SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 10:10:03 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/18 18:44:57 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/19 16:20:52 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,33 +39,35 @@ int	ft_execve_cmd(char **cmd, char **path_split, char **env)
 	ft_putstr_fd(": command not found\n", 2);
 	free_tab_tab(cmd);
 	g_exit_status = 127;
-	return (1);
+	exit (127);
 }
 
-void	find_cmd(char ***env, char **cmd)
+int	find_cmd(char ***env, char **cmd)
 {
 	char	*path;
 	char	**path_split;
 
 	if (ft_find_builtin(cmd[0], cmd, env) == 1)
-		return ;
-	if (access(cmd[0], F_OK | X_OK) == 0)
+		return (1);
+	if (access(cmd[0], F_OK | X_OK) == 0) // mettre les droits d'exec et de lecture
 		execve(cmd[0], cmd, *env);
 	path = getenv("PATH");
 	if (!path)
 	{
 		printf("PATH n'existe pas dans env\n");
-		return ; //gestion d'erreur;
+		return (2); //gestion d'erreur;
 	}
 	path_split = ft_split(path, ':');
 	if (!path_split)
 	{
 		printf("error prblm\n");
-		return ;
+		return (2);
 		// gestion d'err
 		// free path ?
 	}
 	ft_execve_cmd(cmd, path_split, *env);
+	printf("apres exec\n");
+	return (0);
 }
 
 // int	main(int ac, char **av, char **env)
