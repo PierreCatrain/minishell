@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 17:38:07 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/12 07:38:40 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/18 21:37:40 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	ft_exec_cmd_fork(t_tree *tree, char **env)
 		return (EXIT_FAILURE);
 	}
 	pid = fork();
+	printf("1\n");
 	if (pid == -1)
 	{
 		printf("bash: err:%d (fork)", errno);

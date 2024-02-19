@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 01:19:42 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/12 08:19:11 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/18 21:28:16 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	ft_tree_exec(t_tree *tree, char **env)
 		ll_len = ft_linked_list_size(tree->lst_exec);
 		while (tree->lst_exec != NULL)
 		{
+			printf("2\n");
 			ft_exec_cmd_fork(tree, env);
 			tree->lst_exec = tree->lst_exec->next;
 		}

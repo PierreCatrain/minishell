@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec_cmd_pipe.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 10:10:03 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/12 05:07:04 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/18 21:38:31 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,17 @@ int	ft_execve_cmd(char **cmd, char **path_split, char **env)
 		cmd_path = ft_strjoin_path(path_split[i], cmd[0]);
 		if (cmd_path == NULL)
 		{
+			ft_putstr_fd("finito\n", 2);
+			exit(127);
 			return (1);
 			// gestion d'erreur
 		}
 		if (!access(cmd_path, F_OK | X_OK))
 		{
+			ft_putstr_fd("finito\n", 2);
 			if (execve(cmd_path, cmd, env) == -1)
 			{
+				ft_putstr_fd("still alive\n", 2);
 				return (2); // gestion d'erreur
 			}
 		}
@@ -37,6 +41,8 @@ int	ft_execve_cmd(char **cmd, char **path_split, char **env)
 	}
 	free_tab_tab(cmd);
 	g_exit_status = 127;
+	ft_putstr_fd("finito\n", 2);
+	exit(127);
 	return (1);
 }
 
