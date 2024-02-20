@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 01:19:42 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/18 21:28:16 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/19 21:51:39 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,15 @@ void	print_linked_list(t_lst_exec *lst_exec)
 	}
 }
 
-void	ft_tree_exec(t_tree *tree, char **env)
+void	ft_tree_exec(t_tree *tree, char ***env)
 {
 	int	status;
 	int	ll_len;
+	char	**arg;
 
+	
+	ll_len = ft_linked_list_size(tree->lst_exec);
+	arg = new_args(tree->lst_exec->args);
 	if (tree->left_child)
 		ft_tree_exec(tree->left_child, env);
 	if (tree->type == OPPERATOR_AND && g_exit_status == 0)
@@ -57,23 +61,21 @@ void	ft_tree_exec(t_tree *tree, char **env)
 		ft_exec_cmd_fork(tree->right_child, env);
 	else if (tree->type == EXEC_LIST)
 	{
-		ll_len = ft_linked_list_size(tree->lst_exec);
 		while (tree->lst_exec != NULL)
 		{
-			printf("2\n");
+			if (ll_len == 1 && ft_find_builtin(arg[0], arg, env) == 1)
+			{
+				break;
+			}
 			ft_exec_cmd_fork(tree, env);
 			tree->lst_exec = tree->lst_exec->next;
 		}
-		while (ll_len > 0)
-		{
-			waitpid(0, &status, 0);
-			if (WIFEXITED(status))
-				g_exit_status = WEXITSTATUS(status);
-			ll_len--;
-		}
 	}
-	// else
-	// 	ft_tree_exec(tree->right_child, env);
-	return;
-	// executer l'enfant de droite en fonction du type du parent et du retour de la commande de l'enfant de droite
+	while (ll_len > 0)
+	{
+		waitpid(0, &status, 0);
+		if (WIFEXITED(status))
+			g_exit_status = WEXITSTATUS(status);
+		ll_len--;
+	}
 }

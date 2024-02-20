@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 09:32:17 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/09 16:25:57 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/19 11:56:27 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 ◦ exit with no options
 */
 
-int	ft_find_builtin2(char *cmd, char **cmd_tab, char **env)
+int	ft_find_builtin2(char *cmd, char **cmd_tab, char ***env)
 {
 	if (ft_strcmp(cmd, "exit") == 0)
 	{
@@ -41,13 +41,13 @@ int	ft_find_builtin2(char *cmd, char **cmd_tab, char **env)
 	}
 	else if (ft_strcmp(cmd, "env") == 0)
 	{
-		ft_env(env);
+		ft_env(*env);
 		return (1);
 	}
 	return (0);
 }
 
-int	ft_find_builtin(char *cmd, char **cmd_tab, char **env)
+int	ft_find_builtin(char *cmd, char **cmd_tab, char ***env)
 {
 	if (ft_strcmp(cmd, "cd") == 0)
 	{

@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/12 07:23:56 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/20 00:45:53 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ typedef struct s_data_parse
     char *str;
     char *prompt;
     char *input;
+    int merge;
 
     int index_new_str;
 
@@ -191,7 +192,8 @@ int ft_do_insert(t_token **token, t_data_parse *data_parse, char *opperator, int
 // |														|
 // # ====================================================== #
 
-int     ft_replace_env_variable(t_token **token);
+char *ft_replace_env_variable(char *str, t_data_parse *data_parse);
+char	*ft_join_char(char *str, char c);
 
 //ft_replace_wildcard.c
 int ft_replace_wildcard(t_token **token);
@@ -291,6 +293,7 @@ int	ft_add_tree_no_null(t_tree **tree, t_tree *new, t_token *token, t_data_parse
 
 char *ft_here_doc(void);
 void	ft_complete(int fd_in, t_token *token);
+char	*ft_strjoin(char *str1, char *str2);
 
 //ft_complete_here_doc.c
 int ft_complete_here_doc(t_data_parse *data_parse, t_token *token);
@@ -365,6 +368,7 @@ void print_invalid_token(char *str);
 char *ft_strdup(char *str);
 void	ft_print_fd_pipe(int **fd_pipes, int nb_pipes);
 char **new_args(char **args);
+int	ft_linked_list_size(t_lst_exec *lst);
 
 // # ====================================================== #
 // |														|
@@ -418,9 +422,9 @@ char	*ft_str_dup_env(char *s1, char *s2);
 char	*assign_export_empty_value(char *export);
 char	**dup_env(char **env);
 char	**dup_env_ascii_order(char **env);
-char	**ft_change_export(char **env, char *str, char **new_env);
+void    ft_change_export(char ***env, char *str);
 
-char	**ft_export(char **env, char *export_str);
+void	ft_export(char ***env, char *export_str);
 
 
 // # ====================================================== #
@@ -432,7 +436,7 @@ char	**ft_export(char **env, char *export_str);
 int		ft_unset_is_in_env(char **env, char *unset_str);
 int		ft_find_unset_index(char **env, char *unset_str);
 char	**ft_copy_env_exept_unset(char **env, int unset_index);
-char	**ft_unset(char **env, char *unset_str);
+void    ft_unset(char ***env, char *unset_str);
 
 // # ====================================================== #
 // |														|
@@ -440,9 +444,10 @@ char	**ft_unset(char **env, char *unset_str);
 // |														|
 // # ====================================================== #
 
-char	**ft_cd(char **path_tab, char **env);
+void    ft_cd(char **path_tab, char ***env);
 char	*ft_str_join_export_name_with_equal_value(char *s1, char *s2);
-char	**ft_change_OLD_PWD(char **path_tab, char **env);
+void    ft_change_PWD_OLD_PWD(char *current_path, char *new_path, char ***env);
+int     is_export_name_in_env(char **env, char *str);
 
 // # ====================================================== #
 // |														|
@@ -482,10 +487,10 @@ void	ft_env(char **env);
 // |														|
 // # ====================================================== #
 
-int 	ft_find_builtin(char *cmd, char **cmd_tab, char **env);
-int 	ft_exec_cmd_fork(t_tree *tree, char **env);
-void	find_cmd(char **env, char **cmd);
-void	ft_tree_exec(t_tree *tree, char **env);
+int 	ft_find_builtin(char *cmd, char **cmd_tab, char ***env);
+int 	ft_exec_cmd_fork(t_tree *tree, char ***env);
+int 	find_cmd(char ***env, char **cmd);
+void	ft_tree_exec(t_tree *tree, char ***env);
 
 
 

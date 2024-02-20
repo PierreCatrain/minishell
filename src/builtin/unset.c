@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 16:01:18 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/01/29 07:51:29 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/18 17:50:21 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,22 +81,21 @@ int	ft_unset_is_in_env(char **env, char *unset_str)
 	return (0);
 }
 
-char	**ft_unset(char **env, char *unset_str)
+void	ft_unset(char ***env, char *unset_str)
 {
 	int	unset_index;
-	char	**new_env;
 
 	if (!unset_str)
-		return (NULL);
+		return ;
 	else if (unset_str[0] == '\0')
-		return (NULL);
-	if (ft_unset_is_in_env(env, unset_str) == 0)
-		return (env);
-	unset_index = ft_find_unset_index(env, unset_str);
+		return ;
+	if (ft_unset_is_in_env(*env, unset_str) == 0)
+		return ;
+	unset_index = ft_find_unset_index(*env, unset_str);
 	if (unset_index == -1)
-		return (NULL);
-	new_env = ft_copy_env_exept_unset(env, unset_index);
-	return (new_env);
+		return ;
+	*env = ft_copy_env_exept_unset(*env, unset_index);
+	return ;
 }
 
 // int main(int ac, char **av, char **env)
