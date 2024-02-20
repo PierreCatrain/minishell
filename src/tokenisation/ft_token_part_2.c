@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 00:58:07 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/20 00:53:50 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/20 01:51:36 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int ft_merge_token(t_token **token)
 		(*token)->quotes = (*token)->next->quotes;
 	(*token)->str = ft_strjoin((*token)->str, (*token)->next->str);
 	if ((*token)->str == NULL)
-		return (ERROR_MALLOC); // faut free
+		return (ERROR_MALLOC);
 	free((*token)->next->str);
 	free((*token)->next);
 	(*token)->next = NULL;
@@ -85,7 +85,6 @@ int ft_merge_token(t_token **token)
 int	ft_token_part_2(t_data_parse *data_parse, t_token **token)
 {
 	data_parse->merge = 0;
-	printf("\tchar : %c\n", data_parse->input[data_parse->index]);
 	if (data_parse->index != 0)
 	{
 		if (data_parse->input[data_parse->index - 1] != ' ')
@@ -111,7 +110,7 @@ int	ft_token_part_2(t_data_parse *data_parse, t_token **token)
 	if (data_parse->merge == 1)
 	{
 		if (ft_merge_token(token) != SUCCESS)
-			return (ERROR);
+			return (free(data_parse->input), ERROR_MALLOC);
 	}
 	return (SUCCESS);
 }

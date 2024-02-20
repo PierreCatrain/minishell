@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 23:58:35 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/19 22:41:25 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/20 01:49:01 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,24 +129,3 @@ char *ft_replace_env_variable(char *str, t_data_parse *data_parse)
 	}
 	return (free(str), new_str);
 }
-
-// on parcourt tout les tokens et on envoie que les mot et double quotes dans la transpho
-// int	ft_replace_env_variable(t_token **token)
-// {
-// 	while (*token != NULL)
-// 	{
-// 		if ((*token)->quotes != SINGLE_QUOTES && ft_occ((*token)->str, '$') != 0)
-// 		{
-// 			(*token)->str = ft_replace_dollars((*token)->str);
-// 			if ((*token)->str == NULL)
-// 				return (ft_print_error_malloc(), ERROR_MALLOC);
-// 		}
-// 		if ((*token)->next == NULL)
-// 			break;
-// 		else
-// 			*token = (*token)->next;
-// 	}
-// 	while ((*token)->prev != NULL)
-// 		*token = (*token)->prev;
-// 	return (SUCCESS);
-// }

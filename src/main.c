@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:52:38 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/20 01:02:45 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/20 01:48:20 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,6 @@ ctrl c depuis une commande
 
 
 ameliorer
-
-echo cd exit
+echo doit echo tout les args
 les erreurs d'invalide tokens
-message pour les cmd not found
-on fait un wait de moin que necessaire et on attend toujours la meme chose (peut etre stocker les pid pour tous les attendres)
 */

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signaux.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 06:02:52 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/18 20:39:04 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/20 02:20:52 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,16 @@ int ft_set_sig(void)
 {
     struct sigaction s_int;
     struct sigaction s_quit;
+
+	sigemptyset(&s_int.sa_mask);
+	sigemptyset(&s_quit.sa_mask);
+
+	sigaddset(&s_int.sa_mask, SIGINT);
+	sigaddset(&s_quit.sa_mask, SIGQUIT);
+
+	s_int.sa_flags = 0;
+	s_quit.sa_flags = SA_RESTART;
+	
     s_int.sa_handler = &ft_display_new_prompt;
     s_quit.sa_handler = SIG_IGN;
 

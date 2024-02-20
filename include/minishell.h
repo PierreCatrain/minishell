@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/20 00:45:53 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/20 02:13:19 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -292,7 +292,7 @@ int	ft_add_tree_no_null(t_tree **tree, t_tree *new, t_token *token, t_data_parse
 // # ====================================================== #
 
 char *ft_here_doc(void);
-void	ft_complete(int fd_in, t_token *token);
+int	ft_complete(int fd_in, t_token *token);
 char	*ft_strjoin(char *str1, char *str2);
 
 //ft_complete_here_doc.c

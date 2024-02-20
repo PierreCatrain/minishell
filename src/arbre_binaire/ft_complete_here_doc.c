@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 02:57:01 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/11 05:12:47 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/20 02:14:12 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,12 @@ int ft_complete_here_doc(t_data_parse *data_parse, t_token *token)
 		        return (free(data_parse->array_here_doc), ERROR);
 	        data_parse->array_here_doc[index] = open(data_parse->heredoc, \
 			    O_CREAT, O_RDWR, O_TRUNC, 0644);
-	        ft_complete(data_parse->array_here_doc[index++], token);
+	        if (ft_complete(data_parse->array_here_doc[index++], token) == ERROR)
+            {
+                unlink(data_parse->heredoc);
+	            free(data_parse->heredoc);
+                return (ERROR);
+            }
 	        unlink(data_parse->heredoc);
 	        free(data_parse->heredoc);
         }
