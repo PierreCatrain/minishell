@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 05:06:05 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/11 01:44:11 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/20 01:08:52 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@ int	ft_tokenisation(t_token **token, t_data_parse *data_parse)
 {
 	if (ft_is_quote_close(data_parse->input, CLOSE, CLOSE) == OPEN)
 		return (free(data_parse->input), WRONG_INPUT);
+	data_parse->input = ft_replace_env_variable(data_parse->input, data_parse);
+	if (data_parse->input == NULL)
+		return (ERROR_MALLOC);
 	data_parse->double_quote_open = CLOSE;
 	data_parse->single_quote_open = CLOSE;
 	data_parse->new_word = CLOSE;
@@ -34,8 +37,6 @@ int	ft_tokenisation(t_token **token, t_data_parse *data_parse)
 		return (WRONG_INPUT);
 	if (ft_isolate_operateur(token) != SUCCESS)
 		return (ft_free_token(token), ERROR);
-	if (ft_replace_env_variable(token) == ERROR_MALLOC)
-		return (ft_free_token(token), ERROR_MALLOC);
 	if (ft_replace_wildcard(token) != SUCCESS)
 		return (ft_free_token(token), ERROR);
 	ft_set_all_grammaire(token);

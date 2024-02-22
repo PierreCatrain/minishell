@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 23:58:35 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/12 04:49:50 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/20 01:49:01 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,11 +90,14 @@ char *ft_add_env(char *str, char *new_str, int index)
 	return (free(str_isolate), new_str);
 }
 
-char *ft_replace_dollars(char *str)
+char *ft_replace_env_variable(char *str, t_data_parse *data_parse)
 {
 	char *new_str;
 	int index;
 
+	data_parse->double_quote_open = CLOSE;
+	data_parse->single_quote_open = CLOSE;
+	data_parse->new_word = CLOSE;
 	new_str = malloc(sizeof(char));
 	if (new_str == NULL)
 		return (NULL);
@@ -102,7 +105,7 @@ char *ft_replace_dollars(char *str)
 	index = -1;
 	while (str[++index])
 	{
-		if (str[index] == '$' && ft_isalphanum(str[index + 1]))
+		if (str[index] == '$' && ft_isalphanum(str[index + 1]) && data_parse->single_quote_open == CLOSE)
 		{
 			new_str = ft_add_env(str, new_str, index);
 			if (new_str == NULL)
@@ -114,28 +117,15 @@ char *ft_replace_dollars(char *str)
 			new_str = ft_join_char(new_str, str[index]);
 			if (new_str == NULL)
 				return (free(str), NULL);
+			if (str[index] == '\'' && data_parse->double_quote_open == CLOSE && data_parse->single_quote_open == CLOSE)
+				data_parse->single_quote_open = OPEN;
+			else if (str[index] == '\'' && data_parse->double_quote_open == CLOSE && data_parse->single_quote_open == OPEN)
+				data_parse->single_quote_open = CLOSE;
+			else if (str[index] == '"' && data_parse->double_quote_open == CLOSE && data_parse->single_quote_open == CLOSE)
+				data_parse->double_quote_open = OPEN;
+			else if (str[index] == '"' && data_parse->double_quote_open == OPEN && data_parse->single_quote_open == CLOSE)
+				data_parse->double_quote_open = CLOSE;
 		}		
 	}
 	return (free(str), new_str);
-}
-
-// on parcourt tout les tokens et on envoie que les mot et double quotes dans la transpho
-int	ft_replace_env_variable(t_token **token)
-{
-	while (*token != NULL)
-	{
-		if ((*token)->quotes != SINGLE_QUOTES && ft_occ((*token)->str, '$') != 0)
-		{
-			(*token)->str = ft_replace_dollars((*token)->str);
-			if ((*token)->str == NULL)
-				return (ft_print_error_malloc(), ERROR_MALLOC);
-		}
-		if ((*token)->next == NULL)
-			break;
-		else
-			*token = (*token)->next;
-	}
-	while ((*token)->prev != NULL)
-		*token = (*token)->prev;
-	return (SUCCESS);
 }

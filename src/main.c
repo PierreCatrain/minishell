@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:52:38 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/22 13:57:42 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/22 19:28:27 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	main(int argc, char **argv, char **envp)
 		return (ERROR);
 	if (ft_check_argc_envp(argc, argv) == ERROR_ARGC_ENVP)
 		return (ERROR_ARGC_ENVP);
-	env = dup_env(envp);
+	env = dup_env(envp);// peut etre le faire depuis l'exec
 	if (argc == 3)
 		return (only_one_cmd(tree, argv, &env));
 	while (1)
@@ -82,9 +82,6 @@ ctrl c depuis une commande
 
 
 ameliorer
-
-echo cd exit
+echo doit echo tout les args
 les erreurs d'invalide tokens
-message pour les cmd not found
-on fait un wait de moin que necessaire et on attend toujours la meme chose (peut etre stocker les pid pour tous les attendres)
 */

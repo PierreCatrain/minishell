@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_get_prompt.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 21:50:13 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/09 18:55:49 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/20 01:46:04 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*ft_at_home(char *start_prompt, char *end_prompt, char *str)
 	while (start_prompt[++i])
 		prompt[i] = start_prompt[i];
 	j = -1;
-	while (++j <= 5)
+	while (++j < ft_strlen(str))
 		prompt[i + j] = str[j];
 	i += j;
 	j = -1;
@@ -40,6 +40,7 @@ char	*ft_at_user(char *start_prompt, char *end_prompt)
 {
 	char	*prompt;
 	int		i;
+	int		j;
 
 	prompt = malloc ((ft_strlen(start_prompt) \
 	+ ft_strlen(end_prompt) + 2) * sizeof(char));
@@ -48,10 +49,11 @@ char	*ft_at_user(char *start_prompt, char *end_prompt)
 	i = -1;
 	while (start_prompt[++i])
 		prompt[i] = start_prompt[i];
-	prompt[i] = '$';
-	while (end_prompt[++i])
-		prompt[i] = end_prompt[i];
-	prompt[++i] = '\0';
+	prompt[i++] = '~';
+	j = -1;
+	while (end_prompt[++j])
+		prompt[i + j] = end_prompt[j];
+	prompt[++i + j] = '\0';
 	return (prompt);
 }
 

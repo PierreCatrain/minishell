@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 00:53:58 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/11 00:51:09 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/20 00:31:15 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,10 @@ int	ft_token_part_1(t_data_parse *data_parse, t_token **token)
 			return (ERROR_MALLOC);
 	}
 	else
+	{
 		data_parse->index++;
+		if (ft_token_part_1(data_parse, token) == ERROR_MALLOC)
+			return (ERROR_MALLOC);
+	}
 	return (SUCCESS);
 }

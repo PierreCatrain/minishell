@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 02:23:35 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/11 03:11:50 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/20 02:12:11 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,21 +47,25 @@ int	is_pipe_in_suite_exec(t_token *token)
 	return (0);
 }
 
-void	ft_complete(int fd_in, t_token *token)
+int	ft_complete(int fd_in, t_token *token)
 {
 	char	*str;
 	char	*line;
 
 	str = ft_get_str("> ");
 	line = readline(str);
+	if (line == NULL)
+		return (ERROR);
 	if (ft_strcmp(line, token->str) != 0)
 	{
 		ft_putstr_fd(line, fd_in);
 		free(line);
-		ft_complete(fd_in, token);
+		if (ft_complete(fd_in, token) == ERROR)
+			return (ERROR);
 	}
 	else
 		free(line);
+	return (SUCCESS);
 }
 
 char	*ft_here_doc(void)
