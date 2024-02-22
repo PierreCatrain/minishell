@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 21:52:06 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/12 07:45:27 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/22 15:43:39 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,28 +88,24 @@ int	ft_exit_parsing(char **arg, long long int *exit_value)
 	return (1);
 }
 
-// modifier le shlvl
 int	ft_exit(char **arg)
 {
-	// long long int	exit_value;
+	long long int	exit_value;
 
-	printf("1\n");
 	if (arg[1] == NULL)
 		exit (0);
-	printf("2\n");
-	if (!ft_atoi(arg[1], &g_exit_status))
+	if (!ft_exit_parsing(arg, &exit_value))
+		return (0); // gestion d'erreur
+	else if (ft_atoi(arg[1], &exit_value) == FALSE)
 	{
 		printf("bash: exit: %s: numeric argument required\n", arg[1]);
-		g_exit_status = 2;
+		exit(2);
 	}
-	else if (!ft_exit_parsing(arg, &g_exit_status))
-		return (0); // gestion d'erreur
 	else if (!ft_check_exit_char(arg[1]))
 	{
 		printf("bash: exit: %s: numeric argument required\n", arg[1]);
-		g_exit_status = 2;
+			exit_value = 2;
 	}
-	printf("2\n");
-	exit(g_exit_status);
+	exit(exit_value);
 }
 

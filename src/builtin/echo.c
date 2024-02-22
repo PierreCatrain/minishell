@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 22:17:53 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/12 18:41:51 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/22 01:06:58 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int	ft_echo(char **tab)
 
 	param = 0;
 	i = 1;
-	print_tab_tab(tab);
 	if (tab[1] == NULL)
 	{
 		printf("\n");

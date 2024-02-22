@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 22:51:52 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/19 19:14:50 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/22 19:22:52 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ void	free_tab_tab(char **tab)
 
 	i = -1;
 	while (tab[++i])
+	{
+		printf("tab[%d] = %s\n", i , tab[i]);
 		free(tab[i]);
+	}
 	free(tab);
 }
 
@@ -589,7 +592,7 @@ int ft_realloc_env(char ***env, int size)
 }
 
 // faire de new env un valeur 
-void	ft_export(char ***env, char *export_str)
+int	ft_export(char ***env, char *export_str)
 {
 	char	*export = NULL;
 	int		i;
@@ -597,21 +600,20 @@ void	ft_export(char ***env, char *export_str)
 
 	if (!export_str) // tableau de tableau uniquement
 	{
-		ft_print_env_ascii_order(*env);
-		g_exit_status = 0;
-		exit (0); // gestion d'erreur
+		ft_print_env_ascii_order(*env);;
+		return (0); // gestion d'erreur
 	}
 	if (export_str[0] == '=' || !ft_check_export_name(export_str))
 	{
 		printf("bash: export:= `%s': not a valid identifier\n", export_str);
-		exit (2);
+		return (2);
 		// gestion d'erreur
 	}
 	if (!ft_export_name(export_str, &export) || !ft_is_ascii(export_str[0]))
 	{
 		printf("export:= not valid in this context: %s\n", export);
 		free(export);
-		exit (2);
+		return (2);
 	}
 	if (!check_after_equal(export))
 	{
@@ -627,14 +629,14 @@ void	ft_export(char ***env, char *export_str)
 		ft_change_export(env, export);
 		{
 			free(export);
-			return ;
+			return (0);
 		}
 	}
 	i = ft_realloc_env(env, 1);
 	(*env)[i] = ft_str_dup_env(export, (*env)[i]);
 	(*env)[i + 1] = NULL;
 	free(export);
-	g_exit_status = 0;
+	return(0);
 	// return ;
 }
 

@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:52:38 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/19 19:15:42 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/22 13:57:42 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,28 @@ long long int	g_exit_status;
 int	only_one_cmd(t_tree *tree, char **argv, char ***env)
 {
 	t_data_parse	data_parse;
+	int				exit_status;
 
+	exit_status = 0;
 	data_parse.input = ft_strdup(argv[2]);
 	if (data_parse.input == NULL)
 		return (ERROR_MALLOC);
 	add_history(data_parse.input);
 	if (ft_parse(&tree, &data_parse) == GOOD_INPUT)
-		ft_tree_exec(tree, env);
+		exit_status = ft_tree_exec(tree, env);
 	rl_clear_history();
-	return (SUCCESS);
+	return (exit_status);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
 	t_data_parse	data_parse;
 	t_tree			*tree;
+	int				exit_status;
 	char			**env;
-	
+
 	tree = NULL;
-	g_exit_status = 0;
+	exit_status = 0;
 	if (ft_set_sig() == ERROR)
 		return (ERROR);
 	if (ft_check_argc_envp(argc, argv) == ERROR_ARGC_ENVP)
@@ -60,12 +63,12 @@ int	main(int argc, char **argv, char **envp)
 			add_history(data_parse.input);
 		if (ft_parse(&tree, &data_parse) == GOOD_INPUT)
 		{
-			ft_tree_exec(tree, &env);
+			exit_status = ft_tree_exec(tree, &env);
 			free_and_close_tree(tree);
 		}
-		printf("exit status = %lld\n", g_exit_status);
+		printf("exit status = %d\n", exit_status);
 	}
-	return (SUCCESS);
+	return (exit_status);
 }
 
 //echo bonjour"v"sfa

@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/19 19:29:41 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/22 19:23:05 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,16 @@ enum e_token_type
     ARGS,
 };
 
+typedef struct s_exec
+{
+    char    **env;
+    int     *tab_pid;
+    char    **cmd;
+    char    *cmd_path;
+    char    **path_cmd_split;
+    char    **err_msg;
+} t_exec;
+
 enum e_tree_type
 {
     EXEC_LIST = 0,
@@ -94,6 +104,7 @@ typedef struct s_tree // arbre binaire
     struct s_tree *left_child;
     struct s_tree *right_child;
     t_lst_exec *lst_exec;
+    t_exec  *exec;
 } t_tree;
 
 typedef struct s_token
@@ -352,6 +363,7 @@ int is_input_only_whitespace(char *str);
 
 char	**ft_split(char *s, char c);
 char	*ft_strjoin_path(char *s1, char *s2);
+char	*ft_strjoin_wihtout_free(char *s1, char *s2);
 
 //ft_utils_6.c
 void    ft_print_tree(t_tree *tree);
@@ -421,7 +433,7 @@ char	**dup_env(char **env);
 char	**dup_env_ascii_order(char **env);
 void    ft_change_export(char ***env, char *str);
 
-void	ft_export(char ***env, char *export_str);
+int	ft_export(char ***env, char *export_str);
 
 
 // # ====================================================== #
@@ -441,7 +453,7 @@ void    ft_unset(char ***env, char *unset_str);
 // |														|
 // # ====================================================== #
 
-void    ft_cd(char **path_tab, char ***env);
+int     ft_cd(char **path_tab, char ***env);
 char	*ft_str_join_export_name_with_equal_value(char *s1, char *s2);
 void    ft_change_PWD_OLD_PWD(char *current_path, char *new_path, char ***env);
 int     is_export_name_in_env(char **env, char *str);
@@ -484,11 +496,23 @@ void	ft_env(char **env);
 // |														|
 // # ====================================================== #
 
+char	**ft_get_path_cmd(void);
+char	*ft_get_err_msg(char *cmd, char *msg);
+int 	ft_is_builtin(char *cmd);
 int 	ft_find_builtin(char *cmd, char **cmd_tab, char ***env);
-int 	ft_exec_cmd_fork(t_tree *tree, char ***env);
-int 	find_cmd(char ***env, char **cmd);
-void	ft_tree_exec(t_tree *tree, char ***env);
+int 	ft_check_path_cmd(char **env, char **cmd);
+int 	ft_exec_cmd_fork(t_tree *tree, char ***env, int *tab_pid);
+int 	find_cmd(char ***env, char **arg);
+int 	ft_tree_exec(t_tree *tree, char ***env);
 
 
+// # ====================================================== #
+// |														|
+// |					  ERROR								|
+// |														|
+// # ====================================================== #
+
+void	ft_msg_err_getcwd(void);
+int	    ft_msg_err_chdir(char *str);
 
 #endif
