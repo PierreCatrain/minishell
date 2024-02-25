@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_binary_tree.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 01:19:42 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/25 23:02:09 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/25 23:56:19 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,31 +86,26 @@ int	ft_tree_exec(t_tree *tree, char ***env)
 	status = 0;
 	tab_pid = NULL;
 	// ajouter a gc si err del gc exit
-	printf("enfant de gauche n'existe pas\n");
 	if (tree->left_child)
 	{	
-		printf("1\n");
 		// printf("je descend sur l'enfant de gauche\n");
 		// printf("status = %d\n", status);
 		ft_tree_exec(tree->left_child, env);
 	}
 	if (tree->type == OPPERATOR_AND && status == 0)
 	{
-		printf("2\n");
 		// printf("operateur && j'exec cmd fork avec tree->right\n tree->right->commande = %s\n", tree->right_child->lst_exec->args[0]);
 		// printf("status = %d\n", status);
 		ft_tree_exec(tree->right_child, env);// tree-> right child
 	}
 	else if (tree->type == OPPERATOR_OR && status != 0)
 	{
-		printf("3\n");
 		// printf("operateur || j'exec cmd fork avec tree->right\n tree->right->commande = %s\n", tree->right_child->lst_exec->args[0]);
 		// printf("status = %d\n", status);
 		ft_tree_exec(tree->right_child, env);
 	}
 	else if (tree->type == EXEC_LIST)
 	{
-		printf("4\n");
 		// printf("jexec une liste chaine de commande\n");
 		// printf("status = %d\n", status);
 		ll_len = ft_linked_list_size(tree->lst_exec);
@@ -120,7 +115,6 @@ int	ft_tree_exec(t_tree *tree, char ***env)
 		tmp_lst_exec = tree->lst_exec;
 		if (ll_len == 1 && ft_is_builtin(tree->lst_exec->args[0]) == 1)
 		{
-			printf("dans builtin");
 			status = ft_find_builtin(tree->lst_exec->args[0], tree->lst_exec->args, env); //EXECUTE BUILTIN
 			// gestion memoire
 			free(tab_pid);
@@ -128,14 +122,12 @@ int	ft_tree_exec(t_tree *tree, char ***env)
 		}
 		while (tmp_lst_exec != NULL)
 		{
-			printf("boucle command\n");
 			ft_exec_cmd_fork(tree, env, tmp_pid);
 			tmp_lst_exec = tmp_lst_exec->next;
 			tmp_pid++;
 		}
 		// printf("ll_len = %d\n", ll_len);
 		i = 0;
-		printf("fin boucle commande\n");
 		while (ll_len > 0)
 		{
 			waitpid(tab_pid[i], &status, 0);
@@ -143,12 +135,15 @@ int	ft_tree_exec(t_tree *tree, char ***env)
 			ll_len--;
 			i++;
 		}
-		printf("5\n");
 		free(tab_pid);
 	}
 	// guette les free
 	if (WIFEXITED(status))
+	{
+		printf("exist status du fork = %d\n", WEXITSTATUS(status));
 		return(WEXITSTATUS(status));
-	return (0);
+		
+	}
+	return (WEXITSTATUS(status));
 }
 // mettre le retour de cette valeur dans une variable et retourner la derniere
