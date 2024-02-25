@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:42:46 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/19 19:29:02 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/23 16:18:42 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	ft_change_PWD_OLD_PWD(char *current_path, char *new_path, char ***env)
 		export_name_new = ft_str_dup_env("PWD=", export_name_new);
 		export_value_new = ft_str_dup_env(new_path, export_value_new);
 		export_str_new = ft_str_join_export_name_with_equal_value(export_name_new, export_value_new);
-		ft_export(env, export_str_new);
+		ft_export2(env, export_str_new);
 		free(export_str_new);
 		check = 1;
 	}
@@ -57,16 +57,11 @@ void	ft_change_PWD_OLD_PWD(char *current_path, char *new_path, char ***env)
 		export_value_old_pwd = ft_str_dup_env(current_path, export_value_old_pwd);
 		export_str_old_pwd = ft_str_join_export_name_with_equal_value(export_name_old_pwd, export_value_old_pwd);
 		if (check == 1)
-		{
-			ft_export(env, export_str_old_pwd);
-		}
+			ft_export2(env, export_str_old_pwd);
 		else
-		{
-			ft_export(env, export_str_old_pwd);
-		}
+			ft_export2(env, export_str_old_pwd);
 		free(export_str_old_pwd);
 	}
-	// free_tab_tab(*env);
 	return ;
 }
 
@@ -115,9 +110,41 @@ int	ft_cdpath(char **pathtab)
 	return (-1);
 }
 
+// bash: cd: toto: No such file or directory
+
+int	ft_msg_err_chdir(char *str)
+{
+	char	*first_part;
+	char	*second_part;
+	char	*err_msg;
+
+	first_part = ft_strjoin_wihtout_free("bash: cd: ", str);
+	if (!first_part)
+		return (ERROR_MALLOC);
+	second_part = ft_strjoin_wihtout_free(": No such", " file or directory\n");
+	if (!first_part)
+		return (ERROR_MALLOC);
+	err_msg = ft_strjoin_wihtout_free(first_part, second_part);
+	if (!first_part)
+		return (ERROR_MALLOC);
+	ft_putstr_fd(err_msg, 2);
+	free(first_part);
+	free(second_part);
+	free(err_msg);
+	free(str);
+	return (0);
+}
+
+ // fais le messge d'erreur avec putstr fd (regarde google)
+// sh: 0 : getcwd() failed: No such file or directory
+void	ft_msg_err_getcwd(void)
+{
+	ft_putstr_fd("sh: 0 : getcwd() failed: No such file or directory\n", 2);
+}
+
 // trouver le moyen de changer le old path et le path et de faire un cd que ca marche ou non
 // err de parising $? = 2
-void	ft_cd(char **path_tab, char ***env)
+int	ft_cd(char **path_tab, char ***env)
 {
 	char	current_path[PATH_MAX + 1];
 	char	new_path[PATH_MAX + 1];
@@ -128,100 +155,101 @@ void	ft_cd(char **path_tab, char ***env)
 	
 	if (getcwd(current_path, PATH_MAX) == NULL)
 	{
-		printf("Error (%d): %s\n", errno, strerror(errno));
+		ft_msg_err_getcwd();
+		return (2);
 		// gestion
 	}
-	printf("current path = %s\n", current_path);
 	if (!path_tab[1] || ft_strcmp(path_tab[1], "~") == 0) // attention cd et cd ~ ne sont pas identique
 	{
-		printf("cd vers le home\n");
-		if (getcwd(new_path, PATH_MAX) == NULL)
-		{
-			printf("Error (%d): %s\n", errno, strerror(errno));
-			// gestion
-		}
 		oldpwd = getenv("HOME");
 		if (!oldpwd)
 		{
-			printf("Error OLDPWD does not exist\n"); // a tester et a verfier ce cas
-			g_exit_status = 2;
-			return ;
+			ft_putstr_fd("bash: cd: HOME not set\n", 2); // a tester et a verfier ce cas
+			return (2);
 		}
 		if (chdir(oldpwd) != 0)
 		{
-			printf("2\n");
+			ft_msg_err_chdir(oldpwd);
 			free(oldpwd);
-			printf("Error (%d): %s\n", errno, strerror(errno));
-			g_exit_status = 2;
-			return ;
+			return (1);
 		}
-		printf("1\n");
+		if (getcwd(new_path, PATH_MAX) == NULL)
+		{
+			ft_msg_err_getcwd();
+			free(oldpwd);
+			return (1);
+			// gestion
+		}
 		ft_change_PWD_OLD_PWD(current_path, new_path, env);
-		return ;
+		return (0);
 	}
 	len_path_tab = ft_len_tab_tab(path_tab);
 	if (len_path_tab > 2)
 	{
-		printf("bash: cd: too many arguments\n");
-		g_exit_status = 1;
-		return ;
+		ft_putstr_fd("bash: cd: too many arguments\n", 2);
+		return (1);
 		// gestion d'erreur
 	}
-	// free ancien env;
-	// faire de new_env une variable de structure et return le bon status
 	if (ft_strcmp(path_tab[1], "-") == 0)
 	{
 		oldpwd = getenv("OLDPWD");
 		if (!oldpwd)
 		{
-			printf("Error OLDPWD does not exist\n"); // a tester et a verfier ce cas
-			g_exit_status = 2;
-			return ;
+			ft_putstr_fd("bash: cd: OLDPWD not set\n", 2); // a tester et a verfier ce cas
+			return (1);
 		}
 		if (chdir(oldpwd) != 0)
 		{
+			if (ft_msg_err_chdir(oldpwd) == ERROR_MALLOC)
+				return (ERROR_MALLOC);// gestion gc
 			free(oldpwd);
-			printf("Error (%d): %s\n", errno, strerror(errno));
-			g_exit_status = 2;
-			return ;
+			return (1);
 		}
 		if (getcwd(new_path, PATH_MAX) == NULL)
 		{
-			printf("Error (%d): %s\n", errno, strerror(errno));
 			free (oldpwd);
+			ft_msg_err_getcwd();
+			return (1);
 			// gestion
 		}
-		printf("new path = %s\n", new_path);
+		printf("%s\n", new_path);
 		ft_change_PWD_OLD_PWD(current_path, new_path, env);
-		g_exit_status = 0; // si sucess du cd sinon 1 (mssg d'err) = bash: cd: OLDPWD not set
-		return ;
+		return (0);
 	}
 	// tester avec cdpath si cd path existe (fonction comme le test avec access)
 	if (is_export_name_in_env(*env, "CDPATH") != -1)
 	{
-		printf("1\n");
 		if (ft_cdpath(path_tab) == 0)
 		{
 			if (getcwd(new_path, PATH_MAX) != NULL)
+			{
 				ft_change_PWD_OLD_PWD(current_path, new_path, env);
-		printf("2\n");
+				return (0);
+			}
+			else
+			{
+				ft_msg_err_getcwd();
+				return (1);
+			}
 		}
+		else
+			return (1);
 	}
 	if (chdir(path_tab[1]) != 0)
 	{
-		printf("Erreur (%d): %s\n", errno, strerror(errno));
-		g_exit_status = 1;
-		return ;
+		if (ft_msg_err_chdir(path_tab[1]) == ERROR_MALLOC)
+			return (ERROR_MALLOC);
+		return (1);
 		// gestion d'erreur
 	}
 	if (getcwd(new_path, PATH_MAX) == NULL)
 	{
-		printf("Error (%d): %s\n", errno, strerror(errno));
+		ft_msg_err_getcwd();
+		return (1);
 		// gestion
 	}
-	g_exit_status = 0;
-	printf("new path = %s\n", new_path);
 	ft_change_PWD_OLD_PWD(current_path, new_path, env);
+	return (0);
 }
 
 // sur les return de cd, il faut return le nouvelle env avec pwd et old pwd modifie

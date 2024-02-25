@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utils_6.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 22:58:50 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/02 23:22:51 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/25 19:38:06 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,15 @@ void	ft_print_tree(t_tree *tree)
 		printf("OR\n");
 	}
 	if (tree->left_child != NULL)
+	{
+		printf("left child\n");
 		ft_print_tree(tree->left_child);
+	}
 	if (tree->right_child != NULL)
+	{
+		printf("right child\n");
 		ft_print_tree(tree->right_child);
+	}
 	return ;
 }
 

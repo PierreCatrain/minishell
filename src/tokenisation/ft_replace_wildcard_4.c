@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_replace_wildcard_4.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 22:09:52 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/02 22:17:52 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/22 13:10:56 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*ft_strjoin_1_malloc(char *str1, char *str2)
 		return (free(str1), NULL);
 	i = -1;
 	while (str1[++i])
-	join[i] = str1[i];
+		join[i] = str1[i];
 	j = -1;
 	while (str2[++j])
 		join[i + j] = str2[j];

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+         #
+#    By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/11 18:47:20 by picatrai          #+#    #+#              #
-#    Updated: 2024/02/18 18:54:04 by lgarfi           ###   ########.fr        #
+#    Updated: 2024/02/25 23:22:33 by picatrai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,6 +66,20 @@ all: $(NAME)
 $(NAME):  $(OBJ)
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(RFLAGS)
 	@echo "\n\033[1;33mAll objects have been created\033[0m"
+	@clear
+	@./minishell
+
+valgrind:  $(OBJ)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(RFLAGS)
+	@echo "\n\033[1;33mAll objects have been created\033[0m"
+	@clear
+	@valgrind --trace-children=yes --leak-check=full --show-leak-kinds=all --suppressions=supp.supp ./minishell
+
+env less:  $(OBJ)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(RFLAGS)
+	@echo "\n\033[1;33mAll objects have been created\033[0m"
+	@clear
+	@env -i ./minishell
 
 obj_dir_create:
 	@if [ ! -d "./obj" ]; then\

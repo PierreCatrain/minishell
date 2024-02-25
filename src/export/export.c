@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 22:51:52 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/19 19:14:50 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/24 17:53:48 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -574,9 +574,9 @@ int ft_realloc_env(char ***env, int size)
 
 	cp_env = dup_env(*env);
 	free_tab_tab(*env);
-	*env = (char **) malloc (sizeof(char *) * (ft_len_tab_tab(cp_env) + size + 1));
+	*env = (char **) malloc (sizeof(char *) * (ft_len_tab_tab(cp_env) + size)); // + 1 ?, NULL est deja mit lorsque j'apelle realloc
 	if ((*env) == NULL)
-		return (-1);
+		return (ERROR_MALLOC);
 	// gestion d'erreur;
 	i = 0;
 	while (cp_env[i])
@@ -589,29 +589,26 @@ int ft_realloc_env(char ***env, int size)
 }
 
 // faire de new env un valeur 
-void	ft_export(char ***env, char *export_str)
+int	ft_export2(char ***env, char *export_str)
 {
 	char	*export = NULL;
 	int		i;
 	int		empty;
 
-	if (!export_str) // tableau de tableau uniquement
-	{
-		ft_print_env_ascii_order(*env);
-		g_exit_status = 0;
-		exit (0); // gestion d'erreur
-	}
+
+	printf("passe pas\n");
 	if (export_str[0] == '=' || !ft_check_export_name(export_str))
 	{
 		printf("bash: export:= `%s': not a valid identifier\n", export_str);
-		exit (2);
+		return (2);
 		// gestion d'erreur
 	}
 	if (!ft_export_name(export_str, &export) || !ft_is_ascii(export_str[0]))
 	{
+		
 		printf("export:= not valid in this context: %s\n", export);
 		free(export);
-		exit (2);
+		return (2);
 	}
 	if (!check_after_equal(export))
 	{
@@ -627,15 +624,37 @@ void	ft_export(char ***env, char *export_str)
 		ft_change_export(env, export);
 		{
 			free(export);
-			return ;
+			return (0);
 		}
 	}
 	i = ft_realloc_env(env, 1);
 	(*env)[i] = ft_str_dup_env(export, (*env)[i]);
 	(*env)[i + 1] = NULL;
 	free(export);
-	g_exit_status = 0;
+	return(0);
 	// return ;
+}
+
+int	ft_export(char ***env, char **arg, int free)
+{
+	int	i;
+	int	status;
+
+	i = 1;
+	status = 0;
+	if (!arg[1])
+	{
+		ft_print_env_ascii_order(*env);;
+		return (0); // gestion d'erreur
+	}
+	while (arg[i])
+	{
+		status = ft_export2(env, arg[i]);
+		i++;
+	}
+	if (free)
+		free_tab_tab(arg);
+	return (status);
 }
 
 // ajouter l'export de plusieur choix possible export a=qwer b=qwer ... (voir sil y a des cas d'erreurs)

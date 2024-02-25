@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/20 02:13:19 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/24 17:12:06 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@
 # include <linux/limits.h>
 # include <sys/wait.h>
 # include <signal.h>
-
-extern long long int g_exit_status;
 
 # define SUCCESS 0
 # define ERROR_ARGC_ENVP 1
@@ -51,6 +49,8 @@ extern long long int g_exit_status;
 # define ADD 0
 # define DONT_ADD 1
 
+extern int	g_exit_status;
+
 enum e_token_type
 {
     TEXT = 0,
@@ -70,6 +70,16 @@ enum e_token_type
     CMD,
     ARGS,
 };
+
+typedef struct s_exec
+{
+    char    **env;
+    int     *tab_pid;
+    char    **cmd;
+    char    *cmd_path;
+    char    **path_cmd_split;
+    char    **err_msg;
+} t_exec;
 
 enum e_tree_type
 {
@@ -94,6 +104,7 @@ typedef struct s_tree // arbre binaire
     struct s_tree *left_child;
     struct s_tree *right_child;
     t_lst_exec *lst_exec;
+    t_exec  *exec;
 } t_tree;
 
 typedef struct s_token
@@ -355,6 +366,7 @@ int is_input_only_whitespace(char *str);
 
 char	**ft_split(char *s, char c);
 char	*ft_strjoin_path(char *s1, char *s2);
+char	*ft_strjoin_wihtout_free(char *s1, char *s2);
 
 //ft_utils_6.c
 void    ft_print_tree(t_tree *tree);
@@ -381,6 +393,14 @@ void free_tokenisation_1(char *input, t_token **token);
 void free_tokenisation_2(t_token **token, t_data_parse *data_parse);
 void    free_2d(char **str);
 void ft_print_error_malloc(void);
+
+// # ====================================================== #
+// |														|
+// |					ALLOC								|
+// |														|
+// # ====================================================== #
+
+int ft_realloc_env(char ***env, int size);
 
 //free_2.c
 void    free_and_close_tree(t_tree *tree);
@@ -424,8 +444,8 @@ char	**dup_env(char **env);
 char	**dup_env_ascii_order(char **env);
 void    ft_change_export(char ***env, char *str);
 
-void	ft_export(char ***env, char *export_str);
-
+int	ft_export2(char ***env, char *export_str);
+int ft_export(char ***env, char **arg, int free);
 
 // # ====================================================== #
 // |														|
@@ -435,8 +455,8 @@ void	ft_export(char ***env, char *export_str);
 
 int		ft_unset_is_in_env(char **env, char *unset_str);
 int		ft_find_unset_index(char **env, char *unset_str);
-char	**ft_copy_env_exept_unset(char **env, int unset_index);
-void    ft_unset(char ***env, char *unset_str);
+int 	ft_copy_env_exept_unset(char **env, int unset_index);
+int     ft_unset(char ***env, char *unset_str);
 
 // # ====================================================== #
 // |														|
@@ -444,7 +464,7 @@ void    ft_unset(char ***env, char *unset_str);
 // |														|
 // # ====================================================== #
 
-void    ft_cd(char **path_tab, char ***env);
+int     ft_cd(char **path_tab, char ***env);
 char	*ft_str_join_export_name_with_equal_value(char *s1, char *s2);
 void    ft_change_PWD_OLD_PWD(char *current_path, char *new_path, char ***env);
 int     is_export_name_in_env(char **env, char *str);
@@ -463,7 +483,7 @@ int		ft_echo(char **tab);
 // |														|
 // # ====================================================== #
 
-void	ft_pwd(char **tab);
+int	ft_pwd(char **tab);
 
 // # ====================================================== #
 // |														|
@@ -479,7 +499,7 @@ int	ft_exit(char **arg);
 // |														|
 // # ====================================================== #
 
-void	ft_env(char **env);
+int	ft_env(char **env);
 
 // # ====================================================== #
 // |														|
@@ -487,11 +507,23 @@ void	ft_env(char **env);
 // |														|
 // # ====================================================== #
 
+char	**ft_get_path_cmd(void);
+char	*ft_get_err_msg(char *cmd, char *msg);
+int 	ft_is_builtin(char *cmd);
 int 	ft_find_builtin(char *cmd, char **cmd_tab, char ***env);
-int 	ft_exec_cmd_fork(t_tree *tree, char ***env);
-int 	find_cmd(char ***env, char **cmd);
-void	ft_tree_exec(t_tree *tree, char ***env);
+int 	ft_check_path_cmd(char **env, char **cmd);
+int 	ft_exec_cmd_fork(t_tree *tree, char ***env, int *tab_pid);
+int 	find_cmd(char ***env, char **arg);
+int 	ft_tree_exec(t_tree *tree, char ***env);
 
 
+// # ====================================================== #
+// |														|
+// |					  ERROR								|
+// |														|
+// # ====================================================== #
+
+void	ft_msg_err_getcwd(void);
+int	    ft_msg_err_chdir(char *str);
 
 #endif
