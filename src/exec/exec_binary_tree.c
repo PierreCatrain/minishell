@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 01:19:42 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/22 19:27:47 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/25 23:02:09 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,117 +73,78 @@ char	*ft_strjoin_wihtout_free(char *s1, char *s2)
 	
 }
 
-char	*ft_get_err_msg(char *cmd, char *msg)
-{
-	char	*err_msg = NULL;
-	char	*cmd_mall = NULL;
-	char	*err_msg_mall = NULL;
-
-	err_msg = (char *) malloc(sizeof(char) * (ft_strlen(cmd) + ft_strlen(msg) + 1));
-	// ajouter a gc si err del gc exit
-	cmd_mall = ft_str_dup_env(cmd, cmd_mall);
-	err_msg_mall = ft_str_dup_env(msg, err_msg_mall);
-	err_msg = ft_strjoin_wihtout_free(cmd_mall, err_msg_mall);
-	return (free(err_msg_mall), err_msg);
-}
-
-int	ft_test_err_msg(t_tree *tree, char *err_msg)
-{
-	char	*cmd_path;
-	char	**path_split;
-	char	**cmd;
-
-	cmd = new_args(tree->lst_exec->args);
-	if (!cmd)
-		return (ERROR_MALLOC);
-	path_split = ft_get_path_cmd(); // marche pas
-	if (!path_split)
-		return (ERROR_MALLOC);
-	while (*path_split)
-	{
-		cmd_path = ft_strjoin_path(*path_split, cmd[0]);
-		if (cmd_path == NULL)
-		{
-			return (ERROR_MALLOC);
-			// gestion d'erreur
-		}
-		if (!access(cmd_path, F_OK | X_OK))
-		{
-			free(cmd_path);
-			free_tab_tab(cmd);
-			path_split++;
-			ft_free_tab_tab_incremented(path_split);
-			err_msg = ft_strdup("n");
-			return (0);
-		}
-		free (cmd_path);
-		path_split++;
-	}
-	err_msg = ft_strjoin_wihtout_free(cmd[0], ": command not found\n");
-	free_tab_tab(cmd);
-	return (1);
-}
-
-void	ft_test_all_err_msg(t_tree *tree, char **tab_err_msg, int nb_of_cmd)
-{
-	int	i;
-	t_tree	*tmp;
-
-	i = 0;
-	tmp = tree;
-	while (i < nb_of_cmd)
-	{
-		ft_test_err_msg(tmp, tab_err_msg[i]);
-		i++;
-		tmp->lst_exec = tmp->lst_exec->next;
-	}
-}
-
 int	ft_tree_exec(t_tree *tree, char ***env)
 {
 	t_tree	*tmp_tree = NULL;
-	char	**arg;
+	t_lst_exec	*tmp_lst_exec;
 	int		status;
 	int		ll_len;
 	int		*tab_pid;
 	int		*tmp_pid;
 	int		i;
-	
-	ll_len = ft_linked_list_size(tree->lst_exec);
-	arg = new_args(tree->lst_exec->args);
-	tab_pid = (int *) malloc (sizeof(int) * ll_len);
+
+	status = 0;
+	tab_pid = NULL;
 	// ajouter a gc si err del gc exit
-	tmp_pid = tab_pid;
+	printf("enfant de gauche n'existe pas\n");
 	if (tree->left_child)
+	{	
+		printf("1\n");
+		// printf("je descend sur l'enfant de gauche\n");
+		// printf("status = %d\n", status);
 		ft_tree_exec(tree->left_child, env);
-	if (tree->type == OPPERATOR_AND && g_exit_status == 0)
-		ft_exec_cmd_fork(tree, env, tmp_pid++);// tree-> right child
-	else if (tree->type == OPPERATOR_OR && g_exit_status != 0)
-		ft_exec_cmd_fork(tree, env, tmp_pid++);
+	}
+	if (tree->type == OPPERATOR_AND && status == 0)
+	{
+		printf("2\n");
+		// printf("operateur && j'exec cmd fork avec tree->right\n tree->right->commande = %s\n", tree->right_child->lst_exec->args[0]);
+		// printf("status = %d\n", status);
+		ft_tree_exec(tree->right_child, env);// tree-> right child
+	}
+	else if (tree->type == OPPERATOR_OR && status != 0)
+	{
+		printf("3\n");
+		// printf("operateur || j'exec cmd fork avec tree->right\n tree->right->commande = %s\n", tree->right_child->lst_exec->args[0]);
+		// printf("status = %d\n", status);
+		ft_tree_exec(tree->right_child, env);
+	}
 	else if (tree->type == EXEC_LIST)
 	{
+		printf("4\n");
+		// printf("jexec une liste chaine de commande\n");
+		// printf("status = %d\n", status);
+		ll_len = ft_linked_list_size(tree->lst_exec);
+		tab_pid = (int *) malloc (sizeof(int) * ll_len);
+		tmp_pid = tab_pid;
 		tmp_tree = tree;
-		i = 0;
-		while (tree->lst_exec != NULL)
+		tmp_lst_exec = tree->lst_exec;
+		if (ll_len == 1 && ft_is_builtin(tree->lst_exec->args[0]) == 1)
 		{
-			if (ll_len == 1 && ft_is_builtin(arg[0]) == 1)
-			{
-				status = ft_find_builtin(arg[0], arg, env);
-				// gestion memoire
-				return (status);
-			}
+			printf("dans builtin");
+			status = ft_find_builtin(tree->lst_exec->args[0], tree->lst_exec->args, env); //EXECUTE BUILTIN
+			// gestion memoire
+			free(tab_pid);
+			return (status);
+		}
+		while (tmp_lst_exec != NULL)
+		{
+			printf("boucle command\n");
 			ft_exec_cmd_fork(tree, env, tmp_pid);
-			tree->lst_exec = tree->lst_exec->next;
+			tmp_lst_exec = tmp_lst_exec->next;
 			tmp_pid++;
+		}
+		// printf("ll_len = %d\n", ll_len);
+		i = 0;
+		printf("fin boucle commande\n");
+		while (ll_len > 0)
+		{
+			waitpid(tab_pid[i], &status, 0);
+			// printf("tab_pid[%d] = %d\n", i, tab_pid[i]);
+			ll_len--;
 			i++;
 		}
-	}
-	i = 0;
-	while (ll_len > 0)
-	{
-		waitpid(tab_pid[i], &status, 0);
-		ll_len--;
-		i++;
+		printf("5\n");
+		free(tab_pid);
 	}
 	// guette les free
 	if (WIFEXITED(status))

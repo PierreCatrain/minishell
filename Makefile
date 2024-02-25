@@ -6,7 +6,7 @@
 #    By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/11 18:47:20 by picatrai          #+#    #+#              #
-#    Updated: 2024/02/22 13:57:51 by lgarfi           ###   ########.fr        #
+#    Updated: 2024/02/25 21:02:11 by lgarfi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,7 +58,6 @@ dir_in_src = $(notdir $(shell find ./src/* -type d))
 #  # ====================================================== #
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c $(header) | obj_dir_create
-	clear
 	$(CC) $(CFLAGS) -c -o $@ $< $(INCLUDE)
 	@echo "\033[1;32m COMPILED \033[1;37m->\033[4;32m $< \033[0m"
 
@@ -67,7 +66,20 @@ all: $(NAME)
 $(NAME):  $(OBJ)
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(RFLAGS)
 	@echo "\n\033[1;33mAll objects have been created\033[0m"
+	@clear
 	@./minishell
+
+valgrind:  $(OBJ)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(RFLAGS)
+	@echo "\n\033[1;33mAll objects have been created\033[0m"
+	@clear
+	@valgrind --trace-children=yes --leak-check=full --show-leak-kinds=all --suppressions=supp.supp ./minishell
+
+env less:  $(OBJ)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(RFLAGS)
+	@echo "\n\033[1;33mAll objects have been created\033[0m"
+	@clear
+	@env -i ./minishell
 
 obj_dir_create:
 	@if [ ! -d "./obj" ]; then\

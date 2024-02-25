@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:42:46 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/22 19:17:15 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/23 16:18:42 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	ft_change_PWD_OLD_PWD(char *current_path, char *new_path, char ***env)
 		export_name_new = ft_str_dup_env("PWD=", export_name_new);
 		export_value_new = ft_str_dup_env(new_path, export_value_new);
 		export_str_new = ft_str_join_export_name_with_equal_value(export_name_new, export_value_new);
-		ft_export(env, export_str_new);
+		ft_export2(env, export_str_new);
 		free(export_str_new);
 		check = 1;
 	}
@@ -57,16 +57,11 @@ void	ft_change_PWD_OLD_PWD(char *current_path, char *new_path, char ***env)
 		export_value_old_pwd = ft_str_dup_env(current_path, export_value_old_pwd);
 		export_str_old_pwd = ft_str_join_export_name_with_equal_value(export_name_old_pwd, export_value_old_pwd);
 		if (check == 1)
-		{
-			ft_export(env, export_str_old_pwd);
-		}
+			ft_export2(env, export_str_old_pwd);
 		else
-		{
-			ft_export(env, export_str_old_pwd);
-		}
+			ft_export2(env, export_str_old_pwd);
 		free(export_str_old_pwd);
 	}
-	// free_tab_tab(*env);
 	return ;
 }
 
@@ -139,7 +134,7 @@ int	ft_msg_err_chdir(char *str)
 	free(str);
 	return (0);
 }
- 
+
  // fais le messge d'erreur avec putstr fd (regarde google)
 // sh: 0 : getcwd() failed: No such file or directory
 void	ft_msg_err_getcwd(void)
@@ -160,19 +155,12 @@ int	ft_cd(char **path_tab, char ***env)
 	
 	if (getcwd(current_path, PATH_MAX) == NULL)
 	{
-		printf("Error (%d): %s\n", errno, strerror(errno));
+		ft_msg_err_getcwd();
 		return (2);
 		// gestion
 	}
-	printf("current path = %s\n", current_path);
 	if (!path_tab[1] || ft_strcmp(path_tab[1], "~") == 0) // attention cd et cd ~ ne sont pas identique
 	{
-		printf("cd vers le home\n");
-		if (getcwd(new_path, PATH_MAX) == NULL)
-		{
-			printf("Error (%d): %s\n", errno, strerror(errno));
-			// gestion
-		}
 		oldpwd = getenv("HOME");
 		if (!oldpwd)
 		{
@@ -184,6 +172,13 @@ int	ft_cd(char **path_tab, char ***env)
 			ft_msg_err_chdir(oldpwd);
 			free(oldpwd);
 			return (1);
+		}
+		if (getcwd(new_path, PATH_MAX) == NULL)
+		{
+			ft_msg_err_getcwd();
+			free(oldpwd);
+			return (1);
+			// gestion
 		}
 		ft_change_PWD_OLD_PWD(current_path, new_path, env);
 		return (0);
@@ -217,7 +212,7 @@ int	ft_cd(char **path_tab, char ***env)
 			return (1);
 			// gestion
 		}
-		printf("new path = %s\n", new_path);
+		printf("%s\n", new_path);
 		ft_change_PWD_OLD_PWD(current_path, new_path, env);
 		return (0);
 	}

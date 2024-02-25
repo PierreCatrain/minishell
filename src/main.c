@@ -6,13 +6,13 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:52:38 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/22 19:28:27 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/25 19:00:39 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-long long int	g_exit_status;
+int	g_exit_status;
 
 int	only_one_cmd(t_tree *tree, char **argv, char ***env)
 {
@@ -41,8 +41,8 @@ int	main(int argc, char **argv, char **envp)
 	exit_status = 0;
 	if (ft_set_sig() == ERROR)
 		return (ERROR);
-	if (ft_check_argc_envp(argc, argv) == ERROR_ARGC_ENVP)
-		return (ERROR_ARGC_ENVP);
+	// if (ft_check_argc_envp(argc, argv) == ERROR_ARGC_ENVP)
+	// 	return (ERROR_ARGC_ENVP);
 	env = dup_env(envp);// peut etre le faire depuis l'exec
 	if (argc == 3)
 		return (only_one_cmd(tree, argv, &env));
@@ -64,10 +64,11 @@ int	main(int argc, char **argv, char **envp)
 		if (ft_parse(&tree, &data_parse) == GOOD_INPUT)
 		{
 			exit_status = ft_tree_exec(tree, &env);
+			printf("exit status = %d\n", exit_status);
 			free_and_close_tree(tree);
 		}
-		printf("exit status = %d\n", exit_status);
 	}
+	// printf("exit status = %d\n", exit_status);
 	return (exit_status);
 }
 

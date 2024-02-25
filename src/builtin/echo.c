@@ -6,42 +6,50 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 22:17:53 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/22 01:06:58 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/23 14:35:38 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
-// echo affiche un retour a la ligne
-// echo -n affiche sans le retour a la ligne final
+void	ft_echo2(char **tab, int i, int param)
+{
+	if (tab[2] != NULL)
+	{
+		while (tab[i + 1])
+		{
+			printf("%s ", tab[i]);
+			i++;
+		}
+	}
+	if (tab[2] == NULL && ft_strcmp(tab[1], "-n") == 0)
+		return ;
+	printf("%s", tab[i]);
+	if (param == 0)
+		printf("\n");
+}
 
 int	ft_echo(char **tab)
 {
-	int param;
+	int	param;
 	int	i;
 
+	print_tab_tab(tab);
 	param = 0;
 	i = 1;
 	if (tab[1] == NULL)
 	{
 		printf("\n");
-		return (0); // gestion d'erreur
+		free_tab_tab(tab);
+		return (0);
 	}
 	if (ft_strcmp(tab[1], "-n") == 0)
 	{
 		i = 2;
 		param = 1;
 	}
-	while (tab[i + 1])
-	{
-		printf("tab[%d] = %s ", i, tab[i]);
-		i++;
-	}
-	printf("%s", tab[i]);
-	if (param == 0)
-	{
-		printf("\n");
-	}
+	ft_echo2(tab, i, param);
+	free_tab_tab(tab);
 	return (0);
 }
 

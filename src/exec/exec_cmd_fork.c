@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 17:38:07 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/22 19:30:21 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/25 23:18:35 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	ft_exec_cmd_fork(t_tree *tree, char ***env, int *tab_pid)
 	pid_t	pid;
 	char	**arg;
 
+	// printf("dans cmd fork fd in = %d fd out = %d\n", tree->lst_exec->fd_in, tree->lst_exec->fd_out);
 	if (tree->lst_exec->fd_in == -1 || tree->lst_exec->fd_out == -1)
 	{
 		// gestion d'erreur
@@ -29,9 +30,8 @@ int	ft_exec_cmd_fork(t_tree *tree, char ***env, int *tab_pid)
 	pid = fork();
 	if (pid == -1)
 	{
-		printf("bash: err:%d (fork)", errno);
-		return (2);
-		// return (EXIT_FAILURE); pareil
+		printf("%s\n",  strerror(errno));
+		return (EXIT_FAILURE);
 		// gestion d'err
 	}
 	if (pid == 0)
@@ -40,6 +40,7 @@ int	ft_exec_cmd_fork(t_tree *tree, char ***env, int *tab_pid)
 		dup2(tree->lst_exec->fd_in, 0);
 		dup2(tree->lst_exec->fd_out, 1);
 		free_and_close_tree(tree);
+		free(tab_pid);
 		find_cmd(env, arg);
 	}
 	else
@@ -49,6 +50,7 @@ int	ft_exec_cmd_fork(t_tree *tree, char ***env, int *tab_pid)
 		if (tree->lst_exec->fd_in > 2)
 			close(tree->lst_exec->fd_in);
 		(*tab_pid) = pid;
+	
 	}
 	return (2);
 }

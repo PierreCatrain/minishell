@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 10:10:03 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/22 19:29:35 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/25 18:49:51 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,16 @@ int	ft_check_path_cmd(char **env, char **cmd)
 		if (cmd_path == NULL)
 		{
 			return (1);
-			// gestion d'erreur
 		}
 		if (!access(cmd_path, F_OK | X_OK))
 		{
 			if (execve(cmd_path, cmd, env) == -1)
-				return (2);
+			{
+				printf("bash: %s: cannot execute binary file: %s\n", cmd_path, strerror(errno));
+				free(cmd_path);
+				free_tab_tab(cmd);
+				exit (126);
+			}
 		}
 		free (cmd_path);
 	}
@@ -66,21 +70,25 @@ int	ft_check_path_cmd(char **env, char **cmd)
 
 int	find_cmd(char ***env, char **cmd)
 {
-	if (ft_find_builtin(cmd[0], cmd, env) == 1)// access chemin absolue
-		return (1);
-	if (access(cmd[0], F_OK | X_OK) == 0) // mettre les droits d'exec et de lecture
-		execve(cmd[0], cmd, *env);
-	ft_check_path_cmd(*env, cmd);
+	int	status;
+
+	status = 0;
+	if (ft_is_builtin(cmd[0]))
+	{
+		status = ft_find_builtin(cmd[0], cmd, env);// access chemin absolue //EXECUTE BUILTIN
+		exit(status);
+	}
+	else
+	{
+		if (access(cmd[0], F_OK | X_OK) == 0) // mettre les droits d'exec et de lecture
+		{
+			if (execve(cmd[0], cmd, *env) == -1)
+			{
+				printf("bash: %s: cannot execute binary file: %s\n", cmd[0], strerror(errno));
+				exit (126);
+			}
+		}
+		ft_check_path_cmd(*env, cmd);
+	}
 	return (0);
 }
-
-// int	main(int ac, char **av, char **envp)
-// {
-// 	(void)ac;
-// 	(void)envp;
-	
-// 	char	*msg_err;
-
-// 	msg_err = ft_get_err_msg(av[1], ": command not found\n");
-// 	ft_putstr_fd(msg_err ,2);
-// }

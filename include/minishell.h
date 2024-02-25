@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/22 19:28:39 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/24 17:12:06 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@
 # include <linux/limits.h>
 # include <sys/wait.h>
 # include <signal.h>
-
-extern long long int g_exit_status;
 
 # define SUCCESS 0
 # define ERROR_ARGC_ENVP 1
@@ -50,6 +48,8 @@ extern long long int g_exit_status;
 # define YES 1
 # define ADD 0
 # define DONT_ADD 1
+
+extern int	g_exit_status;
 
 enum e_token_type
 {
@@ -394,6 +394,14 @@ void free_tokenisation_2(t_token **token, t_data_parse *data_parse);
 void    free_2d(char **str);
 void ft_print_error_malloc(void);
 
+// # ====================================================== #
+// |														|
+// |					ALLOC								|
+// |														|
+// # ====================================================== #
+
+int ft_realloc_env(char ***env, int size);
+
 //free_2.c
 void    free_and_close_tree(t_tree *tree);
 
@@ -436,8 +444,8 @@ char	**dup_env(char **env);
 char	**dup_env_ascii_order(char **env);
 void    ft_change_export(char ***env, char *str);
 
-int	ft_export(char ***env, char *export_str);
-
+int	ft_export2(char ***env, char *export_str);
+int ft_export(char ***env, char **arg, int free);
 
 // # ====================================================== #
 // |														|
@@ -447,8 +455,8 @@ int	ft_export(char ***env, char *export_str);
 
 int		ft_unset_is_in_env(char **env, char *unset_str);
 int		ft_find_unset_index(char **env, char *unset_str);
-char	**ft_copy_env_exept_unset(char **env, int unset_index);
-void    ft_unset(char ***env, char *unset_str);
+int 	ft_copy_env_exept_unset(char **env, int unset_index);
+int     ft_unset(char ***env, char *unset_str);
 
 // # ====================================================== #
 // |														|
@@ -475,7 +483,7 @@ int		ft_echo(char **tab);
 // |														|
 // # ====================================================== #
 
-void	ft_pwd(char **tab);
+int	ft_pwd(char **tab);
 
 // # ====================================================== #
 // |														|
@@ -491,7 +499,7 @@ int	ft_exit(char **arg);
 // |														|
 // # ====================================================== #
 
-void	ft_env(char **env);
+int	ft_env(char **env);
 
 // # ====================================================== #
 // |														|
