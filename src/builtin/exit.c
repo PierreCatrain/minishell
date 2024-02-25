@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 21:52:06 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/12 07:45:27 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/20 20:07:39 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	ft_exit(char **arg)
 	// long long int	exit_value;
 
 	printf("1\n");
-	if (arg[1] == NULL)
+	if (arg == NULL || arg[1] == NULL)
 		exit (0);
 	printf("2\n");
 	if (!ft_atoi(arg[1], &g_exit_status))

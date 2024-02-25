@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:52:38 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/20 01:48:20 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/21 00:20:48 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	main(int argc, char **argv, char **envp)
 	
 	tree = NULL;
 	g_exit_status = 0;
+	
 	if (ft_set_sig() == ERROR)
 		return (ERROR);
 	if (ft_check_argc_envp(argc, argv) == ERROR_ARGC_ENVP)
@@ -53,8 +54,8 @@ int	main(int argc, char **argv, char **envp)
 		tree = NULL;
 		if (data_parse.input == NULL)
 		{
-			ft_putstr_fd("exit\n", 1);
-			break ;
+			free_2d(env);
+			ft_exit(NULL);
 		}
 		if (is_input_only_whitespace(data_parse.input))
 			add_history(data_parse.input);
@@ -67,7 +68,8 @@ int	main(int argc, char **argv, char **envp)
 	return (SUCCESS);
 }
 
-//echo bonjour"v"sfa
+
+//cd En travaux/
 
 /*
 a faire
