@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 06:02:52 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/26 00:07:08 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/26 03:29:07 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int ft_set_sig(void)
 
 	s_int.sa_flags = 0;
 	s_quit.sa_flags = SA_RESTART;
-	
+
     s_int.sa_handler = &ft_display_new_prompt;
     s_quit.sa_handler = SIG_IGN;
 

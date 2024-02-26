@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 22:17:53 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/23 14:35:38 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/26 02:43:11 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	ft_echo(char **tab)
 	if (tab[1] == NULL)
 	{
 		printf("\n");
-		free_tab_tab(tab);
+		//free_tab_tab(tab);
 		return (0);
 	}
 	if (ft_strcmp(tab[1], "-n") == 0)
@@ -49,7 +49,7 @@ int	ft_echo(char **tab)
 		param = 1;
 	}
 	ft_echo2(tab, i, param);
-	free_tab_tab(tab);
+	// free_tab_tab(tab);
 	return (0);
 }
 

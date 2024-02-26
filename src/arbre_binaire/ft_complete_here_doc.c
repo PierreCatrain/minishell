@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 02:57:01 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/20 02:14:12 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/26 03:51:37 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ int ft_nb_here_doc(t_token *token)
 int ft_complete_here_doc(t_data_parse *data_parse, t_token *token)
 {
     int index;
+    //int tmp;
 
+    //tmp = g_exit_status;
+    //g_exit_status = -100;
     index = 0;
     data_parse->index_here_doc = ft_nb_here_doc(token) - 1;
     data_parse->array_here_doc = malloc (ft_nb_here_doc(token) * sizeof(int));
@@ -56,5 +59,6 @@ int ft_complete_here_doc(t_data_parse *data_parse, t_token *token)
         }
         token = token->next;
     }
+    //g_exit_status = tmp;
     return (SUCCESS);
 }
