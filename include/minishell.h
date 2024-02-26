@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/24 17:12:06 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/26 13:47:01 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -456,7 +456,7 @@ int ft_export(char ***env, char **arg, int free);
 int		ft_unset_is_in_env(char **env, char *unset_str);
 int		ft_find_unset_index(char **env, char *unset_str);
 int 	ft_copy_env_exept_unset(char **env, int unset_index);
-int     ft_unset(char ***env, char *unset_str);
+int     ft_unset(char ***env, char **cmd);
 
 // # ====================================================== #
 // |														|
@@ -512,9 +512,9 @@ char	*ft_get_err_msg(char *cmd, char *msg);
 int 	ft_is_builtin(char *cmd);
 int 	ft_find_builtin(char *cmd, char **cmd_tab, char ***env);
 int 	ft_check_path_cmd(char **env, char **cmd);
-int 	ft_exec_cmd_fork(t_tree *tree, char ***env, int *tab_pid);
+int 	ft_exec_cmd_fork(t_tree *tree, char ***env, char **arg);
 int 	find_cmd(char ***env, char **arg);
-int 	ft_tree_exec(t_tree *tree, char ***env);
+int 	ft_tree_exec(t_tree *tree, char ***env, int *status);
 
 
 // # ====================================================== #

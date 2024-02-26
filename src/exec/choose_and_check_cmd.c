@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 10:10:03 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/25 18:49:51 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/26 12:24:35 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,9 @@ int	ft_check_path_cmd(char **env, char **cmd)
 	msg_err = ft_strjoin_wihtout_free(cmd[0], ": command not found\n");
 	ft_putstr_fd(msg_err, 2);
 	free (msg_err);
+	free_tab_tab(cmd);
+	free_tab_tab(env);
+	free(path_split);
 	exit(127);
 }
 

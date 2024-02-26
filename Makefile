@@ -6,7 +6,7 @@
 #    By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/11 18:47:20 by picatrai          #+#    #+#              #
-#    Updated: 2024/02/25 21:02:11 by lgarfi           ###   ########.fr        #
+#    Updated: 2024/02/26 16:44:59 by lgarfi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -82,14 +82,14 @@ env less:  $(OBJ)
 	@env -i ./minishell
 
 obj_dir_create:
-	@if [ ! -d "./obj" ]; then\
-		mkdir -p obj;\
-	fi;\
-	for d in $(dir_in_src); do\
-		if [ ! -d ./obj/$$d ]; then\
-			mkdir -p ./obj/$$d/;\
-		fi;\
-	done;\
+	# @if [ ! -d "./obj" ]; then\
+	# 	mkdir -p obj;\
+	# fi;\
+	# for d in $(dir_in_src); do\
+	# 	if [ ! -d ./obj/$$d ]; then\
+	# 		mkdir -p ./obj/$$d/;\
+	# 	fi;\
+	# done;\
 
 clean:
 	rm -rf $(OBJ) ./obj

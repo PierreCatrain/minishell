@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signaux.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 06:02:52 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/20 02:20:52 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/26 03:39:40 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,20 @@
 void ft_display_new_prompt(int signal)
 {
     (void)signal;
-    write(1, "\n", 1);
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	rl_redisplay();
+	if (g_exit_status != -100)
+	{
+		printf("%d\n", g_exit_status);
+		printf("qwre\n");
+	    write(1, "\n", 1);
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+	}
+	else
+	{
+		printf("%d\n", g_exit_status);
+		printf("toto\n");
+	}
 }
 
 int ft_set_sig(void)

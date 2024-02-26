@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 17:38:07 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/25 23:18:35 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/26 14:42:03 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,22 @@
 // recois une liste chaine si la liste en plus grande que 1, alors il y a des pipes et donc faire 
 // la fonction qui
 
-int	ft_exec_cmd_fork(t_tree *tree, char ***env, int *tab_pid)
+int	ft_exec_cmd_fork(t_tree *tree, char ***env, char **args)
 {
 	pid_t	pid;
 	char	**arg;
+	int		tmp;
 
-	// printf("dans cmd fork fd in = %d fd out = %d\n", tree->lst_exec->fd_in, tree->lst_exec->fd_out);
 	if (tree->lst_exec->fd_in == -1 || tree->lst_exec->fd_out == -1)
 	{
 		// gestion d'erreur
 		return (2) ;
 		// return (EXIT_FAILURE); est ce que reurn un exit failure a une utilite ?
 	}
+	tmp = g_exit_status;
 	pid = fork();
 	if (pid == -1)
 	{
-		printf("%s\n",  strerror(errno));
 		return (EXIT_FAILURE);
 		// gestion d'err
 	}
@@ -40,19 +40,18 @@ int	ft_exec_cmd_fork(t_tree *tree, char ***env, int *tab_pid)
 		dup2(tree->lst_exec->fd_in, 0);
 		dup2(tree->lst_exec->fd_out, 1);
 		free_and_close_tree(tree);
-		free(tab_pid);
+		free_tab_tab(args);
 		find_cmd(env, arg);
 	}
 	else
 	{
+		g_exit_status = -100;
 		if (tree->lst_exec->fd_out > 2)
 			close(tree->lst_exec->fd_out);
 		if (tree->lst_exec->fd_in > 2)
 			close(tree->lst_exec->fd_in);
-		(*tab_pid) = pid;
-	
 	}
-	return (2);
+	return (tmp);
 }
 
 // int	main(int ac, char **av, char **env)
