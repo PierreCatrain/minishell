@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 01:19:42 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/26 16:53:35 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/26 17:16:02 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int	ft_tree_exec(t_tree *tree, char ***env, int *status)
 		}
 		while (tmp_tree->lst_exec != NULL)
 		{
-			ft_exec_cmd_fork(tmp_tree, env, arg);
+			 ft_exec_cmd_fork(tmp_tree, env, arg);
 			tmp_tree->lst_exec = tmp_tree->lst_exec->next;
 		}
 		free_tab_tab(arg);
