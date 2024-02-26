@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 02:23:35 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/20 02:12:11 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/26 03:49:10 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ char	*ft_here_doc(void)
 	char	*str;
 	char	*str_index;
 	int		index;
-
+	
 	str = ft_get_str("/tmp/.here_doc");
 	index = 1;
 	while (index <= 99999)

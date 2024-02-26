@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 00:58:07 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/20 01:51:36 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/26 01:32:24 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	ft_token_part_2(t_data_parse *data_parse, t_token **token)
 	data_parse->merge = 0;
 	if (data_parse->index != 0)
 	{
-		if (data_parse->input[data_parse->index - 1] != ' ')
+		if (data_parse->input[data_parse->index - 1] != ' ' && ((data_parse->input[data_parse->index - 1] != '\'' && data_parse->input[data_parse->index - 1] != '"') || data_parse->input[data_parse->index - 2] != ' '))
 			data_parse->merge = 1;
 	}
 	while (data_parse->double_quote_open == OPEN \

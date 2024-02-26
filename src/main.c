@@ -6,9 +6,10 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:52:38 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/26 11:13:32 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/26 16:54:02 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include <minishell.h>
 
@@ -54,6 +55,7 @@ int	main(int argc, char **argv, char **envp)
 		tree = NULL;
 		if (data_parse.input == NULL)
 		{
+			free(data_parse.input);
 			ft_putstr_fd("exit\n", 1);
 			return (0);
 		}

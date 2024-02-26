@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 04:13:45 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/11 05:14:58 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/26 00:26:29 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,15 @@ void	ft_exec_token_type_2(t_data_parse *data_parse, t_token *token)
 		if (data_parse->fd_in != 0 && data_parse->fd_in != -1)
 			close(data_parse->fd_in);
 		token = token->next;
-		data_parse->fd_in = open(token->str, O_RDONLY, 0644);
+		data_parse->fd_in = open(token->str, O_RDONLY);
 	}
 	else if (token->type == OUTFILE)
 	{
 		if (data_parse->fd_out != 1 && data_parse->fd_out != -1)
 			close(data_parse->fd_out);
 		token = token->next;
-		data_parse->fd_out = open(token->str, O_CREAT, O_WRONLY, O_TRUNC, 0644);
+		data_parse->fd_out = open(token->str, O_CREAT, O_WRONLY, O_TRUNC, 0777);
+		printf("debut %d\n", data_parse->fd_out);
 	}
 	else if (token->type == APPEND)
 	{

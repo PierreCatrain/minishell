@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 17:38:07 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/26 14:42:03 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/26 16:51:39 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int	ft_exec_cmd_fork(t_tree *tree, char ***env, char **args)
 	}
 	if (pid == 0)
 	{
+		// printf("fin %d\n", tree->lst_exec->fd_out);
+		// printf("qwer\n");
 		arg = new_args(tree->lst_exec->args); // a quoi ca sert ?
 		dup2(tree->lst_exec->fd_in, 0);
 		dup2(tree->lst_exec->fd_out, 1);

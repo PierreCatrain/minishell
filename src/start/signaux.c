@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 06:02:52 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/26 03:39:40 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/26 16:52:59 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int ft_set_sig(void)
 
 	s_int.sa_flags = 0;
 	s_quit.sa_flags = SA_RESTART;
-	
+
     s_int.sa_handler = &ft_display_new_prompt;
     s_quit.sa_handler = SIG_IGN;
 
