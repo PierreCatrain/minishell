@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 01:19:42 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/26 17:16:02 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/26 17:30:01 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,10 @@ int	ft_tree_exec(t_tree *tree, char ***env, int *status)
 	if (tmp_tree->left_child)
 		ft_tree_exec(tmp_tree->left_child, env, status);
 	if (tmp_tree->type == OPPERATOR_AND && *status == 0)
+	{
+		printf("&&\n");
 		ft_tree_exec(tmp_tree->right_child, env, status);// tree-> right child
+	}
 	if (tmp_tree->type == OPPERATOR_OR && *status != 0)
 		ft_tree_exec(tmp_tree->right_child, env, status);
 	if (tmp_tree->type == EXEC_LIST)
@@ -94,14 +97,13 @@ int	ft_tree_exec(t_tree *tree, char ***env, int *status)
 		ll_len = ft_linked_list_size(tmp_tree->lst_exec);
 		if (ll_len == 1 && ft_is_builtin(arg[0]) == 1)
 		{
-			printf("c'est un builtin\n");
 			status2 = ft_find_builtin(arg[0], arg, env); //EXECUTE BUILTIN
 			free_tab_tab(arg);
 			return (*status);
 		}
 		while (tmp_tree->lst_exec != NULL)
 		{
-			 ft_exec_cmd_fork(tmp_tree, env, arg);
+			status2 = ft_exec_cmd_fork(tmp_tree, env, arg);
 			tmp_tree->lst_exec = tmp_tree->lst_exec->next;
 		}
 		free_tab_tab(arg);
