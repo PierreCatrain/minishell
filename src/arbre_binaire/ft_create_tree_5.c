@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 04:13:45 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/26 00:26:29 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/27 02:35:56 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	ft_exec_token_type_pipe(t_data_parse *data_parse, t_lst_exec **lst_exec)
 	else
 		data_parse->fd_out = data_parse->fd_pipes[data_parse->index_pipes][1];
 	if (ft_lst_exec_add_back(lst_exec, ft_new_lst_exec(data_parse->args_tmp, \
-					data_parse->fd_in, data_parse->fd_out)) == ERROR_MALLOC)
+					data_parse->fd_in, data_parse->fd_out, data_parse->expand)) == ERROR_MALLOC)
 		return (ft_free_pipes(data_parse->fd_pipes, data_parse->nb_pipes), \
 				free_2d(data_parse->args_tmp), \
 				ft_print_error_malloc(), ERROR_MALLOC);

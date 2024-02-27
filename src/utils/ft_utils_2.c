@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 01:58:43 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/11 01:52:35 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/27 07:15:30 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_token	*ft_lstlast(t_token *token)
 	return (token);
 }
 
-t_token	*ft_lstnew(char *str, int quotes, int type)
+t_token	*ft_lstnew(char *str, int quotes, int type, t_expand *expand)
 {
 	t_token	*new;
 
@@ -34,6 +34,7 @@ t_token	*ft_lstnew(char *str, int quotes, int type)
 	free(str);
 	new->quotes = quotes;
 	new->type = type;
+	new->expand = expand;
 	new->prev = NULL;
 	new->next = NULL;
 	return (new);
