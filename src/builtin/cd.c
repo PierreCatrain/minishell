@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:42:46 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/23 16:18:42 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/28 11:31:05 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,12 +95,12 @@ int	ft_cdpath(char **pathtab)
 	tmp = CDPATH;
 	while(*CDPATH)
 	{
-		str_CDPATH = ft_strjoin_path(*CDPATH, pathtab[1]);
+		str_CDPATH = ft_strjoin_path_without_free(*CDPATH, pathtab[1]);
 		if (chdir(str_CDPATH) == 0)
 		{
 			printf("%s\n", str_CDPATH);
 			free(str_CDPATH);
-			free_tab_tab(CDPATH);
+			free_tab_tab(tmp);
 			return (0);
 		}
 		free(str_CDPATH);
@@ -131,7 +131,6 @@ int	ft_msg_err_chdir(char *str)
 	free(first_part);
 	free(second_part);
 	free(err_msg);
-	free(str);
 	return (0);
 }
 
@@ -152,15 +151,18 @@ int	ft_cd(char **path_tab, char ***env)
 	char	*oldpwd;
 
 	// si la taille du chemin est supp a 256 alors le cd ne se fait pas $? = 1
-	
+	printf("1\n");
 	if (getcwd(current_path, PATH_MAX) == NULL)
 	{
+		printf("dans 1\n");
 		ft_msg_err_getcwd();
 		return (2);
 		// gestion
 	}
+	printf("2\n");
 	if (!path_tab[1] || ft_strcmp(path_tab[1], "~") == 0) // attention cd et cd ~ ne sont pas identique
 	{
+		printf("dans 2\n");
 		oldpwd = getenv("HOME");
 		if (!oldpwd)
 		{
@@ -184,14 +186,18 @@ int	ft_cd(char **path_tab, char ***env)
 		return (0);
 	}
 	len_path_tab = ft_len_tab_tab(path_tab);
+	printf("3\n");
 	if (len_path_tab > 2)
 	{
+		printf("dans 3\n");
 		ft_putstr_fd("bash: cd: too many arguments\n", 2);
 		return (1);
 		// gestion d'erreur
 	}
+	printf("4\n");
 	if (ft_strcmp(path_tab[1], "-") == 0)
 	{
+		printf("dans 4\n");
 		oldpwd = getenv("OLDPWD");
 		if (!oldpwd)
 		{
@@ -217,37 +223,48 @@ int	ft_cd(char **path_tab, char ***env)
 		return (0);
 	}
 	// tester avec cdpath si cd path existe (fonction comme le test avec access)
-	if (is_export_name_in_env(*env, "CDPATH") != -1)
-	{
-		if (ft_cdpath(path_tab) == 0)
-		{
-			if (getcwd(new_path, PATH_MAX) != NULL)
-			{
-				ft_change_PWD_OLD_PWD(current_path, new_path, env);
-				return (0);
-			}
-			else
-			{
-				ft_msg_err_getcwd();
-				return (1);
-			}
-		}
-		else
-			return (1);
-	}
+	printf("5\n");
+
 	if (chdir(path_tab[1]) != 0)
 	{
+		printf("cd classique ne marche pas\n");
+		if (is_export_name_in_env(*env, "CDPATH") != -1)
+		{
+			printf("CDPATH est dans env\n");
+			if (ft_cdpath(path_tab) == 0)
+			{
+				printf("cdpath a fonctionne\n");
+				if (getcwd(new_path, PATH_MAX) != NULL)
+				{
+					printf("changement de pwd et old pwd\n");
+					ft_change_PWD_OLD_PWD(current_path, new_path, env);
+					printf("fin du changement\n");
+					return (0);
+				}
+				else
+				{
+					ft_msg_err_getcwd();
+					return (1);
+				}
+			}
+		}
+		printf("cd classique ne marche pas j'affiche le mess d'err\n");
 		if (ft_msg_err_chdir(path_tab[1]) == ERROR_MALLOC)
 			return (ERROR_MALLOC);
+		printf("je return 1\n");
 		return (1);
 		// gestion d'erreur
 	}
+	printf("7\n");
+	printf("je chope new path\n");
 	if (getcwd(new_path, PATH_MAX) == NULL)
 	{
 		ft_msg_err_getcwd();
 		return (1);
 		// gestion
 	}
+	printf("8\n");
+	printf("je modifie l'env\n");
 	ft_change_PWD_OLD_PWD(current_path, new_path, env);
 	return (0);
 }

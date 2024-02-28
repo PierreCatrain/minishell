@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 23:13:46 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/26 17:13:42 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/28 13:23:12 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,7 +171,7 @@ char **new_args(char **args)
 {
 	char **new_args;
 	int index;
-	
+
 	new_args = malloc ((ft_strlen_2d(args) + 1) * sizeof(char *));
 	if (new_args == NULL)
 		return (NULL);

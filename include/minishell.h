@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/26 13:47:01 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/28 11:01:10 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -366,6 +366,7 @@ int is_input_only_whitespace(char *str);
 
 char	**ft_split(char *s, char c);
 char	*ft_strjoin_path(char *s1, char *s2);
+char	*ft_strjoin_path_without_free(char *s1, char *s2);
 char	*ft_strjoin_wihtout_free(char *s1, char *s2);
 
 //ft_utils_6.c

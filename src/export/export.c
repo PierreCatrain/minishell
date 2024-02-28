@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 22:51:52 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/26 14:30:25 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/28 11:06:24 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -620,7 +620,6 @@ int	ft_export2(char ***env, char *export_str)
 	// chck a faire l'export se fait avec le nom de l'export pas le total
 	if (ft_is_export_in_env(*env, export))
 	{
-		printf("il est dans l'env\n");
 		ft_change_export(env, export);
 		{
 			free(export);

@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 01:19:42 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/26 17:30:01 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/28 11:27:53 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,7 @@ int	ft_tree_exec(t_tree *tree, char ***env, int *status)
 	if (tmp_tree->left_child)
 		ft_tree_exec(tmp_tree->left_child, env, status);
 	if (tmp_tree->type == OPPERATOR_AND && *status == 0)
-	{
-		printf("&&\n");
 		ft_tree_exec(tmp_tree->right_child, env, status);// tree-> right child
-	}
 	if (tmp_tree->type == OPPERATOR_OR && *status != 0)
 		ft_tree_exec(tmp_tree->right_child, env, status);
 	if (tmp_tree->type == EXEC_LIST)

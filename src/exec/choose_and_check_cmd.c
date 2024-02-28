@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 10:10:03 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/26 12:24:35 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/28 13:45:46 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ int	ft_check_path_cmd(char **env, char **cmd)
 
 	i = -1;
 	path_split = ft_get_path_cmd();
+	printf("path split\n");
+	print_tab_tab(path_split);
 	while (path_split[++i])
 	{
 		cmd_path = ft_strjoin_path(path_split[i], cmd[0]);
@@ -91,7 +93,9 @@ int	find_cmd(char ***env, char **cmd)
 				exit (126);
 			}
 		}
+		printf("env = \n");
+		print_tab_tab(*env);
 		ft_check_path_cmd(*env, cmd);
 	}
-	return (0);
+	return (status);
 }
