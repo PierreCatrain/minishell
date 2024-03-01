@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 16:01:18 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/26 14:38:23 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/29 14:22:46 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,23 +63,27 @@ int	ft_copy_env_exept_unset(char **env, int unset_index)
 	// 	}
 	// }
 	// new_env[i] = NULL;
+	printf("1\n");
 	while (++i < unset_index)
 		;
-	// printf("env[%d + 1] %s\n", i, env[i + 1]);
+	printf("1\n");
 	if (env[i + 1] == NULL)
 	{
 		free(env[i]);
 		env[i] = NULL;
 		return (0);
 	}
+	printf("2\n");
 	while (env[i + 1])
 	{
 		free(env[i]);
 		env[i] = ft_str_dup_env(env[i + 1], env[i]);
 		i++;
 	}
+	printf("3\n");
 	if (env[i - 1])
 		free(env[i - 1]);
+	printf("4\n");
 	return (0);
 }
 
@@ -126,7 +130,7 @@ int	ft_unset2(char ***env, char *unset_str)
 	if (unset_index == -1)
 		return (0);
 	status = ft_copy_env_exept_unset(*env, unset_index);
-	if (ft_realloc_env(env, 0) == ERROR_MALLOC)
+	if (ft_realloc_env(env, 1) == ERROR_MALLOC)
 		return (ERROR_MALLOC);
 	return (status);
 }
@@ -146,10 +150,12 @@ int	ft_unset(char ***env, char **cmd)
 // {
 // 	char	**new_env;
 
-// 	new_env = ft_unset(env, av[1]);
+// 	(void)ac;
+// 	new_env = ft_copy_env(env);
+// 	ft_unset(&new_env, av);
 // 	if (!new_env)
 // 		return (0);
-// 	// print_tab_tab(new_env);
-// 	// free_tab_tab(new_env);
+// 	print_tab_tab(new_env);
+// 	free_tab_tab(new_env);
 // 	return (0);
 // }

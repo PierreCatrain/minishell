@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 20:26:44 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/24 21:32:25 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/29 16:25:43 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ char	*ft_get_builtin_err_msg(char *builtin)
 	final_msg = ft_strjoin(builtin_msg, error_msg);
 	free(builtin_msg);
 	free(error_msg);
-	write(2, "final message:\n", 15);
-	ft_putstr_fd(final_msg, 2);
 	return (final_msg);
 }
 
@@ -38,7 +36,7 @@ void	ft_pustr_builtin_pwd(char *str)
 {
 	char	*err_msg;
 
-	err_msg = ft_get_builtin_err_msg("pwd");
+	err_msg = ft_get_builtin_err_msg("pwd");	
 	if (write(1, str, ft_strlen(str)) == -1)
 	{
 		if (errno == ENOSPC)
@@ -75,8 +73,6 @@ int	ft_pwd(char **tab)
 		return (2);
 	}
 	ft_pustr_builtin_pwd(buff);
-	// if (tab != NULL)
-	// 	free_tab_tab(tab);
 	return (0);
 }
 

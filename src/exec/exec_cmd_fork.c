@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 17:38:07 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/26 17:23:26 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/29 15:29:28 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,13 @@
 // recois une liste chaine si la liste en plus grande que 1, alors il y a des pipes et donc faire 
 // la fonction qui
 
+
 int	ft_exec_cmd_fork(t_tree *tree, char ***env, char **args)
 {
 	pid_t	pid;
 	char	**arg;
 	int		tmp;
+	// signal(SIGINT, SIG_IGN); //Annule reception ctrl C
 
 	if (tree->lst_exec->fd_in == -1 || tree->lst_exec->fd_out == -1)
 	{

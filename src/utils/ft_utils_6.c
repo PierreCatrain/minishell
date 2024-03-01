@@ -6,23 +6,11 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 22:58:50 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/25 19:38:06 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/29 18:19:23 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
-void	ft_print_lst_exec(t_lst_exec *lst_exec)
-{
-	printf("exec\n");
-	while (lst_exec != NULL)
-	{
-		ft_printf_2d(lst_exec->args);
-		printf("in  -> %d\n", lst_exec->fd_in);
-		printf("out -> %d\n\n", lst_exec->fd_out);
-		lst_exec = lst_exec->next;
-	}
-}
 
 void	ft_print_tree(t_tree *tree)
 {
@@ -98,4 +86,8 @@ char	*ft_itoa(int n)
 	if (n < 0)
 	itoa[0] = '-';
 	return (itoa);
+}
+int	ft_is_ascii(char c)
+{
+	return (!(c >= '0' && c <= '9'));
 }

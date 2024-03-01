@@ -6,30 +6,11 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:42:46 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/28 11:31:05 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/01 14:20:11 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "minishell.h"
-
-char	*ft_str_join_export_name_with_equal_value(char *s1, char *s2)
-{
-	int		i;
-	int		j;
-	char	*new_export;
-
-	i = -1;
-	new_export = (char *) malloc (ft_strlen(s1) + ft_strlen(s2) + 1);
-	while (s1[++i])
-		new_export[i] = s1[i];
-	j = -1;
-	while (s2[++j])
-		new_export[i++] = s2[j];
-	new_export[i] = '\0';
-	free(s1);
-	free(s2);
-	return (new_export);
-}
 
 void	ft_change_PWD_OLD_PWD(char *current_path, char *new_path, char ***env)
 {
@@ -134,15 +115,11 @@ int	ft_msg_err_chdir(char *str)
 	return (0);
 }
 
- // fais le messge d'erreur avec putstr fd (regarde google)
-// sh: 0 : getcwd() failed: No such file or directory
 void	ft_msg_err_getcwd(void)
 {
 	ft_putstr_fd("sh: 0 : getcwd() failed: No such file or directory\n", 2);
 }
 
-// trouver le moyen de changer le old path et le path et de faire un cd que ca marche ou non
-// err de parising $? = 2
 int	ft_cd(char **path_tab, char ***env)
 {
 	char	current_path[PATH_MAX + 1];

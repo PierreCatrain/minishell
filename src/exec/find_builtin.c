@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 09:32:17 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/26 12:41:25 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/29 17:46:42 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@
 ◦ exit with no options
 */
 
-int	ft_find_builtin2(char *cmd, char **cmd_tab, char ***env)
+int	ft_find_builtin2(char *cmd, char **cmd_tab, char ***env, int *exit_flag)
 {
 	int	status;
 
 	status = 0;
 	if (ft_strcmp(cmd, "exit") == 0)
 	{
-		status = ft_exit(cmd_tab);
+		status = ft_exit(cmd_tab, exit_flag);
 		return (status);
 	}
 	else if (ft_strcmp(cmd, "unset") == 0) 
@@ -50,7 +50,7 @@ int	ft_find_builtin2(char *cmd, char **cmd_tab, char ***env)
 	return (-1);
 }
 
-int	ft_find_builtin(char *cmd, char **cmd_tab, char ***env)
+int	ft_find_builtin(char *cmd, char **cmd_tab, char ***env, int *exit_flag)
 {
 	int	status;
 
@@ -71,7 +71,7 @@ int	ft_find_builtin(char *cmd, char **cmd_tab, char ***env)
 		return (status);
 	}
 	else
-		status = ft_find_builtin2(cmd, cmd_tab, env);
+		status = ft_find_builtin2(cmd, cmd_tab, env, exit_flag);
 	return (status);
 }
 

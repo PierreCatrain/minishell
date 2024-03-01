@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 22:48:14 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/18 20:20:06 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/01 14:05:15 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,23 @@ void	free_and_close_tree(t_tree *tree)
 	while (tree->parent != NULL)
 		tree = tree->parent;
 	free_close_tree(tree);
+}
+
+void	free_tab_tab(char **tab)
+{
+	int	i;
+
+	i = -1;
+	while (tab[++i])
+		free(tab[i]);
+	free(tab);
+}
+
+void	ft_free_tab_tab_incremented(char **tab)
+{
+	int	i;
+
+	i = -1;
+	while (tab[++i])
+		free(tab[i]);
 }

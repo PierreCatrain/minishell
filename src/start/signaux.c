@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 06:02:52 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/26 16:52:59 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/01 14:36:23 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,10 @@ void ft_display_new_prompt(int signal)
     (void)signal;
 	if (g_exit_status != -100)
 	{
-		printf("%d\n", g_exit_status);
-		printf("qwre\n");
 	    write(1, "\n", 1);
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
-	}
-	else
-	{
-		printf("%d\n", g_exit_status);
-		printf("toto\n");
 	}
 }
 

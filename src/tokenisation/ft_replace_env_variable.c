@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_replace_env_variable.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 23:58:35 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/26 01:32:15 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/29 17:57:49 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,26 +32,7 @@ char	*ft_str_isolate(char *str, int index_debut, int index_fin)
 	return (new_str);
 }
 
-char	*ft_strjoin_one_malloc(char *new_str, char *str_tmp)
-{
-	char	*join;
-	int			i;
-	int			j;
 
-	if (str_tmp == NULL)
-		return (new_str);
-	join = malloc ((ft_strlen(new_str) + ft_strlen(str_tmp) + 1) * sizeof(char));
-	if (join == NULL)
-		return (free(new_str), NULL);
-	i = -1;
-	while (new_str[++i])
-		join[i] = new_str[i];
-	j = -1;
-	while (str_tmp[++j])
-		join[i + j] = str_tmp[j];
-	join[i + j] = '\0';
-	return (free(new_str), join);
-}
 
 char	*ft_join_char(char *str, char c)
 {
