@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 01:23:54 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/27 09:07:22 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/01 08:11:32 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int ft_make_lst_expand(t_expand **expand, t_data_parse *data_parse)
 {
-    if (data_parse->single_quote_open == CLOSE && data_parse->double_quote_open == CLOSE)
+    if (data_parse->single_quote_open == CLOSE)
     {
         if (ft_add_back_expand(expand, ft_new_expand(CHANGE)) == ERROR_MALLOC)
             return (ERROR_MALLOC);
@@ -42,8 +42,6 @@ int ft_complete_expand(t_expand ***expand, t_expand *add, int size)
     t_expand **new;
     int index;
 
-    printf("test %d\n", size);
-    ft_print_expand(add);
     new = malloc ((size + 1) * sizeof(t_expand *));
     if (new == NULL)
         return (ERROR_MALLOC);
@@ -53,11 +51,9 @@ int ft_complete_expand(t_expand ***expand, t_expand *add, int size)
         new[index] = (*expand)[index];
         index++;
     }
-    printf("index add %d\n", index);
     new[index++] = add;
-    //free(*expand);
+    free(*expand);
     *expand = new; // pas sur
-    printf("test\n");
     return (SUCCESS);
 }
 

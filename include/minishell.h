@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/27 08:53:42 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/01 08:49:18 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ typedef struct s_lst_exec // suite d'execution // attention les fd peuvent etre 
     struct s_lst_exec *prev;
     struct s_lst_exec *next;
     t_expand **expand;
+    int len_expand;
     char **args;
     int fd_in;
     int fd_out;
@@ -217,7 +218,7 @@ int ft_do_insert(t_token **token, t_data_parse *data_parse, char *opperator, int
 // |														|
 // # ====================================================== #
 
-char *ft_replace_env_variable(char *str, t_data_parse *data_parse);
+// char *ft_replace_env_variable(char *str, t_data_parse *data_parse);
 char	*ft_join_char(char *str, char c);
 
 //ft_replace_wildcard.c
@@ -335,6 +336,18 @@ int ft_size_expand(t_expand **expand);
 int ft_complete_expand(t_expand ***expand, t_expand *add, int size);
 t_expand **ft_dup_array_expand(t_expand **expand, int size);
 
+//ft_new_args.c
+char **ft_new_args(t_lst_exec *lst_exec);
+
+//ft_replace_env_variable.c
+char *ft_replace_env_variable(char *str, t_expand *expand);
+
+//ft_cat_env_variable.c
+char *ft_cat_env_variable(char *new_str, char *str, int *index);
+
+//ft_add_wildcard.c
+char **ft_add_wildcard(char **base, char *add, t_wildcard *ls);
+
 // # ====================================================== #
 // |														|
 // |					FT_UTILS.C  						|
@@ -405,7 +418,6 @@ char	*ft_itoa(int n);
 void print_invalid_token(char *str);
 char *ft_strdup(char *str);
 void	ft_print_fd_pipe(int **fd_pipes, int nb_pipes);
-char **new_args(char **args);
 int	ft_linked_list_size(t_lst_exec *lst);
 
 // # ====================================================== #

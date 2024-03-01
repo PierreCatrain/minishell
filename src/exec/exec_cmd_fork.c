@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 17:38:07 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/26 23:49:10 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/01 09:24:00 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@ int	ft_exec_cmd_fork(t_tree *tree, char ***env, int *tab_pid)
 	pid_t	pid;
 	char	**arg;
 
+	print_tab_tab(tree->lst_exec->args);
+	arg = ft_new_args(tree->lst_exec); // a quoi ca sert ?
+	print_tab_tab(arg);
 	// printf("dans cmd fork fd in = %d fd out = %d\n", tree->lst_exec->fd_in, tree->lst_exec->fd_out);
 	if (tree->lst_exec->fd_in == -1 || tree->lst_exec->fd_out == -1)
 	{
@@ -38,7 +41,7 @@ int	ft_exec_cmd_fork(t_tree *tree, char ***env, int *tab_pid)
 	{
 		// printf("fin %d\n", tree->lst_exec->fd_out);
 		// printf("qwer\n");
-		arg = new_args(tree->lst_exec->args); // a quoi ca sert ?
+		//arg = ft_new_args(tree->lst_exec); // a quoi ca sert ?
 		dup2(tree->lst_exec->fd_in, 0);
 		dup2(tree->lst_exec->fd_out, 1);
 		free_and_close_tree(tree);
