@@ -6,12 +6,11 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:52:38 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/29 14:22:53 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/01 14:43:58 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#include <minishell.h>
+#include "minishell.h"
 
 int	g_exit_status;
 
@@ -156,6 +155,7 @@ int	main(int argc, char **argv, char **envp)
 		if (data_parse.input == NULL)
 		{
 			free(data_parse.input);
+			free_tab_tab(env);
 			ft_putstr_fd("exit\n", 1);
 			return (0);
 		}
