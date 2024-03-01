@@ -6,28 +6,31 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:52:38 by picatrai          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/02/27 07:19:07 by picatrai         ###   ########.fr       */
+=======
+/*   Updated: 2024/03/01 13:31:08 by picatrai         ###   ########.fr       */
+>>>>>>> 4a2c2c7cc4cd1b25115ddc16a6bea9f257eb41a8
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include <minishell.h>
 
 int	g_exit_status;
 
-int	only_one_cmd(t_tree *tree, char **argv, char ***env)
+int	only_one_cmd(t_tree *tree, char **argv, char ***env, int *exit_status)
 {
 	t_data_parse	data_parse;
-	int				exit_status;
 
-	exit_status = 0;
 	data_parse.input = ft_strdup(argv[2]);
 	if (data_parse.input == NULL)
 		return (ERROR_MALLOC);
 	add_history(data_parse.input);
 	if (ft_parse(&tree, &data_parse) == GOOD_INPUT)
-		exit_status = ft_tree_exec(tree, env);
+		ft_tree_exec(tree, env, exit_status);
 	rl_clear_history();
-	return (exit_status);
+	return (*exit_status);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -45,7 +48,7 @@ int	main(int argc, char **argv, char **envp)
 	// 	return (ERROR_ARGC_ENVP);
 	env = dup_env(envp);// peut etre le faire depuis l'exec
 	if (argc == 3)
-		return (only_one_cmd(tree, argv, &env));
+		return (only_one_cmd(tree, argv, &env, &exit_status));
 	while (1)
 	{
 		data_parse.prompt = ft_get_prompt();
@@ -58,19 +61,21 @@ int	main(int argc, char **argv, char **envp)
 		{
 			free_2d(env);
 			free(data_parse.input);
+<<<<<<< HEAD
 			ft_exit(NULL);
+=======
+			ft_putstr_fd("exit\n", 1);
+>>>>>>> 4a2c2c7cc4cd1b25115ddc16a6bea9f257eb41a8
 			return (0);
 		}
 		if (is_input_only_whitespace(data_parse.input))
 			add_history(data_parse.input);
 		if (ft_parse(&tree, &data_parse) == GOOD_INPUT)
 		{
-			exit_status = ft_tree_exec(tree, &env);
-			printf("exit status = %d\n", exit_status);
+			//exit_status = ft_tree_exec(tree, &env, &exit_status);
 			free_and_close_tree(tree);
 		}
 	}
-	// printf("exit status = %d\n", exit_status);
 	return (exit_status);
 }
 

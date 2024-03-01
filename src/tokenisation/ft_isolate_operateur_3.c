@@ -6,7 +6,11 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 02:51:35 by picatrai          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/02/27 08:39:13 by picatrai         ###   ########.fr       */
+=======
+/*   Updated: 2024/03/01 13:33:26 by picatrai         ###   ########.fr       */
+>>>>>>> 4a2c2c7cc4cd1b25115ddc16a6bea9f257eb41a8
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +32,7 @@ t_token	*ft_lstnew_no_malloc(char *str, int quotes, int type, t_expand *expand)
 	new->prev = NULL;
 	new->next = NULL;
 	return (new);
+<<<<<<< HEAD
 }
 
 char	*ft_str_rev(char *str)
@@ -96,3 +101,6 @@ char *opperator, int type)
 		data_parse->index--;
 	return (SUCCESS);
 }
+=======
+}
+>>>>>>> 4a2c2c7cc4cd1b25115ddc16a6bea9f257eb41a8
