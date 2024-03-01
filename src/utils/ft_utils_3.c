@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 03:45:01 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/19 22:04:47 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/01 05:40:31 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,14 @@ void	ft_print_token(t_token **token)
 	printf("size %d\n\n", ft_lstsize(*token));
 	while ((*token)->next != NULL)
 	{
-		printf("%s\n", (*token)->str);
+		printf("%s ", (*token)->str);
+		ft_print_expand((*token)->expand);
+		printf("\n");
 		*token = (*token)->next;
 	}
-	printf("%s\n", (*token)->str);
+	printf("%s ", (*token)->str);
+	ft_print_expand((*token)->expand);
+	printf("\n");
 	while ((*token)->prev != NULL)
 		*token = (*token)->prev;
 }
@@ -64,7 +68,21 @@ int	ft_strcmp(char *str1, char *str2)
 	return (str1[index] - str2[index]);
 }
 
-void	ft_printf_2d(char **str)
+void ft_print_expand(t_expand *expand)
+{
+	int index;
+
+	index = 0;
+	printf(" expand ");
+	while (expand != NULL)
+	{
+		printf("/ %d ", expand->action);
+		expand = expand->next;
+	}
+	printf(" || ");
+}
+
+void	ft_printf_2d(char **str, t_expand **expand)
 {
 	int	index;
 
@@ -73,6 +91,8 @@ void	ft_printf_2d(char **str)
 	while (str[index])
 	{
 		printf("%s ", str[index]);
+		if (expand != NULL)
+			ft_print_expand(expand[index]);
 		index++;
 	}
 	printf("\n");

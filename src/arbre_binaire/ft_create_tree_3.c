@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 04:09:07 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/03 04:28:57 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/27 08:43:22 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	**ft_strdup_2d(char **str)
 	return (new);
 }
 
-t_lst_exec	*ft_new_lst_exec(char **args, int fd_in, int fd_out)
+t_lst_exec	*ft_new_lst_exec(char **args, int fd_in, int fd_out, t_expand **expand)
 {
 	t_lst_exec	*new;
 
@@ -40,6 +40,9 @@ t_lst_exec	*ft_new_lst_exec(char **args, int fd_in, int fd_out)
 		return (NULL);
 	new->args = ft_strdup_2d(args);
 	if (new->args == NULL)
+		return (NULL);
+	new->expand = ft_dup_array_expand(expand, ft_strlen_2d(args));
+	if (new->expand == NULL)
 		return (NULL);
 	new->next = NULL;
 	new->prev = NULL;

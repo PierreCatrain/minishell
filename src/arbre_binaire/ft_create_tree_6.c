@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 04:16:21 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/03 04:30:47 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/27 08:39:30 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ t_token	*before_token(t_token *token)
 	while (tmp != token)
 	{
 		if (ft_lst_add_back(&new, ft_lstnew_no_malloc(tmp->str, \
-						tmp->quotes, tmp->type)) == ERROR_MALLOC)
+						tmp->quotes, tmp->type, tmp->expand)) == ERROR_MALLOC)
 			return (NULL);
 		tmp = tmp->next;
 	}
@@ -86,7 +86,7 @@ t_token	*after_token(t_token *token)
 	while (tmp != NULL)
 	{
 		if (ft_lst_add_back(&new, ft_lstnew_no_malloc(tmp->str, \
-						tmp->quotes, tmp->type)) == ERROR_MALLOC)
+						tmp->quotes, tmp->type, tmp->expand)) == ERROR_MALLOC)
 			return (NULL);
 		tmp = tmp->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:52:38 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/26 00:44:51 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/27 07:19:07 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,9 @@ int	main(int argc, char **argv, char **envp)
 		if (data_parse.input == NULL)
 		{
 			free_2d(env);
+			free(data_parse.input);
 			ft_exit(NULL);
+			return (0);
 		}
 		if (is_input_only_whitespace(data_parse.input))
 			add_history(data_parse.input);
@@ -77,6 +79,8 @@ int	main(int argc, char **argv, char **envp)
 
 /*
 a faire
+
+"" pas de tokens
 
 le leak de l'historique
 signaux + gerer si on ctrl c ou d depuis le remplissage du here_doc et attention on a open mais pas re close puis re open

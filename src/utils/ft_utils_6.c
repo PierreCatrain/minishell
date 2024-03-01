@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utils_6.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 22:58:50 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/25 19:38:06 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/27 02:41:04 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_print_lst_exec(t_lst_exec *lst_exec)
 	printf("exec\n");
 	while (lst_exec != NULL)
 	{
-		ft_printf_2d(lst_exec->args);
+		ft_printf_2d(lst_exec->args, lst_exec->expand);
 		printf("in  -> %d\n", lst_exec->fd_in);
 		printf("out -> %d\n\n", lst_exec->fd_out);
 		lst_exec = lst_exec->next;

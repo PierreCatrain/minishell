@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/26 17:20:00 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/01 14:57:10 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@
 # define YES 1
 # define ADD 0
 # define DONT_ADD 1
+# define CHANGE 0
+# define KEEP 1
 
 extern int	g_exit_status;
 
@@ -88,10 +90,19 @@ enum e_tree_type
     OPPERATOR_OR,
 };
 
+typedef struct s_expand
+{
+    int action;
+    struct s_expand *prev;
+    struct s_expand *next;
+} t_expand;
+
 typedef struct s_lst_exec // suite d'execution // attention les fd peuvent etre -1 mais sont tous (sauf les -1) a fermer
 {
     struct s_lst_exec *prev;
     struct s_lst_exec *next;
+    t_expand **expand;
+    int len_expand;
     char **args;
     int fd_in;
     int fd_out;
@@ -104,7 +115,7 @@ typedef struct s_tree // arbre binaire
     struct s_tree *left_child;
     struct s_tree *right_child;
     t_lst_exec *lst_exec;
-    t_exec  *exec;
+    t_exec  *exec; // c'est quoi ca ?? une copie pour chaque noeud pk?
 } t_tree;
 
 typedef struct s_token
@@ -112,6 +123,7 @@ typedef struct s_token
     char *str;
     int quotes;
     int type;
+    t_expand *expand;
     struct s_token *prev;
     struct s_token *next;
 }   t_token;
@@ -146,6 +158,9 @@ typedef struct s_data_parse
 
     int *array_here_doc;
     int index_here_doc;
+
+
+    t_expand **expand;
 }   t_data_parse;
 
 typedef struct s_wildcard
@@ -192,7 +207,7 @@ int ft_is_type_1(t_token **token, t_data_parse *data_parse);
 int ft_insert_operateur_type_1(t_token **token, t_data_parse *data_parse);
 
 //ft_isolate_operateur_3.c
-t_token	*ft_lstnew_no_malloc(char *str, int quotes, int type);
+t_token	*ft_lstnew_no_malloc(char *str, int quotes, int type, t_expand *expand);
 char	*ft_str_rev(char *str);
 int	is_token_valid(char *str);
 int ft_do_insert(t_token **token, t_data_parse *data_parse, char *opperator, int type);
@@ -203,7 +218,7 @@ int ft_do_insert(t_token **token, t_data_parse *data_parse, char *opperator, int
 // |														|
 // # ====================================================== #
 
-char *ft_replace_env_variable(char *str, t_data_parse *data_parse);
+// char *ft_replace_env_variable(char *str, t_data_parse *data_parse);
 char	*ft_join_char(char *str, char c);
 
 //ft_replace_wildcard.c
@@ -263,7 +278,7 @@ int ft_complete_tree(t_tree **tree, t_token *token, t_data_parse *data_parse);
 
 //ft_create_tree_3.c
 char	**ft_strdup_2d(char **str);
-t_lst_exec	*ft_new_lst_exec(char **args, int fd_in, int fd_out);
+t_lst_exec	*ft_new_lst_exec(char **args, int fd_in, int fd_out, t_expand **expand);
 t_lst_exec	*ft_lst_exec_last(t_lst_exec *lst_exec);
 int	ft_lst_exec_add_back(t_lst_exec **lst_exec, t_lst_exec *new);
 int	ft_nb_pipes(t_token *token);
@@ -310,6 +325,29 @@ char	*ft_strjoin(char *str1, char *str2);
 int ft_complete_here_doc(t_data_parse *data_parse, t_token *token);
 
 
+//ft_lst_expand.c
+t_expand *ft_new_expand(int action);
+t_expand *ft_last_expand(t_expand *expand);
+int ft_add_back_expand(t_expand **expand, t_expand *new);
+
+//ft_make_lst_expand.c
+int ft_make_lst_expand(t_expand **expand, t_data_parse *data_parse);
+int ft_size_expand(t_expand **expand);
+int ft_complete_expand(t_expand ***expand, t_expand *add, int size);
+t_expand **ft_dup_array_expand(t_expand **expand, int size);
+
+//ft_new_args.c
+char **ft_new_args(t_lst_exec *lst_exec);
+
+//ft_replace_env_variable.c
+char *ft_replace_env_variable(char *str, t_expand *expand);
+
+//ft_cat_env_variable.c
+char *ft_cat_env_variable(char *new_str, char *str, int *index);
+
+//ft_add_wildcard.c
+char **ft_add_wildcard(char **base, char *add, t_wildcard *ls);
+
 // # ====================================================== #
 // |														|
 // |					FT_UTILS.C  						|
@@ -329,7 +367,7 @@ int ft_strchr(char *str, char *find);
 // # ====================================================== #
 
 t_token    *ft_lstlast(t_token *token);
-t_token *ft_lstnew(char *str, int quotes, int type);
+t_token	*ft_lstnew(char *str, int quotes, int type, t_expand *expand);
 int    ft_lst_add_back(t_token **token, t_token *new);
 int ft_lst_insert(t_token **token, t_token *new);
 void ft_lst_del(t_token **token);
@@ -344,7 +382,8 @@ int	ft_lstsize(t_token *token);
 void    ft_print_token(t_token **token);
 int	ft_isalphanum(int c);
 int ft_strcmp(char *str1, char *str2);
-void	ft_printf_2d(char **str);
+void ft_print_expand(t_expand *expand);
+void	ft_printf_2d(char **str, t_expand **expand);
 
 // # ====================================================== #
 // |														|
@@ -379,7 +418,6 @@ char	*ft_itoa(int n);
 void print_invalid_token(char *str);
 char *ft_strdup(char *str);
 void	ft_print_fd_pipe(int **fd_pipes, int nb_pipes);
-char **new_args(char **args);
 int	ft_linked_list_size(t_lst_exec *lst);
 
 // # ====================================================== #

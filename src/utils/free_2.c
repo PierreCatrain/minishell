@@ -3,14 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   free_2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 22:48:14 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/18 20:20:06 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/01 11:42:12 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+void free_expand(t_expand **expand, int len)
+{
+	t_expand *tmp;
+	int index;
+
+	index = 0;
+	while (index < len)
+	{
+		while (expand[index] != NULL)
+		{
+			tmp = expand[index];
+			expand[index] = expand[index]->next;
+			free(tmp);
+		}
+		index++;
+	}
+}
 
 void	free_close_exec_list(t_lst_exec *exec)
 {
@@ -28,6 +46,7 @@ void	free_close_exec_list(t_lst_exec *exec)
 			close(exec->fd_in);
 		if (exec->fd_out > 2)
 			close(exec->fd_out);
+		free_expand(exec->expand, exec->len_expand);
 		exec = exec->next;
 		free(tmp);
 	}

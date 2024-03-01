@@ -6,13 +6,13 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 02:51:35 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/02 03:11:28 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/27 08:39:13 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-t_token	*ft_lstnew_no_malloc(char *str, int quotes, int type)
+t_token	*ft_lstnew_no_malloc(char *str, int quotes, int type, t_expand *expand)
 {
 	t_token	*new;
 
@@ -23,6 +23,7 @@ t_token	*ft_lstnew_no_malloc(char *str, int quotes, int type)
 	if (new->str == NULL)
 		return (free(new), NULL);
 	new->quotes = quotes;
+	new->expand = expand;
 	new->type = type;
 	new->prev = NULL;
 	new->next = NULL;
@@ -76,16 +77,17 @@ int	is_token_valid(char *str)
 int	ft_do_insert(t_token **token, t_data_parse *data_parse, \
 char *opperator, int type)
 {
+	(void)opperator;
 	data_parse->str[data_parse->index_new_str] = '\0';
 	data_parse->str = ft_str_rev(data_parse->str);
 	if (data_parse->str == NULL)
 		return (ft_print_error_malloc(), ERROR_MALLOC);
-	if (ft_lst_insert(token, ft_lstnew(data_parse->str, WORD, TEXT)) \
-	== ERROR_MALLOC)
-		return (ft_print_error_malloc(), ERROR_MALLOC);
-	if (ft_lst_insert(token, ft_lstnew_no_malloc(opperator, WORD, type)) \
-	== ERROR_MALLOC)
-		return (ft_print_error_malloc(), ERROR_MALLOC);
+	// if (ft_lst_insert(token, ft_lstnew(data_parse->str, WORD, TEXT)) \
+	// == ERROR_MALLOC)
+	// 	return (ft_print_error_malloc(), ERROR_MALLOC);
+	// if (ft_lst_insert(token, ft_lstnew_no_malloc(opperator, WORD, type)) \
+	// == ERROR_MALLOC)
+		// return (ft_print_error_malloc(), ERROR_MALLOC);
 	data_parse->str = malloc((ft_strlen((*token)->str) + 1) * sizeof(char));
 	if (data_parse->str == NULL)
 		return (ft_print_error_malloc(), ERROR_MALLOC);

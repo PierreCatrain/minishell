@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 19:13:05 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/02 21:28:39 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/27 00:50:27 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ void	ft_set_redirection_text(t_token **token)
 
 void	ft_set_cmd_args(t_token **token)
 {
-	while ((*token)->next != NULL)
+
+	while (*token != NULL)
 	{
 		if ((*token)->type == TEXT)
 		{
