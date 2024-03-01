@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/01 08:49:18 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/01 14:47:01 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,6 @@ typedef struct s_tree // arbre binaire
     struct s_tree *left_child;
     struct s_tree *right_child;
     t_lst_exec *lst_exec;
-    t_exec  *exec; // c'est quoi ca ?? une copie pour chaque noeud pk?
 } t_tree;
 
 typedef struct s_token
@@ -191,26 +190,11 @@ int ft_parse(t_tree **tree, t_data_parse *data_parse);
 //ft_tokenisation.c
 int ft_tokenisation(t_token **token, t_data_parse *data_parse);
 
-//ft_token_part_1.c
-int ft_token_part_1(t_data_parse *data_parse, t_token **token);
+//ft_isol_operator.c
+char *ft_isol_operator(t_data_parse *data_parse);
 
-//ft_token_part_2.c
-int ft_token_part_2(t_data_parse *data_parse, t_token **token);
-
-//ft_isolate_operateur.c
-int ft_isolate_operateur(t_token **token);
-
-//ft_isolate_operateur_2.c
-int ft_is_type_2(t_token **token, t_data_parse *data_parse);
-int ft_insert_operateur_type_2(t_token **token, t_data_parse *data_parse);
-int ft_is_type_1(t_token **token, t_data_parse *data_parse);
-int ft_insert_operateur_type_1(t_token **token, t_data_parse *data_parse);
-
-//ft_isolate_operateur_3.c
-t_token	*ft_lstnew_no_malloc(char *str, int quotes, int type, t_expand *expand);
-char	*ft_str_rev(char *str);
-int	is_token_valid(char *str);
-int ft_do_insert(t_token **token, t_data_parse *data_parse, char *opperator, int type);
+//ft_make_token.c
+int ft_make_token(t_data_parse *data_parse, t_token **token);
 
 // # ====================================================== #
 // |														|
@@ -220,22 +204,6 @@ int ft_do_insert(t_token **token, t_data_parse *data_parse, char *opperator, int
 
 // char *ft_replace_env_variable(char *str, t_data_parse *data_parse);
 char	*ft_join_char(char *str, char c);
-
-//ft_replace_wildcard.c
-int ft_replace_wildcard(t_token **token);
-
-//ft_replace_wildcard_2.c
-void	ft_complete_before_after(t_data_parse *data_parse, t_token **token);
-int ft_insert_wildcard_before_after(t_wildcard *ls, t_data_parse *data_parse, t_token **token, int *find);
-int	ft_wildcard_before_and_after(t_token **token, t_wildcard *ls, int *find);
-int ft_wildcard_no_before_no_after(t_wildcard **ls, t_token **token, int *find);
-
-//ft_replace_wildcard_3.c
-void	ft_free_wildcard(t_wildcard **ls);
-int	ft_strlen_before(char *str);
-int	ft_strlen_after(char *str);
-char	*ft_only_end_str(char *str, int size);
-int	match_with_wildcard(char *before, char *after, char *str);
 
 //ft_replace_wildcard_4.c
 char	*ft_strjoin_1_malloc(char *str1, char *str2);
@@ -336,6 +304,9 @@ int ft_size_expand(t_expand **expand);
 int ft_complete_expand(t_expand ***expand, t_expand *add, int size);
 t_expand **ft_dup_array_expand(t_expand **expand, int size);
 
+//ft_isolate_operateur_3.c
+t_token	*ft_lstnew_no_malloc(char *str, int quotes, int type, t_expand *expand);
+
 //ft_new_args.c
 char **ft_new_args(t_lst_exec *lst_exec);
 
@@ -405,6 +376,7 @@ int is_input_only_whitespace(char *str);
 
 char	**ft_split(char *s, char c);
 char	*ft_strjoin_path(char *s1, char *s2);
+char	*ft_strjoin_path_without_free(char *s1, char *s2);
 char	*ft_strjoin_wihtout_free(char *s1, char *s2);
 
 //ft_utils_6.c
@@ -494,7 +466,7 @@ int ft_export(char ***env, char **arg, int free);
 int		ft_unset_is_in_env(char **env, char *unset_str);
 int		ft_find_unset_index(char **env, char *unset_str);
 int 	ft_copy_env_exept_unset(char **env, int unset_index);
-int     ft_unset(char ***env, char *unset_str);
+int     ft_unset(char ***env, char **cmd);
 
 // # ====================================================== #
 // |														|
@@ -550,9 +522,9 @@ char	*ft_get_err_msg(char *cmd, char *msg);
 int 	ft_is_builtin(char *cmd);
 int 	ft_find_builtin(char *cmd, char **cmd_tab, char ***env);
 int 	ft_check_path_cmd(char **env, char **cmd);
-int 	ft_exec_cmd_fork(t_tree *tree, char ***env, int *tab_pid);
+int 	ft_exec_cmd_fork(t_tree *tree, char ***env, char **arg);
 int 	find_cmd(char ***env, char **arg);
-int 	ft_tree_exec(t_tree *tree, char ***env);
+int 	ft_tree_exec(t_tree *tree, char ***env, int *status);
 
 
 // # ====================================================== #

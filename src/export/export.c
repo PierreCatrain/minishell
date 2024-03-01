@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 22:51:52 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/24 17:53:48 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/28 11:06:24 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ char	*ft_find_export_name(char *str)
 	char	*export_name;
 
 	i = 0;
-	while (str[i] != '=')
+	while (str[i] && str[i] != '=')
 		i++;
 	export_name = malloc(i + 1);
 	if (!export_name)
@@ -571,10 +571,9 @@ int ft_realloc_env(char ***env, int size)
 {
 	char **cp_env;
 	int	i;
-
 	cp_env = dup_env(*env);
 	free_tab_tab(*env);
-	*env = (char **) malloc (sizeof(char *) * (ft_len_tab_tab(cp_env) + size)); // + 1 ?, NULL est deja mit lorsque j'apelle realloc
+	*env = (char **) malloc (sizeof(char *) * (ft_len_tab_tab(cp_env) + size + 1)); // + 1 ?, NULL est deja mit lorsque j'apelle realloc
 	if ((*env) == NULL)
 		return (ERROR_MALLOC);
 	// gestion d'erreur;
@@ -584,6 +583,7 @@ int ft_realloc_env(char ***env, int size)
 		(*env)[i] = ft_str_dup_env(cp_env[i], (*env)[i]);
 		i++;
 	}
+	(*env)[i] = NULL;
 	free_tab_tab(cp_env);
 	return (i);
 }
@@ -596,7 +596,6 @@ int	ft_export2(char ***env, char *export_str)
 	int		empty;
 
 
-	printf("passe pas\n");
 	if (export_str[0] == '=' || !ft_check_export_name(export_str))
 	{
 		printf("bash: export:= `%s': not a valid identifier\n", export_str);
@@ -627,6 +626,10 @@ int	ft_export2(char ***env, char *export_str)
 			return (0);
 		}
 	}
+	// printf("env[avant realloc]\n\n\n");
+	// print_tab_tab(*env);
+	// printf("env[apres realloc]\n\n\n");
+	// print_tab_tab(*env);
 	i = ft_realloc_env(env, 1);
 	(*env)[i] = ft_str_dup_env(export, (*env)[i]);
 	(*env)[i + 1] = NULL;
@@ -644,7 +647,7 @@ int	ft_export(char ***env, char **arg, int free)
 	status = 0;
 	if (!arg[1])
 	{
-		ft_print_env_ascii_order(*env);;
+		ft_print_env_ascii_order(*env);
 		return (0); // gestion d'erreur
 	}
 	while (arg[i])
@@ -664,9 +667,8 @@ int	ft_export(char ***env, char **arg, int free)
 // 	char	**env;
 
 // 	env = dup_env(envp);
-// 	if (ac < 2)
-// 		return (1);
-// 	ft_export(&env, av[1]);
+// 	(void)ac;
+// 	ft_export(&env, av, 0);
 // 	if (!env)
 // 		return (0);
 // 	print_tab_tab(env);

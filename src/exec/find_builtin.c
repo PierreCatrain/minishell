@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 09:32:17 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/24 17:47:23 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/02/26 12:41:25 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@ int	ft_find_builtin2(char *cmd, char **cmd_tab, char ***env)
 	}
 	else if (ft_strcmp(cmd, "unset") == 0) 
 	{
-		status = ft_unset(env, cmd_tab[1]); // a modifier pour pouvoir faire plusieurs unset
+		status = ft_unset(env, cmd_tab); // a modifier pour pouvoir faire plusieurs unset
 		return (status);
 		}
 	else if (ft_strcmp(cmd, "export") == 0)
 	{
-		status = ft_export(env, cmd_tab, 1); // pareil
+		status = ft_export(env, cmd_tab, 0); // pareil
 		return (status);
 	}
 	else if (ft_strcmp(cmd, "env") == 0)

@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 22:48:14 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/01 11:42:12 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/01 15:01:55 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void free_expand(t_expand **expand, int len)
 		}
 		index++;
 	}
+	free(expand); 
 }
 
 void	free_close_exec_list(t_lst_exec *exec)
@@ -35,9 +36,7 @@ void	free_close_exec_list(t_lst_exec *exec)
 	t_lst_exec	*tmp;
 
 	while (exec->prev != NULL)
-	{
 		exec = exec->prev;
-	}	
 	while (exec != NULL)
 	{
 		tmp = exec;
