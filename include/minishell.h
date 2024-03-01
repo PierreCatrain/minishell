@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/01 14:25:00 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/01 21:20:25 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -430,7 +430,7 @@ int	ft_linked_list_size(t_lst_exec *lst);
 // |														|
 // # ====================================================== #
 
-char	*ft_str_join_export_name_with_equal_value(char *s1, char *s2);
+char	*ft_strjoin_equal_val(char *s1, char *s2);
 char	*ft_strjoin_path_without_free(char *s1, char *s2);
 char	*ft_strjoin_wihtout_free(char *s1, char *s2);
 char	*ft_strjoin_one_malloc(char *new_str, char *str_tmp);
@@ -510,10 +510,20 @@ int     ft_unset(char ***env, char **cmd);
 // |														|
 // # ====================================================== #
 
-int     ft_cd(char **path_tab, char ***env);
-char	*ft_str_join_export_name_with_equal_value(char *s1, char *s2);
-void    ft_change_PWD_OLD_PWD(char *current_path, char *new_path, char ***env);
-int     is_export_name_in_env(char **env, char *str);
+void	ft_change_owd_old_pwd2(char ***env, char *current_path, int check);
+void	ft_change_pwd_old_pwd(char *current_path, char *new_path, char ***env);
+int 	is_export_name_in_env(char **env, char *str);
+int		ft_cdpath(char **pathtab);
+int		ft_msg_err_chdir(char *str);
+void	ft_msg_err_getcwd(void);
+int		ft_get_env_value2(char **env_name, char *env, char *str, char **env_value);
+char	*ft_get_env_value(char **env, char *str);
+int		ft_cd_parsing(char **path_tab);
+int		ft_cd_home(char ***env);
+int		ft_cd_dash(char ***env);
+int		ft_cd_cdpath(char **path_tab, char ***env);
+int		ft_cd(char **path_tab, char ***env);
+
 
 // # ====================================================== #
 // |														|

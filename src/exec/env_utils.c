@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 18:09:13 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/29 19:39:27 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/01 21:31:20 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ char	**dup_env(char **env)
 	i = 0;
 	while (env[i])
 	{
-
 		new_env[i] = ft_str_dup_env(env[i], new_env[i]);
 		if (!new_env)
 			return (NULL);
@@ -78,16 +77,16 @@ char	**dup_env_ascii_order(char **env)
 	return (new_env);
 }
 
-int ft_realloc_env(char ***env, int size)
+int	ft_realloc_env(char ***env, int size)
 {
-	char **cp_env;
-	int	i;
+	char	**cp_env;
+	int		i;
+
 	cp_env = dup_env(*env);
 	free_tab_tab(*env);
-	*env = (char **) malloc (sizeof(char *) * (ft_len_tab_tab(cp_env) + size + 1)); // + 1 ?, NULL est deja mit lorsque j'apelle realloc
+	*env = malloc (sizeof(char *) * (ft_len_tab_tab(cp_env) + size + 1));
 	if ((*env) == NULL)
 		return (ERROR_MALLOC);
-	// gestion d'erreur;
 	i = 0;
 	while (cp_env[i])
 	{

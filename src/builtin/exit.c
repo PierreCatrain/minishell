@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 21:52:06 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/29 17:45:48 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/01 18:16:15 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	ft_exit(char **arg, int *exit_flag)
 	if (ft_atoi(arg[1], &exit_value) == FALSE)
 	{
 		printf("bash: exit: %s: numeric argument required\n", arg[1]);
-		return (2); // exit
+		return (2);
 	}
 	else
 		*exit_flag = 1;
@@ -101,9 +101,9 @@ int	ft_exit(char **arg, int *exit_flag)
 	{
 		printf("bash: exit: %s: numeric argument required\n", arg[1]);
 		*exit_flag = 1;
-		exit_value = 2; // n'exit pas
+		exit_value = 2;
 		return (exit_value);
 	}
-	ft_exit_parsing(arg, &exit_value, exit_flag); // exit
+	ft_exit_parsing(arg, &exit_value, exit_flag);
 	return (exit_value);
 }

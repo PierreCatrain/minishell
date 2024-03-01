@@ -6,19 +6,19 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 01:58:43 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/29 20:04:26 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/01 22:07:04 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-char *ft_str_cat_long_long(char *new_str, long long g_exit_status)
+char	*ft_str_cat_long_long(char *new_str, long long g_exit_status)
 {
-	char *exit;
-	char *cat;
-	int i;
-	int j;
-	
+	char	*exit;
+	char	*cat;
+	int		i;
+	int		j;
+
 	exit = ft_itoa_long_long(g_exit_status);
 	if (exit == NULL)
 		return (free(new_str), NULL);
@@ -35,11 +35,11 @@ char *ft_str_cat_long_long(char *new_str, long long g_exit_status)
 	return (free(exit), free(new_str), cat);
 }
 
-char *ft_str_cat_char(char *new_str, char c)
+char	*ft_str_cat_char(char *new_str, char c)
 {
-	char *cat;
-	int index;
-	
+	char	*cat;
+	int		index;
+
 	cat = malloc((ft_strlen(new_str) + 2) * sizeof(char));
 	if (cat == NULL)
 		return (free(new_str), NULL);
@@ -53,10 +53,10 @@ char *ft_str_cat_char(char *new_str, char c)
 	return (free(new_str), cat);
 }
 
-char *ft_replace_exit_status(char *str)
+char	*ft_replace_exit_status(char *str)
 {
-	char *new_str;
-	int index;
+	char	*new_str;
+	int		index;
 
 	new_str = malloc (sizeof(char));
 	if (new_str == NULL)
@@ -82,7 +82,7 @@ char *ft_replace_exit_status(char *str)
 	return (new_str);
 }
 
-void ft_free_index_new_args(char **str, int index)
+void	ft_free_index_new_args(char **str, int index)
 {
 	index--;
 	while (index >= 0)
@@ -90,10 +90,10 @@ void ft_free_index_new_args(char **str, int index)
 	free(str);
 }
 
-char **new_args(char **args)
+char	**new_args(char **args)
 {
-	char **new_args;
-	int index;
+	char	**new_args;
+	int		index;
 
 	new_args = malloc ((ft_strlen_2d(args) + 1) * sizeof(char *));
 	if (new_args == NULL)

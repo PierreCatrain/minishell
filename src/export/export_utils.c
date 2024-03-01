@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 19:36:06 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/29 19:36:20 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/01 17:27:26 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,8 @@ int	ft_check_empty_export(char *export)
 {
 	char	*export_equal;
 	char	*export_non_equal;
-	int		i;
 	int		res;
 
-	i = 0;
 	res = 0;
 	export_equal = export_and_equal(export);
 	export_non_equal = export_and_empty(export);
@@ -89,15 +87,15 @@ int	value_start_equal(char *export)
 	while (export[i] != '=')
 		i++;
 	if (export[i] && ((export[i] == '=' && export[i + 1] == '\0')
-		|| (export[i] == '=' && export[i + 1] == '=')))
+			|| (export[i] == '=' && export[i + 1] == '=')))
 		return (1);
 	return (0);
 }
 
 char	*add_quote_to_value(char *export)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 	char	*new_export;
 
 	i = -1;
@@ -113,7 +111,7 @@ char	*add_quote_to_value(char *export)
 		i++;
 	}
 	new_export[i] = '\'';
-	new_export[++i] ='\0';
+	new_export[++i] = '\0';
 	free(export);
 	return (new_export);
 }

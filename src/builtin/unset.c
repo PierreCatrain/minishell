@@ -6,26 +6,30 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 16:01:18 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/29 14:22:46 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/01 18:12:53 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
 int	ft_find_unset_index(char **env, char *unset_str)
 {
-	int	i;
-	int	finded;
+	int		i;
+	int		finded;
+	char	*export_name;
 
 	i = 0;
 	finded = 0;
 	while (env[i])
 	{
-		if (ft_strcmp(ft_find_export_name(env[i]), unset_str) == 0)
+		export_name = ft_find_export_name(env[i]);
+		if (ft_strcmp(export_name, unset_str) == 0)
 		{
 			finded = 1;
+			free(export_name);
 			break ;
 		}
+		free(export_name);
 		i++;
 	}
 	if (finded == 1)
@@ -36,33 +40,8 @@ int	ft_find_unset_index(char **env, char *unset_str)
 int	ft_copy_env_exept_unset(char **env, int unset_index)
 {
 	int		i;
-	// char	**new_env;
 
 	i = -1;
-	// new_env = (char **) malloc(sizeof(char *) * (ft_len_tab_tab(env) + 1));
-	// if (!new_env)
-	// 	return (ERROR_MALLOC);
-	// // copier env
-	// while (++i < unset_index)
-	// {
-	// 	new_env[i] = ft_str_dup_env(env[i], new_env[i]);
-	// 	if (!new_env[i])
-	// 	{
-	// 		return (ERROR_MALLOC);
-	// 		// gestion d'erreur
-	// 	}
-	// }
-	// // rendre env sans unset
-	// while (env[++i])
-	// {
-	// 	new_env[i - 1] = ft_str_dup_env(env[i], new_env[i - 1]);
-	// 	if (!new_env[i - 1])
-	// 	{
-	// 		return (ERROR_MALLOC);
-	// 		// gestion d'erreur
-	// 	}
-	// }
-	// new_env[i] = NULL;
 	printf("1\n");
 	while (++i < unset_index)
 		;
@@ -89,7 +68,7 @@ int	ft_copy_env_exept_unset(char **env, int unset_index)
 
 int	ft_unset_is_in_env(char **env, char *unset_str)
 {
-	int	i;
+	int		i;
 	char	*unset_name;
 	char	*env_name;
 

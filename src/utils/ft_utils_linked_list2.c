@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 20:03:49 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/29 20:04:03 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/01 22:01:29 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	print_linked_list(t_lst_exec *lst_exec)
 {
-	t_lst_exec *tmp;
+	t_lst_exec	*tmp;
 
 	tmp = lst_exec;
 	while (tmp)

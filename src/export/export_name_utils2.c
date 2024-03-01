@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 18:13:02 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/29 18:17:07 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/01 17:24:39 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,20 @@ char	*ft_find_export_name(char *str)
 	return (export_name);
 }
 
+void	ft_export_name2(int *i, int *j, int *count)
+{
+	*i = -1;
+	*j = -1;
+	*count = -1;
+}
+
 int	ft_export_name(char *str, char **export_name)
 {
 	int	i;
 	int	j;
 	int	count;
 
-	i = -1;
-	j = -1;
-	count = 1;
+	ft_export_name2(&i, &j, &count);
 	*export_name = malloc(ft_strlen(str) + 1);
 	if (!(*export_name))
 		return (0);

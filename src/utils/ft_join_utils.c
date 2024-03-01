@@ -6,13 +6,13 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 17:54:03 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/01 14:24:56 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/01 21:48:27 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ft_str_join_export_name_with_equal_value(char *s1, char *s2)
+char	*ft_strjoin_equal_val(char *s1, char *s2)
 {
 	int		i;
 	int		j;
@@ -33,8 +33,8 @@ char	*ft_str_join_export_name_with_equal_value(char *s1, char *s2)
 
 char	*ft_strjoin_path_without_free(char *s1, char *s2)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 	char	*str;
 
 	i = -1;
@@ -66,18 +66,18 @@ char	*ft_strjoin_wihtout_free(char *s1, char *s2)
 		str[i + j] = s2[j];
 	str[i + j] = '\0';
 	return (str);
-	
 }
 
 char	*ft_strjoin_one_malloc(char *new_str, char *str_tmp)
 {
 	char	*join;
-	int			i;
-	int			j;
+	int		i;
+	int		j;
 
 	if (str_tmp == NULL)
 		return (new_str);
-	join = malloc ((ft_strlen(new_str) + ft_strlen(str_tmp) + 1) * sizeof(char));
+	join = malloc ((ft_strlen(new_str) \
+		+ ft_strlen(str_tmp) + 1));
 	if (join == NULL)
 		return (free(new_str), NULL);
 	i = -1;
@@ -92,8 +92,8 @@ char	*ft_strjoin_one_malloc(char *new_str, char *str_tmp)
 
 char	*ft_strjoin_path(char *s1, char *s2)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 	char	*str;
 
 	i = -1;
@@ -106,6 +106,5 @@ char	*ft_strjoin_path(char *s1, char *s2)
 		str[i + j] = s2[j];
 	str[i + j] = '\0';
 	free (s1);
-	// free (s2);
 	return (str);
 }
