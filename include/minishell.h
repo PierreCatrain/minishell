@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/02 15:02:43 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/02 15:14:24 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -360,6 +360,7 @@ t_token	*ft_lstnew(char *str, int quotes, int type, t_expand *expand);
 int    ft_lst_add_back(t_token **token, t_token *new);
 int ft_lst_insert(t_token **token, t_token *new);
 void ft_lst_del(t_token **token);
+char *ft_str_cat_long_long(char *new_str, long long g_exit_status);
 
 // # ====================================================== #
 // |														|
