@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_set_all_grammaire.c                             :+:      :+:    :+:   */
+/*   grammaire_1.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 19:13:05 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/26 07:20:52 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/02 14:37:28 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ void	ft_set_redirection_text(t_token **token)
 
 void	ft_set_cmd_args(t_token **token)
 {
-	while ((*token)->next != NULL)
+
+	while (*token != NULL)
 	{
 		if ((*token)->type == TEXT)
 		{

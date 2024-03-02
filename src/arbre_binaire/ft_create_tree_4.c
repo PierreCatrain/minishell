@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_create_tree_4.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 04:11:28 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/03 04:29:28 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/02 14:14:44 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,12 @@ int	ft_one_more_exec(t_data_parse *data_parse, t_lst_exec **lst_exec)
 	{
 		if (ft_lst_exec_add_back(lst_exec, \
 		ft_new_lst_exec(data_parse->args_tmp, \
-		data_parse->fd_in, data_parse->fd_out)) == ERROR_MALLOC)
+		data_parse->fd_in, data_parse->fd_out, data_parse->expand)) == ERROR_MALLOC)
 			return (ft_free_pipes(data_parse->fd_pipes, data_parse->nb_pipes), \
 			free_2d(data_parse->args_tmp), ft_print_error_malloc(), \
 			ERROR_MALLOC);
 		free_2d(data_parse->args_tmp);
+		data_parse->expand = NULL;//
 		data_parse->args_tmp = NULL;
 		data_parse->fd_in = 0;
 		data_parse->fd_out = 1;
@@ -75,6 +76,7 @@ int	ft_set_exec(t_data_parse *data_parse, t_lst_exec **lst_exec, t_token *token)
 	data_parse->fd_in = 0;
 	data_parse->fd_out = 1;
 	data_parse->args_tmp = NULL;
+	data_parse->expand = NULL;//
 	*lst_exec = NULL;
 	return (SUCCESS);
 }

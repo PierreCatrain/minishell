@@ -6,33 +6,38 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 01:58:43 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/01 22:07:04 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/02 14:37:55 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-char	*ft_str_cat_long_long(char *new_str, long long g_exit_status)
+t_token	*ft_lstlast(t_token *token)
 {
-	char	*exit;
-	char	*cat;
-	int		i;
-	int		j;
+	if (token == NULL)
+		return (NULL);
+	while (token->next != NULL)
+		token = token->next;
+	return (token);
+}
 
-	exit = ft_itoa_long_long(g_exit_status);
-	if (exit == NULL)
-		return (free(new_str), NULL);
-	cat = malloc ((ft_strlen(new_str) + ft_strlen(exit) + 1) * sizeof(char));
-	if (cat == NULL)
-		return (free(exit), free(new_str), NULL);
-	i = -1;
-	while (new_str[++i])
-		cat[i] = new_str[i];
-	j = -1;
-	while (exit[++j])
-		cat[i + j] = exit[j];
-	cat[i + j] = '\0';
-	return (free(exit), free(new_str), cat);
+t_token	*ft_lstnew(char *str, int quotes, int type, t_expand *expand)
+{
+	t_token	*new;
+
+	new = malloc(sizeof(t_token));
+	if (new == NULL)
+		return (free(str), NULL);
+	new->str = ft_strdup(str);
+	if (new->str == NULL)
+		return (free(new), free(str), NULL);
+	free(str);
+	new->quotes = quotes;
+	new->type = type;
+	new->expand = expand;
+	new->prev = NULL;
+	new->next = NULL;
+	return (new);
 }
 
 char	*ft_str_cat_char(char *new_str, char c)

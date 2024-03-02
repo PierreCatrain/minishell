@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 21:50:13 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/20 01:46:04 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/27 09:07:38 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ char	*ft_get_prompt(void)
 		prompt = ft_at_home(start_prompt, end_prompt, wd);
 		return (prompt);
 	}
-	else if (ft_occ(wd, '/') == 2)
+	else if (ft_occ(wd, '/') == 2 && ft_strncmp(wd, "/home/", 6) == 0)
 	{
 		prompt = ft_at_user(start_prompt, end_prompt);
 		return (prompt);

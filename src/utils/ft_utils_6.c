@@ -6,11 +6,23 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 22:58:50 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/29 18:19:23 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/02 14:38:14 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+void	ft_print_lst_exec(t_lst_exec *lst_exec)
+{
+	printf("exec\n");
+	while (lst_exec != NULL)
+	{
+		ft_printf_2d(lst_exec->args, lst_exec->expand);
+		printf("in  -> %d\n", lst_exec->fd_in);
+		printf("out -> %d\n\n", lst_exec->fd_out);
+		lst_exec = lst_exec->next;
+	}
+}
 
 void	ft_print_tree(t_tree *tree)
 {

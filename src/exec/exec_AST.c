@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 01:19:42 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/01 22:15:20 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/02 14:34:33 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	ft_tree_exec(t_tree *tree, char ***env, int *status)
 		ll_len = ft_linked_list_size(tmp_tree->lst_exec);
 		if (ll_len == 1 && ft_is_builtin(tmp_tree->lst_exec->args[0]) == 1)
 		{
-			arg = new_args(tmp_tree->lst_exec->args);
+			arg = ft_new_args(tmp_tree->lst_exec);
 			status2 = ft_find_builtin(arg[0], arg, env, &exit_flag);
 			if (exit_flag)
 			{
@@ -47,9 +47,11 @@ int	ft_tree_exec(t_tree *tree, char ***env, int *status)
 		}
 		while (tmp_tree->lst_exec != NULL)
 		{
-			status2 = ft_exec_cmd_fork(tmp_tree, env);
+			arg = ft_new_args(tmp_tree->lst_exec);
+			status2 = ft_exec_cmd_fork(tmp_tree, env, arg);
 			tmp_tree->lst_exec = tmp_tree->lst_exec->next;
 		}
+		free_tab_tab(arg);
 		while ((--ll_len) + 1 > 0)
 			waitpid(0, status, 0);
 	}

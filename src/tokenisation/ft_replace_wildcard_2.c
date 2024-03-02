@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 22:02:47 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/02 22:15:02 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/27 08:40:05 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ t_token **token, int *find)
 		if (match_with_wildcard(data_parse->before, data_parse->after, ls->str) \
 		== SUCCESS)
 		{
-			if (ft_lst_insert(token, ft_lstnew_no_malloc(ls->str, WORD, TEXT)) \
+			if (ft_lst_insert(token, ft_lstnew_no_malloc(ls->str, WORD, TEXT, NULL)) \
 			== ERROR_MALLOC)
 				return (free(data_parse->before), \
 				free(data_parse->after), ERROR_MALLOC);
@@ -88,7 +88,7 @@ int	ft_wildcard_no_before_no_after(t_wildcard **ls, t_token **token, int *find)
 		if ((*ls)->str[0] != '.')
 		{
 			if (ft_lst_insert(token, ft_lstnew_no_malloc((*ls)->str, \
-			WORD, TEXT)) == ERROR_MALLOC)
+			WORD, TEXT, NULL)) == ERROR_MALLOC)
 				return (ft_print_error_malloc(), \
 				ft_free_wildcard(ls), ERROR_MALLOC);
 			*find = 1;

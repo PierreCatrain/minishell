@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 04:21:19 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/11 04:05:56 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/02/27 08:37:58 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_token	*without_parenthesis(t_token *token)
 	while (tmp->next != NULL)
 	{
 		if (ft_lst_add_back(&new, ft_lstnew_no_malloc(tmp->str, \
-						tmp->quotes, tmp->type)) == ERROR_MALLOC)
+						tmp->quotes, tmp->type, tmp->expand)) == ERROR_MALLOC)
 			return (NULL);
 		tmp = tmp->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 11:55:49 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/01 14:18:00 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/02 14:38:04 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,18 +80,6 @@ char	**ft_split(char *s, char c)
 	}
 	tab[j] = 0;
 	return (tab);
-}
-
-void	ft_print_lst_exec(t_lst_exec *lst_exec)
-{
-	printf("exec\n");
-	while (lst_exec != NULL)
-	{
-		ft_printf_2d(lst_exec->args);
-		printf("in  -> %d\n", lst_exec->fd_in);
-		printf("out -> %d\n\n", lst_exec->fd_out);
-		lst_exec = lst_exec->next;
-	}
 }
 
 int	ft_len_tab_tab(char **env)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_create_tree.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 02:02:25 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/11 04:42:20 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/02 14:14:57 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ int	ft_interpret_token(t_data_parse *data_parse, \
 		if (data_parse->args_tmp == NULL)
 			return (ft_free_pipes(data_parse->fd_pipes, data_parse->nb_pipes), \
 			ft_print_error_malloc(), ERROR_MALLOC);
+		if (ft_complete_expand(&data_parse->expand, (*token)->expand, ft_strlen_2d(data_parse->args_tmp)) == ERROR_MALLOC)//
+			return (ERROR_MALLOC);//
 	}
 	return (SUCCESS);
 }

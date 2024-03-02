@@ -6,28 +6,48 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 22:48:14 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/01 21:54:38 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/02 14:37:42 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+void free_expand(t_expand **expand, int len)
+{
+	t_expand *tmp;
+	int index;
+
+	index = 0;
+	while (index < len)
+	{
+		while (expand[index] != NULL)
+		{
+			tmp = expand[index];
+			expand[index] = expand[index]->next;
+			free(tmp);
+		}
+		index++;
+	}
+	free(expand);
+}
 
 void	free_close_exec_list(t_lst_exec *exec)
 {
 	t_lst_exec	*tmp;
 
 	while (exec->prev != NULL)
-	{
 		exec = exec->prev;
-	}	
 	while (exec != NULL)
 	{
 		tmp = exec;
+		free_expand(exec->expand, ft_strlen_2d(exec->args));
+		printf("adress 2: %p\n", exec->args);
 		free_2d(exec->args);
 		if (exec->fd_in > 2)
 			close(exec->fd_in);
 		if (exec->fd_out > 2)
 			close(exec->fd_out);
+		free_expand(exec->expand, exec->len_expand);
 		exec = exec->next;
 		free(tmp);
 	}
@@ -64,11 +84,26 @@ void	free_tab_tab(char **tab)
 	free(tab);
 }
 
-void	ft_free_tab_tab_incremented(char **tab)
-{
-	int	i;
+// void	ft_free_tab_tab_incremented(char **tab)
+// {
+// 	int	i;
 
-	i = -1;
-	while (tab[++i])
-		free(tab[i]);
+// 	i = -1;
+// 	while (tab[++i])
+// 		free(tab[i]);
+// }
+
+void	ft_free_wildcard(t_wildcard **ls)
+{
+	t_wildcard	*tmp;
+
+	while ((*ls)->prev != NULL)
+		*ls = (*ls)->prev;
+	while (*ls != NULL)
+	{
+		tmp = *ls;
+		*ls = (*ls)->next;
+		free(tmp->str);
+		free(tmp);
+	}
 }

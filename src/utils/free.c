@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:02:59 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/01 21:54:52 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/02 14:37:48 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	free_2d(char **str)
 	index = -1;
 	while (str[++index])
 	{
-		if (str[index] != NULL && str[index][0] != '\0')
+		if (str[index] != NULL)
 			free(str[index]);
 	}
 	free(str);

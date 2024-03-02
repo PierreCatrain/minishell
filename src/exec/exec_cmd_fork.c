@@ -6,26 +6,24 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 17:38:07 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/01 22:14:17 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/02 14:34:43 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_child(t_tree *tree, char ***env)
+void	ft_child(t_tree *tree, char ***env, char **args)
 {
-	char	**args;
-
-	args = new_args(tree->lst_exec->args);
 	dup2(tree->lst_exec->fd_in, 0);
 	dup2(tree->lst_exec->fd_out, 1);
 	free_and_close_tree(tree);
 	find_cmd(env, args);
 }
 
-int	ft_exec_cmd_fork(t_tree *tree, char ***env)
+int	ft_exec_cmd_fork(t_tree *tree, char ***env, char **args)
 {
 	pid_t	pid;
+	//char	**arg; j'ai commenter ca c'etait pas utilise
 	int		tmp;
 
 	if (tree->lst_exec->fd_in == -1 || tree->lst_exec->fd_out == -1)
@@ -39,7 +37,7 @@ int	ft_exec_cmd_fork(t_tree *tree, char ***env)
 		return (EXIT_FAILURE);
 	}
 	if (pid == 0)
-		ft_child(tree, env);
+		ft_child(tree, env, args);
 	else
 	{
 		g_exit_status = -100;

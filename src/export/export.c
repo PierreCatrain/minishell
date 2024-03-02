@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 22:51:52 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/01 18:11:33 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/02 14:35:58 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,10 @@ int	ft_export2(char ***env, char *export_str)
 		ft_change_export(env, export);
 		return (free(export), 0);
 	}
+	// printf("env[avant realloc]\n\n\n");
+	// print_tab_tab(*env);
+	// printf("env[apres realloc]\n\n\n");
+	// print_tab_tab(*env);
 	i = ft_realloc_env(env, 1);
 	(*env)[i] = ft_str_dup_env(export, (*env)[i]);
 	(*env)[i + 1] = NULL;

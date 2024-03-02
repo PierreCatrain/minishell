@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:52:38 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/01 14:43:58 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/02 14:33:07 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,21 +167,6 @@ int	main(int argc, char **argv, char **envp)
 			free_and_close_tree(tree);
 		}
 	}
-	// printf("exit status = %d\n", exit_status);
 	return (exit_status);
 }
 
-//echo bonjour"v"sfa
-
-/*
-a faire
-
-le leak de l'historique
-signaux + gerer si on ctrl c ou d depuis le remplissage du here_doc et attention on a open mais pas re close puis re open
-ctrl c depuis une commande
-
-
-ameliorer
-echo doit echo tout les args
-les erreurs d'invalide tokens
-*/
