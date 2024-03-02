@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 22:48:14 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/01 15:01:55 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/02 05:57:25 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void free_expand(t_expand **expand, int len)
 {
 	t_expand *tmp;
 	int index;
-
+	
 	index = 0;
 	while (index < len)
 	{
@@ -28,7 +28,7 @@ void free_expand(t_expand **expand, int len)
 		}
 		index++;
 	}
-	free(expand); 
+	free(expand);
 }
 
 void	free_close_exec_list(t_lst_exec *exec)
@@ -40,12 +40,12 @@ void	free_close_exec_list(t_lst_exec *exec)
 	while (exec != NULL)
 	{
 		tmp = exec;
+		free_expand(exec->expand, ft_strlen_2d(exec->args));
 		free_2d(exec->args);
 		if (exec->fd_in > 2)
 			close(exec->fd_in);
 		if (exec->fd_out > 2)
 			close(exec->fd_out);
-		free_expand(exec->expand, exec->len_expand);
 		exec = exec->next;
 		free(tmp);
 	}

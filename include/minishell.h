@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/01 14:47:01 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/02 07:27:42 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -318,6 +318,13 @@ char *ft_cat_env_variable(char *new_str, char *str, int *index);
 
 //ft_add_wildcard.c
 char **ft_add_wildcard(char **base, char *add, t_wildcard *ls);
+int	ft_strchr_wildcard(char *str, char *find);
+int ft_check_all(char **split, char *str);
+int ft_check_before(char *to_find, char **split, char *str);
+int ft_check_after(char *to_find, char **split, char *str);
+
+//expand_redirection.c
+char *transfo_expand(char *str, t_expand *expand);
 
 // # ====================================================== #
 // |														|

@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 01:23:54 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/01 13:59:54 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/02 05:59:53 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_expand **ft_dup_array_expand(t_expand **expand, int size)
     t_expand **new;
     int index;
 
-    new = malloc(size * sizeof(t_expand *));
+    new = malloc(size * sizeof(t_expand));// peut etre un pointeur mais ca a regler une erreur
     if (new == NULL)
         return (NULL);
     index = 0;
@@ -71,5 +71,6 @@ t_expand **ft_dup_array_expand(t_expand **expand, int size)
         new[index] = expand[index];
         index++;
     }
+    free(expand);
     return (new);
 }

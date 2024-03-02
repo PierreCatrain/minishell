@@ -6,11 +6,13 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 04:13:45 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/27 02:35:56 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/02 06:58:46 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+
 
 void	ft_exec_token_type_2(t_data_parse *data_parse, t_token *token)
 {
@@ -26,16 +28,14 @@ void	ft_exec_token_type_2(t_data_parse *data_parse, t_token *token)
 		if (data_parse->fd_out != 1 && data_parse->fd_out != -1)
 			close(data_parse->fd_out);
 		token = token->next;
-		data_parse->fd_out = open(token->str, O_CREAT, O_WRONLY, O_TRUNC, 0777);
-		printf("debut %d\n", data_parse->fd_out);
+		data_parse->fd_out = open(token->str, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	}
 	else if (token->type == APPEND)
 	{
 		if (data_parse->fd_out != 1 && data_parse->fd_out != -1)
 			close(data_parse->fd_out);
 		token = token->next;
-		data_parse->fd_out = open(token->str, \
-				O_CREAT, O_WRONLY, O_APPEND, 0644);
+		data_parse->fd_out = open(token->str, O_CREAT | O_WRONLY | O_APPEND, 0644);
 	}
 }
 
