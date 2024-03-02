@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utils_7.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 23:13:46 by picatrai          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/03/01 06:53:08 by picatrai         ###   ########.fr       */
-=======
-/*   Updated: 2024/03/01 11:53:20 by picatrai         ###   ########.fr       */
->>>>>>> 4a2c2c7cc4cd1b25115ddc16a6bea9f257eb41a8
+/*   Updated: 2024/03/02 14:12:50 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +46,4 @@ void	ft_print_fd_pipe(int **fd_pipes, int nb_pipes)
 		printf("fd pipe n%d/0 -> %d\n", index, fd_pipes[index][0]);
 		printf("fd pipe n%d/1 -> %d\n", index, fd_pipes[index][1]);
 	}
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 4a2c2c7cc4cd1b25115ddc16a6bea9f257eb41a8

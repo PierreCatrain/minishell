@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_create_tree_3.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 04:09:07 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/27 08:43:22 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/02 14:14:33 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ char	**ft_strdup_2d(char **str)
 	new = malloc((ft_strlen_2d(str) + 1) * sizeof(char *));
 	if (new == NULL)
 		return (free_2d(str), NULL);
+	printf("adress 1: %p\n", new);
 	index = -1;
 	while (str[++index])
 	{

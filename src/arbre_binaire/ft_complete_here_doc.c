@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_complete_here_doc.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 02:57:01 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/26 03:51:37 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/02 14:13:15 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,7 @@ int ft_complete_here_doc(t_data_parse *data_parse, t_token *token)
             data_parse->heredoc = ft_here_doc();
 	        if (data_parse->heredoc == NULL)
 		        return (free(data_parse->array_here_doc), ERROR);
-	        data_parse->array_here_doc[index] = open(data_parse->heredoc, \
-			    O_CREAT, O_RDWR, O_TRUNC, 0644);
+	        data_parse->array_here_doc[index] = open(data_parse->heredoc, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	        if (ft_complete(data_parse->array_here_doc[index++], token) == ERROR)
             {
                 unlink(data_parse->heredoc);

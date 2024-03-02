@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signaux.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 06:02:52 by picatrai          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/02/26 23:50:52 by picatrai         ###   ########.fr       */
-=======
-/*   Updated: 2024/03/01 11:52:04 by picatrai         ###   ########.fr       */
->>>>>>> 4a2c2c7cc4cd1b25115ddc16a6bea9f257eb41a8
+/*   Updated: 2024/03/02 14:22:01 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +21,6 @@ void ft_display_new_prompt(int signal)
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
-	}
-	else
-	{
-		printf("%d\n", g_exit_status);
 	}
 }
 

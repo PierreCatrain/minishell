@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_make_token.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 13:37:36 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/01 14:28:48 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/02 14:23:02 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int ft_add_token(t_token **token, t_data_parse *data_parse, t_expand *expand)
 		{
 			if (ft_lst_add_back(token, ft_lstnew(data_parse->str, WORD, type[index], expand)) == ERROR_MALLOC)
 				return (ERROR_MALLOC);
+			return (SUCCESS);
 		}
 	}
 	if (data_parse->str[0] != '\0')

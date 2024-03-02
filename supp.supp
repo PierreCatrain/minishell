@@ -7,7 +7,6 @@
 {
     ignore_bin_leaks
     Memcheck:Leak
-    ...
     obj:/bin/*
 }
 {

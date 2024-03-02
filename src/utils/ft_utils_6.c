@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utils_6.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 22:58:50 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/27 02:41:04 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/02 14:24:59 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,4 +98,8 @@ char	*ft_itoa(int n)
 	if (n < 0)
 	itoa[0] = '-';
 	return (itoa);
+}
+int	ft_is_ascii(char c)
+{
+	return (!(c >= '0' && c <= '9'));
 }

@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tokenisation.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 05:06:05 by picatrai          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/03/01 11:43:03 by picatrai         ###   ########.fr       */
-=======
-/*   Updated: 2024/03/01 13:46:38 by picatrai         ###   ########.fr       */
->>>>>>> 4a2c2c7cc4cd1b25115ddc16a6bea9f257eb41a8
+/*   Updated: 2024/03/02 14:23:32 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,28 +247,18 @@ char *ft_isol_operateur(t_data_parse *data_parse)
 	return (data_parse->str);
 }
 
-// on parcourt tout l'input et on fait des tokens avec
-=======
 /*
 on parcourt tout l'input et on fait des tokens avec
 */
->>>>>>> 4a2c2c7cc4cd1b25115ddc16a6bea9f257eb41a8
 int	ft_tokenisation(t_token **token, t_data_parse *data_parse)
 {
 	if (ft_is_quote_close(data_parse->input, CLOSE, CLOSE) == OPEN)
 		return (free(data_parse->input), WRONG_INPUT);
-<<<<<<< HEAD
-	data_parse->input = ft_isol_operateur(data_parse);
-=======
 	data_parse->input = ft_isol_operator(data_parse);
->>>>>>> 4a2c2c7cc4cd1b25115ddc16a6bea9f257eb41a8
 	if (data_parse->input == NULL)
 		return (ERROR_MALLOC);
 	data_parse->index = 0;
 	while (data_parse->input[data_parse->index])
-<<<<<<< HEAD
-		ft_make_token(data_parse, token);
-=======
 	{
 		if (ft_make_token(data_parse, token) != SUCCESS)
 			return (ERROR);

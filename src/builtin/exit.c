@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 21:52:06 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/01 11:52:35 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/02 14:16:52 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,36 +69,41 @@ int	ft_check_exit_char(char *str)
 	return (1);
 }
 
-int	ft_exit_parsing(char **arg, long long int *exit_value)
+void	ft_exit_parsing(char **arg, long long int *exit_value, int *exit_flag)
 {
 	if (arg[2] != NULL)
 	{
-		printf("bash: exit: too many arguments\n");
+		ft_putstr_fd("bash: exit: too many arguments\n", 2);
+		*exit_flag = 0;
 		*exit_value = 2;
-		return (0);
+		return ;
 	}
-	return (1);
+	return ;
 }
 
-int	ft_exit(char **arg)
+int	ft_exit(char **arg, int *exit_flag)
 {
 	long long int	exit_value;
 
-	printf("1\n");
-	if (arg == NULL || arg[1] == NULL)
-		exit (0);
-	if (!ft_exit_parsing(arg, &exit_value))
+	if (arg[1] == NULL)
+	{
+		*exit_flag = 1;
+		return (0);
+	}
+	if (ft_atoi(arg[1], &exit_value) == FALSE)
+	{
+		printf("bash: exit: %s: numeric argument required\n", arg[1]);
+		return (2);
+	}
+	else
+		*exit_flag = 1;
+	if (!ft_check_exit_char(arg[1]))
+	{
+		printf("bash: exit: %s: numeric argument required\n", arg[1]);
+		*exit_flag = 1;
 		exit_value = 2;
-	else if (ft_atoi(arg[1], &exit_value) == FALSE)
-	{
-		printf("bash: exit: %s: numeric argument required\n", arg[1]);
-		exit(2);
+		return (exit_value);
 	}
-	else if (!ft_check_exit_char(arg[1]))
-	{
-		printf("bash: exit: %s: numeric argument required\n", arg[1]);
-			exit_value = 2;
-	}
-	free_tab_tab(arg);
-	exit(exit_value);
+	ft_exit_parsing(arg, &exit_value, exit_flag);
+	return (exit_value);
 }
