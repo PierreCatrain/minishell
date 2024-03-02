@@ -6,13 +6,12 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 05:06:05 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/02 14:40:56 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/02 14:56:32 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-<<<<<<< HEAD
 int ft_add_token(t_token **token, t_data_parse *data_parse, t_expand *expand)
 {
 	if (ft_strcmp(data_parse->str, "<<") == 0 && data_parse->single_quote_open == CLOSE && data_parse->double_quote_open == CLOSE)
@@ -263,7 +262,6 @@ int	ft_tokenisation(t_token **token, t_data_parse *data_parse)
 		if (ft_make_token(data_parse, token) != SUCCESS)
 			return (ERROR);
 	}
->>>>>>> 4a2c2c7cc4cd1b25115ddc16a6bea9f257eb41a8
 	free(data_parse->input);
 	if (*token == NULL)
 		return (WRONG_INPUT);

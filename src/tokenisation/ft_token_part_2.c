@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_token_part_2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 00:58:07 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/26 01:32:24 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/02 15:05:20 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ int	ft_complete_double(t_data_parse *data_parse, t_token **token)
 		data_parse->double_quote_open = CLOSE;
 		data_parse->index++;
 		data_parse->str[data_parse->index_str] = '\0';
-		if (ft_lst_add_back(token, ft_lstnew(data_parse->str, \
-		DOUBLE_QUOTES, TEXT)) == ERROR_MALLOC)
+		if (ft_lst_add_back(token, ft_lstnew(data_parse->str, DOUBLE_QUOTES, TEXT)) == ERROR_MALLOC)
 			return (free_tokenisation_2(token, data_parse), ERROR_MALLOC);
 	}
 	return (SUCCESS);

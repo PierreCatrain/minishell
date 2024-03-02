@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 17:38:07 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/02 14:34:43 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/02 14:54:17 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	ft_child(t_tree *tree, char ***env, char **args)
 int	ft_exec_cmd_fork(t_tree *tree, char ***env, char **args)
 {
 	pid_t	pid;
-	//char	**arg; j'ai commenter ca c'etait pas utilise
 	int		tmp;
 
 	if (tree->lst_exec->fd_in == -1 || tree->lst_exec->fd_out == -1)

@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 02:51:35 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/02 14:22:41 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/02 14:56:48 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,4 @@ t_token	*ft_lstnew_no_malloc(char *str, int quotes, int type, t_expand *expand)
 	new->prev = NULL;
 	new->next = NULL;
 	return (new);
-<<<<<<< HEAD
 }

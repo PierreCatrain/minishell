@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/02 14:35:30 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/02 15:02:43 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,6 +206,15 @@ int ft_make_token(t_data_parse *data_parse, t_token **token);
 char	*ft_join_char(char *str, char c);
 char	*ft_strjoin_one_malloc(char *new_str, char *str_tmp);
 
+//ft_replace_wildcard_2.c
+
+//ft_replace_wildcard_3.c
+void	ft_free_wildcard(t_wildcard **ls);
+int	ft_strlen_before(char *str);
+int	ft_strlen_after(char *str);
+char	*ft_only_end_str(char *str, int size);
+int	match_with_wildcard(char *before, char *after, char *str);
+
 //ft_replace_wildcard_4.c
 char	*ft_strjoin_1_malloc(char *str1, char *str2);
 t_wildcard	*ft_lst_wildcard_new(char *str);
@@ -228,6 +237,7 @@ int ft_is_quote_close(char *input, int double_quote_open, int single_quote_open)
 // |			FT_CONDITION_GRAMMAIRE.C		        	|
 // |														|
 // # ====================================================== #
+
 int ft_condition_grammaire(t_token *token);
 
 // ft_condition_grammaire_2.c
@@ -411,14 +421,6 @@ char	*ft_strdup(char *str);
 void	ft_print_fd_pipe(int **fd_pipes, int nb_pipes);
 int		ft_size_malloc_long_long(long long nb);
 char	*ft_itoa_long_long(long long nb);
-
-// # ====================================================== #
-// |														|
-// |	                FT_UTILS_8.C						|
-// |														|
-// # ====================================================== #
-
-
 
 // # ====================================================== #
 // |														|
