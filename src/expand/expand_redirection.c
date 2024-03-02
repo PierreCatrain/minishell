@@ -6,13 +6,13 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 06:57:07 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/02 07:29:26 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/02 08:15:28 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char *ft_transfo_wildcard(char *str, t_wildcard *ls)// free ls
+char *ft_transfo_wildcard(char *str, t_wildcard *ls)
 {
     char *new;
     char **split;
@@ -65,6 +65,6 @@ char *transfo_expand(char *str, t_expand *expand)
 		return (NULL);
     new = ft_transfo_wildcard(new, ls);
     if (new == NULL)
-        return (NULL);
-    return (new);
+        return (ft_free_wildcard(&ls), NULL);
+    return (ft_free_wildcard(&ls), new);
 }

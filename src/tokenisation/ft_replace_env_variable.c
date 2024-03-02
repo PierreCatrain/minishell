@@ -6,12 +6,11 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 23:58:35 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/01 08:17:51 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/02 07:44:15 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
 
 char	*ft_join_char(char *str, char c)
 {

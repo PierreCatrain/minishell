@@ -6,11 +6,11 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 20:26:44 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/24 21:32:25 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/01 18:14:41 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
 char	*ft_get_builtin_err_msg(char *builtin)
 {
@@ -23,14 +23,13 @@ char	*ft_get_builtin_err_msg(char *builtin)
 	builtin_msg = ft_str_dup_env(builtin, builtin_msg);
 	if (!builtin_msg)
 		return (NULL);
-	error_msg = ft_str_dup_env(": write error: No space left on device\n", error_msg);
+	error_msg = ft_str_dup_env(": write error: \
+	No space left on device\n", error_msg);
 	if (!error_msg)
 		return (NULL);
 	final_msg = ft_strjoin(builtin_msg, error_msg);
 	free(builtin_msg);
 	free(error_msg);
-	write(2, "final message:\n", 15);
-	ft_putstr_fd(final_msg, 2);
 	return (final_msg);
 }
 
@@ -41,25 +40,17 @@ void	ft_pustr_builtin_pwd(char *str)
 	err_msg = ft_get_builtin_err_msg("pwd");
 	if (write(1, str, ft_strlen(str)) == -1)
 	{
-		if (errno == ENOSPC)
-		{
-			ft_putstr_fd(err_msg, 2);
-			ft_putstr_fd(strerror(errno), 2);
-			free(err_msg);
-			exit(125);
-		}
-		exit(0);
+		ft_putstr_fd(err_msg, 2);
+		ft_putstr_fd(strerror(errno), 2);
+		free(err_msg);
+		exit(125);
 	}
 	if (write(1, "\n", 1) == -1)
 	{
-		if (errno == ENOSPC)
-		{
-			ft_putstr_fd(err_msg, 2);
-			ft_putstr_fd(strerror(errno), 2);
-			free(err_msg);
-			exit(125);
-		}
-		exit (0);
+		ft_putstr_fd(err_msg, 2);
+		ft_putstr_fd(strerror(errno), 2);
+		free(err_msg);
+		exit(125);
 	}
 	free(err_msg);
 }
@@ -68,6 +59,7 @@ void	ft_pustr_builtin_pwd(char *str)
 int	ft_pwd(char **tab)
 {
 	char	buff[PATH_MAX + 1];
+
 	(void)tab;
 	if (getcwd(buff, PATH_MAX) == NULL)
 	{
@@ -75,8 +67,6 @@ int	ft_pwd(char **tab)
 		return (2);
 	}
 	ft_pustr_builtin_pwd(buff);
-	// if (tab != NULL)
-	// 	free_tab_tab(tab);
 	return (0);
 }
 

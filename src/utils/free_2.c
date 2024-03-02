@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 22:48:14 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/02 05:57:25 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/02 10:52:24 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void free_expand(t_expand **expand, int len)
 {
 	t_expand *tmp;
 	int index;
-	
+
 	index = 0;
 	while (index < len)
 	{
@@ -41,6 +41,7 @@ void	free_close_exec_list(t_lst_exec *exec)
 	{
 		tmp = exec;
 		free_expand(exec->expand, ft_strlen_2d(exec->args));
+		printf("adress 2: %p\n", exec->args);
 		free_2d(exec->args);
 		if (exec->fd_in > 2)
 			close(exec->fd_in);
@@ -65,10 +66,43 @@ void	free_close_tree(t_tree *tree)
 
 void	free_and_close_tree(t_tree *tree)
 {
-	// rl_clear_history();
 	if (tree == NULL)
 		return ;
 	while (tree->parent != NULL)
 		tree = tree->parent;
 	free_close_tree(tree);
+}
+
+void	free_tab_tab(char **tab)
+{
+	int	i;
+
+	i = -1;
+	while (tab[++i])
+		free(tab[i]);
+	free(tab);
+}
+
+// void	ft_free_tab_tab_incremented(char **tab)
+// {
+// 	int	i;
+
+// 	i = -1;
+// 	while (tab[++i])
+// 		free(tab[i]);
+// }
+
+void	ft_free_wildcard(t_wildcard **ls)
+{
+	t_wildcard	*tmp;
+
+	while ((*ls)->prev != NULL)
+		*ls = (*ls)->prev;
+	while (*ls != NULL)
+	{
+		tmp = *ls;
+		*ls = (*ls)->next;
+		free(tmp->str);
+		free(tmp);
+	}
 }

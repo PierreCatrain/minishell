@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/02 07:27:42 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/02 08:12:24 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,6 +204,7 @@ int ft_make_token(t_data_parse *data_parse, t_token **token);
 
 // char *ft_replace_env_variable(char *str, t_data_parse *data_parse);
 char	*ft_join_char(char *str, char c);
+char	*ft_strjoin_one_malloc(char *new_str, char *str_tmp);
 
 //ft_replace_wildcard_4.c
 char	*ft_strjoin_1_malloc(char *str1, char *str2);
@@ -328,7 +329,7 @@ char *transfo_expand(char *str, t_expand *expand);
 
 // # ====================================================== #
 // |														|
-// |					FT_UTILS.C  						|
+// |					FT_UTILS_1.C  						|
 // |														|
 // # ====================================================== #
 
@@ -369,11 +370,11 @@ void	ft_printf_2d(char **str, t_expand **expand);
 // |														|
 // # ====================================================== #
 
-void    ft_free_2d_index(char **str, int index);
-int ft_strlen_2d(char **str);
-char **ft_join_2d_args_null(char *str, char **new);
-char **ft_join_2d(char **args_cmd, char *str);
-int is_input_only_whitespace(char *str);
+void	ft_free_2d_index(char **str, int index);
+int 	ft_strlen_2d(char **str);
+char	**ft_join_2d_args_null(char *str, char **new);
+char	**ft_join_2d(char **args_cmd, char *str);
+int		is_input_only_whitespace(char *str);
 
 // # ====================================================== #
 // |														|
@@ -381,23 +382,76 @@ int is_input_only_whitespace(char *str);
 // |														|
 // # ====================================================== #
 
+int	count_world(char const *s, char sep);
+char	*dup_word(char const *s, int start, int end);
 char	**ft_split(char *s, char c);
-char	*ft_strjoin_path(char *s1, char *s2);
-char	*ft_strjoin_path_without_free(char *s1, char *s2);
-char	*ft_strjoin_wihtout_free(char *s1, char *s2);
-
-//ft_utils_6.c
-void    ft_print_tree(t_tree *tree);
 void	ft_print_lst_exec(t_lst_exec *lst_exec);
-char *ft_get_str(char *str);
+int	ft_len_tab_tab(char **env);
+
+// # ====================================================== #
+// |														|
+// |	                FT_UTILS_6.C						|
+// |														|
+// # ====================================================== #
+
+void	ft_print_tree(t_tree *tree);
+char	*ft_get_str(char *str);
 int	ft_count_itoa(int n);
 char	*ft_itoa(int n);
+int	ft_is_ascii(char c);
 
-//ft_utils_7.c
-void print_invalid_token(char *str);
-char *ft_strdup(char *str);
+// # ====================================================== #
+// |														|
+// |	                FT_UTILS_7.C						|
+// |														|
+// # ====================================================== #
+
+void	print_invalid_token(char *str);
+char	*ft_strdup(char *str);
 void	ft_print_fd_pipe(int **fd_pipes, int nb_pipes);
+int		ft_size_malloc_long_long(long long nb);
+char	*ft_itoa_long_long(long long nb);
+
+// # ====================================================== #
+// |														|
+// |	                FT_UTILS_8.C						|
+// |														|
+// # ====================================================== #
+
+
+
+// # ====================================================== #
+// |														|
+// |	         FT_UTILS_LINKED_LIST.C						|
+// |														|
+// # ====================================================== #
+
+t_token    *ft_lstlast(t_token *token);
+// t_token *ft_lstnew(char *str, int quotes, int type);
+int    ft_lst_add_back(t_token **token, t_token *new);
+int ft_lst_insert(t_token **token, t_token *new);
+void ft_lst_del(t_token **token);
+
+// # ====================================================== #
+// |														|
+// |	         FT_UTILS_LINKED_LIST2.C					|
+// |														|
+// # ====================================================== #
+
+void	print_linked_list(t_lst_exec *lst_exec);
 int	ft_linked_list_size(t_lst_exec *lst);
+
+// # ====================================================== #
+// |														|
+// |	                JOIN_UTILS.C						|
+// |														|
+// # ====================================================== #
+
+char	*ft_strjoin_equal_val(char *s1, char *s2);
+char	*ft_strjoin_path_without_free(char *s1, char *s2);
+char	*ft_strjoin_wihtout_free(char *s1, char *s2);
+char	*ft_strjoin_one_malloc(char *new_str, char *str_tmp);
+char	*ft_strjoin_path(char *s1, char *s2);
 
 // # ====================================================== #
 // |														|
@@ -409,18 +463,12 @@ void ft_free_token(t_token **token);
 void free_tokenisation_1(char *input, t_token **token);
 void free_tokenisation_2(t_token **token, t_data_parse *data_parse);
 void    free_2d(char **str);
-void ft_print_error_malloc(void);
-
-// # ====================================================== #
-// |														|
-// |					ALLOC								|
-// |														|
-// # ====================================================== #
-
+void    ft_print_error_malloc(void);
+void	ft_free_tab_tab_incremented(char **tab);
 int ft_realloc_env(char ***env, int size);
-
-//free_2.c
 void    free_and_close_tree(t_tree *tree);
+void	free_tab_tab(char **tab);
+void	ft_free_wildcard(t_wildcard **ls);
 
 
 // # ====================================================== #
@@ -429,7 +477,6 @@ void    free_and_close_tree(t_tree *tree);
 // |														|
 // # ====================================================== #
 
-void	free_tab_tab(char **tab);
 void	print_tab_tab(char **tab);
 void	clean_env_value(char ***new_env);
 void	ft_print_env_ascii_order(char **env);
@@ -481,10 +528,20 @@ int     ft_unset(char ***env, char **cmd);
 // |														|
 // # ====================================================== #
 
-int     ft_cd(char **path_tab, char ***env);
-char	*ft_str_join_export_name_with_equal_value(char *s1, char *s2);
-void    ft_change_PWD_OLD_PWD(char *current_path, char *new_path, char ***env);
-int     is_export_name_in_env(char **env, char *str);
+void	ft_change_owd_old_pwd2(char ***env, char *current_path, int check);
+void	ft_change_pwd_old_pwd(char *current_path, char *new_path, char ***env);
+int 	is_export_name_in_env(char **env, char *str);
+int		ft_cdpath(char **pathtab);
+int		ft_msg_err_chdir(char *str);
+void	ft_msg_err_getcwd(void);
+int		ft_get_env_value2(char **env_name, char *env, char *str, char **env_value);
+char	*ft_get_env_value(char **env, char *str);
+int		ft_cd_parsing(char **path_tab);
+int		ft_cd_home(char ***env);
+int		ft_cd_dash(char ***env);
+int		ft_cd_cdpath(char **path_tab, char ***env);
+int		ft_cd(char **path_tab, char ***env);
+
 
 // # ====================================================== #
 // |														|
@@ -508,7 +565,7 @@ int	ft_pwd(char **tab);
 // |														|
 // # ====================================================== #
 
-int	ft_exit(char **arg);
+int	ft_exit(char **arg, int *exit_flag);
 
 // # ====================================================== #
 // |														|
@@ -527,7 +584,7 @@ int	ft_env(char **env);
 char	**ft_get_path_cmd(void);
 char	*ft_get_err_msg(char *cmd, char *msg);
 int 	ft_is_builtin(char *cmd);
-int 	ft_find_builtin(char *cmd, char **cmd_tab, char ***env);
+int 	ft_find_builtin(char *cmd, char **cmd_tab, char ***env, int *exit_flag);
 int 	ft_check_path_cmd(char **env, char **cmd);
 int 	ft_exec_cmd_fork(t_tree *tree, char ***env, char **arg);
 int 	find_cmd(char ***env, char **arg);
@@ -542,5 +599,13 @@ int 	ft_tree_exec(t_tree *tree, char ***env, int *status);
 
 void	ft_msg_err_getcwd(void);
 int	    ft_msg_err_chdir(char *str);
+
+// # ====================================================== #
+// |														|
+// |				FT_UTILS_DEBUG							|
+// |														|
+// # ====================================================== #
+
+void	print_tab_tab(char **tab);
 
 #endif

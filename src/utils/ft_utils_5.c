@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utils_5.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 11:55:49 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/28 11:03:25 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/02 07:58:53 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	count_world(char const *s, char sep)
 	return (count);
 }
 
-static char	*dup_word(char const *s, int start, int end)
+char	*dup_word(char const *s, int start, int end)
 {
 	char	*str;
 	int		i;
@@ -82,40 +82,12 @@ char	**ft_split(char *s, char c)
 	return (tab);
 }
 
-char	*ft_strjoin_path(char *s1, char *s2)
+int	ft_len_tab_tab(char **env)
 {
-	int	i;
-	int	j;
-	char	*str;
+	int	res;
 
-	i = -1;
-	str = (char *) malloc (ft_strlen(s1) + ft_strlen(s2) + 2);
-	while (s1[++i])
-		str[i] = s1[i];
-	str[i++] = '/';
-	j = -1;
-	while (s2[++j])
-		str[i + j] = s2[j];
-	str[i + j] = '\0';
-	free (s1);
-	// free (s2);
-	return (str);
-}
-
-char	*ft_strjoin_path_without_free(char *s1, char *s2)
-{
-	int	i;
-	int	j;
-	char	*str;
-
-	i = -1;
-	str = (char *) malloc (ft_strlen(s1) + ft_strlen(s2) + 2);
-	while (s1[++i])
-		str[i] = s1[i];
-	str[i++] = '/';
-	j = -1;
-	while (s2[++j])
-		str[i + j] = s2[j];
-	str[i + j] = '\0';
-	return (str);
+	res = 0;
+	while (env[res])
+		res++;
+	return (res);
 }

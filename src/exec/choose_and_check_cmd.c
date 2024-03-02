@@ -6,32 +6,43 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 10:10:03 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/28 13:45:46 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/01 18:52:03 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
 char	**ft_get_path_cmd(void)
 {
 	char	**path_split;
 	char	*path;
 
-	path = getenv("PATH"); // free ?
+	path = getenv("PATH");
 	if (!path)
 	{
 		printf("PATH n'existe pas dans env\n");
-		return (NULL); //gestion d'erreur;
+		return (NULL);
 	}
 	path_split = ft_split(path, ':');
 	if (!path_split)
 	{
 		printf("error prblm\n");
 		return (NULL);
-		// gestion d'err
-		// free path ?
 	}
 	return (path_split);
+}
+
+void	ft_check_path_execve(char **path, char ***cmd, char ***env)
+{
+	if (execve(*path, *cmd, *env) == -1)
+	{
+		printf("bash: %s: cannot execute binary file: \
+			%s\n", (*cmd)[0], strerror(errno));
+		free(*path);
+		free_tab_tab(*cmd);
+		free_tab_tab(*env);
+		exit (126);
+	}
 }
 
 int	ft_check_path_cmd(char **env, char **cmd)
@@ -41,27 +52,17 @@ int	ft_check_path_cmd(char **env, char **cmd)
 	char	**path_split;
 	char	*msg_err;
 
-	i = -1;
 	path_split = ft_get_path_cmd();
-	printf("path split\n");
-	print_tab_tab(path_split);
+	if (!path_split)
+		exit (127);
+	i = -1;
 	while (path_split[++i])
 	{
 		cmd_path = ft_strjoin_path(path_split[i], cmd[0]);
 		if (cmd_path == NULL)
-		{
-			return (1);
-		}
+			return (ERROR_MALLOC);
 		if (!access(cmd_path, F_OK | X_OK))
-		{
-			if (execve(cmd_path, cmd, env) == -1)
-			{
-				printf("bash: %s: cannot execute binary file: %s\n", cmd_path, strerror(errno));
-				free(cmd_path);
-				free_tab_tab(cmd);
-				exit (126);
-			}
-		}
+			ft_check_path_execve(&cmd_path, &cmd, &env);
 		free (cmd_path);
 	}
 	msg_err = ft_strjoin_wihtout_free(cmd[0], ": command not found\n");
@@ -73,28 +74,31 @@ int	ft_check_path_cmd(char **env, char **cmd)
 	exit(127);
 }
 
+// access chemin absolue //EXECUTE BUILTIN
 int	find_cmd(char ***env, char **cmd)
 {
 	int	status;
+	int	fake_exit_status;
 
 	status = 0;
 	if (ft_is_builtin(cmd[0]))
 	{
-		status = ft_find_builtin(cmd[0], cmd, env);// access chemin absolue //EXECUTE BUILTIN
+		status = ft_find_builtin(cmd[0], cmd, env, &fake_exit_status);
+		if (status == -1)
+			return (1);
 		exit(status);
 	}
 	else
 	{
-		if (access(cmd[0], F_OK | X_OK) == 0) // mettre les droits d'exec et de lecture
+		if (access(cmd[0], F_OK | X_OK) == 0)
 		{
 			if (execve(cmd[0], cmd, *env) == -1)
 			{
-				printf("bash: %s: cannot execute binary file: %s\n", cmd[0], strerror(errno));
+				printf("bash: %s: cannot execute binary file: \
+				%s\n", cmd[0], strerror(errno));
 				exit (126);
 			}
 		}
-		printf("env = \n");
-		print_tab_tab(*env);
 		ft_check_path_cmd(*env, cmd);
 	}
 	return (status);
