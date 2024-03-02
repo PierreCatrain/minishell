@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/01 21:20:25 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/01 22:15:00 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -568,7 +568,7 @@ char	*ft_get_err_msg(char *cmd, char *msg);
 int 	ft_is_builtin(char *cmd);
 int 	ft_find_builtin(char *cmd, char **cmd_tab, char ***env, int *exit_flag);
 int 	ft_check_path_cmd(char **env, char **cmd);
-int 	ft_exec_cmd_fork(t_tree *tree, char ***env, char **arg);
+int 	ft_exec_cmd_fork(t_tree *tree, char ***env);
 int 	find_cmd(char ***env, char **arg);
 int 	ft_tree_exec(t_tree *tree, char ***env, int *status);
 

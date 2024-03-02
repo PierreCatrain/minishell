@@ -6,24 +6,26 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 17:38:07 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/01 21:29:43 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/01 22:14:17 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_child(t_tree *tree, char ***env, char **args)
+void	ft_child(t_tree *tree, char ***env)
 {
+	char	**args;
+
+	args = new_args(tree->lst_exec->args);
 	dup2(tree->lst_exec->fd_in, 0);
 	dup2(tree->lst_exec->fd_out, 1);
 	free_and_close_tree(tree);
 	find_cmd(env, args);
 }
 
-int	ft_exec_cmd_fork(t_tree *tree, char ***env, char **args)
+int	ft_exec_cmd_fork(t_tree *tree, char ***env)
 {
 	pid_t	pid;
-	char	**arg;
 	int		tmp;
 
 	if (tree->lst_exec->fd_in == -1 || tree->lst_exec->fd_out == -1)
@@ -37,7 +39,7 @@ int	ft_exec_cmd_fork(t_tree *tree, char ***env, char **args)
 		return (EXIT_FAILURE);
 	}
 	if (pid == 0)
-		ft_child(tree, env, args);
+		ft_child(tree, env);
 	else
 	{
 		g_exit_status = -100;
