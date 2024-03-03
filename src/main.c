@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:52:38 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/03 13:33:21 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/03 15:47:39 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,8 +134,8 @@ int	main(int argc, char **argv, char **envp)
 	exit_status = 0;
 	if (ft_set_sig() == ERROR)
 		return (ERROR);
-	// if (ft_check_argc_envp(argc, argv) == ERROR_ARGC_ENVP)
-	// 	return (ERROR_ARGC_ENVP);
+	if (ft_check_argc(argc, argv) == ERROR_ARGC_ENVP)
+		return (ERROR_ARGC_ENVP);
 	if (!envp)
 	{
 		printf("pas d'env\n");
@@ -171,3 +171,5 @@ int	main(int argc, char **argv, char **envp)
 	// printf("exit status = %d\n", exit_status);
 	return (exit_status);
 }
+
+//message d'erreur quand c'est pas un bon fichier a voir si on indique le nome du fichier dans le message d'erreur

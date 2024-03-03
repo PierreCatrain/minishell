@@ -6,13 +6,13 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 21:27:05 by picatrai          #+#    #+#             */
-/*   Updated: 2024/01/31 23:48:48 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/03 15:47:25 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	ft_check_argc_envp(int argc, char **argv)
+int	ft_check_argc(int argc, char **argv)
 {
 	if (argc != 1 && argc != 3)
 	{

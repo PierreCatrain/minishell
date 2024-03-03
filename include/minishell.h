@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/03 13:01:23 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/03 16:30:54 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,14 @@ typedef struct s_data_parse
 
     int tmp;
     t_expand **expand;
+
+    char condition_1[4];
+	char *res_1[4];
+	char condition_2[5];
+	char *res_2[5];
+
+    char *opp[9];
+	int type[9];
 }   t_data_parse;
 
 typedef struct s_wildcard
@@ -176,17 +184,27 @@ enum bool
     TRUE
 };
 
-//ft_check_argc_envp.c
-int ft_check_argc_envp(int argc, char **argv);
-
-//ft_get_prompt.c
-char *ft_get_prompt(void);
-
-//signaux.c
-int ft_set_sig(void);
-
 //ft_parse.c
 int ft_parse(t_tree **tree, t_data_parse *data_parse);
+
+// # ====================================================== #
+// |														|
+// |		            	start	           	            |
+// |														|
+// # ====================================================== #
+
+//ft_check_argc.c
+int ft_check_argc(int argc, char **argv);
+
+//ft_get_prompt.c
+char	*ft_at_home(char *start_prompt, char *end_prompt, char *str);
+char	*ft_at_user(char *start_prompt, char *end_prompt);
+char	*ft_at_else(char *start_prompt, char *end_prompt, char *str);
+char    *ft_get_prompt(void);
+
+//signaux.c
+void	ft_display_new_prompt(int signal);
+int ft_set_sig(void);
 
 // # ====================================================== #
 // |														|
@@ -194,14 +212,40 @@ int ft_parse(t_tree **tree, t_data_parse *data_parse);
 // |														|
 // # ====================================================== #
 
+//condition_grammaire_1.c
+int	ft_check_parenthesis(t_token *token);
+int	ft_check_proximity_opperator_bonus_suite(t_token *token);
+int	ft_check_proximity_opperator_bonus(t_token *token);
+int	is_cmd_between_bonus_opperator(t_token *token);
+int	ft_condition_grammaire(t_token *token);
+
+//condition_grammaire_2.c
+int	ft_is_quote_close(char *input, int double_quote_open, int single_quote_open);
+int	ft_check_pipes(t_token *token);
+int	is_redirection_well_followed(t_token *token);
+
+//ft_add_token.c
+void ft_set_add_token(t_data_parse *data_parse);
+int ft_add_token(t_token **token, t_data_parse *data_parse, t_expand *expand);
+int ft_add_and_return(t_data_parse *data_parse, t_token **token, t_expand *expand);
+
+//ft_make_token.c
+int	ft_set_make_token(t_data_parse *data_parse);
+int	ft_gestion_quotes_close(t_data_parse *data_parse, \
+		t_expand *expand, t_token **token);
+int	ft_gestion_quotes(t_data_parse *data_parse, \
+t_expand *expand, t_token **token);
+int ft_make_token(t_data_parse *data_parse, t_token **token);
+
 //ft_tokenisation.c
 int ft_tokenisation(t_token **token, t_data_parse *data_parse);
 
 //ft_isol_operator.c
+void	ft_set_add_in_opperator(t_data_parse *data_parse);
+int	ft_add_in_opperator_suite(t_data_parse *data_parse);
+int	ft_add_in_opperator(t_data_parse *data_parse);
+void	ft_change_status_quotes(t_data_parse *data_parse);
 char *ft_isol_operator(t_data_parse *data_parse);
-
-//ft_make_token.c
-int ft_make_token(t_data_parse *data_parse, t_token **token);
 
 //set_grammaire.c
 void	ft_set_redirection_text(t_token **token);
@@ -360,8 +404,6 @@ int ft_strchr(char *str, char *find);
 t_token    *ft_lstlast(t_token *token);
 t_token	*ft_lstnew(char *str, int quotes, int type, t_expand *expand);
 int    ft_lst_add_back(t_token **token, t_token *new);
-int ft_lst_insert(t_token **token, t_token *new);
-void ft_lst_del(t_token **token);
 
 // # ====================================================== #
 // |														|
@@ -440,8 +482,6 @@ char	*ft_itoa_long_long(long long nb);
 t_token    *ft_lstlast(t_token *token);
 // t_token *ft_lstnew(char *str, int quotes, int type);
 int    ft_lst_add_back(t_token **token, t_token *new);
-int ft_lst_insert(t_token **token, t_token *new);
-void ft_lst_del(t_token **token);
 
 // # ====================================================== #
 // |														|

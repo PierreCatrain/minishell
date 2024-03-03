@@ -6,45 +6,52 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 02:23:35 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/26 03:49:10 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/03 16:28:29 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-char	*ft_strjoin(char *str1, char *str2)
+int ft_nb_here_doc(t_token *token)
 {
-	char	*join;
-	int		i;
-	int		j;
+    int count;
 
-	if (str2 == NULL)
-		return (str1);
-	join = malloc ((ft_strlen(str1) + ft_strlen(str2) + 1) * sizeof(char));
-	if (join == NULL)
-		return (NULL);
-	i = -1;
-	while (str1[++i])
-		join[i] = str1[i];
-	j = -1;
-	while (str2[++j])
-		join[i + j] = str2[j];
-	join[i + j] = '\0';
-	return (join);
+    count = 0;
+    while (token != NULL)
+    {
+        if (token->type == HEREDOC)
+            count++;
+        token = token->next;
+    }
+    return (count);
 }
 
-int	is_pipe_in_suite_exec(t_token *token)
+int ft_complete_here_doc(t_data_parse *data_parse, t_token *token)
 {
-	while (token != NULL)
-	{
-		if (token->type == AND || token->type == OR \
-		|| token->type == CLOSE_PARENTHESIS)
-			return (0);
-		if (token->type == PIPE)
-			return (PIPE);
-		token = token->next;
-	}
-	return (0);
+    int index;
+
+    index = 0;
+    data_parse->index_here_doc = ft_nb_here_doc(token) - 1;
+    data_parse->array_here_doc = malloc (ft_nb_here_doc(token) * sizeof(int));
+    if (data_parse->array_here_doc == NULL)
+        return (ERROR_MALLOC);
+    while (token != NULL)
+    {
+        if (token->type == HEREDOC)
+        {
+            token = token->next;
+            data_parse->heredoc = ft_here_doc();
+	        if (data_parse->heredoc == NULL)
+		        return (free(data_parse->array_here_doc), ERROR);
+	        data_parse->array_here_doc[index] = open(data_parse->heredoc, O_CREAT | O_RDWR | O_TRUNC, 0644);
+            unlink(data_parse->heredoc);
+            free(data_parse->heredoc);
+	        if (ft_complete(data_parse->array_here_doc[index++], token) == ERROR)
+                return (ERROR);
+        }
+        token = token->next;
+    }
+    return (SUCCESS);
 }
 
 int	ft_complete(int fd_in, t_token *token)
@@ -52,6 +59,8 @@ int	ft_complete(int fd_in, t_token *token)
 	char	*str;
 	char	*line;
 
+	if (fd_in == -1)
+		return (SUCCESS);
 	str = ft_get_str("> ");
 	line = readline(str);
 	if (line == NULL)
