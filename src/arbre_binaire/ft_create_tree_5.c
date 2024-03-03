@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 04:13:45 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/03 08:06:39 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/03 13:58:11 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int	ft_exec_token_type_pipe(t_data_parse *data_parse, t_lst_exec **lst_exec)
 				ft_print_error_malloc(), ERROR_MALLOC);
 	free_2d(data_parse->args_tmp);
 	data_parse->args_tmp = NULL;
+	data_parse->expand = NULL;//
 	data_parse->fd_in = data_parse->fd_pipes[data_parse->index_pipes++][0];
 	data_parse->fd_out = 1;
 	return (SUCCESS);

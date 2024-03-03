@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:52:38 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/03 10:32:08 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/03 13:33:21 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			free(data_parse.input);
 			free_tab_tab(env);
+			rl_clear_history();
 			ft_putstr_fd("exit\n", 1);
 			return (0);
 		}

@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 01:19:42 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/03 07:56:38 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/03 13:30:41 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int	ft_tree_exec(t_tree *tree, char ***env, int *status)
 			{
 				free_tab_tab(arg);
 				free_and_close_tree(tmp_tree);
+				free_tab_tab(*env);
 				exit(status2);
 			}
 			free_tab_tab(arg);
@@ -50,9 +51,11 @@ int	ft_tree_exec(t_tree *tree, char ***env, int *status)
 			arg = ft_new_args(tmp_tree->lst_exec);
 			status2 = ft_exec_cmd_fork(tmp_tree, env, arg);
 			free_tab_tab(arg);
-			tmp_tree->lst_exec = tmp_tree->lst_exec->next;
+			if (tmp_tree->lst_exec->next != NULL)
+				tmp_tree->lst_exec = tmp_tree->lst_exec->next;
+			else
+				break;
 		}
-		// free_tab_tab(arg);
 		while ((--ll_len) + 1 > 0)
 			waitpid(0, status, 0);
 	}

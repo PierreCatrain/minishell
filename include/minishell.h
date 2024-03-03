@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/03 10:51:40 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/03 13:01:23 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,6 +202,11 @@ char *ft_isol_operator(t_data_parse *data_parse);
 
 //ft_make_token.c
 int ft_make_token(t_data_parse *data_parse, t_token **token);
+
+//set_grammaire.c
+void	ft_set_redirection_text(t_token **token);
+void	ft_set_cmd_args(t_token **token);
+void	ft_set_all_grammaire(t_token **token);
 
 // # ====================================================== #
 // |														|

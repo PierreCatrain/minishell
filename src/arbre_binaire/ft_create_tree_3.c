@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 04:09:07 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/02 10:49:52 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/03 14:00:44 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ char	**ft_strdup_2d(char **str)
 	new = malloc((ft_strlen_2d(str) + 1) * sizeof(char *));
 	if (new == NULL)
 		return (free_2d(str), NULL);
-	printf("adress 1: %p\n", new);
 	index = -1;
 	while (str[++index])
 	{

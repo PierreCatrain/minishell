@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 22:48:14 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/02 10:52:24 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/03 14:00:46 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ void	free_close_exec_list(t_lst_exec *exec)
 	{
 		tmp = exec;
 		free_expand(exec->expand, ft_strlen_2d(exec->args));
-		printf("adress 2: %p\n", exec->args);
 		free_2d(exec->args);
 		if (exec->fd_in > 2)
 			close(exec->fd_in);

@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 21:50:13 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/27 09:07:38 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/03 13:40:17 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	*ft_at_user(char *start_prompt, char *end_prompt)
 	j = -1;
 	while (end_prompt[++j])
 		prompt[i + j] = end_prompt[j];
-	prompt[++i + j] = '\0';
+	prompt[i + j] = '\0';
 	return (prompt);
 }
 
