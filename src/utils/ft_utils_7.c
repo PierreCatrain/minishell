@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utils_7.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 23:13:46 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/02 14:38:20 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/02 07:37:38 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include <minishell.h>
 
 void	print_invalid_token(char *str)
 {

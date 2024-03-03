@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_new_args.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 06:51:13 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/02 14:50:31 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/02 09:01:22 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,16 @@ char **ft_expand_step_2(t_lst_exec *lst_exec, char **args, t_wildcard *ls)
     int index;
     char **new_args;
 
-    new_args = malloc (sizeof(char *));
-    if (new_args == NULL)
-        return (NULL);
-    new_args[0] = NULL;
+    new_args = NULL;
     index = 0;
     while (index < lst_exec->len_expand)
     {
         new_args = ft_add_wildcard(new_args, args[index], ls);
         if (new_args == NULL)
-            return (NULL);
+            return (free(args), NULL);
         index++;
     }
+    free(args);
     return (new_args);
 }
 
@@ -63,9 +61,9 @@ char **ft_new_args(t_lst_exec *lst_exec)
     if (new_args == NULL)
         return (NULL);
     if (set_ls(&ls) != SUCCESS)
-		return (NULL);//free
+		return (NULL);
     new_args = ft_expand_step_2(lst_exec, new_args, ls);
     if (new_args == NULL)
-        return (NULL);
-    return (new_args);
+        return (ft_free_wildcard(&ls), NULL);
+    return (ft_free_wildcard(&ls), new_args);
 }

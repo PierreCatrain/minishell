@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_add_wildcard.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 08:31:46 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/02 14:19:56 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/02 09:14:47 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char **ft_add_to_2d(char **base, char *add)
     if (new == NULL)
         return (NULL);
     index = 0;
-    while (base[index])
+    while (base != NULL && base[index])
     {
         new[index] = ft_strdup(base[index]);
         if (new[index] == NULL)
@@ -61,6 +61,8 @@ char **ft_add_to_2d(char **base, char *add)
     if (new[index] == NULL)
         return (NULL);//free le debut de la dup
     new[++index] = NULL;
+	if (base != NULL)
+		free_2d(base);
     return (new);
 }
 
@@ -143,8 +145,8 @@ char **ft_add_wildcard(char **base, char *add, t_wildcard *ls)
 	{
 		new = ft_add_to_2d(base, add);
 		if (new == NULL)
-			return (NULL);
-        return (new);
+			return (free(add), NULL);
+        return (free(add), new);
 	}
 	split = ft_split(add, '*');
 	if (split == NULL)
@@ -157,23 +159,25 @@ char **ft_add_wildcard(char **base, char *add, t_wildcard *ls)
             {
                 new = ft_add_to_2d(base, ls->str);
 		        if (new == NULL)
-			        return (NULL);
+			        return (free_2d(split), NULL);
             }
             else
             {
                 new = ft_add_to_2d(new, ls->str);
                 if (new == NULL)
-                    return (NULL);         
+                    return (free_2d(split), NULL);         
             }
 			found = 1;
 		}
 		ls = ls->next;
 	}
+	free_2d(split);
 	if (found == 0)
 	{
 		new = ft_add_to_2d(base, add);
 		if (new == NULL)
-			return (NULL);
+			return (free(add), NULL);
+		free(add);
 	}
     return (new);
 }

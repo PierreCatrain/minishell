@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 10:10:03 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/02 14:34:24 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/01 18:52:03 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,6 @@ int	find_cmd(char ***env, char **cmd)
 				exit (126);
 			}
 		}
-		printf("env = \n");
-		print_tab_tab(*env);
 		ft_check_path_cmd(*env, cmd);
 	}
 	return (status);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utils_2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 01:58:43 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/02 14:37:55 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/02 07:55:43 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,76 +40,64 @@ t_token	*ft_lstnew(char *str, int quotes, int type, t_expand *expand)
 	return (new);
 }
 
-char	*ft_str_cat_char(char *new_str, char c)
+int	ft_lst_add_back(t_token **token, t_token *new)
 {
-	char	*cat;
-	int		index;
-
-	cat = malloc((ft_strlen(new_str) + 2) * sizeof(char));
-	if (cat == NULL)
-		return (free(new_str), NULL);
-	index = -1;
-	while (new_str[++index])
+	if (new == NULL)
+		return (ERROR_MALLOC);
+	if (*token == NULL)
+		*token = new;
+	else
 	{
-		cat[index] = new_str[index];
+		new->prev = ft_lstlast(*token);
+		ft_lstlast(*token)->next = new;
 	}
-	cat[index++] = c;
-	cat[index] = '\0';
-	return (free(new_str), cat);
+	return (SUCCESS);
 }
 
-char	*ft_replace_exit_status(char *str)
+int	ft_lst_insert(t_token **token, t_token *new)
 {
-	char	*new_str;
-	int		index;
-
-	new_str = malloc (sizeof(char));
-	if (new_str == NULL)
-		return (NULL);
-	new_str[0] = '\0';
-	index = -1;
-	while (str[++index])
+	if (new == NULL)
+		return (ERROR_MALLOC);
+	if (*token == NULL)
+		*token = new;
+	else
 	{
-		if (str[index] == '$' && str[index + 1] == '?')
+		if ((*token)->next != NULL)
 		{
-			index++;
-			new_str = ft_str_cat_long_long(new_str, g_exit_status);
-			if (new_str == NULL)
-				return (NULL);
+			(*token)->next->prev = new;
+			new->next = (*token)->next;
 		}
-		else
-		{
-			new_str = ft_str_cat_char(new_str, str[index]);
-			if (new_str == NULL)
-				return (NULL);
-		}
+		(*token)->next = new;
+		new->prev = *token;
 	}
-	return (new_str);
+	return (SUCCESS);
 }
 
-void	ft_free_index_new_args(char **str, int index)
+void	ft_lst_del(t_token **token)
 {
-	index--;
-	while (index >= 0)
-		free(str[index]);
-	free(str);
-}
+	t_token	*tmp;
 
-char	**new_args(char **args)
-{
-	char	**new_args;
-	int		index;
-
-	new_args = malloc ((ft_strlen_2d(args) + 1) * sizeof(char *));
-	if (new_args == NULL)
-		return (NULL);
-	index = -1;
-	while (args[++index])
+	tmp = *token;
+	if ((*token)->next != NULL && (*token)->prev != NULL)
 	{
-		new_args[index] = ft_replace_exit_status(args[index]);
-		if (new_args[index] == NULL)
-			return (ft_free_index_new_args(new_args, index), NULL);
+		(*token)->next->prev = (*token)->prev;
+		(*token)->prev->next = (*token)->next;
+		*token = (*token)->next;
+		free(tmp->str);
+		free(tmp);
 	}
-	new_args[index] = NULL;
-	return (new_args);
+	else if ((*token)->next != NULL)
+	{
+		(*token)->next->prev = NULL;
+		*token = (*token)->next;
+		free(tmp->str);
+		free(tmp);
+	}
+	else if ((*token)->prev != NULL)
+	{
+		(*token)->prev->next = NULL;
+		*token = (*token)->prev;
+		free(tmp->str);
+		free(tmp);
+	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/02 15:14:24 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/02 08:12:24 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,15 +206,6 @@ int ft_make_token(t_data_parse *data_parse, t_token **token);
 char	*ft_join_char(char *str, char c);
 char	*ft_strjoin_one_malloc(char *new_str, char *str_tmp);
 
-//ft_replace_wildcard_2.c
-
-//ft_replace_wildcard_3.c
-void	ft_free_wildcard(t_wildcard **ls);
-int	ft_strlen_before(char *str);
-int	ft_strlen_after(char *str);
-char	*ft_only_end_str(char *str, int size);
-int	match_with_wildcard(char *before, char *after, char *str);
-
 //ft_replace_wildcard_4.c
 char	*ft_strjoin_1_malloc(char *str1, char *str2);
 t_wildcard	*ft_lst_wildcard_new(char *str);
@@ -237,7 +228,6 @@ int ft_is_quote_close(char *input, int double_quote_open, int single_quote_open)
 // |			FT_CONDITION_GRAMMAIRE.C		        	|
 // |														|
 // # ====================================================== #
-
 int ft_condition_grammaire(t_token *token);
 
 // ft_condition_grammaire_2.c
@@ -360,7 +350,6 @@ t_token	*ft_lstnew(char *str, int quotes, int type, t_expand *expand);
 int    ft_lst_add_back(t_token **token, t_token *new);
 int ft_lst_insert(t_token **token, t_token *new);
 void ft_lst_del(t_token **token);
-char *ft_str_cat_long_long(char *new_str, long long g_exit_status);
 
 // # ====================================================== #
 // |														|
@@ -422,6 +411,14 @@ char	*ft_strdup(char *str);
 void	ft_print_fd_pipe(int **fd_pipes, int nb_pipes);
 int		ft_size_malloc_long_long(long long nb);
 char	*ft_itoa_long_long(long long nb);
+
+// # ====================================================== #
+// |														|
+// |	                FT_UTILS_8.C						|
+// |														|
+// # ====================================================== #
+
+
 
 // # ====================================================== #
 // |														|
