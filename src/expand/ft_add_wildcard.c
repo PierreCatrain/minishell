@@ -6,11 +6,38 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 08:31:46 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/02 09:14:47 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/03 09:23:39 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+int	set_ls(t_wildcard **ls)
+{
+	struct dirent	*entry;
+	DIR				*directory;
+
+	directory = opendir(".");
+	if (directory == NULL)
+	{
+		printf("minishell: opendir failed\n");
+		return (ERROR);
+	}
+	while (1)
+	{
+		entry = readdir(directory);
+		if (entry == NULL)
+			break ;
+		if (ft_lst_wildcard_add_back(ls, \
+		ft_lst_wildcard_new(entry->d_name)) != SUCCESS)
+		{
+			closedir(directory);
+			return (ft_print_error_malloc(), ERROR_MALLOC);
+		}
+	}
+	closedir(directory);
+	return (SUCCESS);
+}
 
 char **ft_add_2d_to_2d(char **base, char **add)
 {

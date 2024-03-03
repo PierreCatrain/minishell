@@ -1,31 +1,49 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isolate_operateur_3.c                           :+:      :+:    :+:   */
+/*   lst_wildcard.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/02 02:51:35 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/01 13:33:26 by picatrai         ###   ########.fr       */
+/*   Created: 2024/03/03 09:21:43 by picatrai          #+#    #+#             */
+/*   Updated: 2024/03/03 09:22:20 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include "minishell.h"
 
-t_token	*ft_lstnew_no_malloc(char *str, int quotes, int type, t_expand *expand)
+t_wildcard	*ft_lst_wildcard_new(char *str)
 {
-	t_token	*new;
+	t_wildcard	*new;
 
-	new = malloc(sizeof(t_token));
+	new = malloc(sizeof(t_wildcard));
 	if (new == NULL)
 		return (NULL);
+	new->prev = NULL;
+	new->next = NULL;
 	new->str = ft_strdup(str);
 	if (new->str == NULL)
 		return (free(new), NULL);
-	new->quotes = quotes;
-	new->expand = expand;
-	new->type = type;
-	new->prev = NULL;
-	new->next = NULL;
 	return (new);
+}
+
+t_wildcard	*ft_lst_wildcard_last(t_wildcard *ls)
+{
+	while (ls->next != NULL)
+		ls = ls->next;
+	return (ls);
+}
+
+int	ft_lst_wildcard_add_back(t_wildcard **ls, t_wildcard *new)
+{
+	if (new == NULL)
+		return (ERROR_MALLOC);
+	if (*ls == NULL)
+	{
+		*ls = new;
+		return (SUCCESS);
+	}
+	new->prev = ft_lst_wildcard_last(*ls);
+	ft_lst_wildcard_last(*ls)->next = new;
+	return (SUCCESS);
 }

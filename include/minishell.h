@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/03 08:07:23 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/03 10:51:40 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # define ERROR_PIPE 4
 # define ERROR_FILE 5
 # define ERROR 6
+# define SUCCESS_SQUARE 7
 # define GOOD_INPUT 0
 # define WRONG_INPUT 1
 # define WD_BUFFER_SIZE 5000
@@ -158,7 +159,7 @@ typedef struct s_data_parse
     int *array_here_doc;
     int index_here_doc;
 
-
+    int tmp;
     t_expand **expand;
 }   t_data_parse;
 
@@ -186,6 +187,12 @@ int ft_set_sig(void);
 
 //ft_parse.c
 int ft_parse(t_tree **tree, t_data_parse *data_parse);
+
+// # ====================================================== #
+// |														|
+// |		        	tokenisation	    	            |
+// |														|
+// # ====================================================== #
 
 //ft_tokenisation.c
 int ft_tokenisation(t_token **token, t_data_parse *data_parse);
@@ -362,7 +369,6 @@ void    ft_print_token(t_token **token);
 int	ft_isalphanum(int c);
 int ft_strcmp(char *str1, char *str2);
 void ft_print_expand(t_expand *expand);
-void	ft_printf_2d(char **str, t_expand **expand);
 
 // # ====================================================== #
 // |														|

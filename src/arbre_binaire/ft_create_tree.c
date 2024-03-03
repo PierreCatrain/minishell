@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 02:02:25 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/03 08:21:08 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/03 10:42:12 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	ft_interpret_token(t_data_parse *data_parse, \
 	{
 		if (ft_exec_token_type_heredoc(data_parse, token) != SUCCESS)
 			return (ERROR);
-		*token = (*token)->next;//
 	}
 	else if ((*token)->type == PIPE)
 	{
@@ -51,6 +50,7 @@ int	ft_interpret_token(t_data_parse *data_parse, \
 
 int	ft_lst_exec(t_token *token, t_lst_exec **lst_exec, t_data_parse *data_parse)
 {
+	ft_print_token(&token);
 	if (ft_set_exec(data_parse, lst_exec, token) != SUCCESS)
 		return (ERROR);
 	while (token != NULL)

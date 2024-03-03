@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 23:13:46 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/02 07:37:38 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/03 10:07:22 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,20 @@ void	ft_print_fd_pipe(int **fd_pipes, int nb_pipes)
 		printf("fd pipe n%d/0 -> %d\n", index, fd_pipes[index][0]);
 		printf("fd pipe n%d/1 -> %d\n", index, fd_pipes[index][1]);
 	}
+}
+
+char	*ft_join_char(char *str, char c)
+{
+	char	*join;
+	int			i;
+
+	join = malloc ((ft_strlen(str) + 2) * sizeof(char));
+	if (join == NULL)
+		return (free(str), NULL);
+	i = -1;
+	while (str[++i])
+		join[i] = str[i];
+	join[i++] = c;
+	join[i] = '\0';
+	return (free(str), join);
 }

@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 13:37:36 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/02 06:24:55 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/03 10:17:29 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,11 @@ int ft_add_and_return(t_data_parse *data_parse, t_token **token, t_expand *expan
 		return (ERROR_MALLOC);
 	data_parse->double_quote_open = CLOSE;
 	data_parse->index++;
-	return (SUCCESS);
+	return (SUCCESS_SQUARE);
 }
 
-int ft_make_token(t_data_parse *data_parse, t_token **token)
+int ft_set_make_token(t_data_parse *data_parse)
 {
-	t_expand *expand;
-
-	expand = NULL;
 	data_parse->str = malloc(sizeof(char));
 	if (data_parse->str == NULL)
 		return (ERROR_MALLOC);
@@ -61,6 +58,43 @@ int ft_make_token(t_data_parse *data_parse, t_token **token)
 	data_parse->double_quote_open = CLOSE;
 	while (data_parse->input[data_parse->index] && (data_parse->input[data_parse->index] == ' '))
 		data_parse->index++;
+	return (SUCCESS);
+}
+
+int	ft_gestion_quotes(t_data_parse *data_parse, t_expand *expand, t_token **token)
+{
+	if (data_parse->input[data_parse->index] == '\'' && data_parse->single_quote_open == OPEN)
+	{
+		if ((data_parse->input[data_parse->index + 1] == ' ' || data_parse->input[data_parse->index + 1] == '\0') && data_parse->str[0] != '\0')
+			return (ft_add_and_return(data_parse, token, expand));
+		data_parse->single_quote_open = CLOSE;
+	}
+	else if (data_parse->input[data_parse->index] == '"' && data_parse->double_quote_open == OPEN)
+	{
+		if ((data_parse->input[data_parse->index + 1] == ' ' || data_parse->input[data_parse->index + 1] == '\0') && data_parse->str[0] != '\0')
+			return (ft_add_and_return(data_parse, token, expand));
+		data_parse->double_quote_open = CLOSE;
+	}
+	else if (data_parse->input[data_parse->index] == '\'' && data_parse->single_quote_open == CLOSE && data_parse->double_quote_open == CLOSE)
+		data_parse->single_quote_open = OPEN;
+	else if (data_parse->input[data_parse->index] == '"' && data_parse->single_quote_open == CLOSE && data_parse->double_quote_open == CLOSE)
+		data_parse->double_quote_open = OPEN;
+	else
+	{
+		data_parse->str = ft_join_char(data_parse->str, data_parse->input[data_parse->index]);
+		if (data_parse->str == NULL)
+			return (ERROR_MALLOC);
+	}
+	return (SUCCESS);
+}
+
+int ft_make_token(t_data_parse *data_parse, t_token **token)
+{
+	t_expand *expand;
+
+	expand = NULL;
+	if (ft_set_make_token(data_parse) != SUCCESS)
+		return (ERROR_MALLOC);
 	if (data_parse->input[data_parse->index] == '\0')
 		return (free(data_parse->str), SUCCESS);
 	while (data_parse->input[data_parse->index] && (data_parse->input[data_parse->index] != ' ' || data_parse->single_quote_open == OPEN || data_parse->double_quote_open == OPEN))
@@ -70,28 +104,11 @@ int ft_make_token(t_data_parse *data_parse, t_token **token)
 			if (ft_make_lst_expand(&expand, data_parse) == ERROR_MALLOC)
 				return (ERROR_MALLOC);
 		}
-		if (data_parse->input[data_parse->index] == '\'' && data_parse->single_quote_open == OPEN)
-		{
-			if ((data_parse->input[data_parse->index + 1] == ' ' || data_parse->input[data_parse->index + 1] == '\0') && data_parse->str[0] != '\0')
-                return (ft_add_and_return(data_parse, token, expand));
-			data_parse->single_quote_open = CLOSE;
-		}
-		else if (data_parse->input[data_parse->index] == '"' && data_parse->double_quote_open == OPEN)
-		{
-			if ((data_parse->input[data_parse->index + 1] == ' ' || data_parse->input[data_parse->index + 1] == '\0') && data_parse->str[0] != '\0')
-			    return (ft_add_and_return(data_parse, token, expand));
-			data_parse->double_quote_open = CLOSE;
-		}
-		else if (data_parse->input[data_parse->index] == '\'' && data_parse->single_quote_open == CLOSE && data_parse->double_quote_open == CLOSE)
-			data_parse->single_quote_open = OPEN;
-		else if (data_parse->input[data_parse->index] == '"' && data_parse->single_quote_open == CLOSE && data_parse->double_quote_open == CLOSE)
-			data_parse->double_quote_open = OPEN;
-		else
-		{
-			data_parse->str = ft_join_char(data_parse->str, data_parse->input[data_parse->index]);
-			if (data_parse->str == NULL)
-				return (ERROR_MALLOC);
-		}
+		data_parse->tmp = ft_gestion_quotes(data_parse, expand, token);
+		if (data_parse->tmp == SUCCESS_SQUARE)
+			return (SUCCESS);
+		if (data_parse->tmp == ERROR_MALLOC)
+			return (ERROR_MALLOC);
 		data_parse->index++;
 	}
 	if (ft_add_token(token, data_parse, expand) == ERROR_MALLOC)

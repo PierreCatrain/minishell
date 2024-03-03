@@ -1,16 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_condition_grammaire_2.c                         :+:      :+:    :+:   */
+/*   grammaire_3.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 01:08:04 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/27 00:39:13 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/03 10:09:31 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+// on s'assure que les quotes ouvertes soient ferme
+int	ft_is_quote_close(char *input, int double_quote_open, \
+int single_quote_open)
+{
+	int	index;
+
+	index = 0;
+	while (input[index])
+	{
+		if (input[index] == '"')
+			double_quote_open = OPEN;
+		else if (input[index] == '\'')
+			single_quote_open = OPEN;
+		index++;
+		while (double_quote_open == OPEN && input[index])
+		{
+			if (input[index++] == '"')
+				double_quote_open = CLOSE;
+		}
+		while (single_quote_open == OPEN && input[index])
+		{
+			if (input[index++] == '\'')
+				single_quote_open = CLOSE;
+		}
+	}
+	if (double_quote_open == OPEN || single_quote_open == OPEN)
+		return (ft_putstr_fd("minishell: syntax error with open quotes\n", 2), \
+		OPEN);
+	return (CLOSE);
+}
 
 int	ft_check_pipes(t_token *token)
 {
