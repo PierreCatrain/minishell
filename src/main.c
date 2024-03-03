@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:52:38 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/02 10:05:42 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/03 13:35:09 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ int	only_one_cmd(t_tree *tree, char **argv, char ***env, int *exit_status)
 	add_history(data_parse.input);
 	if (ft_parse(&tree, &data_parse) == GOOD_INPUT)
 		ft_tree_exec(tree, env, exit_status);
+	free_and_close_tree(tree);
 	rl_clear_history();
+	free_tab_tab(*env);
 	return (*exit_status);
 }
 
@@ -130,7 +132,8 @@ int	main(int argc, char **argv, char **envp)
 	int				exit_status;
 	char			**env;
 
-	tree = NULL;
+	tree = NULL;// if (ft_check_argc_envp(argc, argv) == ERROR_ARGC_ENVP)
+	// 	return (ERROR_ARGC_ENVP);
 	exit_status = 0;
 	if (ft_set_sig() == ERROR)
 		return (ERROR);
@@ -167,7 +170,6 @@ int	main(int argc, char **argv, char **envp)
 			free_and_close_tree(tree);
 		}
 	}
-	// printf("exit status = %d\n", exit_status);
 	return (exit_status);
 }
 

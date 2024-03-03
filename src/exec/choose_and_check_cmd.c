@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 10:10:03 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/01 18:52:03 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/03 13:32:31 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	**ft_get_path_cmd(void)
 	char	**path_split;
 	char	*path;
 
-	path = getenv("PATH");
+	path = getenv("PATH"); // changer et mettre ma fonction
 	if (!path)
 	{
 		printf("PATH n'existe pas dans env\n");
@@ -58,11 +58,14 @@ int	ft_check_path_cmd(char **env, char **cmd)
 	i = -1;
 	while (path_split[++i])
 	{
-		cmd_path = ft_strjoin_path(path_split[i], cmd[0]);
+		cmd_path = ft_strjoin_path_without_free(path_split[i], cmd[0]);
 		if (cmd_path == NULL)
 			return (ERROR_MALLOC);
 		if (!access(cmd_path, F_OK | X_OK))
+		{
+			free_tab_tab(path_split);
 			ft_check_path_execve(&cmd_path, &cmd, &env);
+		}
 		free (cmd_path);
 	}
 	msg_err = ft_strjoin_wihtout_free(cmd[0], ": command not found\n");
@@ -70,7 +73,7 @@ int	ft_check_path_cmd(char **env, char **cmd)
 	free (msg_err);
 	free_tab_tab(cmd);
 	free_tab_tab(env);
-	free(path_split);
+	free_tab_tab(path_split);
 	exit(127);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 22:48:14 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/02 10:52:24 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/03 13:37:20 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ void	free_close_exec_list(t_lst_exec *exec)
 	{
 		tmp = exec;
 		free_expand(exec->expand, ft_strlen_2d(exec->args));
-		printf("adress 2: %p\n", exec->args);
 		free_2d(exec->args);
 		if (exec->fd_in > 2)
 			close(exec->fd_in);
@@ -83,14 +82,14 @@ void	free_tab_tab(char **tab)
 	free(tab);
 }
 
-// void	ft_free_tab_tab_incremented(char **tab)
-// {
-// 	int	i;
+void	ft_free_tab_tab_incremented(char **tab)
+{
+	int	i;
 
-// 	i = -1;
-// 	while (tab[++i])
-// 		free(tab[i]);
-// }
+	i = -1;
+	while (tab[++i])
+		free(tab[i]);
+}
 
 void	ft_free_wildcard(t_wildcard **ls)
 {
