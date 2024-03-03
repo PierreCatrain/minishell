@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 02:02:25 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/02 06:01:50 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/03 08:21:08 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,16 @@ int	ft_interpret_token(t_data_parse *data_parse, \
 			return (ERROR_MALLOC);
 	}
 	else if (ft_is_token_type_2(*token) == SUCCESS)
-		ft_exec_token_type_2(data_parse, *token);
+	{
+		if (ft_exec_token_type_2(data_parse, *token) != SUCCESS)
+			return (ERROR);
+		*token = (*token)->next;//
+	}
 	else if ((*token)->type == HEREDOC)
 	{
 		if (ft_exec_token_type_heredoc(data_parse, token) != SUCCESS)
 			return (ERROR);
+		*token = (*token)->next;//
 	}
 	else if ((*token)->type == PIPE)
 	{

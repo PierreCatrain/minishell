@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/02 08:12:24 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/03 08:07:23 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -260,7 +260,7 @@ int	ft_set_exec(t_data_parse *data_parse, t_lst_exec **lst_exec, t_token *token)
 int	ft_exec_token_type_1(t_data_parse *data_parse, t_lst_exec **lst_exec, t_token *token);
 
 //ft_create_tree_5.c
-void	ft_exec_token_type_2(t_data_parse *data_parse, t_token *token);
+int	ft_exec_token_type_2(t_data_parse *data_parse, t_token *token);
 int	ft_exec_token_type_heredoc(t_data_parse *data_parse, t_token **token);
 int	ft_exec_token_type_pipe(t_data_parse *data_parse, t_lst_exec **lst_exec);
 int ft_is_token_type_1(t_token *token);
