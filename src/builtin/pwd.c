@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 20:26:44 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/01 18:14:41 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/04 08:28:41 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ void	ft_pustr_builtin_pwd(char *str)
 	free(err_msg);
 }
 
-// gerer correment les parametres s'il y en a
 int	ft_pwd(char **tab)
 {
 	char	buff[PATH_MAX + 1];
@@ -69,9 +68,3 @@ int	ft_pwd(char **tab)
 	ft_pustr_builtin_pwd(buff);
 	return (0);
 }
-
-// int	main(int ac, char **av)
-// {
-// 	(void)ac;
-// 	ft_pwd(av);
-// }

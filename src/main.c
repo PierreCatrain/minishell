@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:52:38 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/03 13:35:09 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/04 09:41:15 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	count_word(int nb)
 	count = 1;
 	while (nb >= 10)
 	{
-		nb /=10;
+		nb /= 10;
 		count++;
 	}
 	return (count);
@@ -51,6 +51,8 @@ char	*ft_itoa_shlvl(int nb)
 
 	len = count_word(nb);
 	str = malloc(sizeof(char) * (len + 1));
+	if (!str)
+		return (NULL);
 	i = 0;
 	str[len] = '\0';
 	while (0 < len)
@@ -92,7 +94,11 @@ char	*ft_change_shlvl(char *shlvl)
 	char	*res;
 
 	res_val = ft_itoa_shlvl(ft_atoi_int_shlvl(shlvl));
+	if (!res_val)
+		return (NULL);
 	res = ft_strjoin_wihtout_free("SHLVL=", res_val);
+	if (!res)
+		return (NULL);
 	free(res_val);
 	return (res);
 }
@@ -105,7 +111,7 @@ char	**ft_copy_env(char **envp)
 	char	*envp_name;
 
 	if (!envp)
-		return (NULL); // a voir
+		return (NULL);
 	len_envp = ft_strlen_2d(envp);
 	env = (char **) malloc(sizeof(char *) * (len_envp + 2));
 	i = -1;
@@ -116,7 +122,7 @@ char	**ft_copy_env(char **envp)
 		{
 			env[i] = ft_change_shlvl(getenv("SHLVL"));
 			free(envp_name);
-			continue;
+			continue ;
 		}
 		free(envp_name);
 		env[i] = ft_str_dup_env(envp[i], env[i]);
@@ -132,18 +138,14 @@ int	main(int argc, char **argv, char **envp)
 	int				exit_status;
 	char			**env;
 
-	tree = NULL;// if (ft_check_argc_envp(argc, argv) == ERROR_ARGC_ENVP)
-	// 	return (ERROR_ARGC_ENVP);
+	tree = NULL;
 	exit_status = 0;
 	if (ft_set_sig() == ERROR)
 		return (ERROR);
-	// if (ft_check_argc_envp(argc, argv) == ERROR_ARGC_ENVP)
-	// 	return (ERROR_ARGC_ENVP);
+	if (ft_check_argc_envp(argc, argv) == ERROR_ARGC_ENVP)
+		return (ERROR_ARGC_ENVP);
 	if (!envp)
-	{
-		printf("pas d'env\n");
-		return (2);
-	}
+		return (printf("pas d'env\n"), 2);
 	env = ft_copy_env(envp);// peut etre le faire depuis l'exec
 	if (argc == 3)
 		return (only_one_cmd(tree, argv, &env, &exit_status));
@@ -156,20 +158,17 @@ int	main(int argc, char **argv, char **envp)
 		free(data_parse.prompt);
 		tree = NULL;
 		if (data_parse.input == NULL)
-		{
-			free(data_parse.input);
-			free_tab_tab(env);
-			ft_putstr_fd("exit\n", 1);
-			return (0);
-		}
+			return (free(data_parse.input), \
+			free_tab_tab(env), ft_putstr_fd("exit\n", 1), 0);
 		if (is_input_only_whitespace(data_parse.input))
 			add_history(data_parse.input);
 		if (ft_parse(&tree, &data_parse) == GOOD_INPUT)
 		{
 			exit_status = ft_tree_exec(tree, &env, &exit_status);
+			if (exit_status == ERROR_MALLOC)
+				return (free_and_close_tree(tree), free(env), ERROR_MALLOC);
 			free_and_close_tree(tree);
 		}
 	}
 	return (exit_status);
 }
-

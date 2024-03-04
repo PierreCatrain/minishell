@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 21:52:06 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/02 07:38:15 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/04 09:37:18 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,18 +91,14 @@ int	ft_exit(char **arg, int *exit_flag)
 		return (0);
 	}
 	if (ft_atoi(arg[1], &exit_value) == FALSE)
-	{
-		printf("bash: exit: %s: numeric argument required\n", arg[1]);
-		return (2);
-	}
+		return (printf("bash: exit: %s: numeric argument required\n", arg[1]), 2);
 	else
 		*exit_flag = 1;
 	if (!ft_check_exit_char(arg[1]))
 	{
-		printf("bash: exit: %s: numeric argument required\n", arg[1]);
 		*exit_flag = 1;
 		exit_value = 2;
-		return (exit_value);
+		return (printf("bash: exit: %s: numeric argument required\n", arg[1]), exit_value);
 	}
 	ft_exit_parsing(arg, &exit_value, exit_flag);
 	return (exit_value);

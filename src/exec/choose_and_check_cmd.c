@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 10:10:03 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/03 13:32:31 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/04 08:31:15 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ int	find_cmd(char ***env, char **cmd)
 	int	fake_exit_status;
 
 	status = 0;
+	if (check_absolute_path_builtin(&(cmd[0])) == ERROR)
+		return (ERROR_MALLOC);
 	if (ft_is_builtin(cmd[0]))
 	{
 		status = ft_find_builtin(cmd[0], cmd, env, &fake_exit_status);
