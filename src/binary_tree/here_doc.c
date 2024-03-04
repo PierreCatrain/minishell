@@ -6,11 +6,11 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 02:23:35 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/04 17:57:20 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/04 18:10:42 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include "minishell.h"
 
 int	ft_exec_token_type_heredoc(t_data_parse *data_parse, t_token **token)
 {

@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 06:57:07 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/04 17:59:02 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/04 18:34:48 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ char *transfo_expand(char *str, t_expand *expand, t_data_parse *data_parse)
     t_wildcard *ls;
 
     ls = NULL;
-    new = ft_replace_env_variable(str, expand, 0);
+    new = ft_replace_env_variable(str, expand, data_parse->env, data_parse->exit_status);
     if (new == NULL)
         return (NULL);
     if (set_ls(&ls) != SUCCESS)

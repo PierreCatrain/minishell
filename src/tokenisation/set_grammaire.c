@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   set_grammaire.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 19:13:05 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/04 12:15:42 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/04 18:08:24 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#include <minishell.h>
+#include "minishell.h"
 
 void	ft_set_redirection_text(t_token **token)
 {

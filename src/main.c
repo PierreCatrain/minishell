@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:52:38 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/04 17:55:55 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/04 18:32:20 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	only_one_cmd(t_tree *tree, char **argv, char ***env, int *exit_status)
 	if (data_parse.input == NULL)
 		return (ERROR_MALLOC);
 	add_history(data_parse.input);
-	if (ft_parse(&tree, &data_parse) == GOOD_INPUT)
+	if (ft_parse(&tree, &data_parse, *env, *exit_status) == GOOD_INPUT)
 		ft_tree_exec(tree, env, exit_status);
 	free_and_close_tree(tree);
 	rl_clear_history();
@@ -170,7 +170,7 @@ int	main(int argc, char **argv, char **envp)
 		}
 		if (is_input_only_whitespace(data_parse.input))
 			add_history(data_parse.input);
-		if (ft_parse(&tree, &data_parse) == GOOD_INPUT)
+		if (ft_parse(&tree, &data_parse, env, exit_status) == GOOD_INPUT)
 		{
 			exit_status = ft_tree_exec(tree, &env, &exit_status);
 			if (exit_status == ERROR_MALLOC)

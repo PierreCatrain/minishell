@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_new_args.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 06:51:13 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/04 13:09:49 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/04 18:40:51 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include "minishell.h"
 
-char **ft_expand_step_1(t_lst_exec *lst_exec, int status)
+char **ft_expand_step_1(t_lst_exec *lst_exec, int status, char **env)
 {
     int index;
     char **new_args;
@@ -23,7 +23,7 @@ char **ft_expand_step_1(t_lst_exec *lst_exec, int status)
     index = 0;
     while (index < lst_exec->len_expand)
     {
-        new_args[index] = ft_replace_env_variable(lst_exec->args[index], lst_exec->expand[index], status);
+        new_args[index] = ft_replace_env_variable(lst_exec->args[index], lst_exec->expand[index], env, status);
         if (new_args[index] == NULL)
             return (NULL);
         index++;
@@ -50,14 +50,14 @@ char **ft_expand_step_2(t_lst_exec *lst_exec, char **args, t_wildcard *ls)
     return (new_args);
 }
 
-char **ft_new_args(t_lst_exec *lst_exec, int status)
+char **ft_new_args(t_lst_exec *lst_exec, int status, char **env)
 {
     char **new_args;
     t_wildcard *ls;
 
     ls = NULL;
     lst_exec->len_expand = ft_strlen_2d(lst_exec->args);
-    new_args = ft_expand_step_1(lst_exec, status);
+    new_args = ft_expand_step_1(lst_exec, status, env);
     if (new_args == NULL)
         return (NULL);
     if (set_ls(&ls) != SUCCESS)

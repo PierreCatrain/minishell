@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_AST.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 01:19:42 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/04 17:23:30 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/04 18:41:36 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	ft_tree_exec(t_tree *tree, char ***env, int *status)
 		if (ll_len == 1 && ft_is_builtin(tree->lst_exec->args[0]) == 1)
 		{
 			printf("c'est un builtin\n");
-			arg = ft_new_args(tree->lst_exec, *status);
+			arg = ft_new_args(tree->lst_exec, *status, *env);
 			status2 = ft_find_builtin(arg[0], arg, env, &exit_flag);
 			if (exit_flag || status2 == ERROR_MALLOC)
 			{

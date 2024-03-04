@@ -6,11 +6,11 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:02:59 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/04 17:59:38 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/04 18:12:16 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include "minishell.h"
 
 void	ft_free_token(t_token **token)
 {

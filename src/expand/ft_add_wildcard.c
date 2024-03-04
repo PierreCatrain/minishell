@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_add_wildcard.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 08:31:46 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/04 12:01:16 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/04 18:10:06 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include "minishell.h"
 
 int	set_ls(t_wildcard **ls)
 {

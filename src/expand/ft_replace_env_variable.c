@@ -6,11 +6,11 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 07:05:34 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/04 17:55:16 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/04 18:35:55 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include "minishell.h"
 
 int ft_size_malloc_long_long(long long nb)
 {
@@ -75,7 +75,7 @@ char *ft_str_cat_long_long(char *new_str, long long g_exit_status)
 	return (free(exit), free(new_str), cat);
 }
 
-char *ft_replace_env_variable(char *str, t_expand *expand, int status)
+char *ft_replace_env_variable(char *str, t_expand *expand, char **env, int status)
 {
     int index;
     char *new_str;
@@ -104,7 +104,7 @@ char *ft_replace_env_variable(char *str, t_expand *expand, int status)
         }
         else if (str[index] == '$' && expand->action == CHANGE)
         {
-            new_str = ft_cat_env_variable(new_str, str, &index);
+            new_str = ft_cat_env_variable(new_str, str, &index, env);
             if (new_str == NULL)
                 return (NULL);
             expand = expand->next;

@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/04 18:01:56 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/04 18:41:12 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,6 +169,9 @@ typedef struct s_data_parse
 
     char *opp[9];
 	int type[9];
+
+    char **env;
+    int exit_status;
 }   t_data_parse;
 
 typedef struct s_wildcard
@@ -191,7 +194,7 @@ enum bool
 };
 
 //ft_parse.c
-int ft_parse(t_tree **tree, t_data_parse *data_parse);
+int ft_parse(t_tree **tree, t_data_parse *data_parse, char **env, int exit_status);
 
 // # ====================================================== #
 // |														|
@@ -319,7 +322,7 @@ int	ft_exec_token_type_pipe(t_data_parse *data_parse, t_lst_exec **lst_exec);
 
 char	*ft_join_char(char *str, char c);
 char	*ft_strjoin_one_malloc(char *new_str, char *str_tmp);
-char *ft_replace_env_variable(char *str, t_expand *expand, int status);
+char *ft_replace_env_variable(char *str, t_expand *expand, char **env, int status);
 
 
 // # ====================================================== #
@@ -440,13 +443,7 @@ int ft_complete_expand(t_expand ***expand, t_expand *add, int size);
 t_expand **ft_dup_array_expand(t_expand **expand, int size);
 
 //ft_new_args.c
-char **ft_new_args(t_lst_exec *lst_exec, int status);
-
-//ft_replace_env_variable.c
-char *ft_replace_env_variable(char *str, t_expand *expand, int status);
-
-//ft_cat_env_variable.c
-char *ft_cat_env_variable(char *new_str, char *str, int *index);
+char **ft_new_args(t_lst_exec *lst_exec, int status, char **env);
 
 //ft_add_wildcard.c
 char **ft_add_wildcard(char **base, char *add, t_wildcard *ls);
@@ -489,7 +486,7 @@ t_token	*ft_lstnew_no_malloc(char *str, int quotes, int type, t_expand *expand);
 // |			    FT_CAT_ENV_VARIABLE.C					|
 // |		        										|
 // # ====================================================== #
-char *ft_cat_env_variable(char *new_str, char *str, int *index);
+char *ft_cat_env_variable(char *new_str, char *str, int *index, char **env);
 
 // # ====================================================== #
 // |														|

@@ -6,11 +6,11 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 13:29:01 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/03 15:06:29 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/04 18:08:59 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include "minishell.h"
 
 void	ft_set_add_in_opperator(t_data_parse *data_parse)
 {
