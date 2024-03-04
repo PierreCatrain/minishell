@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 01:19:42 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/04 17:23:30 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/04 18:58:55 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ int	ft_tree_exec(t_tree *tree, char ***env, int *status)
 	int		status2;
 	char	**arg;
 	int		exit_flag;
-	int		*tab_pid = NULL;
-	int		i;
+	t_tab_pid	pid;
 
 	ll_len = 0;
 	arg = NULL;
@@ -35,7 +34,6 @@ int	ft_tree_exec(t_tree *tree, char ***env, int *status)
 		ll_len = ft_linked_list_size(tree->lst_exec);
 		if (ll_len == 1 && ft_is_builtin(tree->lst_exec->args[0]) == 1)
 		{
-			printf("c'est un builtin\n");
 			arg = ft_new_args(tree->lst_exec, *status);
 			status2 = ft_find_builtin(arg[0], arg, env, &exit_flag);
 			if (exit_flag || status2 == ERROR_MALLOC)
@@ -48,27 +46,25 @@ int	ft_tree_exec(t_tree *tree, char ***env, int *status)
 			}
 			return (free_tab_tab(arg), status2);
 		}
-		tab_pid = malloc(sizeof(int) * ll_len);
-		i = 0;
+		pid.tab_pid = malloc(sizeof(int) * ll_len);
+		pid.index = 0;
 		while (tree->lst_exec != NULL)
 		{
-			status2 = ft_exec_cmd_fork(tree, env, *status, tab_pid, i);
+			status2 = ft_exec_cmd_fork(tree, env, *status, pid);
 			if (status2 == ERROR_MALLOC)
 				return (ERROR_MALLOC);
 			if (tree->lst_exec->next != NULL)
 				tree->lst_exec = tree->lst_exec->next;
 			else
 				break ;
-			i++;
+			pid.index++;
 		}
-		i = 0;
+		pid.index = 0;
 		while ((--ll_len) + 1 > 0)
-			waitpid(tab_pid[i++], status, 0);
+			waitpid(pid.tab_pid[pid.index++], status, 0);
+		free(pid.tab_pid);
 		if (WIFEXITED(*status))
-		{
-			puts("je fais\n");
 			*status = WEXITSTATUS(*status);
-		}
 }
 	return (*status);
 }

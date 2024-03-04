@@ -6,13 +6,13 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 17:38:07 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/04 17:31:18 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/04 18:58:34 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_child(t_tree *tree, char ***env, int status)
+void	ft_child(t_tree *tree, char ***env, int status, int *tab_pid)
 {
 	char	**arg;
 
@@ -21,6 +21,7 @@ void	ft_child(t_tree *tree, char ***env, int status)
 	dup2(tree->lst_exec->fd_in, 0);
 	dup2(tree->lst_exec->fd_out, 1);
 	free_and_close_tree(tree);
+	free(tab_pid);
 	rl_clear_history();
 	if (find_cmd(env, arg) == ERROR_MALLOC)
 	{
@@ -29,7 +30,7 @@ void	ft_child(t_tree *tree, char ***env, int status)
 	}
 }
 
-int	ft_exec_cmd_fork(t_tree *tree, char ***env, int status, int *tab_pid, int i)
+int	ft_exec_cmd_fork(t_tree *tree, char ***env, int status, t_tab_pid pid_data)
 {
 	pid_t	pid;
 	int		tmp;
@@ -44,10 +45,10 @@ int	ft_exec_cmd_fork(t_tree *tree, char ***env, int status, int *tab_pid, int i)
 	if (pid == -1)
 		return (EXIT_FAILURE);
 	if (pid == 0)
-		ft_child(tree, env, status);
+		ft_child(tree, env, status, pid_data.tab_pid);
 	else
 	{
-		tab_pid[i++] = pid;
+		pid_data.tab_pid[pid_data.index++] = pid;
 		g_exit_status = -100;
 		if (tree->lst_exec->fd_out > 2)
 			close(tree->lst_exec->fd_out);
