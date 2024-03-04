@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/04 17:25:09 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/04 18:01:56 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,6 +178,12 @@ typedef struct s_wildcard
     char *str;
 } t_wildcard;
 
+typedef struct s_process_id
+{
+    int *tab_pid;
+    int index;
+}   t_tab_pid;
+
 enum bool
 {
     FALSE = 0,
@@ -311,9 +317,16 @@ int	ft_exec_token_type_pipe(t_data_parse *data_parse, t_lst_exec **lst_exec);
 // |														|
 // # ====================================================== #
 
-// char *ft_replace_env_variable(char *str, t_data_parse *data_parse);
 char	*ft_join_char(char *str, char c);
 char	*ft_strjoin_one_malloc(char *new_str, char *str_tmp);
+char *ft_replace_env_variable(char *str, t_expand *expand, int status);
+
+
+// # ====================================================== #
+// |														|
+// |			    FT_REPLACE_WILDCARD_4.C					|
+// |		        										|
+// # ====================================================== #
 
 //ft_replace_wildcard_4.c
 char	*ft_strjoin_1_malloc(char *str1, char *str2);
@@ -322,7 +335,6 @@ t_wildcard	*ft_lst_wildcard_last(t_wildcard *ls);
 int	ft_lst_wildcard_add_back(t_wildcard **ls, t_wildcard *new);
 int	set_ls(t_wildcard **ls);
 
-//ft_set_all_grammaire.c
 // # ====================================================== #
 // |														|
 // |			FT_SET_ALL_GRAMMAIRE.C				        |
@@ -337,21 +349,26 @@ int ft_is_quote_close(char *input, int double_quote_open, int single_quote_open)
 // |			FT_CONDITION_GRAMMAIRE.C		        	|
 // |														|
 // # ====================================================== #
-int ft_condition_grammaire(t_token *token);
 
-// ft_condition_grammaire_2.c
+int ft_condition_grammaire(t_token *token);
 int	ft_check_pipes(t_token *token);
 int	is_redirection_well_followed(t_token *token);
 
 // # ====================================================== #
 // |														|
-// |			    FT_CREATE_TREE,C    			        |
+// |			    FT_CREATE_TREE.C    			        |
 // |		        										|
 // # ====================================================== #
+
 int ft_create_tree(t_tree **tree, t_token *token, t_data_parse *data_parse);
 int ft_lst_exec(t_token *token, t_lst_exec **lst_exec, t_data_parse *data_parse);
 
-//ft_create_tree_2.c
+// # ====================================================== #
+// |														|
+// |			    FT_CREATE_TREE2.C    			        |
+// |		        										|
+// # ====================================================== #
+
 int ft_complete_tree(t_tree **tree, t_token *token, t_data_parse *data_parse);
 
 //ft_create_tree_3.c
@@ -366,14 +383,13 @@ int	ft_one_more_exec(t_data_parse *data_parse, t_lst_exec **lst_exec);
 int	ft_set_exec(t_data_parse *data_parse, t_lst_exec **lst_exec, t_token *token);
 int	ft_exec_token_type_1(t_data_parse *data_parse, t_lst_exec **lst_exec, t_token *token);
 
-//ft_create_tree_5.c
-int	ft_exec_token_type_2(t_data_parse *data_parse, t_token *token);
-int	ft_exec_token_type_heredoc(t_data_parse *data_parse, t_token **token);
-int	ft_exec_token_type_pipe(t_data_parse *data_parse, t_lst_exec **lst_exec);
-int ft_is_token_type_1(t_token *token);
-int ft_is_token_type_2(t_token *token);
 
-//ft_create_tree_6.c
+// # ====================================================== #
+// |														|
+// |			    FT_CREATE_TREE_6.C    			        |
+// |		        										|
+// # ====================================================== #
+
 int	ft_add_left_child(t_tree **tree, t_tree *new);
 int	ft_add_right_child(t_tree **tree, t_tree *new);
 t_tree	*ft_tree_new(int type);
@@ -381,7 +397,12 @@ t_token	*before_token(t_token *token);
 t_token	*after_token(t_token *token);
 int	ft_add_tree(t_tree **tree, t_tree *new, t_token *token, t_data_parse *data_parse);
 
-//ft_create_tree_7.c
+// # ====================================================== #
+// |														|
+// |			    FT_CREATE_TREE_7.C    			        |
+// |		        										|
+// # ====================================================== #
+
 int	ft_is_there_parenthesis(t_token *token);
 t_token	*without_parenthesis(t_token *token);
 t_tree	*ft_first_empty_child(t_tree *tree);
@@ -419,10 +440,10 @@ int ft_complete_expand(t_expand ***expand, t_expand *add, int size);
 t_expand **ft_dup_array_expand(t_expand **expand, int size);
 
 //ft_new_args.c
-char **ft_new_args(t_lst_exec *lst_exec);
+char **ft_new_args(t_lst_exec *lst_exec, int status);
 
 //ft_replace_env_variable.c
-char *ft_replace_env_variable(char *str, t_expand *expand);
+char *ft_replace_env_variable(char *str, t_expand *expand, int status);
 
 //ft_cat_env_variable.c
 char *ft_cat_env_variable(char *new_str, char *str, int *index);
@@ -436,6 +457,50 @@ int ft_check_after(char *to_find, char **split, char *str);
 
 //expand_redirection.c
 char *transfo_expand(char *str, t_expand *expand, t_data_parse *data_parse);
+
+// # ====================================================== #
+// |														|
+// |			    FT_CLST_EXPAND.C    					|
+// |		        										|
+// # ====================================================== #
+t_expand *ft_new_expand(int action);
+t_expand *ft_last_expand(t_expand *expand);
+int ft_add_back_expand(t_expand **expand, t_expand *new);
+
+// # ====================================================== #
+// |														|
+// |			    FT_MAKE_LST_EXPAND.C					|
+// |		        										|
+// # ====================================================== #
+int ft_make_lst_expand(t_expand **expand, t_data_parse *data_parse);
+int ft_size_expand(t_expand **expand);
+int ft_complete_expand(t_expand ***expand, t_expand *add, int size);
+t_expand **ft_dup_array_expand(t_expand **expand, int size);
+
+// # ====================================================== #
+// |														|
+// |			    FT_ISOLATE_OPERATEUR_3.C				|
+// |		        										|
+// # ====================================================== #
+t_token	*ft_lstnew_no_malloc(char *str, int quotes, int type, t_expand *expand);
+
+// # ====================================================== #
+// |														|
+// |			    FT_CAT_ENV_VARIABLE.C					|
+// |		        										|
+// # ====================================================== #
+char *ft_cat_env_variable(char *new_str, char *str, int *index);
+
+// # ====================================================== #
+// |														|
+// |			    FT_ADD_WILDCARD.C	    				|
+// |		        										|
+// # ====================================================== #
+char **ft_add_wildcard(char **base, char *add, t_wildcard *ls);
+int	ft_strchr_wildcard(char *str, char *find);
+int ft_check_all(char **split, char *str);
+int ft_check_before(char *to_find, char **split, char *str);
+int ft_check_after(char *to_find, char **split, char *str);
 
 // # ====================================================== #
 // |														|
@@ -519,14 +584,6 @@ void	ft_print_fd_pipe(int **fd_pipes, int nb_pipes);
 int		ft_size_malloc_long_long(long long nb);
 char	*ft_itoa_long_long(long long nb);
 char	**ft_strdup_2d(char **str);
-
-// # ====================================================== #
-// |														|
-// |	                FT_UTILS_8.C						|
-// |														|
-// # ====================================================== #
-
-
 
 // # ====================================================== #
 // |														|
@@ -640,7 +697,7 @@ int     ft_unset(char ***env, char **cmd);
 void	ft_change_owd_old_pwd2(char ***env, char *current_path, int check);
 void	ft_change_pwd_old_pwd(char *current_path, char *new_path, char ***env);
 int 	is_export_name_in_env(char **env, char *str);
-int		ft_cdpath(char **pathtab);
+int		ft_cdpath(char **pathtab, char **env);
 int		ft_msg_err_chdir(char *str);
 void	ft_msg_err_getcwd(void);
 int		ft_get_env_value2(char **env_name, char *env, char *str, char **env_value);
@@ -690,14 +747,15 @@ int	ft_env(char **env);
 // |														|
 // # ====================================================== #
 
+// char	*ft_get_err_msg(char *cmd, char *msg);
 char	**ft_get_path_cmd(void);
-char	*ft_get_err_msg(char *cmd, char *msg);
 int 	ft_is_builtin(char *cmd);
-int 	ft_find_builtin(char *cmd, char **cmd_tab, char ***env, int *exit_flag);
-int 	ft_check_path_cmd(char **env, char **cmd);
-int 	ft_exec_cmd_fork(t_tree *tree, char ***env, char **arg);
 int 	find_cmd(char ***env, char **arg);
+int 	check_absolute_path_builtin(char **arg);
+int 	ft_check_path_cmd(char **env, char **cmd);
+int 	ft_exec_cmd_fork(t_tree *tree, char ***env, int status, int *tab_pid, int i);
 int 	ft_tree_exec(t_tree *tree, char ***env, int *status);
+int 	ft_find_builtin(char *cmd, char **cmd_tab, char ***env, int *exit_flag);
 
 
 // # ====================================================== #

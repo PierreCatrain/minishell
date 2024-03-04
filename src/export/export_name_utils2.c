@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 18:13:02 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/01 17:24:39 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/04 08:56:20 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	ft_export_name(char *str, char **export_name)
 	ft_export_name2(&i, &j, &count);
 	*export_name = malloc(ft_strlen(str) + 1);
 	if (!(*export_name))
-		return (0);
+		return (ERROR_MALLOC);
 	while (str[++i] && str[i] != '=')
 	{
 		if (str[i] == '\\' && count == 1)

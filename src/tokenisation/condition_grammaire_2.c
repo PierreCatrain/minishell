@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   condition_grammaire_2.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 01:08:04 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/03 15:31:13 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/04 12:15:03 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include <minishell.h>
 

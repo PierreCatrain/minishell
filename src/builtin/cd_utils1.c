@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 21:20:57 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/01 21:22:39 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/04 09:30:54 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,17 +77,23 @@ int	is_export_name_in_env(char **env, char *str)
 	return (-1);
 }
 
-int	ft_cdpath(char **pathtab)
+int	ft_cdpath(char **pathtab, char **env)
 {
 	char	**cdpath;
 	char	*str_cdpath;
+	char	*cdpath_val;
 	int		i;
 
-	cdpath = ft_split(getenv("cdpath"), ':');
+	cdpath_val = ft_get_env_value(env, "CDPATH");
+	cdpath = ft_split(cdpath_val, ':');
+	if (!cdpath)
+		return (ERROR_MALLOC);
 	i = -1;
 	while (cdpath[++i])
 	{
 		str_cdpath = ft_strjoin_path_without_free(cdpath[i], pathtab[1]);
+		if (!str_cdpath)
+			return (free_tab_tab(cdpath), ERROR_MALLOC);
 		if (chdir(str_cdpath) == 0)
 		{
 			printf("%s\n", str_cdpath);

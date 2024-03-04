@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   set_grammaire.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 19:13:05 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/03 15:02:26 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/04 12:15:42 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include <minishell.h>
 

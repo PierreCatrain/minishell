@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 06:57:07 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/04 12:40:32 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/04 17:59:02 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ char *transfo_expand(char *str, t_expand *expand, t_data_parse *data_parse)
     t_wildcard *ls;
 
     ls = NULL;
-    new = ft_replace_env_variable(str, expand);
+    new = ft_replace_env_variable(str, expand, 0);
     if (new == NULL)
         return (NULL);
     if (set_ls(&ls) != SUCCESS)
@@ -92,38 +92,3 @@ char *transfo_expand(char *str, t_expand *expand, t_data_parse *data_parse)
         return (ft_free_wildcard(&ls), free_expand(data_parse->expand, ft_strlen_2d(data_parse->args_tmp)), free_2d(data_parse->args_tmp), NULL);
     return (ft_free_wildcard(&ls), new);
 }
-
-// char *ft_transfo_wildcard(char *str, t_wildcard *ls)
-// {
-//     char *new;
-//     char **split;
-//     int found;
-
-//     found = 0;
-//     if (ft_occ(str, '*') == 0)
-//     {
-//         return (str);
-//     }
-// 	split = ft_split(str, '*');
-// 	if (split == NULL)
-// 		return (NULL);
-// 	while (ls->next != NULL)
-// 	{
-// 		if (ft_check_before(str, split, ls->str) && ft_check_after(str, split, ls->str) && ft_check_all(split, ls->str))
-// 		{
-//             if (found == 0)
-//             {
-//                 new = ft_strdup(ls->str);
-// 		        if (new == NULL)
-// 			        return (NULL);
-//             }
-//             else
-//                 return (ft_ambiguous_redirect(str));
-// 			found++;
-// 		}
-// 		ls = ls->next;
-// 	}
-// 	if (found == 0)
-// 			return (str);
-//     return (new);
-// }

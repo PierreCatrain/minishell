@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+         #
+#    By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/11 18:47:20 by picatrai          #+#    #+#              #
-#    Updated: 2024/03/02 05:31:58 by picatrai         ###   ########.fr        #
+#    Updated: 2024/03/04 13:18:19 by lgarfi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,7 +73,7 @@ valgrind:  $(OBJ)
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(RFLAGS)
 	@echo "\n\033[1;33mAll objects have been created\033[0m"
 	@clear
-	@valgrind --trace-children=yes --leak-check=full --show-leak-kinds=all --suppressions=supp.supp ./minishell
+	@valgrind --trace-children=yes --leak-check=full --show-leak-kinds=all --suppressions=/home/lgarfi/Documents/projets/ms/supp.supp ./minishell
 
 env less:  $(OBJ)
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(RFLAGS)
@@ -85,7 +85,7 @@ valenv:  $(OBJ)
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(RFLAGS)
 	@echo "\n\033[1;33mAll objects have been created\033[0m"
 	@clear
-	@valgrind --trace-children=yes --leak-check=full --show-leak-kinds=all --suppressions=supp.supp env -i ./minishell
+	@valgrind --trace-children=yes --leak-check=full --show-leak-kinds=all --suppressions=/home/lgarfi/Documents/projets/ms/supp.supp env -i ./minishell
 
 obj_dir_create:
 	@if [ ! -d "./obj" ]; then\

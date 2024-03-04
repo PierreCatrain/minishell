@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:42:46 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/01 21:22:32 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/04 09:33:29 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int	ft_cd_cdpath(char **path_tab, char ***env)
 		return (2);
 	if (is_export_name_in_env(*env, "CDPATH") != -1)
 	{
-		if (ft_cdpath(path_tab) == 0)
+		if (ft_cdpath(path_tab, *env) == 0)
 		{
 			if (getcwd(new_path, PATH_MAX) != NULL)
 			{

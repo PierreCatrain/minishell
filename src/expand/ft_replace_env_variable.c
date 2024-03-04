@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 07:05:34 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/04 12:56:32 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/04 17:55:16 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ char *ft_str_cat_long_long(char *new_str, long long g_exit_status)
 	return (free(exit), free(new_str), cat);
 }
 
-char *ft_replace_env_variable(char *str, t_expand *expand)
+char *ft_replace_env_variable(char *str, t_expand *expand, int status)
 {
     int index;
     char *new_str;
@@ -90,7 +90,7 @@ char *ft_replace_env_variable(char *str, t_expand *expand)
         if (str[index] == '$' && str[index + 1] == '?' && expand->action == CHANGE)
         {
             index++;
-            new_str = ft_str_cat_long_long(new_str, g_exit_status);
+            new_str = ft_str_cat_long_long(new_str, status);
             if (new_str == NULL)
                 return (NULL);
             expand = expand->next;

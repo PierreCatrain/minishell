@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 22:28:44 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/26 11:25:16 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/04 09:34:32 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ int	ft_env(char **env)
 	status = 0;
 	while (env[++i])
 		status = ft_pustr_builtin_env(env[i]);
-	printf("fin de env\n");
 	return (status);
 }
 

@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:52:38 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/04 17:07:56 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/04 17:55:55 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ int	only_one_cmd(t_tree *tree, char **argv, char ***env, int *exit_status)
 	add_history(data_parse.input);
 	if (ft_parse(&tree, &data_parse) == GOOD_INPUT)
 		ft_tree_exec(tree, env, exit_status);
+	free_and_close_tree(tree);
 	rl_clear_history();
+	free_tab_tab(*env);
 	return (*exit_status);
 }
 
@@ -35,7 +37,7 @@ int	count_word(int nb)
 	count = 1;
 	while (nb >= 10)
 	{
-		nb /=10;
+		nb /= 10;
 		count++;
 	}
 	return (count);
@@ -49,6 +51,8 @@ char	*ft_itoa_shlvl(int nb)
 
 	len = count_word(nb);
 	str = malloc(sizeof(char) * (len + 1));
+	if (!str)
+		return (NULL);
 	i = 0;
 	str[len] = '\0';
 	while (0 < len)
@@ -90,7 +94,11 @@ char	*ft_change_shlvl(char *shlvl)
 	char	*res;
 
 	res_val = ft_itoa_shlvl(ft_atoi_int_shlvl(shlvl));
+	if (!res_val)
+		return (NULL);
 	res = ft_strjoin_wihtout_free("SHLVL=", res_val);
+	if (!res)
+		return (NULL);
 	free(res_val);
 	return (res);
 }
@@ -103,7 +111,7 @@ char	**ft_copy_env(char **envp)
 	char	*envp_name;
 
 	if (!envp)
-		return (NULL); // a voir
+		return (NULL);
 	len_envp = ft_strlen_2d(envp);
 	env = (char **) malloc(sizeof(char *) * (len_envp + 2));
 	i = -1;
@@ -114,7 +122,7 @@ char	**ft_copy_env(char **envp)
 		{
 			env[i] = ft_change_shlvl(getenv("SHLVL"));
 			free(envp_name);
-			continue;
+			continue ;
 		}
 		free(envp_name);
 		env[i] = ft_str_dup_env(envp[i], env[i]);
@@ -165,11 +173,11 @@ int	main(int argc, char **argv, char **envp)
 		if (ft_parse(&tree, &data_parse) == GOOD_INPUT)
 		{
 			exit_status = ft_tree_exec(tree, &env, &exit_status);
+			if (exit_status == ERROR_MALLOC)
+				return (free_and_close_tree(tree), free(env), ERROR_MALLOC);
 			free_and_close_tree(tree);
 		}
+		printf("exit_status = %d\n", exit_status);
 	}
-	// printf("exit status = %d\n", exit_status);
 	return (exit_status);
 }
-
-//message d'erreur quand c'est pas un bon fichier a voir si on indique le nome du fichier dans le message d'erreur
