@@ -6,11 +6,23 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 22:48:14 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/03 14:00:46 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/04 12:24:20 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+void free_mini_expand(t_expand *expand)
+{
+	t_expand *tmp;
+	
+	while (expand != NULL)
+	{
+		tmp = expand;
+		expand = expand->next;
+		free(tmp);
+	}
+}
 
 void free_expand(t_expand **expand, int len)
 {

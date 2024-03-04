@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 04:13:45 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/03 13:58:11 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/04 12:25:26 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,10 @@ int	ft_exec_token_type_2(t_data_parse *data_parse, t_token *token)
 		if (data_parse->fd_in != 0 && data_parse->fd_in != -1)
 			close(data_parse->fd_in);
 		token = token->next;
-		str_tmp = transfo_expand(token->str, token->expand);
+		str_tmp = transfo_expand(token->str, token->expand, data_parse);
 		if (str_tmp == NULL)
-			return (ERROR);
+			return (free_mini_expand(token->expand), ERROR);
+		free_mini_expand(token->expand);
 		data_parse->fd_in = open(str_tmp, O_RDONLY);
 		free(str_tmp);
 	}
@@ -32,9 +33,10 @@ int	ft_exec_token_type_2(t_data_parse *data_parse, t_token *token)
 		if (data_parse->fd_out != 1 && data_parse->fd_out != -1)
 			close(data_parse->fd_out);
 		token = token->next;
-		str_tmp = transfo_expand(token->str, token->expand);
+		str_tmp = transfo_expand(token->str, token->expand, data_parse);
 		if (str_tmp == NULL)
-			return (ERROR);
+			return (free_mini_expand(token->expand), ERROR);
+		free_mini_expand(token->expand);
 		data_parse->fd_out = open(str_tmp, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 		free(str_tmp);
 	}
@@ -43,9 +45,10 @@ int	ft_exec_token_type_2(t_data_parse *data_parse, t_token *token)
 		if (data_parse->fd_out != 1 && data_parse->fd_out != -1)
 			close(data_parse->fd_out);
 		token = token->next;
-		str_tmp = transfo_expand(token->str, token->expand);
+		str_tmp = transfo_expand(token->str, token->expand, data_parse);
 		if (str_tmp == NULL)
-			return (ERROR);
+			return (free_mini_expand(token->expand), ERROR);
+		free_mini_expand(token->expand);
 		data_parse->fd_out = open(str_tmp, O_CREAT | O_WRONLY | O_APPEND, 0644);
 		free(str_tmp);
 	}

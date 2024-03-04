@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/03 16:30:54 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/04 12:24:39 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -381,7 +381,7 @@ int ft_check_before(char *to_find, char **split, char *str);
 int ft_check_after(char *to_find, char **split, char *str);
 
 //expand_redirection.c
-char *transfo_expand(char *str, t_expand *expand);
+char *transfo_expand(char *str, t_expand *expand, t_data_parse *data_parse);
 
 // # ====================================================== #
 // |														|
@@ -520,6 +520,8 @@ int ft_realloc_env(char ***env, int size);
 void    free_and_close_tree(t_tree *tree);
 void	free_tab_tab(char **tab);
 void	ft_free_wildcard(t_wildcard **ls);
+void free_expand(t_expand **expand, int len);
+void free_mini_expand(t_expand *expand);
 
 
 // # ====================================================== #

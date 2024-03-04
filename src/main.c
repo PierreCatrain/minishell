@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:52:38 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/03 15:47:39 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/04 12:41:51 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ int	main(int argc, char **argv, char **envp)
 		printf("pas d'env\n");
 		return (2);
 	}
-	env = ft_copy_env(envp);// peut etre le faire depuis l'exec
+	env = ft_copy_env(envp);
 	if (argc == 3)
 		return (only_one_cmd(tree, argv, &env, &exit_status));
 	while (1)

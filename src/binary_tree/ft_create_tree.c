@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 02:02:25 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/03 13:09:18 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/04 12:15:54 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,12 @@ int	ft_lst_exec(t_token *token, t_lst_exec **lst_exec, t_data_parse *data_parse)
 	while (token != NULL)
 	{
 		if (ft_interpret_token(data_parse, lst_exec, &token) != SUCCESS)
+		{
+			while (++data_parse->index_pipes < data_parse->nb_pipes)
+				free(data_parse->fd_pipes[data_parse->index_pipes]);
+			free(data_parse->fd_pipes);
 			return (ERROR);
+		}
 		if (token->next == NULL)
 			break ;
 		token = token->next;
