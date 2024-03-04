@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:52:38 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/04 11:56:42 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/04 17:05:46 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,8 +144,6 @@ int	main(int argc, char **argv, char **envp)
 		return (ERROR);
 	if (ft_check_argc(argc, argv) == ERROR_ARGC_ENVP)
 		return (ERROR_ARGC_ENVP);
-	if (!envp)
-		return (printf("pas d'env\n"), 2);
 	env = ft_copy_env(envp);// peut etre le faire depuis l'exec
 	if (argc == 3)
 		return (only_one_cmd(tree, argv, &env, &exit_status));
@@ -174,6 +172,7 @@ int	main(int argc, char **argv, char **envp)
 				return (free_and_close_tree(tree), free(env), ERROR_MALLOC);
 			free_and_close_tree(tree);
 		}
+		printf("exit_status = %d\n", exit_status);
 	}
 	return (exit_status);
 }

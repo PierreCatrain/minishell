@@ -3,16 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   set_grammaire.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 19:13:05 by picatrai          #+#    #+#             */
-<<<<<<<< HEAD:src/tokenisation/grammaire_1.c
-/*   Updated: 2024/02/27 00:50:27 by picatrai         ###   ########.fr       */
-========
-/*   Updated: 2024/03/03 15:02:26 by picatrai         ###   ########.fr       */
->>>>>>>> pierre:src/tokenisation/set_grammaire.c
+/*   Updated: 2024/03/04 12:15:42 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include <minishell.h>
 
@@ -42,10 +39,6 @@ void	ft_set_redirection_text(t_token **token)
 
 void	ft_set_cmd_args(t_token **token)
 {
-<<<<<<<< HEAD:src/tokenisation/grammaire_1.c
-
-========
->>>>>>>> pierre:src/tokenisation/set_grammaire.c
 	while (*token != NULL)
 	{
 		if ((*token)->type == TEXT)

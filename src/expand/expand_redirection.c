@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 06:57:07 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/04 12:01:06 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/04 13:08:59 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char *transfo_expand(char *str, t_expand *expand)
     t_wildcard *ls;
 
     ls = NULL;
-    new = ft_replace_env_variable(str, expand);
+    new = ft_replace_env_variable(str, expand, 0); // j'ai un doute
     if (new == NULL)
         return (NULL);
     if (set_ls(&ls) != SUCCESS)

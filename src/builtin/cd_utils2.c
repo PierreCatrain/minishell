@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 21:21:48 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/04 08:53:19 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/04 13:16:14 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int	ft_get_env_value2(char **env_name, char *env, char *str, char **env_value)
 		(*env_value)[k] = '\0';
 		return (0);
 	}
+	free(*env_name);
 	return (1);
 }
 

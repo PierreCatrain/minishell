@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/04 11:55:42 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/04 17:48:41 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,6 +178,12 @@ typedef struct s_wildcard
     char *str;
 } t_wildcard;
 
+typedef struct s_process_id
+{
+    int *tab_pid;
+    int index;
+}   t_tab_pid;
+
 enum bool
 {
     FALSE = 0,
@@ -258,10 +264,9 @@ void	ft_set_all_grammaire(t_token **token);
 // |														|
 // # ====================================================== #
 
-// char *ft_replace_env_variable(char *str, t_data_parse *data_parse);
 char	*ft_join_char(char *str, char c);
 char	*ft_strjoin_one_malloc(char *new_str, char *str_tmp);
-char *ft_replace_env_variable(char *str, t_expand *expand);
+char *ft_replace_env_variable(char *str, t_expand *expand, int status);
 
 
 // # ====================================================== #
@@ -343,8 +348,6 @@ int	ft_exec_token_type_1(t_data_parse *data_parse, t_lst_exec **lst_exec, t_toke
 // |		        										|
 // # ====================================================== #
 
-void	ft_exec_token_type_2(t_data_parse *data_parse, t_token *token);
-//ft_create_tree_5.c
 int	ft_exec_token_type_2(t_data_parse *data_parse, t_token *token);
 int	ft_exec_token_type_heredoc(t_data_parse *data_parse, t_token **token);
 int	ft_exec_token_type_pipe(t_data_parse *data_parse, t_lst_exec **lst_exec);
@@ -407,11 +410,8 @@ t_expand **ft_dup_array_expand(t_expand **expand, int size);
 //ft_isolate_operateur_3.c
 t_token	*ft_lstnew_no_malloc(char *str, int quotes, int type, t_expand *expand);
 
-//ft_new_args.c
-char **ft_new_args(t_lst_exec *lst_exec);
-
 //ft_replace_env_variable.c
-char *ft_replace_env_variable(char *str, t_expand *expand);
+char *ft_replace_env_variable(char *str, t_expand *expand, int status);
 
 //ft_cat_env_variable.c
 char *ft_cat_env_variable(char *new_str, char *str, int *index);
@@ -457,7 +457,7 @@ t_token	*ft_lstnew_no_malloc(char *str, int quotes, int type, t_expand *expand);
 // |			        FT_NEW_ARGS.C   					|
 // |		        										|
 // # ====================================================== #
-char **ft_new_args(t_lst_exec *lst_exec);
+char **ft_new_args(t_lst_exec *lst_exec, int status);
 
 // # ====================================================== #
 // |														|
@@ -731,7 +731,7 @@ int 	ft_is_builtin(char *cmd);
 int 	find_cmd(char ***env, char **arg);
 int 	check_absolute_path_builtin(char **arg);
 int 	ft_check_path_cmd(char **env, char **cmd);
-int 	ft_exec_cmd_fork(t_tree *tree, char ***env);
+int 	ft_exec_cmd_fork(t_tree *tree, char ***env, int status, int *tab_pid, int i);
 int 	ft_tree_exec(t_tree *tree, char ***env, int *status);
 int 	ft_find_builtin(char *cmd, char **cmd_tab, char ***env, int *exit_flag);
 

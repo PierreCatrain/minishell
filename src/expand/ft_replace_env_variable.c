@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_replace_env_variable.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 07:05:34 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/02 09:18:30 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/04 13:05:28 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ char *ft_str_cat_long_long(char *new_str, long long g_exit_status)
 	return (free(exit), free(new_str), cat);
 }
 
-char *ft_replace_env_variable(char *str, t_expand *expand)
+char *ft_replace_env_variable(char *str, t_expand *expand, int status)
 {
     int index;
     char *new_str;
@@ -90,7 +90,7 @@ char *ft_replace_env_variable(char *str, t_expand *expand)
         if (str[index] == '$' && str[index + 1] == '?' && expand->action == CHANGE)
         {
             index++;
-            new_str = ft_str_cat_long_long(new_str, g_exit_status);
+            new_str = ft_str_cat_long_long(new_str, status);
             if (new_str == NULL)
                 return (NULL);
             expand = expand->next;

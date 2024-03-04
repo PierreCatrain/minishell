@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 10:10:03 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/04 12:00:15 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/04 16:49:06 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int	ft_check_path_cmd(char **env, char **cmd)
 	msg_err = ft_strjoin_wihtout_free(cmd[0], ": command not found\n");
 	ft_putstr_fd(msg_err, 2);
 	free (msg_err);
+	printf("j'exit 127 sur %s\n", cmd[0]);
 	free_tab_tab(cmd);
 	free_tab_tab(env);
 	free_tab_tab(path_split);
@@ -91,6 +92,8 @@ int	find_cmd(char ***env, char **cmd)
 		status = ft_find_builtin(cmd[0], cmd, env, &fake_exit_status);
 		if (status == -1)
 			return (1);
+		free_tab_tab(cmd);
+		free_tab_tab(*env);
 		exit(status);
 	}
 	else
