@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 22:48:14 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/04 12:24:20 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/04 12:48:03 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,4 +116,13 @@ void	ft_free_wildcard(t_wildcard **ls)
 		free(tmp->str);
 		free(tmp);
 	}
+}
+
+void	ft_free_pipes(int **fd_pipes, int nb_pipes)
+{
+	while (--nb_pipes >= 0)
+	{
+		free(fd_pipes[nb_pipes]);
+	}
+	free(fd_pipes);
 }

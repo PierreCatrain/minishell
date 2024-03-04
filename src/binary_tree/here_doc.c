@@ -1,57 +1,66 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_here_doc.c                                      :+:      :+:    :+:   */
+/*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 02:23:35 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/03 16:28:29 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/04 14:35:12 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int ft_nb_here_doc(t_token *token)
+int	ft_exec_token_type_heredoc(t_data_parse *data_parse, t_token **token)
 {
-    int count;
-
-    count = 0;
-    while (token != NULL)
-    {
-        if (token->type == HEREDOC)
-            count++;
-        token = token->next;
-    }
-    return (count);
+	if (data_parse->fd_in != 0 && data_parse->fd_in != -1)
+		close(data_parse->fd_in);
+	*token = (*token)->next;
+	data_parse->fd_in = \
+		data_parse->array_here_doc[data_parse->index_here_doc--];
+	return (SUCCESS);
 }
 
-int ft_complete_here_doc(t_data_parse *data_parse, t_token *token)
+int	ft_nb_here_doc(t_token *token)
 {
-    int index;
+	int	count;
 
-    index = 0;
-    data_parse->index_here_doc = ft_nb_here_doc(token) - 1;
-    data_parse->array_here_doc = malloc (ft_nb_here_doc(token) * sizeof(int));
-    if (data_parse->array_here_doc == NULL)
-        return (ERROR_MALLOC);
-    while (token != NULL)
-    {
-        if (token->type == HEREDOC)
-        {
-            token = token->next;
-            data_parse->heredoc = ft_here_doc();
-	        if (data_parse->heredoc == NULL)
-		        return (free(data_parse->array_here_doc), ERROR);
-	        data_parse->array_here_doc[index] = open(data_parse->heredoc, O_CREAT | O_RDWR | O_TRUNC, 0644);
-            unlink(data_parse->heredoc);
-            free(data_parse->heredoc);
-	        if (ft_complete(data_parse->array_here_doc[index++], token) == ERROR)
-                return (ERROR);
-        }
-        token = token->next;
-    }
-    return (SUCCESS);
+	count = 0;
+	while (token != NULL)
+	{
+		if (token->type == HEREDOC)
+			count++;
+		token = token->next;
+	}
+	return (count);
+}
+
+int	ft_complete_here_doc(t_data_parse *data_parse, t_token *token, int index)
+{
+	data_parse->index_here_doc = ft_nb_here_doc(token) - 1;
+	data_parse->array_here_doc = malloc (ft_nb_here_doc(token) * sizeof(int));
+	if (data_parse->array_here_doc == NULL)
+		return (ERROR_MALLOC);
+	while (token != NULL)
+	{
+		if (token->type == HEREDOC)
+		{
+			token = token->next;
+			data_parse->heredoc = ft_here_doc();
+			if (data_parse->heredoc == NULL)
+				return (free(data_parse->array_here_doc), ERROR);
+			data_parse->array_here_doc[index] = open(data_parse->heredoc, \
+					O_CREAT | O_RDWR | O_TRUNC, 0644);
+			unlink(data_parse->heredoc);
+			free(data_parse->heredoc);
+			if (ft_complete(data_parse->array_here_doc[index++], \
+						token) == ERROR)
+				return (ERROR);
+		}
+		token = token->next;
+	}
+	return (SUCCESS);
 }
 
 int	ft_complete(int fd_in, t_token *token)
@@ -83,7 +92,7 @@ char	*ft_here_doc(void)
 	char	*str;
 	char	*str_index;
 	int		index;
-	
+
 	str = ft_get_str("/tmp/.here_doc");
 	index = 1;
 	while (index <= 99999)

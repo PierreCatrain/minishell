@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/04 12:24:39 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/04 17:25:09 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,10 +231,8 @@ int ft_add_and_return(t_data_parse *data_parse, t_token **token, t_expand *expan
 
 //ft_make_token.c
 int	ft_set_make_token(t_data_parse *data_parse);
-int	ft_gestion_quotes_close(t_data_parse *data_parse, \
-		t_expand *expand, t_token **token);
-int	ft_gestion_quotes(t_data_parse *data_parse, \
-t_expand *expand, t_token **token);
+int	ft_gestion_quotes_close(t_data_parse *data_parse, t_expand *expand, t_token **token);
+int	ft_gestion_quotes(t_data_parse *data_parse, t_expand *expand, t_token **token);
 int ft_make_token(t_data_parse *data_parse, t_token **token);
 
 //ft_tokenisation.c
@@ -251,6 +249,61 @@ char *ft_isol_operator(t_data_parse *data_parse);
 void	ft_set_redirection_text(t_token **token);
 void	ft_set_cmd_args(t_token **token);
 void	ft_set_all_grammaire(t_token **token);
+
+// # ====================================================== #
+// |														|
+// |		        	  binary_tree	   	                |
+// |														|
+// # ====================================================== #
+
+//cut_token.c
+int	ft_is_there_parenthesis(t_token *token);
+t_token	*without_parenthesis(t_token *token);
+t_token	*before_token(t_token *token);
+t_token	*after_token(t_token *token);
+
+//ft_create_tree_1.c
+int	ft_add_node(t_tree **tree, t_token *token, t_data_parse *data_parse, t_token *tmp);
+int	ft_suite_add_node(t_tree **tree, t_token *token, t_token **new, t_data_parse *data_parse);
+void	ft_complete_tree_first_step(t_token **token, int *parenthesis_open);
+int	ft_complete_tree(t_tree **tree, t_token *token, t_data_parse *data_parse);
+int	ft_create_tree(t_tree **tree, t_token *token, t_data_parse *data_parse);
+
+//ft_create_tree_2.c
+int	ft_add_tree_null(t_tree **tree, t_tree *new, t_token *token, t_data_parse *data_parse);
+int	ft_add_tree_no_null(t_tree **tree, t_tree *new, t_token *token, t_data_parse *data_parse);
+int	ft_add_tree(t_tree **tree, t_tree *new, t_token *token, t_data_parse *data_parse);
+int	ft_complete_tree_part_2(t_tree **tree, t_token *tmp, t_token **new, t_data_parse *data_parse);
+
+//ft_interpret_token_1.c
+int	ft_is_token_type_1(t_token *token);
+int	ft_is_token_type_2(t_token *token);
+int	ft_interpret_token_suite(t_data_parse *data_parse, t_lst_exec **lst_exec, t_token **token);
+int	ft_interpret_token(t_data_parse *data_parse, t_lst_exec **lst_exec, t_token **token);
+
+//ft_interpret_token_2.c
+int	ft_exec_token_type_1(t_data_parse *data_parse, t_lst_exec **lst_exec, t_token *token);
+int	ft_exec_token_type_infile(t_data_parse *data_parse, t_token *token);
+int	ft_exec_token_type_outfile(t_data_parse *data_parse, t_token *token);
+int	ft_exec_token_type_2(t_data_parse *data_parse, t_token *token);
+
+//here_doc.c
+int	ft_exec_token_type_heredoc(t_data_parse *data_parse, t_token **token);
+int	ft_nb_here_doc(t_token *token);
+int	ft_complete_here_doc(t_data_parse *data_parse, t_token *token, int index);
+int	ft_complete(int fd_in, t_token *token);
+char	*ft_here_doc(void);
+
+//make_lst_exec.c
+int	ft_nb_lst_exec(t_token *token);
+int	ft_one_more_exec(t_data_parse *data_parse, t_lst_exec **lst_exec);
+int	ft_set_exec(t_data_parse *data_parse, t_lst_exec **lst_exec, t_token *token);
+int	ft_lst_exec(t_token *token, t_lst_exec **lst_exec, t_data_parse *data_parse);
+
+//pipes.c
+void	ft_pipes_fail(int **fd_pipes, int index_pipes);
+int	ft_nb_pipes(t_token *token);
+int	ft_exec_token_type_pipe(t_data_parse *data_parse, t_lst_exec **lst_exec);
 
 // # ====================================================== #
 // |														|
@@ -302,14 +355,12 @@ int ft_lst_exec(t_token *token, t_lst_exec **lst_exec, t_data_parse *data_parse)
 int ft_complete_tree(t_tree **tree, t_token *token, t_data_parse *data_parse);
 
 //ft_create_tree_3.c
-char	**ft_strdup_2d(char **str);
 t_lst_exec	*ft_new_lst_exec(char **args, int fd_in, int fd_out, t_expand **expand);
 t_lst_exec	*ft_lst_exec_last(t_lst_exec *lst_exec);
 int	ft_lst_exec_add_back(t_lst_exec **lst_exec, t_lst_exec *new);
 int	ft_nb_pipes(t_token *token);
 
 //ft_create_tree_4.c
-void	ft_free_pipes(int **fd_pipes, int nb_pipes);
 void	ft_pipes_fail(int **fd_pipes, int index_pipes);
 int	ft_one_more_exec(t_data_parse *data_parse, t_lst_exec **lst_exec);
 int	ft_set_exec(t_data_parse *data_parse, t_lst_exec **lst_exec, t_token *token);
@@ -328,6 +379,7 @@ int	ft_add_right_child(t_tree **tree, t_tree *new);
 t_tree	*ft_tree_new(int type);
 t_token	*before_token(t_token *token);
 t_token	*after_token(t_token *token);
+int	ft_add_tree(t_tree **tree, t_tree *new, t_token *token, t_data_parse *data_parse);
 
 //ft_create_tree_7.c
 int	ft_is_there_parenthesis(t_token *token);
@@ -335,6 +387,11 @@ t_token	*without_parenthesis(t_token *token);
 t_tree	*ft_first_empty_child(t_tree *tree);
 int	ft_add_tree_null(t_tree **tree, t_tree *new, t_token *token, t_data_parse *data_parse);
 int	ft_add_tree_no_null(t_tree **tree, t_tree *new, t_token *token, t_data_parse *data_parse);
+t_token	*ft_lstnew_no_malloc(char *str, int quotes, int type, t_expand *expand);
+int	ft_complete_tree_part_2(t_tree **tree, t_token *tmp, t_token **new, t_data_parse *data_parse);
+int	ft_interpret_token(t_data_parse *data_parse, \
+		t_lst_exec **lst_exec, t_token **token);
+
 
 // # ====================================================== #
 // |														|
@@ -347,7 +404,7 @@ int	ft_complete(int fd_in, t_token *token);
 char	*ft_strjoin(char *str1, char *str2);
 
 //ft_complete_here_doc.c
-int ft_complete_here_doc(t_data_parse *data_parse, t_token *token);
+int ft_complete_here_doc(t_data_parse *data_parse, t_token *token, int index);
 
 
 //ft_lst_expand.c
@@ -360,9 +417,6 @@ int ft_make_lst_expand(t_expand **expand, t_data_parse *data_parse);
 int ft_size_expand(t_expand **expand);
 int ft_complete_expand(t_expand ***expand, t_expand *add, int size);
 t_expand **ft_dup_array_expand(t_expand **expand, int size);
-
-//ft_isolate_operateur_3.c
-t_token	*ft_lstnew_no_malloc(char *str, int quotes, int type, t_expand *expand);
 
 //ft_new_args.c
 char **ft_new_args(t_lst_exec *lst_exec);
@@ -464,6 +518,7 @@ char	*ft_strdup(char *str);
 void	ft_print_fd_pipe(int **fd_pipes, int nb_pipes);
 int		ft_size_malloc_long_long(long long nb);
 char	*ft_itoa_long_long(long long nb);
+char	**ft_strdup_2d(char **str);
 
 // # ====================================================== #
 // |														|
@@ -522,6 +577,7 @@ void	free_tab_tab(char **tab);
 void	ft_free_wildcard(t_wildcard **ls);
 void free_expand(t_expand **expand, int len);
 void free_mini_expand(t_expand *expand);
+void	ft_free_pipes(int **fd_pipes, int nb_pipes);
 
 
 // # ====================================================== #

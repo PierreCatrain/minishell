@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:52:38 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/04 12:41:51 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/04 17:07:56 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ int	main(int argc, char **argv, char **envp)
 		return (ERROR);
 	if (ft_check_argc(argc, argv) == ERROR_ARGC_ENVP)
 		return (ERROR_ARGC_ENVP);
-	if (!envp)
+	if (!envp[0])
 	{
 		printf("pas d'env\n");
 		return (2);

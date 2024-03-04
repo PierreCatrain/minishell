@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 23:13:46 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/04 11:13:11 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/04 12:46:16 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,4 +83,23 @@ char	*ft_strjoin(char *str1, char *str2)
 		join[i + j] = str2[j];
 	join[i + j] = '\0';
 	return (join);
+}
+
+char	**ft_strdup_2d(char **str)
+{
+	char	**new;
+	int		index;
+
+	new = malloc((ft_strlen_2d(str) + 1) * sizeof(char *));
+	if (new == NULL)
+		return (free_2d(str), NULL);
+	index = -1;
+	while (str[++index])
+	{
+		new[index] = ft_strdup(str[index]);
+		if (new[index] == NULL)
+			return (free_2d(str), ft_free_2d_index(new, index), NULL);
+	}
+	new[index] = NULL;
+	return (new);
 }

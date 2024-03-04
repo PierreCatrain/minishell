@@ -1,75 +1,48 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_create_tree_6.c                                 :+:      :+:    :+:   */
+/*   cut_token.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/03 04:16:21 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/03 09:39:22 by picatrai         ###   ########.fr       */
+/*   Created: 2024/03/04 13:02:52 by picatrai          #+#    #+#             */
+/*   Updated: 2024/03/04 14:35:51 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include "minishell.h"
 
-t_token	*ft_lstnew_no_malloc(char *str, int quotes, int type, t_expand *expand)
+int	ft_is_there_parenthesis(t_token *token)
+{
+	while (token->prev != NULL)
+		token = token->prev;
+	if (token->type != OPEN_PARENTHESIS)
+		return (0);
+	while (token->next != NULL)
+		token = token->next;
+	if (token->type != CLOSE_PARENTHESIS)
+		return (0);
+	return (1);
+}
+
+t_token	*without_parenthesis(t_token *token)
 {
 	t_token	*new;
+	t_token	*tmp;
 
-	new = malloc(sizeof(t_token));
-	if (new == NULL)
-		return (NULL);
-	new->str = ft_strdup(str);
-	if (new->str == NULL)
-		return (free(new), NULL);
-	new->quotes = quotes;
-	new->expand = expand;
-	new->type = type;
-	new->prev = NULL;
-	new->next = NULL;
-	return (new);
-}
-
-int	ft_add_left_child(t_tree **tree, t_tree *new)
-{
-	if (new == NULL)
-		return (ERROR_MALLOC);
-	else if (*tree == NULL)
+	while (token->prev != NULL)
+		token = token->prev;
+	tmp = token->next;
+	new = NULL;
+	while (tmp->next != NULL)
 	{
-		*tree = new;
-		return (SUCCESS);
+		if (ft_lst_add_back(&new, ft_lstnew_no_malloc(tmp->str, \
+						tmp->quotes, tmp->type, tmp->expand)) == ERROR_MALLOC)
+			return (NULL);
+		tmp = tmp->next;
 	}
-	new->parent = *tree;
-	(*tree)->left_child = new;
-	return (SUCCESS);
-}
-
-int	ft_add_right_child(t_tree **tree, t_tree *new)
-{
-	if (new == NULL)
-		return (ERROR_MALLOC);
-	else if (*tree == NULL)
-	{
-		*tree = new;
-		return (SUCCESS);
-	}
-	new->parent = *tree;
-	(*tree)->right_child = new;
-	return (SUCCESS);
-}
-
-t_tree	*ft_tree_new(int type)
-{
-	t_tree	*new;
-
-	new = malloc (sizeof(t_tree));
-	if (new == NULL)
-		return (NULL);
-	new->type = type;
-	new->parent = NULL;
-	new->left_child = NULL;
-	new->right_child = NULL;
-	new->lst_exec = NULL;
+	while (new->prev != NULL)
+		new = new->prev;
 	return (new);
 }
 
