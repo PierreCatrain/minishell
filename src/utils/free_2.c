@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 22:48:14 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/03 13:37:20 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/04 12:01:45 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,14 +82,14 @@ void	free_tab_tab(char **tab)
 	free(tab);
 }
 
-void	ft_free_tab_tab_incremented(char **tab)
-{
-	int	i;
+// void	ft_free_tab_tab_incremented(char **tab)
+// {
+// 	int	i;
 
-	i = -1;
-	while (tab[++i])
-		free(tab[i]);
-}
+// 	i = -1;
+// 	while (tab[++i])
+// 		free(tab[i]);
+// }
 
 void	ft_free_wildcard(t_wildcard **ls)
 {

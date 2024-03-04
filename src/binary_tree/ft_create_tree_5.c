@@ -3,40 +3,53 @@
 /*                                                        :::      ::::::::   */
 /*   ft_create_tree_5.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 04:13:45 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/02 06:58:46 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/04 11:59:28 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-
-
-void	ft_exec_token_type_2(t_data_parse *data_parse, t_token *token)
+int	ft_exec_token_type_2(t_data_parse *data_parse, t_token *token)
 {
+	char *str_tmp;
+	
 	if (token->type == INFILE)
 	{
 		if (data_parse->fd_in != 0 && data_parse->fd_in != -1)
 			close(data_parse->fd_in);
 		token = token->next;
-		data_parse->fd_in = open(token->str, O_RDONLY);
+		str_tmp = transfo_expand(token->str, token->expand);
+		if (str_tmp == NULL)
+			return (ERROR);
+		data_parse->fd_in = open(str_tmp, O_RDONLY);
+		free(str_tmp);
 	}
 	else if (token->type == OUTFILE)
 	{
 		if (data_parse->fd_out != 1 && data_parse->fd_out != -1)
 			close(data_parse->fd_out);
 		token = token->next;
-		data_parse->fd_out = open(token->str, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+		str_tmp = transfo_expand(token->str, token->expand);
+		if (str_tmp == NULL)
+			return (ERROR);
+		data_parse->fd_out = open(str_tmp, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+		free(str_tmp);
 	}
 	else if (token->type == APPEND)
 	{
 		if (data_parse->fd_out != 1 && data_parse->fd_out != -1)
 			close(data_parse->fd_out);
 		token = token->next;
-		data_parse->fd_out = open(token->str, O_CREAT | O_WRONLY | O_APPEND, 0644);
+		str_tmp = transfo_expand(token->str, token->expand);
+		if (str_tmp == NULL)
+			return (ERROR);
+		data_parse->fd_out = open(str_tmp, O_CREAT | O_WRONLY | O_APPEND, 0644);
+		free(str_tmp);
 	}
+	return (SUCCESS);
 }
 
 int	ft_exec_token_type_heredoc(t_data_parse *data_parse, t_token **token)
@@ -61,6 +74,7 @@ int	ft_exec_token_type_pipe(t_data_parse *data_parse, t_lst_exec **lst_exec)
 				ft_print_error_malloc(), ERROR_MALLOC);
 	free_2d(data_parse->args_tmp);
 	data_parse->args_tmp = NULL;
+	data_parse->expand = NULL;//
 	data_parse->fd_in = data_parse->fd_pipes[data_parse->index_pipes++][0];
 	data_parse->fd_out = 1;
 	return (SUCCESS);

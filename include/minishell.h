@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/04 10:06:13 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/04 11:55:42 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # define ERROR_PIPE 4
 # define ERROR_FILE 5
 # define ERROR 6
+# define SUCCESS_SQUARE 7
 # define GOOD_INPUT 0
 # define WRONG_INPUT 1
 # define WD_BUFFER_SIZE 5000
@@ -158,8 +159,16 @@ typedef struct s_data_parse
     int *array_here_doc;
     int index_here_doc;
 
-
+    int tmp;
     t_expand **expand;
+
+    char condition_1[4];
+	char *res_1[4];
+	char condition_2[5];
+	char *res_2[5];
+
+    char *opp[9];
+	int type[9];
 }   t_data_parse;
 
 typedef struct s_wildcard
@@ -175,55 +184,73 @@ enum bool
     TRUE
 };
 
-// # ====================================================== #
-// |														|
-// |			    FT_CHECK_ARGC_ENVP.C		            |
-// |														|
-// # ====================================================== #
-int ft_check_argc_envp(int argc, char **argv);
-
-// # ====================================================== #
-// |														|
-// |			      FT_GET_PROMPT.C   		            |
-// |														|
-// # ====================================================== #
-char *ft_get_prompt(void);
-
-// # ====================================================== #
-// |														|
-// |			       FT_SIGNAUX.C     		            |
-// |														|
-// # ====================================================== #
-int ft_set_sig(void);
-
-// # ====================================================== #
-// |														|
-// |			FT_REPLACE_ENV_VARIABLE.C		            |
-// |														|
-// # ====================================================== #
+//ft_parse.c
 int ft_parse(t_tree **tree, t_data_parse *data_parse);
 
 // # ====================================================== #
 // |														|
-// |			FT_REPLACE_ENV_VARIABLE.C		            |
+// |		            	start	           	            |
 // |														|
 // # ====================================================== #
+
+//ft_check_argc.c
+int ft_check_argc(int argc, char **argv);
+
+//ft_get_prompt.c
+char	*ft_at_home(char *start_prompt, char *end_prompt, char *str);
+char	*ft_at_user(char *start_prompt, char *end_prompt);
+char	*ft_at_else(char *start_prompt, char *end_prompt, char *str);
+char    *ft_get_prompt(void);
+
+//signaux.c
+void	ft_display_new_prompt(int signal);
+int ft_set_sig(void);
+
+// # ====================================================== #
+// |														|
+// |		        	tokenisation	    	            |
+// |														|
+// # ====================================================== #
+
+//condition_grammaire_1.c
+int	ft_check_parenthesis(t_token *token);
+int	ft_check_proximity_opperator_bonus_suite(t_token *token);
+int	ft_check_proximity_opperator_bonus(t_token *token);
+int	is_cmd_between_bonus_opperator(t_token *token);
+int	ft_condition_grammaire(t_token *token);
+
+//condition_grammaire_2.c
+int	ft_is_quote_close(char *input, int double_quote_open, int single_quote_open);
+int	ft_check_pipes(t_token *token);
+int	is_redirection_well_followed(t_token *token);
+
+//ft_add_token.c
+void ft_set_add_token(t_data_parse *data_parse);
+int ft_add_token(t_token **token, t_data_parse *data_parse, t_expand *expand);
+int ft_add_and_return(t_data_parse *data_parse, t_token **token, t_expand *expand);
+
+//ft_make_token.c
+int	ft_set_make_token(t_data_parse *data_parse);
+int	ft_gestion_quotes_close(t_data_parse *data_parse, \
+		t_expand *expand, t_token **token);
+int	ft_gestion_quotes(t_data_parse *data_parse, \
+t_expand *expand, t_token **token);
+int ft_make_token(t_data_parse *data_parse, t_token **token);
+
+//ft_tokenisation.c
 int ft_tokenisation(t_token **token, t_data_parse *data_parse);
 
-// # ====================================================== #
-// |														|
-// |			FT_ISO_OPERATEUR.C      		            |
-// |														|
-// # ====================================================== #
+//ft_isol_operator.c
+void	ft_set_add_in_opperator(t_data_parse *data_parse);
+int	ft_add_in_opperator_suite(t_data_parse *data_parse);
+int	ft_add_in_opperator(t_data_parse *data_parse);
+void	ft_change_status_quotes(t_data_parse *data_parse);
 char *ft_isol_operator(t_data_parse *data_parse);
 
-// # ====================================================== #
-// |														|
-// |			FT_MAKE_TOKEN.C         		            |
-// |														|
-// # ====================================================== #
-
-int ft_make_token(t_data_parse *data_parse, t_token **token);
+//set_grammaire.c
+void	ft_set_redirection_text(t_token **token);
+void	ft_set_cmd_args(t_token **token);
+void	ft_set_all_grammaire(t_token **token);
 
 // # ====================================================== #
 // |														|
@@ -242,6 +269,8 @@ char *ft_replace_env_variable(char *str, t_expand *expand);
 // |			    FT_REPLACE_WILDCARD_4.C					|
 // |		        										|
 // # ====================================================== #
+
+//ft_replace_wildcard_4.c
 char	*ft_strjoin_1_malloc(char *str1, char *str2);
 t_wildcard	*ft_lst_wildcard_new(char *str);
 t_wildcard	*ft_lst_wildcard_last(t_wildcard *ls);
@@ -315,6 +344,8 @@ int	ft_exec_token_type_1(t_data_parse *data_parse, t_lst_exec **lst_exec, t_toke
 // # ====================================================== #
 
 void	ft_exec_token_type_2(t_data_parse *data_parse, t_token *token);
+//ft_create_tree_5.c
+int	ft_exec_token_type_2(t_data_parse *data_parse, t_token *token);
 int	ft_exec_token_type_heredoc(t_data_parse *data_parse, t_token **token);
 int	ft_exec_token_type_pipe(t_data_parse *data_parse, t_lst_exec **lst_exec);
 int ft_is_token_type_1(t_token *token);
@@ -361,6 +392,39 @@ char	*ft_strjoin(char *str1, char *str2);
 // # ====================================================== #
 int ft_complete_here_doc(t_data_parse *data_parse, t_token *token);
 
+
+//ft_lst_expand.c
+t_expand *ft_new_expand(int action);
+t_expand *ft_last_expand(t_expand *expand);
+int ft_add_back_expand(t_expand **expand, t_expand *new);
+
+//ft_make_lst_expand.c
+int ft_make_lst_expand(t_expand **expand, t_data_parse *data_parse);
+int ft_size_expand(t_expand **expand);
+int ft_complete_expand(t_expand ***expand, t_expand *add, int size);
+t_expand **ft_dup_array_expand(t_expand **expand, int size);
+
+//ft_isolate_operateur_3.c
+t_token	*ft_lstnew_no_malloc(char *str, int quotes, int type, t_expand *expand);
+
+//ft_new_args.c
+char **ft_new_args(t_lst_exec *lst_exec);
+
+//ft_replace_env_variable.c
+char *ft_replace_env_variable(char *str, t_expand *expand);
+
+//ft_cat_env_variable.c
+char *ft_cat_env_variable(char *new_str, char *str, int *index);
+
+//ft_add_wildcard.c
+char **ft_add_wildcard(char **base, char *add, t_wildcard *ls);
+int	ft_strchr_wildcard(char *str, char *find);
+int ft_check_all(char **split, char *str);
+int ft_check_before(char *to_find, char **split, char *str);
+int ft_check_after(char *to_find, char **split, char *str);
+
+//expand_redirection.c
+char *transfo_expand(char *str, t_expand *expand);
 
 // # ====================================================== #
 // |														|
@@ -441,8 +505,6 @@ int ft_strchr(char *str, char *find);
 t_token    *ft_lstlast(t_token *token);
 t_token	*ft_lstnew(char *str, int quotes, int type, t_expand *expand);
 int    ft_lst_add_back(t_token **token, t_token *new);
-int ft_lst_insert(t_token **token, t_token *new);
-void ft_lst_del(t_token **token);
 
 // # ====================================================== #
 // |														|
@@ -455,7 +517,6 @@ void    ft_print_token(t_token **token);
 int	ft_isalphanum(int c);
 int ft_strcmp(char *str1, char *str2);
 void ft_print_expand(t_expand *expand);
-void	ft_printf_2d(char **str, t_expand **expand);
 
 // # ====================================================== #
 // |														|
@@ -514,8 +575,6 @@ char	*ft_itoa_long_long(long long nb);
 t_token    *ft_lstlast(t_token *token);
 // t_token *ft_lstnew(char *str, int quotes, int type);
 int    ft_lst_add_back(t_token **token, t_token *new);
-int ft_lst_insert(t_token **token, t_token *new);
-void ft_lst_del(t_token **token);
 
 // # ====================================================== #
 // |														|

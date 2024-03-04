@@ -3,14 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   ft_create_tree_6.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 04:16:21 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/27 08:39:30 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/04 11:59:42 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+t_token	*ft_lstnew_no_malloc(char *str, int quotes, int type, t_expand *expand)
+{
+	t_token	*new;
+
+	new = malloc(sizeof(t_token));
+	if (new == NULL)
+		return (NULL);
+	new->str = ft_strdup(str);
+	if (new->str == NULL)
+		return (free(new), NULL);
+	new->quotes = quotes;
+	new->expand = expand;
+	new->type = type;
+	new->prev = NULL;
+	new->next = NULL;
+	return (new);
+}
 
 int	ft_add_left_child(t_tree **tree, t_tree *new)
 {

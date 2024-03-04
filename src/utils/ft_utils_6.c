@@ -3,55 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utils_6.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 22:58:50 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/02 07:35:12 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/04 12:02:38 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
-void	ft_print_lst_exec(t_lst_exec *lst_exec)
-{
-	printf("exec\n");
-	while (lst_exec != NULL)
-	{
-		ft_printf_2d(lst_exec->args, lst_exec->expand);
-		printf("in  -> %d\n", lst_exec->fd_in);
-		printf("out -> %d\n\n", lst_exec->fd_out);
-		lst_exec = lst_exec->next;
-	}
-}
-
-void	ft_print_tree(t_tree *tree)
-{
-	if (tree == NULL)
-		return ;
-	if (tree->type == EXEC_LIST)
-	{
-		ft_print_lst_exec(tree->lst_exec);
-	}
-	else if (tree->type == OPPERATOR_AND)
-	{
-		printf("AND\n");
-	}
-	else if (tree->type == OPPERATOR_OR)
-	{
-		printf("OR\n");
-	}
-	if (tree->left_child != NULL)
-	{
-		printf("left child\n");
-		ft_print_tree(tree->left_child);
-	}
-	if (tree->right_child != NULL)
-	{
-		printf("right child\n");
-		ft_print_tree(tree->right_child);
-	}
-	return ;
-}
 
 char	*ft_get_str(char *str)
 {
@@ -99,7 +58,29 @@ char	*ft_itoa(int n)
 	itoa[0] = '-';
 	return (itoa);
 }
+
 int	ft_is_ascii(char c)
 {
 	return (!(c >= '0' && c <= '9'));
+}
+
+char	*ft_strjoin_1_malloc(char *str1, char *str2)
+{
+	char	*join;
+	int		i;
+	int		j;
+
+	if (str2 == NULL)
+		return (str1);
+	join = malloc ((ft_strlen(str1) + ft_strlen(str2) + 1) * sizeof(char));
+	if (join == NULL)
+		return (free(str1), NULL);
+	i = -1;
+	while (str1[++i])
+		join[i] = str1[i];
+	j = -1;
+	while (str2[++j])
+		join[i + j] = str2[j];
+	join[i + j] = '\0';
+	return (free(str1), join);
 }

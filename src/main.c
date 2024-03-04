@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:52:38 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/04 09:41:15 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/04 11:56:42 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ int	main(int argc, char **argv, char **envp)
 	exit_status = 0;
 	if (ft_set_sig() == ERROR)
 		return (ERROR);
-	if (ft_check_argc_envp(argc, argv) == ERROR_ARGC_ENVP)
+	if (ft_check_argc(argc, argv) == ERROR_ARGC_ENVP)
 		return (ERROR_ARGC_ENVP);
 	if (!envp)
 		return (printf("pas d'env\n"), 2);
@@ -158,8 +158,13 @@ int	main(int argc, char **argv, char **envp)
 		free(data_parse.prompt);
 		tree = NULL;
 		if (data_parse.input == NULL)
-			return (free(data_parse.input), \
-			free_tab_tab(env), ft_putstr_fd("exit\n", 1), 0);
+		{
+			free(data_parse.input);
+			free_tab_tab(env);
+			rl_clear_history();
+			ft_putstr_fd("exit\n", 1);
+			return (0);
+		}
 		if (is_input_only_whitespace(data_parse.input))
 			add_history(data_parse.input);
 		if (ft_parse(&tree, &data_parse) == GOOD_INPUT)
