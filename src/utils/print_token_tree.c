@@ -6,21 +6,21 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 08:32:07 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/04 12:20:08 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/05 11:53:46 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void ft_print_expand(t_expand *expand)
+void	ft_print_expand(t_expand *expand)
 {
-	int index;
+	int	index;
 
 	index = 0;
 	printf(" expand ");
 	while (expand != NULL)
 	{
-		printf("/ %d ", expand->action);
+		printf("/ %d ", expand->act);
 		expand = expand->next;
 	}
 	printf(" || ");

@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   lst_exec.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 16:33:48 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/04 12:02:58 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/05 11:52:22 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_lst_exec	*ft_new_lst_exec(char **args, int fd_in, int fd_out, t_expand **expand)
+t_lst_exec	*ft_new_lst_exec(char **args, int fd_in, \
+		int fd_out, t_expand **expand)
 {
 	t_lst_exec	*new;
 

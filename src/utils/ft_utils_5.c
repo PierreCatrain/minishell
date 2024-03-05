@@ -6,11 +6,11 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 11:55:49 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/04 12:41:32 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/05 13:09:10 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
 int	count_world(char const *s, char sep)
 {
@@ -59,7 +59,7 @@ char	**ft_split(char *s, char c)
 	char		**tab;
 	int			start_word;
 	int			j;
-	int 		i;
+	int			i;
 
 	tab = malloc(sizeof(char *) * (count_world(s, c) + 1));
 	if (!tab || !s)

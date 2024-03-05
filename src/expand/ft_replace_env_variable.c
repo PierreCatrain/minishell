@@ -6,123 +6,83 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 07:05:34 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/04 18:35:55 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/05 10:27:36 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int ft_size_malloc_long_long(long long nb)
+int	ft_not_replace(char *str, char **new_str, int index, t_expand **expand)
 {
-	int count;
-
-	count = 0;
-	if (nb >= 0 && nb <= 9)
-		return (1);
-	if (nb < 0)
+	if (str[index] == '$' && str[index + 1] == '?' && (*expand)->act == KEEP)
 	{
-		nb *= -1;
-		count++;
+		*new_str = ft_join_char(*new_str, str[index]);
+		if (*new_str == NULL)
+			return (ERROR_MALLOC);
+		*expand = (*expand)->next;
 	}
-	while (nb > 0)
+	else if (str[index] == '$' && (*expand)->act == KEEP)
 	{
-		count++;
-		nb /= 10;
+		*new_str = ft_join_char(*new_str, str[index]);
+		if (new_str == NULL)
+			return (ERROR_MALLOC);
+		*expand = (*expand)->next;
 	}
-	return (count);
+	else
+	{
+		*new_str = ft_join_char(*new_str, str[index]);
+		if (*new_str == NULL)
+			return (ERROR_MALLOC);
+	}
+	return (SUCCESS);
 }
 
-char *ft_itoa_long_long(long long nb)
+int	rep_status(int *index, char **new_str, int status, t_expand **expand)
 {
-	char *str;
-	int count;
-	int index;
-	
-	count = ft_size_malloc_long_long(nb);
-	str = malloc ((count + 1) * sizeof(char));
-	if (str == NULL)
+	(*index)++;
+	*new_str = ft_str_cat_long_long(*new_str, status);
+	if (new_str == NULL)
+		return (ERROR_MALLOC);
+	*expand = (*expand)->next;
+	return (SUCCESS);
+}
+
+int	ft_set_replace_env_variable(char **new_str, int *index)
+{
+	*index = 0;
+	*new_str = malloc(sizeof(char));
+	if (*new_str == NULL)
+		return (ERROR_MALLOC);
+	*new_str[0] = '\0';
+	return (SUCCESS);
+}
+
+char	*ft_replace_env_variable(char *str, t_expand *expand, \
+		char **env, int status)
+{
+	char	*new_str;
+	int		index;
+
+	new_str = NULL;
+	if (ft_set_replace_env_variable(&new_str, &index) == ERROR_MALLOC)
 		return (NULL);
-	index = count - 1;
-	while (index >= 0)
+	while (str[index])
 	{
-		str[index--] = (nb % 10) + 48;
-		nb /= 10;
+		if (str[index] == '$' && str[index + 1] == '?' && expand->act == CHANGE)
+		{
+			if (rep_status(&index, &new_str, status, &expand) == ERROR_MALLOC)
+				return (NULL);
+		}
+		else if (str[index] == '$' && expand->act == CHANGE)
+		{
+			new_str = ft_cat_env_variable(new_str, str, &index, env);
+			if (new_str == NULL)
+				return (NULL);
+			expand = expand->next;
+		}
+		else if (ft_not_replace(str, &new_str, index, &expand) == ERROR_MALLOC)
+			return (NULL);
+		index++;
 	}
-	str[count] = '\0';
-	return (str);	
-}
-
-char *ft_str_cat_long_long(char *new_str, long long g_exit_status)
-{
-	char *exit;
-	char *cat;
-	int i;
-	int j;
-	
-	exit = ft_itoa_long_long(g_exit_status);
-	if (exit == NULL)
-		return (free(new_str), NULL);
-	cat = malloc ((ft_strlen(new_str) + ft_strlen(exit) + 1) * sizeof(char));
-	if (cat == NULL)
-		return (free(exit), free(new_str), NULL);
-	i = -1;
-	while (new_str[++i])
-		cat[i] = new_str[i];
-	j = -1;
-	while (exit[++j])
-		cat[i + j] = exit[j];
-	cat[i + j] = '\0';
-	return (free(exit), free(new_str), cat);
-}
-
-char *ft_replace_env_variable(char *str, t_expand *expand, char **env, int status)
-{
-    int index;
-    char *new_str;
-
-    index = 0;
-    new_str = malloc(sizeof(char));
-    if (new_str == NULL)
-        return (NULL);
-    new_str[0] = '\0';
-    while (str[index])
-    {
-        if (str[index] == '$' && str[index + 1] == '?' && expand->action == CHANGE)
-        {
-            index++;
-            new_str = ft_str_cat_long_long(new_str, status);
-            if (new_str == NULL)
-                return (NULL);
-            expand = expand->next;
-        }
-        else if (str[index] == '$' && str[index + 1] == '?' && expand->action == KEEP)
-        {
-            new_str = ft_join_char(new_str, str[index]);
-            if (new_str == NULL)
-                return (NULL);
-            expand = expand->next;
-        }
-        else if (str[index] == '$' && expand->action == CHANGE)
-        {
-            new_str = ft_cat_env_variable(new_str, str, &index, env);
-            if (new_str == NULL)
-                return (NULL);
-            expand = expand->next;
-        }
-        else if (str[index] == '$' && expand->action == KEEP)
-        {
-            new_str = ft_join_char(new_str, str[index]);
-            if (new_str == NULL)
-                return (NULL);
-            expand = expand->next;
-        }
-        else
-        {
-            new_str = ft_join_char(new_str, str[index]);
-            if (new_str == NULL)
-                return (NULL);
-        }
-        index++;
-    }
-    return (new_str);
+	return (new_str);
 }
