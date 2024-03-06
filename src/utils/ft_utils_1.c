@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utils_1.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 21:39:11 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/02 08:06:46 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/05 19:55:45 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 void	ft_putstr_fd(char *s, int fd)
 {
-	if (write(fd, s, ft_strlen(s)) == -1)
-		ft_putstr_fd(strerror(errno), 2);
+	write(fd, s, ft_strlen(s));
 }
 
 int	ft_strlen(char *str)

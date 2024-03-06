@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 16:01:18 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/01 18:12:53 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/05 22:19:07 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,27 +42,27 @@ int	ft_copy_env_exept_unset(char **env, int unset_index)
 	int		i;
 
 	i = -1;
-	printf("1\n");
 	while (++i < unset_index)
 		;
-	printf("1\n");
 	if (env[i + 1] == NULL)
 	{
 		free(env[i]);
 		env[i] = NULL;
 		return (0);
 	}
-	printf("2\n");
 	while (env[i + 1])
 	{
 		free(env[i]);
 		env[i] = ft_str_dup_env(env[i + 1], env[i]);
+		if (env[i] == NULL)
+			return (free_tab_tab(env), ERROR_MALLOC);
 		i++;
 	}
-	printf("3\n");
-	if (env[i - 1])
-		free(env[i - 1]);
-	printf("4\n");
+	if (env[i - 1] != NULL)
+	{
+		free(env[i]);
+		env[i] = NULL;
+	}
 	return (0);
 }
 
@@ -99,17 +99,12 @@ int	ft_unset2(char ***env, char *unset_str)
 	else if (unset_str[0] == '\0')
 		return (0);
 	if (ft_unset_is_in_env(*env, unset_str) == 1)
-	{
-		printf("il est pas dans env\n");
 		return (0);
-	}
-	printf("il est dans env\n");
 	unset_index = ft_find_unset_index(*env, unset_str);
-	printf("index de l'unset = %d\n", unset_index);
 	if (unset_index == -1)
 		return (0);
 	status = ft_copy_env_exept_unset(*env, unset_index);
-	if (ft_realloc_env(env, 1) == ERROR_MALLOC)
+	if (ft_realloc_env(env, 0) == ERROR_MALLOC)
 		return (ERROR_MALLOC);
 	return (status);
 }
@@ -122,6 +117,7 @@ int	ft_unset(char ***env, char **cmd)
 	i = 0;
 	while (cmd[++i])
 		status = ft_unset2(env, cmd[i]);
+	printf("dans unset %p\n", *env);
 	return (status);
 }
 

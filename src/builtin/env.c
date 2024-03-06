@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 22:28:44 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/04 09:34:32 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/06 15:46:06 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,18 @@
 
 int	ft_pustr_builtin_env(char *str)
 {
-	if (write(1, str, ft_strlen(str)) == -1)
+	char	*env_val;
+
+	env_val = ft_strjoin_wihtout_free(str, "\n");
+	if (write(1, env_val, ft_strlen(env_val)) == -1)
 	{
-		if (errno == ENOSPC)
-		{
-			ft_putstr_fd("env: write error: ", 2);
-			ft_putstr_fd(strerror(errno), 2);
-			return (125);
-		}
+		ft_putstr_fd("env: write error: ", 2);
+		ft_putstr_fd(strerror(errno), 2);
+		ft_putstr_fd("\n", 2);
+		free(env_val);
+		return (125);
 	}
-	if (write(1, "\n", 1) == -1)
-	{
-		if (errno == ENOSPC)
-		{
-			ft_putstr_fd("env: write error: ", 2);
-			ft_putstr_fd(strerror(errno), 2);
-			return (125);
-		}
-	}
+	free(env_val);
 	return (0);
 }
 
@@ -42,8 +36,14 @@ int	ft_env(char **env)
 
 	i = -1;
 	status = 0;
+	if (getenv("PATH") == NULL && is_export_name_in_env(env, "PATH") != -1)
+		i = 0;
 	while (env[++i])
+	{
 		status = ft_pustr_builtin_env(env[i]);
+		if (status == 125)
+			return (status);
+	}
 	return (status);
 }
 

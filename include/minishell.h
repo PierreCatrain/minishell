@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/04 18:58:45 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/06 18:40:02 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -614,6 +614,17 @@ void    free_and_close_tree(t_tree *tree);
 void	free_tab_tab(char **tab);
 void	ft_free_wildcard(t_wildcard **ls);
 
+// # ====================================================== #
+// |														|
+// |					ENV_UTILS_2.C 						|
+// |														|
+// # ====================================================== #
+
+int	count_word(int nb);
+char	*ft_itoa_shlvl(int nb);
+int	ft_atoi_int_shlvl_main(char *nb);
+char	*ft_change_shlvl(char *shlvl);
+char	**ft_copy_env(char **envp);
 
 // # ====================================================== #
 // |														|
@@ -648,6 +659,7 @@ char	*add_quote_to_value(char *export);
 char	*add_equal_null_char(char *export);
 char	*ft_str_dup_env(char *s1, char *s2);
 char	*assign_export_empty_value(char *export);
+char	*ft_change_shlvl_export(char *shlvl);
 char	**dup_env(char **env);
 char	**dup_env_ascii_order(char **env);
 void    ft_change_export(char ***env, char *str);
@@ -726,15 +738,16 @@ int	ft_env(char **env);
 // # ====================================================== #
 
 // char	*ft_get_err_msg(char *cmd, char *msg);
-char	**ft_get_path_cmd(void);
+char 	*ft_get_path(void);
+char	**ft_get_path_cmd(char **env);
 int 	ft_is_builtin(char *cmd);
 int 	find_cmd(char ***env, char **arg);
 int 	check_absolute_path_builtin(char **arg);
-int 	ft_check_path_cmd(char **env, char **cmd);
+int     ft_check_path_cmd(char ***env, char **cmd);
+int 	ft_exec_builtin(char **arg, char ***env, int *exit_flag, t_tree *tree);
 int 	ft_exec_cmd_fork(t_tree *tree, char ***env, int status, t_tab_pid pid);
 int 	ft_tree_exec(t_tree *tree, char ***env, int *status);
 int 	ft_find_builtin(char *cmd, char **cmd_tab, char ***env, int *exit_flag);
-
 
 // # ====================================================== #
 // |														|

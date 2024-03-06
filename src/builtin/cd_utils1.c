@@ -6,13 +6,13 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 21:20:57 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/04 09:30:54 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/05 22:15:41 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_change_owd_old_pwd2(char ***env, char *current_path, int check)
+void	ft_change_pwd_old_pwd2(char ***env, char *current_path)
 {
 	char	*exp_n_old_pwd;
 	char	*exp_val_old_pwd;
@@ -21,16 +21,11 @@ void	ft_change_owd_old_pwd2(char ***env, char *current_path, int check)
 	exp_n_old_pwd = NULL;
 	exp_val_old_pwd = NULL;
 	exp_str_old_pwd = NULL;
-	if (is_export_name_in_env(*env, "OLDPWD") != 1 \
-		|| is_export_name_in_env(*env, "OLDPWD"))
-	{
-		exp_n_old_pwd = ft_str_dup_env("OLDPWD=", exp_n_old_pwd);
-		exp_val_old_pwd = ft_str_dup_env(current_path, exp_val_old_pwd);
-		exp_str_old_pwd = ft_strjoin_equal_val(exp_n_old_pwd, exp_val_old_pwd);
-		if (check == 1)
-			ft_export2(env, exp_str_old_pwd);
-		free(exp_str_old_pwd);
-	}
+	exp_n_old_pwd = ft_str_dup_env("OLDPWD=", exp_n_old_pwd);
+	exp_val_old_pwd = ft_str_dup_env(current_path, exp_val_old_pwd);
+	exp_str_old_pwd = ft_strjoin_equal_val(exp_n_old_pwd, exp_val_old_pwd);
+	ft_export2(env, exp_str_old_pwd);	
+	free(exp_str_old_pwd);
 }
 
 void	ft_change_pwd_old_pwd(char *current_path, char *new_path, char ***env)
@@ -38,22 +33,16 @@ void	ft_change_pwd_old_pwd(char *current_path, char *new_path, char ***env)
 	char	*exp_n_new;
 	char	*exp_val_new;
 	char	*exp_str_new;
-	int		check;
 
-	check = 0;
 	exp_n_new = NULL;
 	exp_val_new = NULL;
 	exp_str_new = NULL;
-	if (is_export_name_in_env(*env, "PWD") != -1)
-	{
-		exp_n_new = ft_str_dup_env("PWD=", exp_n_new);
-		exp_val_new = ft_str_dup_env(new_path, exp_val_new);
-		exp_str_new = ft_strjoin_equal_val(exp_n_new, exp_val_new);
-		ft_export2(env, exp_str_new);
-		free(exp_str_new);
-		check = 1;
-	}
-	ft_change_owd_old_pwd2(env, current_path, check);
+	exp_n_new = ft_str_dup_env("PWD=", exp_n_new);
+	exp_val_new = ft_str_dup_env(new_path, exp_val_new);
+	exp_str_new = ft_strjoin_equal_val(exp_n_new, exp_val_new);
+	ft_export2(env, exp_str_new);
+	free(exp_str_new);
+	ft_change_pwd_old_pwd2(env, current_path);
 	return ;
 }
 

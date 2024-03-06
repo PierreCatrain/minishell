@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:52:38 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/04 18:36:45 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/06 14:08:25 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,107 +30,6 @@ int	only_one_cmd(t_tree *tree, char **argv, char ***env, int *exit_status)
 	return (*exit_status);
 }
 
-int	count_word(int nb)
-{
-	int	count;
-
-	count = 1;
-	while (nb >= 10)
-	{
-		nb /= 10;
-		count++;
-	}
-	return (count);
-}
-
-char	*ft_itoa_shlvl(int nb)
-{
-	char	*str;
-	int		len;
-	int		i;
-
-	len = count_word(nb);
-	str = malloc(sizeof(char) * (len + 1));
-	if (!str)
-		return (NULL);
-	i = 0;
-	str[len] = '\0';
-	while (0 < len)
-	{
-		str[len - 1] = (nb % 10) + '0';
-		nb /= 10;
-		len--;
-	}
-	return (str);
-}
-
-int	ft_atoi_int_shlvl(char *nb)
-{
-	int	i;
-	int	res;
-	int	s;
-
-	i = 0;
-	res = 0;
-	s = 1;
-	if (nb[0] == '-')
-		s = -1;
-	while (nb[i] == '-' || nb[i] == '+')
-		i++;
-	while (nb[i] >= '0' && nb[i] <= '9')
-	{
-		res = res * 10 + nb[i] - 48;
-		i++;
-	}
-	res += 1;
-	if ((res * s) < 0 || (res * s) > 2147483647)
-		return (1);
-	return (s * res);
-}
-
-char	*ft_change_shlvl(char *shlvl)
-{
-	char	*res_val;
-	char	*res;
-
-	res_val = ft_itoa_shlvl(ft_atoi_int_shlvl(shlvl));
-	if (!res_val)
-		return (NULL);
-	res = ft_strjoin_wihtout_free("SHLVL=", res_val);
-	if (!res)
-		return (NULL);
-	free(res_val);
-	return (res);
-}
-
-char	**ft_copy_env(char **envp)
-{
-	char	**env;
-	int		len_envp;
-	int		i;
-	char	*envp_name;
-
-	if (!envp)
-		return (NULL);
-	len_envp = ft_strlen_2d(envp);
-	env = (char **) malloc(sizeof(char *) * (len_envp + 2));
-	i = -1;
-	while (envp[++i])
-	{
-		envp_name = ft_find_export_name(envp[i]);
-		if (ft_strcmp(envp_name, "SHLVL") == 0)
-		{
-			env[i] = ft_change_shlvl(getenv("SHLVL"));
-			free(envp_name);
-			continue ;
-		}
-		free(envp_name);
-		env[i] = ft_str_dup_env(envp[i], env[i]);
-	}
-	env[i] = NULL;
-	return (env);
-}
-
 int	main(int argc, char **argv, char **envp)
 {
 	t_data_parse	data_parse;
@@ -144,7 +43,9 @@ int	main(int argc, char **argv, char **envp)
 		return (ERROR);
 	if (ft_check_argc(argc, argv) == ERROR_ARGC_ENVP)
 		return (ERROR_ARGC_ENVP);
-	env = ft_copy_env(envp);// peut etre le faire depuis l'exec
+	env = ft_copy_env(envp);
+	if (!env)
+		return (ERROR_MALLOC);
 	if (argc == 3)
 		return (only_one_cmd(tree, argv, &env, &exit_status));
 	while (1)

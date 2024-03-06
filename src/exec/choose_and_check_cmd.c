@@ -6,29 +6,24 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 10:10:03 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/04 18:36:36 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/05 22:18:28 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**ft_get_path_cmd(void)
+char	**ft_get_path_cmd(char **env)
 {
 	char	**path_split;
 	char	*path;
 
-	path = getenv("PATH"); // changer et mettre ma fonction
+	path = ft_get_env_value(env, "PATH"); // changer et mettre ma fonction
 	if (!path)
-	{
-		printf("PATH n'existe pas dans env\n");
 		return (NULL);
-	}
 	path_split = ft_split(path, ':');
 	if (!path_split)
-	{
-		printf("error prblm\n");
-		return (NULL);
-	}
+		return (free(path), NULL);
+	free(path);
 	return (path_split);
 }
 
@@ -45,16 +40,20 @@ void	ft_check_path_execve(char **path, char ***cmd, char ***env)
 	}
 }
 
-int	ft_check_path_cmd(char **env, char **cmd)
+int	ft_check_path_cmd(char ***env, char **cmd)
 {
 	int		i;
 	char	*cmd_path;
 	char	**path_split;
 	char	*msg_err;
 
-	path_split = ft_get_path_cmd();
+	path_split = ft_get_path_cmd(*env);
 	if (!path_split)
+	{
+		free_tab_tab(*env);
+		free_tab_tab(cmd);
 		exit (127);
+	}
 	i = -1;
 	while (path_split[++i])
 	{
@@ -64,7 +63,7 @@ int	ft_check_path_cmd(char **env, char **cmd)
 		if (!access(cmd_path, F_OK | X_OK))
 		{
 			free_tab_tab(path_split);
-			ft_check_path_execve(&cmd_path, &cmd, &env);
+			ft_check_path_execve(&cmd_path, &cmd, env);
 		}
 		free (cmd_path);
 	}
@@ -72,19 +71,18 @@ int	ft_check_path_cmd(char **env, char **cmd)
 	ft_putstr_fd(msg_err, 2);
 	free (msg_err);
 	free_tab_tab(cmd);
-	free_tab_tab(env);
+	free_tab_tab(*env);
 	free_tab_tab(path_split);
 	exit(127);
 }
 
-// access chemin absolue //EXECUTE BUILTIN
 int	find_cmd(char ***env, char **cmd)
 {
 	int	status;
 	int	fake_exit_status;
 
 	status = 0;
-	if (check_absolute_path_builtin(&(cmd[0])) == ERROR)
+	if (check_absolute_path_builtin(&(cmd[0])) == ERROR_MALLOC)
 		return (ERROR_MALLOC);
 	if (ft_is_builtin(cmd[0]))
 	{
@@ -95,6 +93,11 @@ int	find_cmd(char ***env, char **cmd)
 		free_tab_tab(*env);
 		exit(status);
 	}
+	// if (getenv("PATH") == NULL && (ft_strcmp(cmd[0], "UNSET") == 0 && ft_strcmp(ft_strcmp(cmd[1], "PATH") == 0)))
+	// 	ft_exec_env_less(env);
+	// si PATH n'est pas dans env et que mon path != NULL -> execve
+	// si PATH n'est pas dans en et que mon PATh cache == NULLL 
+	//		-> ecrire que le msg d'erreur que la commande n'est pas dispo
 	else
 	{
 		if (access(cmd[0], F_OK | X_OK) == 0)
@@ -106,7 +109,7 @@ int	find_cmd(char ***env, char **cmd)
 				exit (126);
 			}
 		}
-		ft_check_path_cmd(*env, cmd);
+		ft_check_path_cmd(env, cmd);
 	}
 	return (status);
 }

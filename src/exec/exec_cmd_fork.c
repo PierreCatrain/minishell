@@ -6,17 +6,47 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 17:38:07 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/04 18:58:34 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/06 15:56:38 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int	ft_exec_builtin(char **arg, char ***env, int *exit_flag, t_tree *tree)
+{
+	int	check;
+	check = 0;
+	int		fd_stdout;
+	int		fd_out_saved;
+
+	if (tree->lst_exec->fd_in == -1 || tree->lst_exec->fd_out == -1)
+	{
+		printf("fd in = %d\nfd out = %d\n", tree->lst_exec->fd_in, tree->lst_exec->fd_out);
+		ft_putstr_fd("file in doesn't exist\n", 2);
+		return (2);
+	}
+	fd_stdout = dup(0);
+	fd_out_saved = dup(1);
+	dup2(tree->lst_exec->fd_in, 0);
+	if (tree->lst_exec->fd_in > 2)
+		close (tree->lst_exec->fd_in);
+	dup2(tree->lst_exec->fd_out, 1);
+	if (tree->lst_exec->fd_in > 2)
+		close (tree->lst_exec->fd_out);
+	check = ft_find_builtin(arg[0], arg, env, exit_flag);
+	dup2(fd_stdout, 0);
+	// if (fd_stdout >= 0)
+	close(fd_stdout);
+	dup2(fd_out_saved, 1);
+	// if (fd_out_saved >= 0)
+	close(fd_out_saved);
+	return (check);
+}
+
 void	ft_child(t_tree *tree, char ***env, int status, int *tab_pid)
 {
 	char	**arg;
 
-	arg = NULL;
 	arg = ft_new_args(tree->lst_exec, status);
 	dup2(tree->lst_exec->fd_in, 0);
 	dup2(tree->lst_exec->fd_out, 1);

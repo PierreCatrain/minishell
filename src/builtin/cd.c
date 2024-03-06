@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:42:46 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/04 09:33:29 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/05 22:13:05 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,21 +38,12 @@ int	ft_cd_home(char ***env)
 	if (getcwd(current_path, PATH_MAX) == NULL)
 		return (2);
 	if (is_export_name_in_env(*env, "HOME") == -1)
-	{
-		ft_putstr_fd("bash: cd: HOME not set\n", 2);
-		return (2);
-	}
+		return (ft_putstr_fd("bash: cd: HOME not set\n", 2), 2);
 	oldpwd = ft_get_env_value(*env, "HOME");
 	if (chdir(oldpwd) != 0)
-	{
-		ft_msg_err_chdir(oldpwd);
-		return (free(oldpwd), 1);
-	}
+		return (ft_msg_err_chdir(oldpwd), free(oldpwd), 1);
 	if (getcwd(new_path, PATH_MAX) == NULL)
-	{
-		ft_msg_err_getcwd();
-		return (free(oldpwd), 1);
-	}
+		return (ft_msg_err_getcwd(), free(oldpwd), 1);
 	free(oldpwd);
 	ft_change_pwd_old_pwd(current_path, new_path, env);
 	return (0);

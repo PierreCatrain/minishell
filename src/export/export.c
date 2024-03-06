@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 22:51:52 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/01 18:11:33 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/06 19:30:32 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,75 @@ void	ft_export3(char *export_str, char **export, int *res)
 	}
 }
 
+char	*ft_get_export_value(char *str)
+{
+	int	i;
+	int	j;
+	char	*export_value;
+
+	i = 0;
+	j = 0;
+	while (str[i] && str[i] != '=')
+		i++;
+	while (str[j])
+		j++;
+	export_value = malloc(j + 1);
+	if (!export_value)
+		return (NULL);
+	j = 0;
+	while (str[++i])
+	{
+		export_value[j] = str[i];
+		j++;
+	}
+	export_value[j] = '\0';
+	return (export_value);
+}
+
+int	ft_check_shlvl_export(char ***env, char *export_str)
+{
+	int		i;
+	char	*export_name;
+	char	*export_value;
+
+	export_name = ft_find_export_name(export_str);
+	if (!export_name)
+		return (ERROR_MALLOC);
+	printf("export name %s\n", export_name);
+	if (ft_strcmp(export_name, "SHLVL") != 0)
+		return (2);
+	i = 0;
+	free(export_name);
+	while ((*env)[i])
+	{
+		printf("(*env)[i] %s\n", (*env)[i]);
+		export_name = ft_find_export_name((*env)[i]);
+		if (ft_strcmp(export_name, "SHLVL") == 0)
+		{
+			export_value = ft_get_export_value(export_str);
+			printf("export value = %s\n", export_value);
+			printf("env[i] que je free = %s\n", (*env)[i]);
+			free((*env)[i]);
+			(*env)[i] = ft_change_shlvl_export(export_value);
+			free(export_value);
+			free(export_name);
+			return (0);
+		}
+		free(export_name);
+		i++;
+	}
+	return (2);
+}
+
 int	ft_export2(char ***env, char *export_str)
 {
 	char	*export;
 	int		i;
 	int		res;
 
+	printf("export str = %s\n", export_str);
+	if (ft_check_shlvl_export(env, export_str) == 0)
+		return (0);
 	ft_export3(export_str, &export, &res);
 	if (res != 0)
 		return (res);
