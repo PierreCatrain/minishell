@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 06:02:52 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/04 18:09:28 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/07 12:26:32 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,10 @@ void	ft_display_new_prompt(int signal)
 		rl_on_new_line();
 		rl_redisplay();
 	}
+	// else if (g_exit_status == -200)
+	// {
+	// 	write(1, "\n", 1);
+	// }
 }
 
 int	ft_set_sig(void)

@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:52:38 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/05 11:37:32 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/06 17:39:27 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,9 @@ int	main(int argc, char **argv, char **envp)
 				return (free_and_close_tree(tree), free(env), ERROR_MALLOC);
 			free_and_close_tree(tree);
 		}
-		printf("exit_status = %d\n", exit_status);
+		//printf("exit_status = %d\n", exit_status);
 	}
 	return (exit_status);
 }
+
+//ctrl c depuis heredoc

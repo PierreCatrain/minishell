@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 02:23:35 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/04 18:10:42 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/07 15:23:44 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	ft_complete_here_doc(t_data_parse *data_parse, t_token *token, int index)
 			free(data_parse->heredoc);
 			if (ft_complete(data_parse->array_here_doc[index++], \
 						token) == ERROR)
-				return (ERROR);
+				return (free(data_parse->array_here_doc), ERROR);
 		}
 		token = token->next;
 	}
@@ -65,16 +65,26 @@ int	ft_complete_here_doc(t_data_parse *data_parse, t_token *token, int index)
 
 int	ft_complete(int fd_in, t_token *token)
 {
-	char	*str;
+	// char	*str;
 	char	*line;
 
 	if (fd_in == -1)
 		return (SUCCESS);
-	str = ft_get_str("> ");
-	line = readline(str);
+	// str = ft_get_str("> ");
+	// line = readline(str);
+	ft_putstr_fd("> ", 1);
+	// line = get_next_line(0);
+	line = new_readline(token->str);
 	if (line == NULL)
+	{
+		// printf("\n");
 		return (ERROR);
-	if (ft_strcmp(line, token->str) != 0)
+	}
+		// return (ft_putstr_fd("minishell: warning: heredoc wanted (`", 2), ft_putstr_fd(token->str, 2), ft_putstr_fd("')\n", 2), ERROR);
+	// printf("gnl : |%s|\n", line);
+	// printf("len %d\n", ft_strlen(line));
+	// if (ft_strcmp(line, token->str) != 0)
+	if (ft_strncmp(line, token->str, ft_strlen(token->str)) == 1 || ft_strlen(token->str) != ft_strlen(line) - 1)
 	{
 		ft_putstr_fd(line, fd_in);
 		free(line);
@@ -93,7 +103,7 @@ char	*ft_here_doc(void)
 	char	*str_index;
 	int		index;
 
-	str = ft_get_str("/tmp/.here_doc");
+	str = ft_get_str(".here_doc");
 	index = 1;
 	while (index <= 99999)
 	{

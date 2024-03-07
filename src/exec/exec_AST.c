@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 01:19:42 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/04 18:41:36 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/06 13:30:00 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int	ft_tree_exec(t_tree *tree, char ***env, int *status)
 		while (tree->lst_exec != NULL)
 		{
 			status2 = ft_exec_cmd_fork(tree, env, *status, tab_pid, i);
+			g_exit_status = status2;// j'ai rajouter ca c'est pour les signaux
 			if (status2 == ERROR_MALLOC)
 				return (ERROR_MALLOC);
 			if (tree->lst_exec->next != NULL)

@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/05 13:31:21 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/07 14:06:06 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -472,6 +472,9 @@ t_tree	*ft_first_empty_child(t_tree *tree);
 t_wildcard	*ft_lst_wildcard_new(char *str);
 t_wildcard	*ft_lst_wildcard_last(t_wildcard *ls);
 int	ft_lst_wildcard_add_back(t_wildcard **ls, t_wildcard *new);
+
+//new_gnl.c
+char *new_readline(char *lim);
 
 //print_token_tree.c
 void	ft_print_expand(t_expand *expand);
