@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 08:32:07 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/05 11:53:46 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/08 17:22:55 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,9 @@ void	ft_printf_2d(char **str, t_expand **expand)
 	while (str[index])
 	{
 		printf("%s ", str[index]);
-		if (expand != NULL)
-			ft_print_expand(expand[index]);
+		(void)expand;
+		// if (expand != NULL)
+		// 	ft_print_expand(expand[index]);
 		index++;
 	}
 	printf("\n");
@@ -94,11 +95,11 @@ void	ft_print_token(t_token **token)
 	printf("size %d\n\n", ft_lstsize(*token));
 	while ((*token)->next != NULL)
 	{
-		printf("%s |\n", (*token)->str);
+		printf("%s | %d |\n", (*token)->str, (*token)->type);
 		ft_print_expand((*token)->expand);
 		*token = (*token)->next;
 	}
-	printf("%s |\n", (*token)->str);
+	printf("%s | %d |\n", (*token)->str, (*token)->type);
 	ft_print_expand((*token)->expand);
 	while ((*token)->prev != NULL)
 		*token = (*token)->prev;
