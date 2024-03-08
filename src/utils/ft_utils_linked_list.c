@@ -1,102 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_utils_linked_list.c                             :+:      :+:    :+:   */
+/*   ft_utils_linked_list2.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/29 17:49:56 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/02 07:57:15 by picatrai         ###   ########.fr       */
+/*   Created: 2024/02/29 20:03:49 by lgarfi            #+#    #+#             */
+/*   Updated: 2024/03/01 22:01:29 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// t_token	*ft_lstlast(t_token *token)
-// {
-// 	if (token == NULL)
-// 		return (NULL);
-// 	while (token->next != NULL)
-// 		token = token->next;
-// 	return (token);
-// }
+void	print_linked_list(t_lst_exec *lst_exec)
+{
+	t_lst_exec	*tmp;
 
-// t_token	*ft_lstnew(char *str, int quotes, int type)
-// {
-// 	t_token	*new;
+	tmp = lst_exec;
+	while (tmp)
+	{
+		print_tab_tab(tmp->args);
+		tmp = tmp->next;
+	}
+}
 
-// 	new = malloc(sizeof(t_token));
-// 	if (new == NULL)
-// 		return (free(str), NULL);
-// 	new->str = ft_strdup(str);
-// 	if (new->str == NULL)
-// 		return (free(new), free(str), NULL);
-// 	free(str);
-// 	new->quotes = quotes;
-// 	new->type = type;
-// 	new->prev = NULL;
-// 	new->next = NULL;
-// 	return (new);
-// }
+int	ft_linked_list_size(t_lst_exec *lst)
+{
+	int	len;
 
-// int	ft_lst_add_back(t_token **token, t_token *new)
-// {
-// 	if (new == NULL)
-// 		return (ERROR_MALLOC);
-// 	if (*token == NULL)
-// 		*token = new;
-// 	else
-// 	{
-// 		new->prev = ft_lstlast(*token);
-// 		ft_lstlast(*token)->next = new;
-// 	}
-// 	return (SUCCESS);
-// }
-
-// int	ft_lst_insert(t_token **token, t_token *new)
-// {
-// 	if (new == NULL)
-// 		return (ERROR_MALLOC);
-// 	if (*token == NULL)
-// 		*token = new;
-// 	else
-// 	{
-// 		if ((*token)->next != NULL)
-// 		{
-// 			(*token)->next->prev = new;
-// 			new->next = (*token)->next;
-// 		}
-// 		(*token)->next = new;
-// 		new->prev = *token;
-// 	}
-// 	return (SUCCESS);
-// }
-
-// void	ft_lst_del(t_token **token)
-// {
-// 	t_token	*tmp;
-
-// 	tmp = *token;
-// 	if ((*token)->next != NULL && (*token)->prev != NULL)
-// 	{
-// 		(*token)->next->prev = (*token)->prev;
-// 		(*token)->prev->next = (*token)->next;
-// 		*token = (*token)->next;
-// 		free(tmp->str);
-// 		free(tmp);
-// 	}
-// 	else if ((*token)->next != NULL)
-// 	{
-// 		(*token)->next->prev = NULL;
-// 		*token = (*token)->next;
-// 		free(tmp->str);
-// 		free(tmp);
-// 	}
-// 	else if ((*token)->prev != NULL)
-// 	{
-// 		(*token)->prev->next = NULL;
-// 		*token = (*token)->prev;
-// 		free(tmp->str);
-// 		free(tmp);
-// 	}
-// }
+	len = 0;
+	while (lst != NULL)
+	{
+		len++;
+		lst = lst->next;
+	}
+	return (len);
+}

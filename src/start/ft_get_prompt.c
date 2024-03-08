@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_get_prompt.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 21:50:13 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/04 12:01:23 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/04 18:09:17 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include "minishell.h"
 
 char	*ft_at_home(char *start_prompt, char *end_prompt, char *str)
 {

@@ -6,13 +6,13 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:52:38 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/08 19:43:40 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/08 21:44:14 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	g_exit_status;
+int	g_signal;
 
 int	only_one_cmd(t_tree *tree, char **argv, char ***env, int *exit_status)
 {
@@ -22,7 +22,7 @@ int	only_one_cmd(t_tree *tree, char **argv, char ***env, int *exit_status)
 	if (data_parse.input == NULL)
 		return (ERROR_MALLOC);
 	add_history(data_parse.input);
-	if (ft_parse(&tree, &data_parse) == GOOD_INPUT)
+	if (ft_parse(&tree, &data_parse, *env, *exit_status) == GOOD_INPUT)
 		ft_tree_exec(tree, env, exit_status);
 	free_and_close_tree(tree);
 	rl_clear_history();
@@ -39,6 +39,7 @@ int	main(int argc, char **argv, char **envp)
 
 	tree = NULL;
 	exit_status = 0;
+	printf("_=%s", getenv("_"));
 	if (ft_set_sig() == ERROR)
 		return (ERROR);
 	if (ft_check_argc(argc, argv) == ERROR_ARGC_ENVP)
@@ -66,7 +67,7 @@ int	main(int argc, char **argv, char **envp)
 		}
 		if (is_input_only_whitespace(data_parse.input))
 			add_history(data_parse.input);
-		if (ft_parse(&tree, &data_parse) == GOOD_INPUT)
+		if (ft_parse(&tree, &data_parse, env, exit_status) == GOOD_INPUT)
 		{
 			exit_status = ft_tree_exec(tree, &env, &exit_status);
 			if (exit_status == ERROR_MALLOC)
@@ -76,3 +77,5 @@ int	main(int argc, char **argv, char **envp)
 	}
 	return (exit_status);
 }
+
+//wc -l << lim

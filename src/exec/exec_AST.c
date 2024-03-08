@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 01:19:42 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/08 19:40:50 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/08 21:41:29 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	ft_tree_exec(t_tree *tree, char ***env, int *status)
 		if (ll_len == 1 && ft_is_builtin(tree->lst_exec->args[0]) == 1)
 		{
 			ft_replace_last_command(env, tree->lst_exec->args[0]);
-			arg = ft_new_args(tree->lst_exec, *status);
+			arg = ft_new_args(tree->lst_exec, *status, *env);
 			status2 = ft_exec_builtin(arg, env, &exit_flag, tree);
 			if (exit_flag || status2 == ERROR_MALLOC)
 			{

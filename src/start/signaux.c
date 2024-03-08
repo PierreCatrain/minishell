@@ -6,16 +6,16 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 06:02:52 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/04 12:04:51 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/08 21:42:42 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include "minishell.h"
 
 void	ft_display_new_prompt(int signal)
 {
 	(void)signal;
-	if (g_exit_status != -100)
+	if (g_signal != -100)
 	{
 		write(1, "\n", 1);
 		rl_replace_line("", 0);

@@ -1,37 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_create_tree_4.c                                 :+:      :+:    :+:   */
+/*   make_lst_exec.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/03 04:11:28 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/04 11:56:50 by lgarfi           ###   ########.fr       */
+/*   Created: 2024/03/04 13:06:51 by picatrai          #+#    #+#             */
+/*   Updated: 2024/03/04 17:57:16 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include "minishell.h"
 
-void	ft_free_pipes(int **fd_pipes, int nb_pipes)
+int	ft_nb_lst_exec(t_token *token)
 {
-	while (--nb_pipes >= 0)
-	{
-		free(fd_pipes[nb_pipes]);
-	}
-	free(fd_pipes);
-}
+	int	count;
 
-void	ft_pipes_fail(int **fd_pipes, int index_pipes)
-{
-	index_pipes--;
-	while (index_pipes >= 0)
+	count = 1;
+	while (token != NULL)
 	{
-		close(fd_pipes[index_pipes][0]);
-		close(fd_pipes[index_pipes][1]);
-		free(fd_pipes[index_pipes]);
-		index_pipes--;
+		if (token->type == AND || token->type == OR)
+			count++;
+		token = token->next;
 	}
-	free(fd_pipes);
+	return (count);
 }
 
 int	ft_one_more_exec(t_data_parse *data_parse, t_lst_exec **lst_exec)
@@ -40,12 +32,13 @@ int	ft_one_more_exec(t_data_parse *data_parse, t_lst_exec **lst_exec)
 	{
 		if (ft_lst_exec_add_back(lst_exec, \
 		ft_new_lst_exec(data_parse->args_tmp, \
-		data_parse->fd_in, data_parse->fd_out, data_parse->expand)) == ERROR_MALLOC)
+		data_parse->fd_in, data_parse->fd_out, \
+		data_parse->expand)) == ERROR_MALLOC)
 			return (ft_free_pipes(data_parse->fd_pipes, data_parse->nb_pipes), \
 			free_2d(data_parse->args_tmp), ft_print_error_malloc(), \
 			ERROR_MALLOC);
 		free_2d(data_parse->args_tmp);
-		data_parse->expand = NULL;//
+		data_parse->expand = NULL;
 		data_parse->args_tmp = NULL;
 		data_parse->fd_in = 0;
 		data_parse->fd_out = 1;
@@ -76,33 +69,33 @@ int	ft_set_exec(t_data_parse *data_parse, t_lst_exec **lst_exec, t_token *token)
 	data_parse->fd_in = 0;
 	data_parse->fd_out = 1;
 	data_parse->args_tmp = NULL;
-	data_parse->expand = NULL;//
+	data_parse->expand = NULL;
 	*lst_exec = NULL;
 	return (SUCCESS);
 }
 
-int	ft_exec_token_type_1(t_data_parse *data_parse, \
-		t_lst_exec **lst_exec, t_token *token)
+int	ft_lst_exec(t_token *token, t_lst_exec **lst_exec, t_data_parse *data_parse)
 {
-	if (token->type == OPEN_PARENTHESIS)
+	if (ft_set_exec(data_parse, lst_exec, token) != SUCCESS)
+		return (ERROR);
+	while (token != NULL)
 	{
-		if (ft_one_more_exec(data_parse, lst_exec) == ERROR_MALLOC)
-			return (ERROR_MALLOC);
+		if (ft_interpret_token(data_parse, lst_exec, &token) != SUCCESS)
+		{
+			while (++data_parse->index_pipes < data_parse->nb_pipes)
+				free(data_parse->fd_pipes[data_parse->index_pipes]);
+			free(data_parse->fd_pipes);
+			return (ERROR);
+		}
+		if (token->next == NULL)
+			break ;
+		token = token->next;
 	}
-	else if (token->type == CLOSE_PARENTHESIS)
-	{
-		if (ft_one_more_exec(data_parse, lst_exec) == ERROR_MALLOC)
-			return (ERROR_MALLOC);
-	}
-	else if (token->type == OR)
-	{
-		if (ft_one_more_exec(data_parse, lst_exec) == ERROR_MALLOC)
-			return (ERROR_MALLOC);
-	}
-	else if (token->type == AND)
-	{
-		if (ft_one_more_exec(data_parse, lst_exec) == ERROR_MALLOC)
-			return (ERROR_MALLOC);
-	}
+	if (ft_one_more_exec(data_parse, lst_exec) == ERROR_MALLOC)
+		return (ERROR_MALLOC);
+	data_parse->index_pipes = -1;
+	while (++data_parse->index_pipes < data_parse->nb_pipes)
+		free(data_parse->fd_pipes[data_parse->index_pipes]);
+	free(data_parse->fd_pipes);
 	return (SUCCESS);
 }

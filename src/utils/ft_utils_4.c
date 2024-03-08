@@ -6,11 +6,11 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 05:46:43 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/12 06:34:35 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/06 15:17:05 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include "minishell.h"
 
 void	ft_free_2d_index(char **str, int index)
 {

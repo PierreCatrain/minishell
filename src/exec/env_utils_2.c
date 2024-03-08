@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 12:37:17 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/08 20:46:22 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/08 21:39:24 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,9 +110,11 @@ int	ft_get_path_in_env(char **envp, char ***env, int *i)
 	if (!(*env))
 		return (ERROR_MALLOC);
 	if (getenv("PATH") == NULL)
+	{
 		(*env)[(*i)++] = ft_get_path();
-	if ((*env)[(*i) - 1] == NULL)
-		return (ERROR_MALLOC);
+		if ((*env)[(*i) - 1] == NULL)
+			return (free_tab_tab(*env), ERROR_MALLOC);
+	}
 	(*env)[*i] = NULL;
 	return (0);
 }
@@ -122,29 +124,36 @@ void	ft_check_missing_env(char ***env, int *i)
 	char	buff[PATH_MAX + 1];
 	char	*env_val;
 
+	printf("1\n");
 	if (getenv("PWD") == NULL)
 	{
+		printf("2\n");
 		env_val = ft_strjoin("PWD=", getcwd(buff, PATH_MAX));
 		ft_realloc_env(env, 2);
 		(*env)[(*i)++] = ft_strdup(env_val);
 		free(env_val);
 		(*env)[*i] = NULL;
 	}
+	printf("1\n");
 	if (getenv("_") == NULL)
 	{
+		printf("2\n");
 		env_val = ft_strdup("_=./minishell");
 		ft_realloc_env(env, 3);
 		(*env)[(*i)++] = ft_strdup(env_val);
 		free(env_val);
 	}
+	printf("1\n");
 	if (getenv("SHLVL") == NULL)
 	{
+		printf("2\n");
 		env_val = ft_strdup("SHLVL=1");
 		ft_realloc_env(env, 4);
 		(*env)[(*i)++] = ft_strdup(env_val);
 		free(env_val);
 		(*env)[*i] = NULL;
 	}
+	printf("1\n");
 }
 
 char	**ft_copy_env(char **envp)
@@ -157,24 +166,30 @@ char	**ft_copy_env(char **envp)
 	len_envp = ft_strlen_2d(envp);
 	i = 0;
 	ft_get_path_in_env(envp, &env, &i);
+	if (!env)
+		return (NULL);
 	if (!envp[0])
 	{
+		printf("qwer\n");
 		ft_check_missing_env(&env, &i);
 		return (env);
 	}
-	while (envp[++i])
+	while (envp[i])
 	{
 		envp_name = ft_find_export_name(envp[i]);
 		if (ft_strcmp(envp_name, "SHLVL") == 0)
 		{
 			env[i] = ft_change_shlvl(envp, getenv("SHLVL"));
 			free(envp_name);
+			i++;
 			continue ;
 		}
 		free(envp_name);
 		env[i] = ft_str_dup_env(envp[i], env[i]);
+		i++;
 	}
 	ft_check_missing_env(&env, &i);
+	env[i] = NULL;
 	return (env);
 }
 

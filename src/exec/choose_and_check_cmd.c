@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 10:10:03 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/08 19:52:09 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/08 21:52:56 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	**ft_get_path_cmd(char **env)
 	char	**path_split;
 	char	*path;
 
-	path = ft_get_env_value(env, "PATH"); // changer et mettre ma fonction
+	path = ft_get_env_value(env, "PATH");
 	if (!path)
 		return (NULL);
 	path_split = ft_split(path, ':');
@@ -91,11 +91,6 @@ int	find_cmd(char ***env, char **cmd)
 		free_tab_tab(*env);
 		exit(status);
 	}
-	// if (getenv("PATH") == NULL && (ft_strcmp(cmd[0], "UNSET") == 0 && ft_strcmp(ft_strcmp(cmd[1], "PATH") == 0)))
-	// 	ft_exec_env_less(env);
-	// si PATH n'est pas dans env et que mon path != NULL -> execve
-	// si PATH n'est pas dans en et que mon PATh cache == NULLL 
-	//		-> ecrire que le msg d'erreur que la commande n'est pas dispo
 	else
 	{
 		if (access(cmd[0], F_OK | X_OK) == 0)

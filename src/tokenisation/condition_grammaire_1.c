@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_condition_grammaire.c                           :+:      :+:    :+:   */
+/*   condition_grammaire_1.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 19:36:25 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/02 01:11:09 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/04 18:08:37 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include "minishell.h"
 
 int	ft_check_parenthesis(t_token *token)
 {

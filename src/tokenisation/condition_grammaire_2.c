@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   condition_grammaire_2.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 01:08:04 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/04 12:15:03 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/04 18:08:31 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#include <minishell.h>
+#include "minishell.h"
 
 int	ft_is_quote_close(char *input, int double_quote_open, int single_quote_open)
 {

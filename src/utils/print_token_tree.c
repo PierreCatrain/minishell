@@ -6,21 +6,21 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 08:32:07 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/03 08:36:31 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/08 17:22:55 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void ft_print_expand(t_expand *expand)
+void	ft_print_expand(t_expand *expand)
 {
-	int index;
+	int	index;
 
 	index = 0;
 	printf(" expand ");
 	while (expand != NULL)
 	{
-		printf("/ %d ", expand->action);
+		printf("/ %d ", expand->act);
 		expand = expand->next;
 	}
 	printf(" || ");
@@ -35,8 +35,9 @@ void	ft_printf_2d(char **str, t_expand **expand)
 	while (str[index])
 	{
 		printf("%s ", str[index]);
-		if (expand != NULL)
-			ft_print_expand(expand[index]);
+		(void)expand;
+		// if (expand != NULL)
+		// 	ft_print_expand(expand[index]);
 		index++;
 	}
 	printf("\n");
@@ -94,10 +95,12 @@ void	ft_print_token(t_token **token)
 	printf("size %d\n\n", ft_lstsize(*token));
 	while ((*token)->next != NULL)
 	{
-		printf("%s | %d\n", (*token)->str, (*token)->type);
+		printf("%s | %d |\n", (*token)->str, (*token)->type);
+		ft_print_expand((*token)->expand);
 		*token = (*token)->next;
 	}
-	printf("%s | %d\n", (*token)->str, (*token)->type);
+	printf("%s | %d |\n", (*token)->str, (*token)->type);
+	ft_print_expand((*token)->expand);
 	while ((*token)->prev != NULL)
 		*token = (*token)->prev;
 }

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_check_argc_envp.c                               :+:      :+:    :+:   */
+/*   ft_check_argc.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 21:27:05 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/03 15:47:25 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/04 18:09:09 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include "minishell.h"
 
 int	ft_check_argc(int argc, char **argv)
 {

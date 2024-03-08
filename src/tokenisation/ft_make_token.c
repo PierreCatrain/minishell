@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_make_token.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 13:37:36 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/04 12:01:30 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/04 18:08:45 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include "minishell.h"
 
 int	ft_set_make_token(t_data_parse *data_parse)
 {
