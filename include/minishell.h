@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/06 18:40:02 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/08 15:53:41 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -620,10 +620,10 @@ void	ft_free_wildcard(t_wildcard **ls);
 // |														|
 // # ====================================================== #
 
-int	count_word(int nb);
+int 	count_word(int nb);
 char	*ft_itoa_shlvl(int nb);
-int	ft_atoi_int_shlvl_main(char *nb);
-char	*ft_change_shlvl(char *shlvl);
+int	    ft_atoi_int_shlvl_main(char **envp, char *nb);
+char	*ft_change_shlvl(char **envp, char *shlvl);
 char	**ft_copy_env(char **envp);
 
 // # ====================================================== #

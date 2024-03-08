@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 18:09:13 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/06 18:10:20 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/08 20:34:59 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,20 +60,25 @@ char	**dup_env_ascii_order(char **env)
 	int		len_env;
 	int		i;
 	char	**new_env;
+	int		j;
 
 	len_env = ft_len_tab_tab(env);
 	new_env = (char **) malloc(sizeof(char *) * (len_env + 2));
 	if (!new_env)
 		return (NULL);
 	i = 0;
+	j = 0;
+	if (getenv("OLDPWD") == NULL)
+		new_env[j++] = ft_strdup("OLDPWD");
 	while (env[i])
 	{
-		new_env[i] = ft_str_dup_env(env[i], new_env[i]);
+		new_env[j] = ft_str_dup_env(env[i], new_env[j]);
 		if (!new_env)
 			return (NULL);
 		i++;
+		j++;
 	}
-	new_env[i] = NULL;
+	new_env[j] = NULL;
 	return (new_env);
 }
 
