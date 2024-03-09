@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 07:05:34 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/09 23:35:38 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/10 00:53:47 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,54 +72,81 @@ char	**ft_add_to_2d_expand(char **base, char *add)
 	return (new);
 }
 
+int ft_set_split_add_expand_part1(char ***split, char **new_str, int *add_next, int *add_start)
+{
+	*split = ft_split(*new_str, ' ');
+	if (*split == NULL)
+		return (ERROR_MALLOC);
+	if ((*new_str)[0] != ' ' && *add_next != -1)
+		*add_start = 1;
+	else
+		*add_start = 0;
+	if ((*new_str)[ft_strlen(*new_str)] == ' ')
+		*add_next = 0;
+	else
+		*add_next = 1;
+	return (SUCCESS);
+}
+
+int ft_set_split_add_expand_part2(char ***new, char ***res, char **split)
+{
+	int index;
+	
+	*new = malloc(sizeof(char *));
+	if (*new == NULL)
+		return (free_2d(split), ERROR_MALLOC);
+	*new[0] = NULL;
+	index = -1;
+	while ((*res)[++index])
+	{
+		*new = ft_add_to_2d_expand(*new, *res[index]);
+		if (*new == NULL)
+			return (free_2d(split), ERROR_MALLOC);
+	}
+	return (SUCCESS);
+}
+
+int ft_clear_buffer_in_split_expand(int index, char ***new, int add_start, char **split)
+{
+	int len;
+	
+	len = ft_strlen_2d(*new);
+	if (len != 0 && index == 0 && add_start == 1)
+	{
+		*new[len - 1] = ft_strjoin_1_malloc(*new[len - 1], split[index]);
+		if (*new[len - 1] == NULL)
+			return (free_2d(split), free_2d(*new), ERROR_MALLOC);
+	}
+	else
+	{
+		*new = ft_add_to_2d_expand(*new, split[index]);
+		if (*new == NULL)
+			return (free_2d(split), ERROR_MALLOC);
+	}
+	return (SUCCESS);
+}
+
 int ft_split_add_expand(char *new_str, char ***res, int *add_next)
 {
 	char **split;
 	int add_start;
 	int index;
 	char **new;
-	int len;
 
-	split = ft_split(new_str, ' ');
-	if (split == NULL)
+	printf("iciiiiiii\n");
+	if (ft_set_split_add_expand_part1(&split, &new_str, add_next, &add_start) != SUCCESS)
 		return (ERROR_MALLOC);
-	if (new_str[0] != ' ' && *add_next != -1)
-		add_start = 1;
-	else
-		add_start = 0;
-	if (new_str[ft_strlen(new_str)] == ' ')
-		*add_next = 0;
-	else
-		*add_next = 1;
-	new = malloc(sizeof(char *));
-	if (new == NULL)
-		return (free_2d(split), ERROR_MALLOC);
-	new[0] = NULL;
-	index = -1;
-	while ((*res)[++index])
-	{
-		new = ft_add_to_2d_expand(new, *res[index]);
-		if (new == NULL)
-			return (free_2d(split), ERROR_MALLOC);
-	}
+	printf("iciiiiiii\n");
+	if (ft_set_split_add_expand_part2(&new, res, split) != SUCCESS)
+		return (ERROR_MALLOC);
+	printf("iciiiiiii\n");
 	index = -1;
 	while (split[++index])
 	{
-		len = ft_strlen_2d(new);
-		if (len != 0 && index == 0 && add_start == 1)
-		{
-			printf("test\n");
-			new[len - 1] = ft_strjoin_1_malloc(new[len - 1], split[index]);
-			if (new[len - 1] == NULL)
-				return (free_2d(split), free_2d(new), ERROR_MALLOC);
-		}
-		else
-		{
-			new = ft_add_to_2d_expand(new, split[index]);
-			if (new == NULL)
-				return (free_2d(split), ERROR_MALLOC);
-		}
+		if (ft_clear_buffer_in_split_expand(index, &new, add_start, split) != SUCCESS)
+			return (ERROR_MALLOC);
 	}
+	printf("iciiiiiii\n");
 	free_2d(*res);
 	*res = new;
 	return (SUCCESS);
@@ -171,115 +198,135 @@ int ft_set_add_and_replace_env_variable(char ***res, char **new_str, char **new_
 	if (*new_str == NULL)
 		return (free_2d(*res), ERROR_MALLOC);
 	*new_str[0] = '\0';
+	data_expand->index = 0;
 	return (SUCCESS);
 }
 
-// int reset_the_buffer(char *new_str, )
+int reset_the_buffer(t_data_expand *data_expand, char ***res, char **new_str)
+{
+	int len;
+	
+	if (*new_str[0] != '\0')
+	{
+		len = ft_strlen_2d(*res);
+		if (len == 0 || data_expand->add_next != 1)
+		{
+			*res = ft_add_to_2d_expand(*res, *new_str);
+			if (*res == NULL)
+				return (free(*new_str), ERROR_MALLOC);
+		}
+		else
+		{
+			*res[len - 1] = ft_strjoin_1_malloc(*res[len - 1], *new_str);
+			if (*res[len - 1] == NULL)
+				return (free_2d(*res), free(*new_str), ERROR_MALLOC);
+		}
+		free(*new_str);
+		*new_str = malloc(sizeof(char));
+		if (*new_str == NULL)
+			return (free_2d(*res), ERROR_MALLOC);
+		*new_str[0] = '\0';
+	}
+	return (SUCCESS);
+}
+
+char **end_add_and_replace(char *new_str, char ***res, t_data_expand *data_expand, char *str)
+{
+	int len;
+	
+	printf("ici if %s\n", **res);
+	if (new_str[0] != '\0')
+	{
+		len = ft_strlen_2d(*res);
+		if (len == 0 || data_expand->add_next != 1 || strcmp(new_str, str) == 0)
+		{	
+			*res = ft_add_to_2d_expand(*res, new_str);
+			if (*res == NULL)
+				return (free(new_str), NULL);
+		}
+		else
+		{
+			(*res)[len - 1] = ft_strjoin_1_malloc_expand((*res)[len - 1], new_str);
+			if ((*res)[len - 1] == NULL)
+				return (free_2d(*res), free(new_str), NULL);
+		}
+	}
+	return (free(new_str), *res);
+}
+
+int ft_add_replace_status(t_data_expand *data_expand, char ***res, char **new_str, t_expand **expand)
+{
+	if (reset_the_buffer(data_expand, res, new_str) != SUCCESS)
+		return (ERROR_MALLOC);
+	if (rep_status(&data_expand->index, new_str, data_expand->status, expand) == ERROR_MALLOC)
+		return (ERROR_MALLOC);
+	if (ft_split_add_expand(*new_str, res, &data_expand->add_next) != SUCCESS)
+		return (free(*new_str), free_2d(*res), ERROR_MALLOC);
+	free(*new_str);
+	*new_str = malloc(sizeof(char));
+	if (*new_str == NULL)
+		return (free_2d(*res), ERROR_MALLOC);
+	*new_str[0] = '\0';
+	return (SUCCESS);
+}
+
+int ft_add_replace_classique(t_data_expand *data_expand, char ***res, char **new_str, char *str)
+{
+	if (reset_the_buffer(data_expand, res, new_str) != SUCCESS)
+		return (ERROR_MALLOC);
+	*new_str = ft_cat_env_variable(*new_str, str, &data_expand->index, data_expand->env);
+	if (*new_str == NULL)
+		return (ERROR_MALLOC);
+	if (ft_split_add_expand(*new_str, res, &data_expand->add_next) != SUCCESS)
+	{
+		return (free(*new_str), free_2d(*res), ERROR_MALLOC);
+	}
+	free(*new_str);
+	*new_str = malloc(sizeof(char));
+	if (*new_str == NULL)
+		return (free_2d(*res), ERROR_MALLOC);
+	*new_str[0] = '\0';
+	return (SUCCESS);
+}
 
 char	**ft_add_and_replace_env_variable(char *str, t_expand *expand, t_data_expand *data_expand, char **new_args)
 {
 	char **res;
 	char	*new_str;
-	int		index;
-	int len;
 
 	if (ft_set_add_and_replace_env_variable(&res, &new_str, new_args, data_expand) != SUCCESS)
 		return (NULL);
-	index = 0;
-	while (str[index])
+	while (str[data_expand->index])
 	{
-		if (str[index] == '$' && str[index + 1] == '?' && expand->act == CHANGE)
+		printf("ici\n");
+		if (str[data_expand->index] == '$' && str[data_expand->index + 1] == '?' && expand->act == CHANGE)
 		{
-			if (new_str[0] != '\0')
+			if (ft_add_replace_status(data_expand, &res, &new_str, &expand) != SUCCESS)
 			{
-				len = ft_strlen_2d(res);
-				if (len == 0 || data_expand->add_next != 1)
-				{
-					res = ft_add_to_2d_expand(res, new_str);
-					if (res == NULL)
-						return (free(new_str), NULL);
-				}
-				else
-				{
-					res[len - 1] = ft_strjoin_1_malloc(res[len - 1], new_str);
-					if (res[len - 1] == NULL)
-						return (free_2d(res), free(new_str), NULL);
-				}
-				free(new_str);
-				new_str = malloc(sizeof(char));
-				if (new_str == NULL)
-					return (free_2d(res), NULL);
-				new_str[0] = '\0';
-			}
-			if (rep_status(&index, &new_str, data_expand->status, &expand) == ERROR_MALLOC)
+				printf("ici if\n");
 				return (NULL);
-			if (ft_split_add_expand(new_str, &res, &data_expand->add_next) != SUCCESS)
-				return (free(new_str), free_2d(res), NULL);
-			free(new_str);
-			new_str = malloc(sizeof(char));
-			if (new_str == NULL)
-				return (free_2d(res), NULL);
-			new_str[0] = '\0';
+			}
 		}
-		else if (str[index] == '$' && expand->act == CHANGE)
+		else if (str[data_expand->index] == '$' && expand->act == CHANGE)
 		{
-			if (new_str[0] != '\0')
+			if (ft_add_replace_classique(data_expand, &res, &new_str, str) != SUCCESS)
 			{
-				len = ft_strlen_2d(res);
-				if (len == 0 || data_expand->add_next != 1)
-				{
-					res = ft_add_to_2d_expand(res, new_str);
-					if (res == NULL)
-						return (free(new_str), NULL);
-				}
-				else
-				{
-					res[len - 1] = ft_strjoin_1_malloc(res[len - 1], new_str);
-					if (res[len - 1] == NULL)
-						return (free_2d(res), free(new_str), NULL);
-				}
-				free(new_str);
-				new_str = malloc(sizeof(char));
-				if (new_str == NULL)
-					return (free_2d(res), NULL);
-				new_str[0] = '\0';
-			}
-			new_str = ft_cat_env_variable(new_str, str, &index, data_expand->env);
-			if (new_str == NULL)
+				printf("ici if\n");
 				return (NULL);
-			if (ft_split_add_expand(new_str, &res, &data_expand->add_next) != SUCCESS)
-				return (free(new_str), free_2d(res), NULL);
-			free(new_str);
-			new_str = malloc(sizeof(char));
-			if (new_str == NULL)
-				return (free_2d(res), NULL);
-			new_str[0] = '\0';
+			}
 			expand = expand->next;
 		}
 		else
 		{
-			if (ft_not_replace(str, &new_str, index, &expand) == ERROR_MALLOC)
+			if (ft_not_replace(str, &new_str, data_expand->index, &expand) == ERROR_MALLOC)
+			{
+				printf("ici if\n");
 				return (NULL);
+			}
 			if (data_expand->add_next == -1)
 				data_expand->add_next = 1;
 		}
-		index++;
+		data_expand->index++;
 	}
-	if (new_str[0] != '\0')
-	{
-		len = ft_strlen_2d(res);
-		if (len == 0 || data_expand->add_next != 1 || strcmp(new_str, str) == 0)
-		{	
-			res = ft_add_to_2d_expand(res, new_str);
-			if (res == NULL)
-				return (free(new_str), NULL);
-		}
-		else
-		{
-			res[len - 1] = ft_strjoin_1_malloc_expand(res[len - 1], new_str);
-			if (res[len - 1] == NULL)
-				return (free_2d(res), free(new_str), NULL);
-		}
-	}
-	return (free(new_str), res);
+	return (end_add_and_replace(new_str, &res, data_expand, str));
 }

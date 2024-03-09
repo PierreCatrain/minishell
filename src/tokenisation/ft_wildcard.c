@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 16:43:13 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/09 22:59:47 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/10 00:04:23 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ int	ft_maybe_a_wildcard(t_data_parse *data_parse)
     while (ls != NULL)
 	{
 		if (ft_check_before(isol, split, ls->str) && ft_check_after(isol, split, \
-					ls->str) && ft_check_all(split, ls->str))
+					ls->str) && ft_check_all(split, ls->str) && ls->str[0] != '.')
 		{
 			if (ft_condition_wildcard_2(&found, &data_parse->wildcard, ls) == ERROR_MALLOC)
 				return (ft_free_wildcard(&ls), free(isol), free_2d(split), ERROR_MALLOC);

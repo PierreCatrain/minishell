@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:52:38 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/09 16:30:07 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/10 00:29:58 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ int	main(int argc, char **argv, char **envp)
 	exit_status = 0;
 	if (ft_set_sig() == ERROR)
 		return (ERROR);
-	if (ft_check_argc(argc, argv) == ERROR_ARGC_ENVP)
-		return (ERROR_ARGC_ENVP);
+	// if (ft_check_argc(argc, argv) == ERROR_ARGC_ENVP)
+	// 	return (ERROR_ARGC_ENVP);
 	env = ft_copy_env(envp);
 	if (!env)
 		return (ERROR_MALLOC);
