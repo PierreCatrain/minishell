@@ -6,13 +6,13 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 21:52:06 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/04 12:00:09 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/09 22:14:43 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-enum bool	ft_atoi(char *str, long long int *res)
+enum e_bool	ft_atoi(char *str, long long int *res)
 {
 	int	i;
 	int	s;

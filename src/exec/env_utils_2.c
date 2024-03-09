@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 12:37:17 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/09 15:36:38 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/09 19:33:52 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,10 @@ void	ft_check_increment(int *res)
 	char	*last_cmd;
 
 	last_cmd = getenv("_");
-	if (ft_strcmp(last_cmd, "bash") == 0)
-	{
-		return ;
-	}
-	else
+	if (ft_strcmp(last_cmd, "./minishell") == 0)
 		(*res)++;
+	else
+		return ;
 }
 
 int	ft_atoi_int_shlvl_main(char **envp, char *nb)
@@ -102,7 +100,7 @@ char	*ft_change_shlvl(char **envp, char *shlvl)
 int	ft_get_path_in_env(char **envp, char ***env, int *i)
 {
 	int	len_envp;
-	
+
 	len_envp = ft_strlen_2d(envp);
 	if (getenv("PATH") == NULL)
 		len_envp = ft_strlen_2d(envp) + 1;
@@ -111,11 +109,11 @@ int	ft_get_path_in_env(char **envp, char ***env, int *i)
 		return (ERROR_MALLOC);
 	if (getenv("PATH") == NULL)
 	{
-		(*env)[(*i)++] = ft_get_path();
-		if ((*env)[(*i) - 1] == NULL)
+		(*env)[(*i)] = ft_get_path();
+		if ((*env)[(*i)] == NULL)
 			return (free_tab_tab(*env), ERROR_MALLOC);
+		(*env)[++(*i)] = NULL;
 	}
-	(*env)[*i] = NULL;
 	return (0);
 }
 
@@ -126,23 +124,25 @@ void	ft_check_missing_env(char ***env, int *i)
 
 	if (getenv("PWD") == NULL)
 	{
+		(*env)[(*i)] = NULL;
 		env_val = ft_strjoin("PWD=", getcwd(buff, PATH_MAX));
-		ft_realloc_env(env, 2);
-		(*env)[(*i)++] = ft_strdup(env_val);
+		ft_realloc_env(env, 1);
+		(*env)[(*i)] = ft_strdup(env_val);
 		free(env_val);
-		(*env)[*i] = NULL;
+		(*env)[++(*i)] = NULL;
 	}
 	if (getenv("_") == NULL)
 	{
 		env_val = ft_strdup("_=./minishell");
-		ft_realloc_env(env, 3);
+		ft_realloc_env(env, 1);
 		(*env)[(*i)++] = ft_strdup(env_val);
 		free(env_val);
+		(*env)[*i] = NULL;
 	}
 	if (getenv("SHLVL") == NULL)
 	{
 		env_val = ft_strdup("SHLVL=1");
-		ft_realloc_env(env, 4);
+		ft_realloc_env(env, 1);
 		(*env)[(*i)++] = ft_strdup(env_val);
 		free(env_val);
 		(*env)[*i] = NULL;

@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 01:19:42 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/08 21:41:29 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/09 21:24:29 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ int	ft_tree_exec(t_tree *tree, char ***env, int *status)
 				free_and_close_tree(tree);
 				free_tab_tab(*env);
 				rl_clear_history();
+				write(1, "exit\n", 5);
 				exit(status2);
 			}
 			return (free_tab_tab(arg), status2);

@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 19:36:06 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/01 17:27:26 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/09 16:15:07 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	value_start_equal(char *export)
 	int	i;
 
 	i = 0;
-	while (export[i] != '=')
+	while (export[i] && export[i] != '=')
 		i++;
 	if (export[i] && ((export[i] == '=' && export[i + 1] == '\0')
 			|| (export[i] == '=' && export[i + 1] == '=')))
