@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/09 19:33:10 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/09 22:53:56 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,6 +174,7 @@ typedef struct s_data_parse
     int exit_status;
     
     char *wildcard;
+    int tmp_wildcard;
 }   t_data_parse;
 
 typedef struct s_wildcard
@@ -241,6 +242,8 @@ int	ft_condition_grammaire(t_token *token);
 int	ft_is_quote_close(char *input, int double_quote_open, int single_quote_open);
 int	ft_check_pipes(t_token *token);
 int	is_redirection_well_followed(t_token *token);
+void print_no_cmd(char *str);
+int ft_no_cmd(t_token *token);
 
 //ft_add_token.c
 void ft_set_add_token(t_data_parse *data_parse);
