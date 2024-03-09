@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 07:05:34 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/09 21:40:52 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/09 23:35:38 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,14 +83,14 @@ int ft_split_add_expand(char *new_str, char ***res, int *add_next)
 	split = ft_split(new_str, ' ');
 	if (split == NULL)
 		return (ERROR_MALLOC);
+	if (new_str[0] != ' ' && *add_next != -1)
+		add_start = 1;
+	else
+		add_start = 0;
 	if (new_str[ft_strlen(new_str)] == ' ')
 		*add_next = 0;
 	else
 		*add_next = 1;
-	if (new_str[0] == ' ')
-		add_start = 0;
-	else
-		add_start = 1;
 	new = malloc(sizeof(char *));
 	if (new == NULL)
 		return (free_2d(split), ERROR_MALLOC);
@@ -108,6 +108,7 @@ int ft_split_add_expand(char *new_str, char ***res, int *add_next)
 		len = ft_strlen_2d(new);
 		if (len != 0 && index == 0 && add_start == 1)
 		{
+			printf("test\n");
 			new[len - 1] = ft_strjoin_1_malloc(new[len - 1], split[index]);
 			if (new[len - 1] == NULL)
 				return (free_2d(split), free_2d(new), ERROR_MALLOC);
@@ -149,6 +150,32 @@ char	*ft_strjoin_1_malloc_expand(char *str1, char *str2)
 	return (free(str1), join);
 }
 
+int ft_set_add_and_replace_env_variable(char ***res, char **new_str, char **new_args, t_data_expand *data_expand)
+{
+	int index;
+	
+	data_expand->add_next = -1;
+	index = -1;
+	*res = malloc(sizeof(char *));
+	if (*res == NULL)
+		return (ERROR_MALLOC);
+	*res[0] = NULL;
+	while (new_args[++index])
+	{
+		*res = ft_add_to_2d(*res, new_args[index]);
+		if (res == NULL)
+			return (free_2d(new_args), ERROR_MALLOC);
+	}
+	free_2d(new_args);
+	*new_str = malloc(sizeof(char));
+	if (*new_str == NULL)
+		return (free_2d(*res), ERROR_MALLOC);
+	*new_str[0] = '\0';
+	return (SUCCESS);
+}
+
+// int reset_the_buffer(char *new_str, )
+
 char	**ft_add_and_replace_env_variable(char *str, t_expand *expand, t_data_expand *data_expand, char **new_args)
 {
 	char **res;
@@ -156,24 +183,9 @@ char	**ft_add_and_replace_env_variable(char *str, t_expand *expand, t_data_expan
 	int		index;
 	int len;
 
-	data_expand->add_next = 1;
-	index = -1;
-	res = malloc(sizeof(char *));
-	if (res == NULL)
+	if (ft_set_add_and_replace_env_variable(&res, &new_str, new_args, data_expand) != SUCCESS)
 		return (NULL);
-	res[0] = NULL;
-	while (new_args[++index])
-	{
-		res = ft_add_to_2d(res, new_args[index]);
-		if (res == NULL)
-			return (free_2d(new_args), NULL);
-	}
-	free_2d(new_args);
 	index = 0;
-	new_str = malloc(sizeof(char));
-	if (new_str == NULL)
-		return (free_2d(res), NULL);
-	new_str[0] = '\0';
 	while (str[index])
 	{
 		if (str[index] == '$' && str[index + 1] == '?' && expand->act == CHANGE)
@@ -181,7 +193,7 @@ char	**ft_add_and_replace_env_variable(char *str, t_expand *expand, t_data_expan
 			if (new_str[0] != '\0')
 			{
 				len = ft_strlen_2d(res);
-				if (len == 0 || data_expand->add_next == 0)
+				if (len == 0 || data_expand->add_next != 1)
 				{
 					res = ft_add_to_2d_expand(res, new_str);
 					if (res == NULL)
@@ -214,7 +226,7 @@ char	**ft_add_and_replace_env_variable(char *str, t_expand *expand, t_data_expan
 			if (new_str[0] != '\0')
 			{
 				len = ft_strlen_2d(res);
-				if (len == 0 || data_expand->add_next == 0)
+				if (len == 0 || data_expand->add_next != 1)
 				{
 					res = ft_add_to_2d_expand(res, new_str);
 					if (res == NULL)
@@ -244,14 +256,19 @@ char	**ft_add_and_replace_env_variable(char *str, t_expand *expand, t_data_expan
 			new_str[0] = '\0';
 			expand = expand->next;
 		}
-		else if (ft_not_replace(str, &new_str, index, &expand) == ERROR_MALLOC)
-			return (NULL);
+		else
+		{
+			if (ft_not_replace(str, &new_str, index, &expand) == ERROR_MALLOC)
+				return (NULL);
+			if (data_expand->add_next == -1)
+				data_expand->add_next = 1;
+		}
 		index++;
 	}
 	if (new_str[0] != '\0')
 	{
 		len = ft_strlen_2d(res);
-		if (len == 0 || data_expand->add_next == 0 || strcmp(new_str, str) == 0)
+		if (len == 0 || data_expand->add_next != 1 || strcmp(new_str, str) == 0)
 		{	
 			res = ft_add_to_2d_expand(res, new_str);
 			if (res == NULL)
