@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 13:00:46 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/06 12:52:51 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/09 21:26:03 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	ft_exec_token_type_infile(t_data_parse *data_parse, t_token *token)
 		return (free_mini_expand(token->expand), ERROR);
 	free_mini_expand(token->expand);
 	if (access(str_tmp, R_OK) != 0)
-		data_parse->fd_in = 2;
+		data_parse->fd_in = -2;
 	else
 		data_parse->fd_in = open(str_tmp, O_RDONLY);
 	free(str_tmp);

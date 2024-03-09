@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 06:57:07 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/04 19:39:22 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/09 18:59:33 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,4 +89,44 @@ char	*transfo_expand(char *str, t_expand *expand, t_data_parse *data_parse)
 					ft_strlen_2d(data_parse->args_tmp)), \
 				free_2d(data_parse->args_tmp), NULL);
 	return (ft_free_wildcard(&ls), new);
+}
+
+int	ft_set_replace_env_variable(char **new_str, int *index)
+{
+	*index = 0;
+	*new_str = malloc(sizeof(char));
+	if (*new_str == NULL)
+		return (ERROR_MALLOC);
+	*new_str[0] = '\0';
+	return (SUCCESS);
+}
+
+char	*ft_replace_env_variable(char *str, t_expand *expand, \
+		char **env, int status)
+{
+	char	*new_str;
+	int		index;
+
+	new_str = NULL;
+	if (ft_set_replace_env_variable(&new_str, &index) == ERROR_MALLOC)
+		return (NULL);
+	while (str[index])
+	{
+		if (str[index] == '$' && str[index + 1] == '?' && expand->act == CHANGE)
+		{
+			if (rep_status(&index, &new_str, status, &expand) == ERROR_MALLOC)
+				return (NULL);
+		}
+		else if (str[index] == '$' && expand->act == CHANGE)
+		{
+			new_str = ft_cat_env_variable(new_str, str, &index, env);
+			if (new_str == NULL)
+				return (NULL);
+			expand = expand->next;
+		}
+		else if (ft_not_replace(str, &new_str, index, &expand) == ERROR_MALLOC)
+			return (NULL);
+		index++;
+	}
+	return (new_str);
 }

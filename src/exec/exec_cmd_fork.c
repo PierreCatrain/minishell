@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 17:38:07 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/07 16:22:32 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/09 16:32:57 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int	ft_exec_cmd_fork(t_tree *tree, char ***env, int status, t_tab_pid pid_data)
 		return (2);
 	}
 	tmp = g_exit_status;
+	g_exit_status = -100;
 	pid = fork();
 	if (pid == -1)
 		return (EXIT_FAILURE);
@@ -80,11 +81,11 @@ int	ft_exec_cmd_fork(t_tree *tree, char ***env, int status, t_tab_pid pid_data)
 	else
 	{
 		pid_data.tab_pid[pid_data.index++] = pid;
-		g_exit_status = -100;
 		if (tree->lst_exec->fd_out > 2)
 			close(tree->lst_exec->fd_out);
 		if (tree->lst_exec->fd_in > 2)
 			close(tree->lst_exec->fd_in);
 	}
+	g_exit_status = tmp;// je la remet elle a du etre virer pendant un merge
 	return (tmp);
 }

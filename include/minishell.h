@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/08 15:36:58 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/09 19:33:10 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,6 +172,8 @@ typedef struct s_data_parse
 
     char **env;
     int exit_status;
+    
+    char *wildcard;
 }   t_data_parse;
 
 typedef struct s_wildcard
@@ -180,6 +182,13 @@ typedef struct s_wildcard
     struct s_wildcard *next;
     char *str;
 } t_wildcard;
+
+typedef struct s_data_expand
+{
+    char **env;
+    int status;
+    int add_next;
+} t_data_expand;
 
 typedef struct s_process_id
 {
@@ -246,6 +255,9 @@ int ft_make_token(t_data_parse *data_parse, t_token **token);
 
 //ft_tokenisation.c
 int ft_tokenisation(t_token **token, t_data_parse *data_parse);
+
+//ft_wildcard.c
+char	*ft_wildcard(t_data_parse *data_parse);
 
 //ft_isol_operator.c
 void	ft_set_add_in_opperator(t_data_parse *data_parse);
@@ -361,6 +373,7 @@ int	ft_not_replace(char *str, char **new_str, int index, t_expand **expand);
 int	rep_status(int *index, char **new_str, int status, t_expand **expand);
 int	ft_set_replace_env_variable(char **new_str, int *index);
 char	*ft_replace_env_variable(char *str, t_expand *expand, char **env, int status);
+char	**ft_add_and_replace_env_variable(char *str, t_expand *expand, t_data_expand *data_expand, char **new_args);
 
 // # ====================================================== #
 // |														|
