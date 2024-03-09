@@ -88,26 +88,6 @@ typedef struct s_expand
 	struct s_expand		*next;
 }						t_expand;
 
-// typedef struct s_lst_execs
-// {
-// 	struct s_lst_exec	*prev;
-// 	struct s_lst_exec	*next;
-// 	t_expand			**expand;
-// 	int					len_expand;
-// 	char				**args;
-// 	int					fd_in;
-// 	int					fd_out;
-// }						t_lst_exec;
-
-// typedef struct s_tree
-// {
-// 	int type;
-// 	struct s_tree *parent;
-// 	struct s_tree *left_child;
-// 	struct s_tree *right_child;
-// 	t_lst_exec *lst_exec;
-// }						t_tree;
-
 typedef struct s_lst_exec
 {
 	struct s_lst_exec	*prev;
@@ -119,7 +99,7 @@ typedef struct s_lst_exec
 	int					fd_out;
 }						t_lst_exec;
 
-typedef struct s_tree // arbre binaire
+typedef struct s_tree
 {
 	int				type;
 	struct s_tree	*parent;
@@ -140,25 +120,25 @@ typedef struct s_token
 
 typedef struct s_data_parse
 {
-    t_token *token;
-    int double_quote_open;
-    int single_quote_open;
-    int new_word;
-    int index_str;
-    int index;
-    char *str;
-    char *prompt;
-    char *input;
-    int merge;
+	t_token *token;
+	int double_quote_open;
+	int single_quote_open;
+	int new_word;
+	int index_str;
+	int index;
+	char *str;
+	char *prompt;
+	char *input;
+	int merge;
 
-    int index_new_str;
+	int index_new_str;
 
-    char	*before;
+	char	*before;
 	char	*after;
 	int	i;
 	int	part;
 
-    char	*heredoc;
+	char	*heredoc;
 	int			fd_in;
 	int			fd_out;
 	char	**args_tmp;
@@ -166,25 +146,25 @@ typedef struct s_data_parse
 	int		**fd_pipes;
 	int			nb_pipes;
 
-    int *array_here_doc;
-    int index_here_doc;
+	int *array_here_doc;
+	int index_here_doc;
 
-    int tmp;
-    t_expand **expand;
+	int tmp;
+	t_expand **expand;
 
-    char condition_1[4];
+	char condition_1[4];
 	char *res_1[4];
 	char condition_2[5];
 	char *res_2[5];
 
-    char *opp[9];
+	char *opp[9];
 	int type[9];
 
-    char **env;
-    int exit_status;
-    
-    char *wildcard;
-    int tmp_wildcard;
+	char **env;
+	int exit_status;
+	
+	char *wildcard;
+	int tmp_wildcard;
 }   t_data_parse;
 
 typedef struct s_wildcard
@@ -196,9 +176,9 @@ typedef struct s_wildcard
 
 typedef struct s_data_expand
 {
-    char **env;
-    int status;
-    int add_next;
+	char **env;
+	int status;
+	int add_next;
 } t_data_expand;
 
 typedef struct s_process_id

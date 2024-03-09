@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   condition_grammaire_2.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 01:08:04 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/09 22:25:29 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/09 23:22:35 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,14 +91,14 @@ int	is_redirection_well_followed(t_token *token)
 	return (GOOD_INPUT);
 }
 
-void print_no_cmd(char *str)
+void	print_no_cmd(char *str)
 {
 	ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd("'\n", 2);
 }
 
-int ft_no_cmd(t_token *token)
+int	ft_no_cmd(t_token *token)
 {
 	while (token->next != NULL)
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_new_args.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 06:51:13 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/09 22:17:48 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/09 23:49:11 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 char	**ft_new_args(t_lst_exec *lst_exec, int status, char **env)
 {
-	char	**new_args;
-	int		index;
-	t_data_expand data_expand;
+	char			**new_args;
+	int				index;
+	t_data_expand	data_expand;
 
 	data_expand.env = env;
 	data_expand.status = status;
