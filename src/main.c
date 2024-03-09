@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:52:38 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/08 21:44:14 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/09 15:35:27 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int	main(int argc, char **argv, char **envp)
 
 	tree = NULL;
 	exit_status = 0;
-	printf("_=%s", getenv("_"));
 	if (ft_set_sig() == ERROR)
 		return (ERROR);
 	if (ft_check_argc(argc, argv) == ERROR_ARGC_ENVP)

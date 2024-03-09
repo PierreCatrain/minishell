@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 12:37:17 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/08 21:39:24 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/09 15:36:38 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,36 +124,29 @@ void	ft_check_missing_env(char ***env, int *i)
 	char	buff[PATH_MAX + 1];
 	char	*env_val;
 
-	printf("1\n");
 	if (getenv("PWD") == NULL)
 	{
-		printf("2\n");
 		env_val = ft_strjoin("PWD=", getcwd(buff, PATH_MAX));
 		ft_realloc_env(env, 2);
 		(*env)[(*i)++] = ft_strdup(env_val);
 		free(env_val);
 		(*env)[*i] = NULL;
 	}
-	printf("1\n");
 	if (getenv("_") == NULL)
 	{
-		printf("2\n");
 		env_val = ft_strdup("_=./minishell");
 		ft_realloc_env(env, 3);
 		(*env)[(*i)++] = ft_strdup(env_val);
 		free(env_val);
 	}
-	printf("1\n");
 	if (getenv("SHLVL") == NULL)
 	{
-		printf("2\n");
 		env_val = ft_strdup("SHLVL=1");
 		ft_realloc_env(env, 4);
 		(*env)[(*i)++] = ft_strdup(env_val);
 		free(env_val);
 		(*env)[*i] = NULL;
 	}
-	printf("1\n");
 }
 
 char	**ft_copy_env(char **envp)
@@ -170,7 +163,6 @@ char	**ft_copy_env(char **envp)
 		return (NULL);
 	if (!envp[0])
 	{
-		printf("qwer\n");
 		ft_check_missing_env(&env, &i);
 		return (env);
 	}

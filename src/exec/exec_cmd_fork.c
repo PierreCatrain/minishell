@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 17:38:07 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/08 21:42:41 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/09 15:34:44 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,12 @@
 
 int	ft_exec_builtin(char **arg, char ***env, int *exit_flag, t_tree *tree)
 {
-	int	check;
-	check = 0;
+	int		check;
 	int		fd_stdout;
 	int		fd_out_saved;
 
 	if (tree->lst_exec->fd_in == -1 || tree->lst_exec->fd_out == -1)
-	{
-		printf("fd in = %d\nfd out = %d\n", tree->lst_exec->fd_in, tree->lst_exec->fd_out);
-		ft_putstr_fd("file in doesn't exist\n", 2);
-		return (2);
-	}
+		return (ft_putstr_fd("file in doesn't exist\n", 2), 2);
 	fd_stdout = dup(0);
 	fd_out_saved = dup(1);
 	dup2(tree->lst_exec->fd_in, 0);
