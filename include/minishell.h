@@ -88,7 +88,27 @@ typedef struct s_expand
 	struct s_expand		*next;
 }						t_expand;
 
-typedef struct s_lst_execs
+// typedef struct s_lst_execs
+// {
+// 	struct s_lst_exec	*prev;
+// 	struct s_lst_exec	*next;
+// 	t_expand			**expand;
+// 	int					len_expand;
+// 	char				**args;
+// 	int					fd_in;
+// 	int					fd_out;
+// }						t_lst_exec;
+
+// typedef struct s_tree
+// {
+// 	int type;
+// 	struct s_tree *parent;
+// 	struct s_tree *left_child;
+// 	struct s_tree *right_child;
+// 	t_lst_exec *lst_exec;
+// }						t_tree;
+
+typedef struct s_lst_exec
 {
 	struct s_lst_exec	*prev;
 	struct s_lst_exec	*next;
@@ -99,14 +119,14 @@ typedef struct s_lst_execs
 	int					fd_out;
 }						t_lst_exec;
 
-typedef struct s_tree
+typedef struct s_tree // arbre binaire
 {
-	int type;
-	struct s_tree *parent;
-	struct s_tree *left_child;
-	struct s_tree *right_child;
-	t_lst_exec *lst_exec;
-}						t_tree;
+	int				type;
+	struct s_tree	*parent;
+	struct s_tree	*left_child;
+	struct s_tree	*right_child;
+	t_lst_exec		*lst_exec;
+}					t_tree;
 
 typedef struct s_token
 {
@@ -209,7 +229,8 @@ int						ft_set_sig(void);
 
 //condition_grammaire_1.c
 int						ft_check_parenthesis(t_token *token);
-int						ft_check_proximity_opperator_bonus_suite(t_token *token);
+int						ft_check_proximity_opperator_bonus_suite(t_token \
+																*token);
 int						ft_check_proximity_opperator_bonus(t_token *token);
 int						is_cmd_between_bonus_opperator(t_token *token);
 int						ft_condition_grammaire(t_token *token);
@@ -224,18 +245,18 @@ int						is_redirection_well_followed(t_token *token);
 void					ft_set_add_token(t_data_parse *data_parse);
 int						ft_add_token(t_token **token, t_data_parse *data_parse,
 							t_expand *expand);
-int	ft_add_and_return(t_data_parse *data_parse,
-						t_token **token,
-						t_expand *expand);
+int						ft_add_and_return(t_data_parse *data_parse,
+							t_token **token,
+							t_expand *expand);
 
 //ft_make_token.c
 int						ft_set_make_token(t_data_parse *data_parse);
-int	ft_gestion_quotes_close(t_data_parse *data_parse,
+int						ft_gestion_quotes_close(t_data_parse *data_parse,
 							t_expand *expand,
 							t_token **token);
-int	ft_gestion_quotes(t_data_parse *data_parse,
-						t_expand *expand,
-						t_token **token);
+int						ft_gestion_quotes(t_data_parse *data_parse,
+							t_expand *expand,
+							t_token **token);
 int						ft_make_token(t_data_parse *data_parse,
 							t_token **token);
 
@@ -272,8 +293,8 @@ int						ft_add_node(t_tree **tree, t_token *token,
 							t_data_parse *data_parse, t_token *tmp);
 int						ft_suite_add_node(t_tree **tree, t_token *token,
 							t_token **new, t_data_parse *data_parse);
-void	ft_complete_tree_first_step(t_token **token,
-									int *parenthesis_open);
+void					ft_complete_tree_first_step(t_token **token,
+							int *parenthesis_open);
 int						ft_complete_tree(t_tree **tree, t_token *token,
 							t_data_parse *data_parse);
 
@@ -292,24 +313,24 @@ int						ft_is_token_type_1(t_token *token);
 int						ft_is_token_type_2(t_token *token);
 int						ft_interpret_token_suite(t_data_parse *data_parse,
 							t_lst_exec **lst_exec, t_token **token);
-int	ft_interpret_token(t_data_parse *data_parse,
-						t_lst_exec **lst_exec,
-						t_token **token);
+int						ft_interpret_token(t_data_parse *data_parse,
+							t_lst_exec **lst_exec,
+							t_token **token);
 
 //ft_interpret_token_2.c
-int	ft_exec_token_type_1(t_data_parse *data_parse,
+int						ft_exec_token_type_1(t_data_parse *data_parse,
 							t_lst_exec **lst_exec,
 							t_token *token);
-int	ft_exec_token_type_infile(t_data_parse *data_parse,
-								t_token *token);
-int	ft_exec_token_type_outfile(t_data_parse *data_parse,
-								t_token *token);
+int						ft_exec_token_type_infile(t_data_parse *data_parse,
+							t_token *token);
+int						ft_exec_token_type_outfile(t_data_parse *data_parse,
+							t_token *token);
 int						ft_exec_token_type_2(t_data_parse *data_parse,
 							t_token *token);
 
 //here_doc.c
-int	ft_exec_token_type_heredoc(t_data_parse *data_parse,
-								t_token **token);
+int						ft_exec_token_type_heredoc(t_data_parse *data_parse,
+							t_token **token);
 int						ft_nb_here_doc(t_token *token);
 int						ft_complete_here_doc(t_data_parse *data_parse,
 							t_token *token, int index);
@@ -320,9 +341,9 @@ char					*ft_here_doc(void);
 int						ft_nb_lst_exec(t_token *token);
 int						ft_one_more_exec(t_data_parse *data_parse,
 							t_lst_exec **lst_exec);
-int	ft_set_exec(t_data_parse *data_parse,
-				t_lst_exec **lst_exec,
-				t_token *token);
+int						ft_set_exec(t_data_parse *data_parse,
+							t_lst_exec **lst_exec,
+							t_token *token);
 int						ft_lst_exec(t_token *token, t_lst_exec **lst_exec,
 							t_data_parse *data_parse);
 int						ft_create_tree(t_tree **tree, t_token *token,
@@ -331,7 +352,7 @@ int						ft_create_tree(t_tree **tree, t_token *token,
 //pipes.c
 void					ft_pipes_fail(int **fd_pipes, int index_pipes);
 int						ft_nb_pipes(t_token *token);
-int	ft_exec_token_type_pipe(t_data_parse *data_parse,
+int						ft_exec_token_type_pipe(t_data_parse *data_parse,
 							t_lst_exec **lst_exec);
 
 // # ====================================================== #
@@ -660,15 +681,15 @@ int						ft_exec_cmd_fork(t_tree *tree, char ***env, int status,
 int						ft_tree_exec(t_tree *tree, char ***env, int *status);
 int						ft_find_builtin(char *cmd, char **cmd_tab, char ***env,
 							int *exit_flag);
-
-char	*ft_itoa_shlvl(int nb);     //je sais pas ou le mettre
-char	**ft_copy_env(char **envp); //pareil
+char					*ft_itoa_shlvl(int nb);
+char					**ft_copy_env(char **envp);
 
 // # ====================================================== #
 // |														|
-// |						ERROR								|
+// |						ERROR							|
 // |														|
-// # =============================================
+// # ====================================================== #
+
 void					ft_msg_err_getcwd(void);
 int						ft_msg_err_chdir(char *str);
 

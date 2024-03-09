@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 12:37:17 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/09 19:33:52 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/09 22:34:39 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,16 +184,3 @@ char	**ft_copy_env(char **envp)
 	env[i] = NULL;
 	return (env);
 }
-
-// int	main(int ac, char **av, char **envp)
-// {
-// 	char **env;
-	
-// 	(void)ac;
-// 	(void)av;
-	
-// 	env = ft_copy_env(envp);
-// 	print_tab_tab(env);
-// 	free_tab_tab(env);
-// 	return (0);
-// }

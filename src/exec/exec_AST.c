@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 01:19:42 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/09 21:24:29 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/09 22:36:41 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ char	*ft_get_path(void)
 {
 	char	*path;
 
-	path = ft_strdup("PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin");
+	path = ft_strdup("PATH=/usr/local/sbin:"
+			"/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin");
 	if (!path)
 		return (NULL);
 	return (path);

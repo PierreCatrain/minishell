@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 22:17:53 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/06 17:44:23 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/09 22:34:52 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,3 @@ int	ft_echo(char **tab)
 	check = ft_echo2(tab, i, param);
 	return (check);
 }
-
-// int	main(int ac, char **av)
-// {
-// 	(void)ac;
-// 	ft_echo(av);
-// 	return (0);
-// }

@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 17:38:07 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/09 21:30:50 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/09 22:37:06 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,8 @@ int	ft_exec_builtin(char **arg, char ***env, int *exit_flag, t_tree *tree)
 		close (tree->lst_exec->fd_out);
 	check = ft_find_builtin(arg[0], arg, env, exit_flag);
 	dup2(fd_stdout, 0);
-	// if (fd_stdout >= 0)
 	close(fd_stdout);
 	dup2(fd_out_saved, 1);
-	// if (fd_out_saved >= 0)
 	close(fd_out_saved);
 	return (check);
 }

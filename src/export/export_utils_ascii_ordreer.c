@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 18:07:38 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/08 20:33:43 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/09 22:46:11 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ void	print_tab_tab_ascii_order(char **tab)
 	i = 0;
 	while (tab[i])
 	{
-		if (ft_strncmp(tab[i], "_=", 2) == 0 || ft_strncmp(tab[i], "PATH=", 5) == 0)
+		if (ft_strncmp(tab[i], "_=", 2) == 0
+			|| ft_strncmp(tab[i], "PATH=", 5) == 0)
 		{
 			i++;
 			continue ;

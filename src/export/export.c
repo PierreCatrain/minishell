@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 22:51:52 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/08 20:32:39 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/09 22:45:28 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ void	ft_export3(char *export_str, char **export, int *res)
 
 char	*ft_get_export_value(char *str)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 	char	*export_value;
 
 	i = 0;
@@ -85,9 +85,7 @@ int	ft_check_shlvl_export(char ***env, char *export_str)
 			export_value = ft_get_export_value(export_str);
 			free((*env)[i]);
 			(*env)[i] = ft_change_shlvl_export(export_value);
-			free(export_value);
-			free(export_name);
-			return (0);
+			return (free(export_value), free(export_name), 0);
 		}
 		free(export_name);
 		i++;
@@ -139,19 +137,3 @@ int	ft_export(char ***env, char **arg, int free)
 		free_tab_tab(arg);
 	return (status);
 }
-
-// int	main(int ac, char **av, char **envp)
-// {
-// 	char	**env;
-
-// 	env = dup_env(envp);
-// 	(void)ac;
-// 	ft_export(&env, av, 0);
-// 	if (!env)
-// 		return (0);
-// 	print_tab_tab(env);
-// 	free_tab_tab(env);
-// 	return (0);
-// }
-
-//ft_error to do
