@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 17:38:07 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/09 22:37:06 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/09 23:17:42 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,5 +81,6 @@ int	ft_exec_cmd_fork(t_tree *tree, char ***env, int status, t_tab_pid pid_data)
 		if (tree->lst_exec->fd_in > 2)
 			close(tree->lst_exec->fd_in);
 	}
+	g_signal = tmp;// je la remet elle a du etre virer pendant un merge
 	return (tmp);
 }
