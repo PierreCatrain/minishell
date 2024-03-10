@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_new_args.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 06:51:13 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/10 22:02:09 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/10 22:31:00 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char **ft_without_empty(char **new_args)
 	int index;
 
 	if (is_no_empty(new_args))
-		return (NULL);
+		return (free_2d(new_args), NULL);
 	res = malloc(sizeof(char *));
 	if (res == NULL)
 		return (NULL);
