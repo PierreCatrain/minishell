@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 16:32:22 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/10 16:33:19 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/10 18:06:18 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,25 +66,25 @@ int	ft_all_wildcard(t_wildcard *ls, char **wildcard)
 int	ft_set_maybe_a_wildcard(char **isol, char ***split, t_wildcard *ls,
 		t_data_parse *data_parse)
 {
-    *isol = ft_isol_word(data_parse);
-    if (*isol == NULL)
-        return (ft_free_wildcard(&ls), ERROR_MALLOC);
-    data_parse->wildcard = malloc(sizeof(char));
-    if (data_parse->wildcard == NULL)
-        return (ft_free_wildcard(&ls), free(*isol), ERROR_MALLOC);
-    data_parse->wildcard[0] = '\0';
-    if (ft_occ(*isol, '*') == 0)
-    {
-        free(data_parse->wildcard);
-        data_parse->wildcard = *isol;
-        return (ft_free_wildcard(&ls), SUCCESS);
-    }
-    if (*isol[0] == '*' && ft_strlen(*isol) == 1)
-    {
-        if (ft_all_wildcard(ls, &data_parse->wildcard) != SUCCESS)
-            return (ft_free_wildcard(&ls), free(*isol), ERROR_MALLOC);
-        return (free(*isol), ft_free_wildcard(&ls), SUCCESS);
-    }
+	*isol = ft_isol_word(data_parse);
+	if (*isol == NULL)
+		return (ft_free_wildcard(&ls), ERROR_MALLOC);
+	data_parse->wildcard = malloc(sizeof(char));
+	if (data_parse->wildcard == NULL)
+		return (ft_free_wildcard(&ls), free(*isol), ERROR_MALLOC);
+	data_parse->wildcard[0] = '\0';
+	if (ft_occ(*isol, '*') == 0)
+	{
+		free(data_parse->wildcard);
+		data_parse->wildcard = *isol;
+		return (ft_free_wildcard(&ls), SUCCESS);
+	}
+	if (*isol[0] == '*' && ft_strlen(*isol) == 1)
+	{
+		if (ft_all_wildcard(ls, &data_parse->wildcard) != SUCCESS)
+			return (ft_free_wildcard(&ls), free(*isol), ERROR_MALLOC);
+		return (free(*isol), ft_free_wildcard(&ls), SUCCESS);
+	}
 	*split = ft_split(*isol, '*');
 	if (*split == NULL)
 		return (free(*isol), free(data_parse->wildcard), ft_free_wildcard(&ls),

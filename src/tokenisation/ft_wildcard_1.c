@@ -6,13 +6,14 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 16:43:13 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/10 17:34:20 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/10 18:04:30 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int condition_maybe_wildcard(char **isol, char ***split, t_wildcard *ls, t_data_parse *data_parse)
+int	condition_maybe_wildcard(char **isol, char ***split, t_wildcard *ls, \
+		t_data_parse *data_parse)
 {
 	if (ft_check_before(*isol, *split, ls->str) && ft_check_after(*isol, \
 				*split, ls->str) && ft_check_all(*split, \
@@ -48,8 +49,8 @@ int	ft_maybe_a_wildcard(t_data_parse *data_parse)
 			break ;
 		ls = ls->next;
 	}
-	return (ft_free_wildcard(&ls), ft_end_maybe_wildcard(data_parse->found, data_parse,
-			isol, split));
+	return (ft_free_wildcard(&ls), ft_end_maybe_wildcard(data_parse->found, \
+				data_parse, isol, split));
 }
 
 int	ft_set_wildcard(t_data_parse *data_parse)
