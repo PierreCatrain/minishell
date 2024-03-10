@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/10 17:54:31 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/10 18:38:09 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -402,6 +402,8 @@ int						ft_condition_wildcard(int *found, char **base,
 							char ***new, t_wildcard *ls);
 char					**ft_add_wildcard(char **base, char *add,
 							t_wildcard *ls, int found);
+char	*ft_replace_env_variable(char *str, t_expand *expand, \
+		char **env, int status);
 
 //ft_cat_env_variable.c
 int						ft_lim_isolate(char *str, int index);
@@ -428,12 +430,24 @@ char					**ft_expand_step_2(t_lst_exec *lst_exec, char **args,
 char					**ft_new_args(t_lst_exec *lst_exec, int status,
 							char **env);
 
-//ft_replace_env_variable.c
+//ft_replace_env_variable_1.c
+int ft_set_add(char ***res, char **new_str, char **new_args, t_data_expand *data_expand);
+int reset_the_buffer(t_data_expand *data_expand, char ***res, char **new_str, int len);
+char **end_add(char *new_str, char ***res, t_data_expand *data_expand, char *str);
+char	**ft_add_and_replace_env_variable(char *str, t_expand *expand, t_data_expand *data_expand, char **new_args);
+
+//ft_replace_env_variable_2.c
 int	ft_not_replace(char *str, char **new_str, int index, t_expand **expand);
 int	rep_status(int *index, char **new_str, int status, t_expand **expand);
-int	ft_set_replace_env_variable(char **new_str, int *index);
-char	*ft_replace_env_variable(char *str, t_expand *expand, char **env, int status);
-char	**ft_add_and_replace_env_variable(char *str, t_expand *expand, t_data_expand *data_expand, char **new_args);
+char	**ft_add_to_2d_expand(char **base, char *add);
+int ft_add_replace_status(t_data_expand *data_expand, char ***res, char **new_str, t_expand **expand);
+int ft_add_classique(t_data_expand *data_expand, char ***res, char **new_str, char *str);
+
+//ft_split_add_expand.c
+int ft_set_split_add_expand_part1(char ***split, char **new_str, int *add_next, int *add_start);
+int ft_set_split_add_expand_part2(char ***new, char ***res, char **split);
+int ft_clear_buffer_in_split_expand(int index, char ***new, int add_start, char **split);
+int ft_split_add_expand(char *new_str, char ***res, int *add_next);
 
 // # ====================================================== #
 // |														|
@@ -513,6 +527,7 @@ char					*ft_strjoin_1_malloc(char *str1, char *str2);
 char					*ft_join_char(char *str, char c);
 char					*ft_strjoin(char *str1, char *str2);
 char					**ft_strdup_2d(char **str);
+char	*ft_strjoin_1_malloc_expand(char *str1, char *str2);
 
 //ft_utils_debug.c
 void					print_tab_tab(char **tab);

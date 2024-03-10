@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 11:15:27 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/10 18:02:29 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/10 18:19:46 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	ft_strchr_wildcard(char *str, char *find, int index_str)
 			j++;
 			if (j == ft_strlen(find))
 			{
-				return((i - index_str) + j);
+				return ((i - index_str) + j);
 			}
 		}
 		i++;
