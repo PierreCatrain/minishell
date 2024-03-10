@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/10 00:10:53 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/10 16:06:57 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,6 +190,8 @@ typedef struct s_data_expand
     int status;
     int add_next;
     int index;
+    char **res;
+    char *new_str;
 } t_data_expand;
 
 typedef struct s_process_id

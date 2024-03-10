@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 07:05:34 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/10 00:53:47 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/10 16:08:26 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,7 +198,7 @@ int ft_set_add_and_replace_env_variable(char ***res, char **new_str, char **new_
 	if (*new_str == NULL)
 		return (free_2d(*res), ERROR_MALLOC);
 	*new_str[0] = '\0';
-	data_expand->index = 0;
+	data_expand->index = -1;
 	return (SUCCESS);
 }
 
@@ -291,42 +291,28 @@ int ft_add_replace_classique(t_data_expand *data_expand, char ***res, char **new
 
 char	**ft_add_and_replace_env_variable(char *str, t_expand *expand, t_data_expand *data_expand, char **new_args)
 {
-	char **res;
-	char	*new_str;
-
-	if (ft_set_add_and_replace_env_variable(&res, &new_str, new_args, data_expand) != SUCCESS)
+	if (ft_set_add_and_replace_env_variable(&data_expand->res, &data_expand->new_str, new_args, data_expand) != SUCCESS)
 		return (NULL);
-	while (str[data_expand->index])
+	while (str[++data_expand->index])
 	{
-		printf("ici\n");
 		if (str[data_expand->index] == '$' && str[data_expand->index + 1] == '?' && expand->act == CHANGE)
 		{
-			if (ft_add_replace_status(data_expand, &res, &new_str, &expand) != SUCCESS)
-			{
-				printf("ici if\n");
+			if (ft_add_replace_status(data_expand, &data_expand->res, &data_expand->new_str, &expand) != SUCCESS)
 				return (NULL);
-			}
 		}
 		else if (str[data_expand->index] == '$' && expand->act == CHANGE)
 		{
-			if (ft_add_replace_classique(data_expand, &res, &new_str, str) != SUCCESS)
-			{
-				printf("ici if\n");
+			if (ft_add_replace_classique(data_expand, &data_expand->res, &data_expand->new_str, str) != SUCCESS)
 				return (NULL);
-			}
 			expand = expand->next;
 		}
 		else
 		{
-			if (ft_not_replace(str, &new_str, data_expand->index, &expand) == ERROR_MALLOC)
-			{
-				printf("ici if\n");
+			if (ft_not_replace(str, &data_expand->new_str, data_expand->index, &expand) == ERROR_MALLOC)
 				return (NULL);
-			}
 			if (data_expand->add_next == -1)
 				data_expand->add_next = 1;
 		}
-		data_expand->index++;
 	}
-	return (end_add_and_replace(new_str, &res, data_expand, str));
+	return (end_add_and_replace(data_expand->new_str, &data_expand->res, data_expand, str));
 }
