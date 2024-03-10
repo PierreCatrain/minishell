@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:42:46 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/09 18:21:54 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/10 17:49:34 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,15 +96,12 @@ int	ft_cd_cdpath(char **path_tab, char ***env)
 				return (0);
 			}
 			else
-			{
-				ft_msg_err_getcwd();
-				return (1);
-			}
+				return (ft_msg_err_getcwd(), 1);
 		}
 	}
 	if (ft_msg_err_chdir(path_tab[1]) == ERROR_MALLOC)
 		return (ERROR_MALLOC);
-	return (0);
+	return (1);
 }
 
 int	ft_cd(char **path_tab, char ***env)
@@ -120,7 +117,9 @@ int	ft_cd(char **path_tab, char ***env)
 	if (ft_strcmp(path_tab[1], "-") == 0)
 		return (ft_cd_dash(env));
 	if (chdir(path_tab[1]) != 0)
+	{
 		return (ft_cd_cdpath(path_tab, env));
+	}
 	else
 		ft_change_pwd_old_pwd(current_path, getcwd(new_path, PATH_MAX), env);
 	return (0);

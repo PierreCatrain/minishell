@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 23:48:10 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/09 23:50:10 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/10 16:40:56 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,27 @@ int	find_cmd_2(char **cmd, int *status, char ***env)
 	exit(*status);
 }
 
+int	ft_check_cmd(char *cmd)
+{
+	int	i;
+
+	i = 0;
+	while (cmd[i])
+	{
+		if (cmd[i] == '/')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 int	find_cmd(char ***env, char **cmd)
 {
 	int	status;
 
 	status = 0;
 	if (ft_is_builtin(cmd[0]))
-	{
 		find_cmd_2(cmd, &status, env);
-	}
 	else
 	{
 		if (access(cmd[0], F_OK | X_OK) == 0)
@@ -44,6 +56,13 @@ int	find_cmd(char ***env, char **cmd)
 				%s\n", cmd[0], strerror(errno));
 				exit (126);
 			}
+		}
+		if (!ft_check_cmd(cmd[0]))
+		{
+			ft_putstr_fd("bash: ", 2);
+			ft_putstr_fd(cmd[0], 2);
+			ft_putstr_fd(": No such file or directory\n", 2);
+			exit(127);
 		}
 		ft_check_path_cmd(env, cmd);
 	}

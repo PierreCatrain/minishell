@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 21:52:06 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/09 22:50:57 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/10 18:01:58 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	ft_exit_parsing(char **arg, long long int *exit_value, int *exit_flag)
 	{
 		ft_putstr_fd("bash: exit: too many arguments\n", 2);
 		*exit_flag = 0;
-		*exit_value = 2;
+		*exit_value = 1;
 		return ;
 	}
 	return ;
@@ -103,5 +103,5 @@ int	ft_exit(char **arg, int *exit_flag)
 				arg[1]), exit_value);
 	}
 	ft_exit_parsing(arg, &exit_value, exit_flag);
-	return (exit_value);
+		return (exit_value);
 }

@@ -120,52 +120,43 @@ typedef struct s_token
 
 typedef struct s_data_parse
 {
-	t_token *token;
-	int double_quote_open;
-	int single_quote_open;
-	int new_word;
-	int index_str;
-	int index;
-	char *str;
-	char *prompt;
-	char *input;
-	int merge;
-
-	int index_new_str;
-
-	char	*before;
-	char	*after;
-	int	i;
-	int	part;
-
-	char	*heredoc;
+	t_token		*token;
+	int			double_quote_open;
+	int			single_quote_open;
+	int			new_word;
+	int			index_str;
+	int			index;
+	char		*str;
+	char		*prompt;
+	char		*input;
+	int			merge;
+	int			index_new_str;
+	char		*before;
+	char		*after;
+	int			i;
+	int			part;
+	char		*heredoc;
 	int			fd_in;
 	int			fd_out;
-	char	**args_tmp;
+	char		**args_tmp;
 	int			index_pipes;
-	int		**fd_pipes;
+	int			**fd_pipes;
 	int			nb_pipes;
-
-	int *array_here_doc;
-	int index_here_doc;
-
-	int tmp;
-	t_expand **expand;
-
-	char condition_1[4];
-	char *res_1[4];
-	char condition_2[5];
-	char *res_2[5];
-
-	char *opp[9];
-	int type[9];
-
-	char **env;
-	int exit_status;
-	
-	char *wildcard;
-	int tmp_wildcard;
-}   t_data_parse;
+	int			*array_here_doc;
+	int			index_here_doc;
+	int			tmp;
+	t_expand	**expand;
+	char		condition_1[4];
+	char		*res_1[4];
+	char		condition_2[5];
+	char		*res_2[5];
+	char		*opp[9];
+	int			type[9];
+	char		**env;
+	int			exit_status;
+	char		*wildcard;
+	int			tmp_wildcard;
+}	t_data_parse;
 
 typedef struct s_wildcard
 {
@@ -176,11 +167,11 @@ typedef struct s_wildcard
 
 typedef struct s_data_expand
 {
-    int index;
-	char **env;
-	int status;
-	int add_next;
-} t_data_expand;
+	int		index;
+	char	**env;
+	int		status;
+	int		add_next;
+}	t_data_expand;
 
 typedef struct s_process_id
 {
@@ -235,11 +226,12 @@ int						is_cmd_between_bonus_opperator(t_token *token);
 int						ft_condition_grammaire(t_token *token);
 
 //condition_grammaire_2.c
-int	ft_is_quote_close(char *input, int double_quote_open, int single_quote_open);
-int	ft_check_pipes(t_token *token);
-int	is_redirection_well_followed(t_token *token);
-void print_no_cmd(char *str);
-int ft_no_cmd(t_token *token);
+int						ft_is_quote_close(char *input,
+							int double_quote_open, int single_quote_open);
+int						ft_check_pipes(t_token *token);
+int						is_redirection_well_followed(t_token *token);
+void					print_no_cmd(char *str);
+int						ft_no_cmd(t_token *token);
 
 //ft_add_token.c
 void					ft_set_add_token(t_data_parse *data_parse);
@@ -265,7 +257,7 @@ int						ft_tokenisation(t_token **token,
 							t_data_parse *data_parse);
 
 //ft_wildcard.c
-char	*ft_wildcard(t_data_parse *data_parse);
+char					*ft_wildcard(t_data_parse *data_parse);
 
 //ft_isol_operator.c
 char					*ft_isol_operator(t_data_parse *data_parse);
@@ -414,11 +406,16 @@ char					**ft_new_args(t_lst_exec *lst_exec, int status,
 							char **env);
 
 //ft_replace_env_variable.c
-int	ft_not_replace(char *str, char **new_str, int index, t_expand **expand);
-int	rep_status(int *index, char **new_str, int status, t_expand **expand);
-int	ft_set_replace_env_variable(char **new_str, int *index);
-char	*ft_replace_env_variable(char *str, t_expand *expand, char **env, int status);
-char	**ft_add_and_replace_env_variable(char *str, t_expand *expand, t_data_expand *data_expand, char **new_args);
+int						ft_not_replace(char *str,
+							char **new_str, int index, t_expand **expand);
+int						rep_status(int *index, char **new_str, int status,
+							t_expand **expand);
+int						ft_set_replace_env_variable(char **new_str, int *index);
+char					*ft_replace_env_variable(char *str,
+							t_expand *expand, char **env, int status);
+char					**ft_add_and_replace_env_variable(char *str,
+							t_expand *expand, t_data_expand *data_expand,
+							char **new_args);
 
 // # ====================================================== #
 // |														|

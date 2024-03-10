@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 17:38:07 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/09 23:49:56 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/10 17:10:21 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +59,12 @@ void	ft_child(t_tree *tree, char ***env, int status, int *tab_pid)
 int	ft_exec_cmd_fork(t_tree *tree, char ***env, int status, t_tab_pid pid_data)
 {
 	pid_t	pid;
-	int		tmp;
 
 	if (tree->lst_exec->fd_in == -1 || tree->lst_exec->fd_out == -1)
 	{
 		ft_putstr_fd("file ine doesn't exist\n", 2);
 		return (2);
 	}
-	tmp = g_signal;
-	g_signal = -100;
 	pid = fork();
 	if (pid == -1)
 		return (EXIT_FAILURE);
@@ -81,6 +78,5 @@ int	ft_exec_cmd_fork(t_tree *tree, char ***env, int status, t_tab_pid pid_data)
 		if (tree->lst_exec->fd_in > 2)
 			close(tree->lst_exec->fd_in);
 	}
-	g_signal = tmp;
-	return (tmp);
+	return (SUCCESS);
 }

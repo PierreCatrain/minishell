@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 22:51:52 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/10 00:03:06 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/10 15:42:13 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,17 @@ void	ft_export3(char *export_str, char **export, int *res)
 	int		empty;
 
 	*res = 0;
-	if (export_str[0] == '=' || !ft_check_export_name(export_str))
+	if (export_str[0] == '=' || !ft_check_export_name(export_str) 
+		|| !ft_is_ascii(export_str[0]))
 	{
 		printf("bash: export:= `%s': not a valid identifier\n", export_str);
-		*res = 2;
+		*res = 1;
 		return ;
 	}
-	if (!ft_export_name(export_str, export) || !ft_is_ascii(export_str[0]))
+	if (!ft_export_name(export_str, export))
 	{
 		printf("export:= not valid in this context: %s\n", *export);
-		*res = 2;
+		*res = 1;
 		return (free(*export));
 	}
 	if (!check_after_equal(*export))
@@ -74,10 +75,7 @@ int	ft_check_shlvl_export(char ***env, char *export_str)
 	if (!export_name)
 		return (ERROR_MALLOC);
 	if (ft_strcmp(export_name, "SHLVL") != 0)
-	{
-		free(export_name);
-		return (2);
-	}
+		return (free(export_name), 2);
 	i = 0;
 	free(export_name);
 	while ((*env)[i])

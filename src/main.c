@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:52:38 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/10 15:19:20 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/10 16:53:12 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	main(int argc, char **argv, char **envp)
 	t_tree			*tree;
 	int				exit_status;
 	char			**env;
+	int				tmp;
 
 	tree = NULL;
 	exit_status = 0;
@@ -68,10 +69,13 @@ int	main(int argc, char **argv, char **envp)
 			add_history(data_parse.input);
 		if (ft_parse(&tree, &data_parse, env, exit_status) == GOOD_INPUT)
 		{
+			tmp = g_signal;
+			g_signal = -100;
 			exit_status = ft_tree_exec(tree, &env, &exit_status);
 			if (exit_status == ERROR_MALLOC)
 				return (free_and_close_tree(tree), free(env), ERROR_MALLOC);
 			free_and_close_tree(tree);
+			g_signal = tmp;
 		}
 	}
 	return (exit_status);
