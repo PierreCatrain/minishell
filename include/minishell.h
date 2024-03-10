@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/10 16:35:56 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/10 17:54:31 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,7 @@ typedef struct s_data_parse
 	
 	char *wildcard;
 	int tmp_wildcard;
+	int found;
 }   t_data_parse;
 
 typedef struct s_wildcard
@@ -267,6 +268,7 @@ int						ft_tokenisation(t_token **token,
 							t_data_parse *data_parse);
 
 //ft_wildcard_1.c
+int condition_maybe_wildcard(char **isol, char ***split, t_wildcard *ls, t_data_parse *data_parse);
 int	ft_maybe_a_wildcard(t_data_parse *data_parse);
 int	ft_set_wildcard(t_data_parse *data_parse);
 char	*ft_wildcard(t_data_parse *data_parse);
@@ -378,7 +380,7 @@ int						ft_exec_token_type_pipe(t_data_parse *data_parse,
 // # ====================================================== #
 
 //check_wildcard.c
-int						ft_strchr_wildcard(char *str, char *find);
+int	ft_strchr_wildcard(char *str, char *find, int index_str);
 int						ft_check_all(char **split, char *str);
 int						ft_check_before(char *to_find, char **split, char *str);
 int						ft_check_after(char *to_find, char **split, char *str);

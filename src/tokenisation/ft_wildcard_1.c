@@ -6,21 +6,34 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 16:43:13 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/10 16:33:38 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/10 17:34:20 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int condition_maybe_wildcard(char **isol, char ***split, t_wildcard *ls, t_data_parse *data_parse)
+{
+	if (ft_check_before(*isol, *split, ls->str) && ft_check_after(*isol, \
+				*split, ls->str) && ft_check_all(*split, \
+					ls->str) && ls->str[0] != '.')
+	{
+		if (ft_condition_wildcard_2(&data_parse->found, &data_parse->wildcard,
+				ls) == ERROR_MALLOC)
+			return (ft_free_wildcard(&ls), free(*isol), free_2d(*split),
+				ERROR_MALLOC);
+	}
+	return (SUCCESS);
+}
 
 int	ft_maybe_a_wildcard(t_data_parse *data_parse)
 {
 	char		*isol;
 	char		**split;
 	t_wildcard	*ls;
-	int			found;
 
 	ls = NULL;
-	found = 0;
+	data_parse->found = 0;
 	if (set_ls(&ls) != SUCCESS)
 		return (ERROR_MALLOC);
 	data_parse->tmp_wildcard = ft_set_maybe_a_wildcard(&isol, &split, ls,
@@ -29,21 +42,13 @@ int	ft_maybe_a_wildcard(t_data_parse *data_parse)
 		return (data_parse->tmp_wildcard);
 	while (ls != NULL)
 	{
-		if (ft_check_before(isol, split, ls->str) && ft_check_after(isol, split,
-				ls->str) && ft_check_all(split, ls->str))
-		if (ft_check_before(isol, split, ls->str) && ft_check_after(isol, split, \
-					ls->str) && ft_check_all(split, ls->str) && ls->str[0] != '.')
-		{
-			if (ft_condition_wildcard_2(&found, &data_parse->wildcard,
-					ls) == ERROR_MALLOC)
-				return (ft_free_wildcard(&ls), free(isol), free_2d(split),
-					ERROR_MALLOC);
-		}
+		if (condition_maybe_wildcard(&isol, &split, ls, data_parse) != SUCCESS)
+			return (ERROR_MALLOC);
 		if (ls->next == NULL)
 			break ;
 		ls = ls->next;
 	}
-	return (ft_free_wildcard(&ls), ft_end_maybe_wildcard(found, data_parse,
+	return (ft_free_wildcard(&ls), ft_end_maybe_wildcard(data_parse->found, data_parse,
 			isol, split));
 }
 
@@ -79,8 +84,8 @@ char	*ft_wildcard(t_data_parse *data_parse)
 		}
 		if (data_parse->input[data_parse->index])
 		{
-			data_parse->str = ft_join_char(data_parse->str,
-											data_parse->input[data_parse->index++]);
+			data_parse->str = ft_join_char(data_parse->str, \
+					data_parse->input[data_parse->index++]);
 			if (data_parse->str == NULL)
 				return (NULL);
 		}
