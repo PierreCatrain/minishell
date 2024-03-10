@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 22:51:52 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/09 22:45:28 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/10 00:03:06 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,10 @@ int	ft_check_shlvl_export(char ***env, char *export_str)
 	if (!export_name)
 		return (ERROR_MALLOC);
 	if (ft_strcmp(export_name, "SHLVL") != 0)
+	{
+		free(export_name);
 		return (2);
+	}
 	i = 0;
 	free(export_name);
 	while ((*env)[i])
