@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/10 21:10:25 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/10 21:59:53 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -419,10 +419,8 @@ int						ft_complete_expand(t_expand ***expand, t_expand *add,
 t_expand				**ft_dup_array_expand(t_expand **expand, int size);
 
 //ft_new_args.c
-char					**ft_expand_step_1(t_lst_exec *lst_exec, int status,
-							char **env);
-char					**ft_expand_step_2(t_lst_exec *lst_exec, char **args,
-							t_wildcard *ls);
+int is_no_empty(char **arg);
+char **ft_without_empty(char **new_args);
 char					**ft_new_args(t_lst_exec *lst_exec, int status,
 							char **env);
 
