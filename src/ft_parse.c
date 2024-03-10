@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parse.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 00:23:08 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/09 23:17:19 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/10 19:56:29 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,6 @@ int	ft_parse(t_tree **tree, t_data_parse *data_parse,
 		return (free_2d(data_parse->env), ft_free_token(&token), WRONG_INPUT);
 	if (ft_create_tree(tree, token, data_parse) != SUCCESS)
 		return (free_2d(data_parse->env), ft_free_token(&token), ERROR_MALLOC);
+	ft_print_tree(*tree);
 	return (free_2d(data_parse->env), GOOD_INPUT);
 }
