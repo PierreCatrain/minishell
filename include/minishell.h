@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/10 21:59:53 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/11 00:02:07 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,9 +204,6 @@ int						ft_parse(t_tree **tree, t_data_parse *data_parse,
 // |														|
 // # ====================================================== #
 
-//ft_check_argc.c
-int						ft_check_argc(int argc, char **argv);
-
 //ft_get_prompt.c
 char					*ft_get_prompt(void);
 char					*ft_at_user(char *start_prompt, char *end_prompt);
@@ -216,7 +213,6 @@ char					*ft_at_else(char *start_prompt, char *end_prompt,
 							char *str);
 
 //signaux.c
-
 void					ft_display_new_prompt(int signal);
 int						ft_set_sig(void);
 

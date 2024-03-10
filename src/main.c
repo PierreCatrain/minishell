@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:52:38 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/10 20:58:05 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/11 00:17:05 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,24 @@
 
 int	g_signal;
 
-int	only_one_cmd(t_tree *tree, char **argv, char ***env, int *exit_status)
+int set_main_1(t_tree **tree, int *exit_status, int argc, char **argv)
 {
-	t_data_parse	data_parse;
+	*tree = NULL;
+	*exit_status = 0;
+	(void)argv;
+	if (argc != 1)
+		return (ERROR);
+	if (ft_set_sig() == ERROR)
+		return (ERROR);
+	return (SUCCESS);
+}
 
-	data_parse.input = ft_strdup(argv[2]);
-	if (data_parse.input == NULL)
+int set_main_2(char ***env, char **envp)
+{
+	*env = ft_copy_env(envp);
+	if (*env == NULL)
 		return (ERROR_MALLOC);
-	add_history(data_parse.input);
-	if (ft_parse(&tree, &data_parse, *env, *exit_status) == GOOD_INPUT)
-		ft_tree_exec(tree, env, exit_status);
-	free_and_close_tree(tree);
-	rl_clear_history();
-	free_tab_tab(*env);
-	return (*exit_status);
+	return (SUCCESS);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -38,17 +42,8 @@ int	main(int argc, char **argv, char **envp)
 	char			**env;
 	int				tmp;
 
-	tree = NULL;
-	exit_status = 0;
-	if (ft_set_sig() == ERROR)
+	if (set_main_1(&tree, &exit_status, argc, argv) || set_main_2(&env, envp))
 		return (ERROR);
-	if (ft_check_argc(argc, argv) == ERROR_ARGC_ENVP)
-		return (ERROR_ARGC_ENVP);
-	env = ft_copy_env(envp);
-	if (!env)
-		return (ERROR_MALLOC);
-	if (argc == 3)
-		return (only_one_cmd(tree, argv, &env, &exit_status));
 	while (1)
 	{
 		data_parse.prompt = ft_get_prompt();
@@ -58,15 +53,11 @@ int	main(int argc, char **argv, char **envp)
 		free(data_parse.prompt);
 		tree = NULL;
 		if (data_parse.input == NULL)
-		{
-			free(data_parse.input);
-			free_tab_tab(env);
+		{	
 			rl_clear_history();
 			ft_putstr_fd("exit\n", 1);
-			return (0);
+			return (free_tab_tab(env), 0);
 		}
-		if (is_input_only_whitespace(data_parse.input))
-			add_history(data_parse.input);
 		if (ft_parse(&tree, &data_parse, env, exit_status) == GOOD_INPUT)
 		{
 			tmp = g_signal;
@@ -74,7 +65,6 @@ int	main(int argc, char **argv, char **envp)
 			exit_status = ft_tree_exec(tree, &env, &exit_status);
 			if (exit_status == ERROR_MALLOC)
 				return (free_and_close_tree(tree), free(env), ERROR_MALLOC);
-			g_signal = tmp;
 			free_and_close_tree(tree);
 			g_signal = tmp;
 		}

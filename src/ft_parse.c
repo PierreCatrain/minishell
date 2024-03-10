@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 00:23:08 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/10 23:02:53 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/11 00:16:05 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	ft_parse(t_tree **tree, t_data_parse *data_parse,
 {
 	t_token	*token;
 
+	if (is_input_only_whitespace(data_parse->input))
+		add_history(data_parse->input);
 	token = NULL;
 	data_parse->exit_status = exit_status;
 	data_parse->env = ft_strdup_2d(env);
@@ -28,6 +30,5 @@ int	ft_parse(t_tree **tree, t_data_parse *data_parse,
 		return (free_2d(data_parse->env), ft_free_token(&token), WRONG_INPUT);
 	if (ft_create_tree(tree, token, data_parse) != SUCCESS)
 		return (free_2d(data_parse->env), ft_free_token(&token), ERROR_MALLOC);
-	// ft_print_tree(*tree);
 	return (free_2d(data_parse->env), GOOD_INPUT);
 }
