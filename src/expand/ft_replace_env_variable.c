@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 07:05:34 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/10 16:08:26 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/10 16:21:02 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,11 +95,11 @@ int ft_set_split_add_expand_part2(char ***new, char ***res, char **split)
 	*new = malloc(sizeof(char *));
 	if (*new == NULL)
 		return (free_2d(split), ERROR_MALLOC);
-	*new[0] = NULL;
+	(*new)[0] = NULL;
 	index = -1;
 	while ((*res)[++index])
 	{
-		*new = ft_add_to_2d_expand(*new, *res[index]);
+		*new = ft_add_to_2d_expand(*new, (*res)[index]);
 		if (*new == NULL)
 			return (free_2d(split), ERROR_MALLOC);
 	}
@@ -113,8 +113,8 @@ int ft_clear_buffer_in_split_expand(int index, char ***new, int add_start, char 
 	len = ft_strlen_2d(*new);
 	if (len != 0 && index == 0 && add_start == 1)
 	{
-		*new[len - 1] = ft_strjoin_1_malloc(*new[len - 1], split[index]);
-		if (*new[len - 1] == NULL)
+		(*new)[len - 1] = ft_strjoin_1_malloc((*new)[len - 1], split[index]);
+		if ((*new)[len - 1] == NULL)
 			return (free_2d(split), free_2d(*new), ERROR_MALLOC);
 	}
 	else
@@ -133,20 +133,16 @@ int ft_split_add_expand(char *new_str, char ***res, int *add_next)
 	int index;
 	char **new;
 
-	printf("iciiiiiii\n");
 	if (ft_set_split_add_expand_part1(&split, &new_str, add_next, &add_start) != SUCCESS)
 		return (ERROR_MALLOC);
-	printf("iciiiiiii\n");
 	if (ft_set_split_add_expand_part2(&new, res, split) != SUCCESS)
 		return (ERROR_MALLOC);
-	printf("iciiiiiii\n");
 	index = -1;
 	while (split[++index])
 	{
 		if (ft_clear_buffer_in_split_expand(index, &new, add_start, split) != SUCCESS)
 			return (ERROR_MALLOC);
 	}
-	printf("iciiiiiii\n");
 	free_2d(*res);
 	*res = new;
 	return (SUCCESS);
@@ -186,7 +182,7 @@ int ft_set_add_and_replace_env_variable(char ***res, char **new_str, char **new_
 	*res = malloc(sizeof(char *));
 	if (*res == NULL)
 		return (ERROR_MALLOC);
-	*res[0] = NULL;
+	(*res)[0] = NULL;
 	while (new_args[++index])
 	{
 		*res = ft_add_to_2d(*res, new_args[index]);
@@ -197,7 +193,7 @@ int ft_set_add_and_replace_env_variable(char ***res, char **new_str, char **new_
 	*new_str = malloc(sizeof(char));
 	if (*new_str == NULL)
 		return (free_2d(*res), ERROR_MALLOC);
-	*new_str[0] = '\0';
+	(*new_str)[0] = '\0';
 	data_expand->index = -1;
 	return (SUCCESS);
 }
@@ -217,15 +213,15 @@ int reset_the_buffer(t_data_expand *data_expand, char ***res, char **new_str)
 		}
 		else
 		{
-			*res[len - 1] = ft_strjoin_1_malloc(*res[len - 1], *new_str);
-			if (*res[len - 1] == NULL)
+			(*res)[len - 1] = ft_strjoin_1_malloc((*res)[len - 1], *new_str);
+			if ((*res)[len - 1] == NULL)
 				return (free_2d(*res), free(*new_str), ERROR_MALLOC);
 		}
 		free(*new_str);
 		*new_str = malloc(sizeof(char));
 		if (*new_str == NULL)
 			return (free_2d(*res), ERROR_MALLOC);
-		*new_str[0] = '\0';
+		(*new_str)[0] = '\0';
 	}
 	return (SUCCESS);
 }
@@ -266,7 +262,7 @@ int ft_add_replace_status(t_data_expand *data_expand, char ***res, char **new_st
 	*new_str = malloc(sizeof(char));
 	if (*new_str == NULL)
 		return (free_2d(*res), ERROR_MALLOC);
-	*new_str[0] = '\0';
+	(*new_str)[0] = '\0';
 	return (SUCCESS);
 }
 
@@ -285,7 +281,7 @@ int ft_add_replace_classique(t_data_expand *data_expand, char ***res, char **new
 	*new_str = malloc(sizeof(char));
 	if (*new_str == NULL)
 		return (free_2d(*res), ERROR_MALLOC);
-	*new_str[0] = '\0';
+	(*new_str)[0] = '\0';
 	return (SUCCESS);
 }
 
