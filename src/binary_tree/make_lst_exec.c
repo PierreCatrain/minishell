@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 13:06:51 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/04 17:57:16 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/10 20:09:52 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,21 +28,18 @@ int	ft_nb_lst_exec(t_token *token)
 
 int	ft_one_more_exec(t_data_parse *data_parse, t_lst_exec **lst_exec)
 {
-	if (data_parse->args_tmp != NULL)
-	{
-		if (ft_lst_exec_add_back(lst_exec, \
-		ft_new_lst_exec(data_parse->args_tmp, \
-		data_parse->fd_in, data_parse->fd_out, \
-		data_parse->expand)) == ERROR_MALLOC)
-			return (ft_free_pipes(data_parse->fd_pipes, data_parse->nb_pipes), \
-			free_2d(data_parse->args_tmp), ft_print_error_malloc(), \
-			ERROR_MALLOC);
-		free_2d(data_parse->args_tmp);
-		data_parse->expand = NULL;
-		data_parse->args_tmp = NULL;
-		data_parse->fd_in = 0;
-		data_parse->fd_out = 1;
-	}
+	if (ft_lst_exec_add_back(lst_exec, \
+	ft_new_lst_exec(data_parse->args_tmp, \
+	data_parse->fd_in, data_parse->fd_out, \
+	data_parse->expand)) == ERROR_MALLOC)
+		return (ft_free_pipes(data_parse->fd_pipes, data_parse->nb_pipes), \
+		free_2d(data_parse->args_tmp), ft_print_error_malloc(), \
+		ERROR_MALLOC);
+	free_2d(data_parse->args_tmp);
+	data_parse->expand = NULL;
+	data_parse->args_tmp = NULL;
+	data_parse->fd_in = 0;
+	data_parse->fd_out = 1;
 	return (SUCCESS);
 }
 

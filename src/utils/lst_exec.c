@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 16:33:48 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/05 11:52:22 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/10 19:53:54 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,22 @@ t_lst_exec	*ft_new_lst_exec(char **args, int fd_in, \
 	new = malloc(sizeof(t_lst_exec));
 	if (new == NULL)
 		return (NULL);
-	new->args = ft_strdup_2d(args);
-	if (new->args == NULL)
-		return (NULL);
-	new->expand = ft_dup_array_expand(expand, ft_strlen_2d(args));
-	if (new->expand == NULL)
-		return (NULL);
+	if (args == NULL)
+		new->args = NULL;
+	else
+	{
+		new->args = ft_strdup_2d(args);
+		if (new->args == NULL)
+			return (NULL);
+	}
+	if (expand == NULL)
+		new->expand = NULL;
+	else
+	{
+		new->expand = ft_dup_array_expand(expand, ft_strlen_2d(args));
+		if (new->expand == NULL)
+			return (NULL);
+	}
 	new->next = NULL;
 	new->prev = NULL;
 	new->fd_in = fd_in;

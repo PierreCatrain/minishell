@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_token_tree.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 08:32:07 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/09 22:40:45 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/10 20:00:00 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,11 @@ void	ft_print_lst_exec(t_lst_exec *lst_exec)
 	printf("exec\n");
 	while (lst_exec != NULL)
 	{
-		ft_printf_2d(lst_exec->args, lst_exec->expand);
+		printf("passage\n");
+		if (lst_exec->args == NULL)
+			printf("args NULL\n");
+		else
+			ft_printf_2d(lst_exec->args, lst_exec->expand);
 		printf("in  -> %d\n", lst_exec->fd_in);
 		printf("out -> %d\n\n", lst_exec->fd_out);
 		lst_exec = lst_exec->next;
