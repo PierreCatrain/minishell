@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 17:38:07 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/10 18:47:46 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/10 21:32:49 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ int	ft_exec_builtin(char **arg, char ***env, int *exit_flag, t_tree *tree)
 	int		fd_out_saved;
 
 	if (tree->lst_exec->fd_in == -1 || tree->lst_exec->fd_out == -1)
-		return (ft_putstr_fd("bash: File: Permission denied\n", 2), 1);
+		return (ft_putstr_fd("minishell: File: Permission denied\n", 2), 1);
 	if (tree->lst_exec->fd_in == -2)
-		return (ft_putstr_fd("bash: File: No suche file or directory\n", 2), 1);
+		return (ft_putstr_fd("minishell: File: No suche file or directory\n", 2), 1);
 	fd_stdout = dup(0);
 	fd_out_saved = dup(1);
 	dup2(tree->lst_exec->fd_in, 0);
@@ -44,16 +44,30 @@ void	ft_child(t_tree *tree, char ***env, int status, int *tab_pid)
 
 	if (tree->lst_exec->fd_in == -2)
 	{
-		ft_putstr_fd("bash: File: No suche file or directory\n", 2);
+		ft_putstr_fd("minishell: File: No suche file or directory\n", 2);
+		free_and_close_tree(tree);
+		free_tab_tab(*env);
+		free(tab_pid);
 		exit (1);
 	}
 	if (tree->lst_exec->fd_in == -1 || tree->lst_exec->fd_out == -1)
 	{
-		ft_putstr_fd("bash: File: Permission denied\n", 2);
+		ft_putstr_fd("minishell: File: Permission denied\n", 2);
+		free_and_close_tree(tree);
+		free_tab_tab(*env);
+		free(tab_pid);
 		exit (1);
+	}
+	if (tree->lst_exec->args == NULL)
+	{
+		free_and_close_tree(tree);
+		free_tab_tab(*env);
+		free(tab_pid);
+		exit (0);
 	}
 	arg = NULL;
 	arg = ft_new_args(tree->lst_exec, status, *env);
+	print_tab_tab(arg);
 	dup2(tree->lst_exec->fd_in, 0);
 	dup2(tree->lst_exec->fd_out, 1);
 	free_and_close_tree(tree);

@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 10:10:03 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/10 16:21:46 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/10 21:29:58 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	ft_check_path_execve(char **path, char ***cmd, char ***env)
 {
 	if (execve(*path, *cmd, *env) == -1)
 	{
-		printf("bash: %s: cannot execute binary file: \
+		printf("minishell: %s: cannot execute binary file: \
 			%s\n", (*cmd)[0], strerror(errno));
 		free(*path);
 		free_tab_tab(*cmd);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_and_close_tree.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 11:55:03 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/10 20:15:30 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/10 20:58:16 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	free_expand(t_expand **expand, int len)
 	int			index;
 
 	index = 0;
-	printf("\ttest\n");
 	while (index < len)
 	{
 		while (expand && expand[index] != NULL)

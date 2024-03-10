@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 12:37:17 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/09 22:34:39 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/10 21:30:00 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*ft_itoa_shlvl(int nb)
 
 	if (nb >= 999)
 	{
-		ft_putstr_fd("bash: warning: shell level (1000)"
+		ft_putstr_fd("minishell: warning: shell level (1000)"
 			" too high, resetting to 1\n", 2);
 		nb = 1;
 	}

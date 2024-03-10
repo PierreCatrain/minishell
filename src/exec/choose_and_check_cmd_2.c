@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 23:48:10 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/10 20:38:13 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/10 21:30:00 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	find_cmd(char ***env, char **cmd)
 		ft_putstr_fd(" : Is a directory\n", 2);
 		exit (126);
 	}
-	if (ft_is_builtin(cmd[0]))
+	if (ft_is_builtin(cmd))
 		find_cmd_2(cmd, &status, env);
 	else
 	{
@@ -58,14 +58,14 @@ int	find_cmd(char ***env, char **cmd)
 		{
 			if (execve(cmd[0], cmd, *env) == -1)
 			{
-				printf("bash: %s: cannot execute binary file: \
+				printf("minishell: %s: cannot execute binary file: \
 				%s\n", cmd[0], strerror(errno));
 				exit (126);
 			}
 		}
 		if (!ft_check_cmd(cmd[0]))
 		{
-			ft_putstr_fd("bash: ", 2);
+			ft_putstr_fd("minishell: ", 2);
 			ft_putstr_fd(cmd[0], 2);
 			ft_putstr_fd(": No such file or directory\n", 2);
 			exit(127);

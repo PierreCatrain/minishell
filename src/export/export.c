@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 22:51:52 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/10 19:48:40 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/10 21:30:02 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	ft_export3(char *export_str, char **export, int *res)
 	if (export_str[0] == '=' || !ft_check_export_name(export_str)
 		|| !ft_is_ascii(export_str[0]))
 	{
-		ft_putstr_fd("bash: export:= `", 2);
+		ft_putstr_fd("minishell: export:= `", 2);
 		ft_putstr_fd(export_str, 2);
 		ft_putstr_fd("': not a valid identifier\n", 2);
 		*res = 1;
