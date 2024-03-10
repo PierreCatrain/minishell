@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 09:32:17 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/09 22:37:34 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/10 21:10:15 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,21 +65,23 @@ int	ft_find_builtin(char *cmd, char **cmd_tab, char ***env, int *exit_flag)
 	return (status);
 }
 
-int	ft_is_builtin(char *cmd)
+int	ft_is_builtin(char **cmd)
 {
-	if (ft_strcmp(cmd, "cd") == 0)
+	if (!cmd)
+		return (0);
+	if (ft_strcmp(*cmd, "cd") == 0)
 		return (1);
-	else if (ft_strcmp(cmd, "echo") == 0)
+	else if (ft_strcmp(*cmd, "echo") == 0)
 		return (1);
-	else if (ft_strcmp(cmd, "pwd") == 0)
+	else if (ft_strcmp(*cmd, "pwd") == 0)
 		return (1);
-	else if (ft_strcmp(cmd, "exit") == 0)
+	else if (ft_strcmp(*cmd, "exit") == 0)
 		return (1);
-	else if (ft_strcmp(cmd, "unset") == 0)
+	else if (ft_strcmp(*cmd, "unset") == 0)
 		return (1);
-	else if (ft_strcmp(cmd, "export") == 0)
+	else if (ft_strcmp(*cmd, "export") == 0)
 		return (1);
-	else if (ft_strcmp(cmd, "env") == 0)
+	else if (ft_strcmp(*cmd, "env") == 0)
 		return (1);
 	return (0);
 }

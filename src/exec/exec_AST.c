@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_AST.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 01:19:42 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/10 20:21:31 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/10 21:32:29 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,19 +33,21 @@ char	*ft_get_path(void)
 	return (path);
 }
 
-void	ft_replace_last_command(char ***env, char *str)
+void	ft_replace_last_command(char ***env, char **str)
 {
 	char	*val;
 	int		i;
 	char	*export_name;
 
 	i = 0;
+	if (!str)
+		return ;
 	while ((*env)[i])
 	{
 		export_name = ft_find_export_name((*env)[i]);
 		if (ft_strcmp("_", export_name) == 0)
 		{
-			val = ft_strjoin_wihtout_free("_=", str);
+			val = ft_strjoin_wihtout_free("_=", *str);
 			free(export_name);
 			free((*env)[i]);
 			(*env)[i] = ft_str_dup_env(val, (*env)[i]);
@@ -77,9 +79,9 @@ int	ft_tree_exec(t_tree *tree, char ***env, int *status)
 	{
 		exit_flag = 0;
 		ll_len = ft_linked_list_size(tree->lst_exec);
-		if (ll_len == 1 && ft_is_builtin(tree->lst_exec->args[0]) == 1)
+		if (ll_len == 1 && ft_is_builtin(tree->lst_exec->args) == 1)
 		{
-			ft_replace_last_command(env, tree->lst_exec->args[0]);
+			ft_replace_last_command(env, tree->lst_exec->args);
 			arg = ft_new_args(tree->lst_exec, *status, *env);
 			status2 = ft_exec_builtin(arg, env, &exit_flag, tree);
 			if (exit_flag || status2 == ERROR_MALLOC)
@@ -97,7 +99,7 @@ int	ft_tree_exec(t_tree *tree, char ***env, int *status)
 		pid.index = 0;
 		while (tree->lst_exec != NULL)
 		{
-			ft_replace_last_command(env, tree->lst_exec->args[0]);
+			ft_replace_last_command(env, tree->lst_exec->args);
 			status2 = ft_exec_cmd_fork(tree, env, *status, pid);
 			if (status2 == ERROR_MALLOC)
 				return (ERROR_MALLOC);

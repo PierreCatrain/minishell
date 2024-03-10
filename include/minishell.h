@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/10 20:08:58 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/10 21:59:53 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,30 +120,27 @@ typedef struct s_token
 
 typedef struct s_data_parse
 {
-	t_token *token;
-	int double_quote_open;
-	int single_quote_open;
-	int new_word;
-	int index_str;
-	int index;
-	char *str;
-	char *prompt;
-	char *input;
-	int merge;
-
-	int index_new_str;
-
-	char	*before;
-	char	*after;
-	int	i;
-	int	part;
-
-	char	*heredoc;
+	t_token		*token;
+	int			double_quote_open;
+	int			single_quote_open;
+	int			new_word;
+	int			index_str;
+	int			index;
+	char		*str;
+	char		*prompt;
+	char		*input;
+	int			merge;
+	int			index_new_str;
+	char		*before;
+	char		*after;
+	int			i;
+	int			part;
+	char		*heredoc;
 	int			fd_in;
 	int			fd_out;
-	char	**args_tmp;
+	char		**args_tmp;
 	int			index_pipes;
-	int		**fd_pipes;
+	int			**fd_pipes;
 	int			nb_pipes;
 
 	int *array_here_doc;
@@ -244,11 +241,12 @@ int						is_cmd_between_bonus_opperator(t_token *token);
 int						ft_condition_grammaire(t_token *token);
 
 //condition_grammaire_2.c
-int	ft_is_quote_close(char *input, int double_quote_open, int single_quote_open);
-int	ft_check_pipes(t_token *token);
-int	is_redirection_well_followed(t_token *token);
-void print_no_cmd(char *str);
-int ft_no_cmd(t_token *token);
+int						ft_is_quote_close(char *input,
+							int double_quote_open, int single_quote_open);
+int						ft_check_pipes(t_token *token);
+int						is_redirection_well_followed(t_token *token);
+void					print_no_cmd(char *str);
+int						ft_no_cmd(t_token *token);
 
 //ft_add_token.c
 void					ft_set_add_token(t_data_parse *data_parse);
@@ -421,10 +419,8 @@ int						ft_complete_expand(t_expand ***expand, t_expand *add,
 t_expand				**ft_dup_array_expand(t_expand **expand, int size);
 
 //ft_new_args.c
-char					**ft_expand_step_1(t_lst_exec *lst_exec, int status,
-							char **env);
-char					**ft_expand_step_2(t_lst_exec *lst_exec, char **args,
-							t_wildcard *ls);
+int is_no_empty(char **arg);
+char **ft_without_empty(char **new_args);
 char					**ft_new_args(t_lst_exec *lst_exec, int status,
 							char **env);
 
@@ -700,7 +696,7 @@ int						ft_env(char **env);
 // char	*ft_get_err_msg(char *cmd, char *msg);
 char					*ft_get_path(void);
 char					**ft_get_path_cmd(char **env);
-int						ft_is_builtin(char *cmd);
+int						ft_is_builtin(char **cmd);
 int						find_cmd(char ***env, char **arg);
 int						check_absolute_path_builtin(char **arg);
 int						ft_check_path_cmd(char ***env, char **cmd);

@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:42:46 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/09 18:21:54 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/10 21:29:57 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ int	ft_cd_parsing(char **path_tab)
 		return (1);
 	if (ft_len_tab_tab(path_tab) > 2)
 	{
-		ft_putstr_fd("bash: cd: too many arguments\n", 2);
+		ft_putstr_fd("minishell: cd: too many arguments\n", 2);
 		return (1);
 	}
 	if (ft_strlen(path_tab[1]) > 256)
 	{
-		ft_putstr_fd("bash: cd: ", 2);
+		ft_putstr_fd("minishell: cd: ", 2);
 		ft_putstr_fd(path_tab[1], 2);
 		ft_putstr_fd(": File name too long\n", 2);
 		return (1);
@@ -40,7 +40,7 @@ int	ft_cd_home(char ***env)
 	if (getcwd(current_path, PATH_MAX) == NULL)
 		return (2);
 	if (is_export_name_in_env(*env, "HOME") == -1)
-		return (ft_putstr_fd("bash: cd: HOME not set\n", 2), 2);
+		return (ft_putstr_fd("minishell: cd: HOME not set\n", 2), 2);
 	oldpwd = ft_get_env_value(*env, "HOME");
 	if (chdir(oldpwd) != 0)
 		return (ft_msg_err_chdir(oldpwd), free(oldpwd), 1);
@@ -59,7 +59,7 @@ int	ft_cd_dash(char ***env)
 
 	if (is_export_name_in_env(*env, "OLDPWD") == -1)
 	{
-		ft_putstr_fd("bash: cd: OLDPWD not set\n", 2);
+		ft_putstr_fd("minishell: cd: OLDPWD not set\n", 2);
 		return (1);
 	}
 	oldpwd = ft_get_env_value(*env, "OLDPWD");
@@ -96,15 +96,12 @@ int	ft_cd_cdpath(char **path_tab, char ***env)
 				return (0);
 			}
 			else
-			{
-				ft_msg_err_getcwd();
-				return (1);
-			}
+				return (ft_msg_err_getcwd(), 1);
 		}
 	}
 	if (ft_msg_err_chdir(path_tab[1]) == ERROR_MALLOC)
 		return (ERROR_MALLOC);
-	return (0);
+	return (1);
 }
 
 int	ft_cd(char **path_tab, char ***env)
@@ -120,7 +117,9 @@ int	ft_cd(char **path_tab, char ***env)
 	if (ft_strcmp(path_tab[1], "-") == 0)
 		return (ft_cd_dash(env));
 	if (chdir(path_tab[1]) != 0)
+	{
 		return (ft_cd_cdpath(path_tab, env));
+	}
 	else
 		ft_change_pwd_old_pwd(current_path, getcwd(new_path, PATH_MAX), env);
 	return (0);

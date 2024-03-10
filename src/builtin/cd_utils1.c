@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 21:20:57 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/09 22:47:35 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/10 21:29:54 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int	ft_msg_err_chdir(char *str)
 	char	*second_part;
 	char	*err_msg;
 
-	first_part = ft_strjoin_wihtout_free("bash: cd: ", str);
+	first_part = ft_strjoin_wihtout_free("minishell: cd: ", str);
 	if (!first_part)
 		return (ERROR_MALLOC);
 	second_part = ft_strjoin_wihtout_free(": No such", " file or directory\n");

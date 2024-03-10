@@ -6,11 +6,48 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 06:51:13 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/10 21:16:00 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/10 22:00:09 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int is_no_empty(char **arg)
+{
+	int index;
+
+	index = -1;
+	while (arg[++index])
+	{
+		if (arg[index][0] != '\0')
+			return (0);
+	}
+	return (1);
+}
+
+char **ft_without_empty(char **new_args)
+{
+	char **res;
+	int index;
+
+	if (is_no_empty(new_args))
+		return (NULL);
+	res = malloc(sizeof(char *));
+	if (res == NULL)
+		return (NULL);
+	res[0] == NULL;
+	index = -1;
+	while (new_args[++index])
+	{
+		if (new_args[index][0] != '\0')
+		{
+			res = ft_add_to_2d(res, new_args[index]);
+			if (res == NULL)
+				return (free_2d(new_args), NULL);
+		}
+	}
+	return (free_2d(new_args), res);
+}
 
 char	**ft_new_args(t_lst_exec *lst_exec, int status, char **env)
 {
