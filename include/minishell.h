@@ -176,6 +176,7 @@ typedef struct s_wildcard
 
 typedef struct s_data_expand
 {
+    int index;
 	char **env;
 	int status;
 	int add_next;
