@@ -6,13 +6,13 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:52:38 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/10 00:29:58 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/10 16:30:51 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	g_exit_status;
+int	g_signal;
 
 int	only_one_cmd(t_tree *tree, char **argv, char ***env, int *exit_status)
 {

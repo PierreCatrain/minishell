@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utils_2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 11:56:45 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/09 20:13:24 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/09 23:16:59 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,14 @@ char	*ft_itoa_long_long(long long nb)
 	return (str);
 }
 
-char	*ft_str_cat_long_long(char *new_str, long long g_exit_status)
+char	*ft_str_cat_long_long(char *new_str, long long status)
 {
 	char	*exit;
 	char	*cat;
 	int		i;
 	int		j;
 
-	exit = ft_itoa_long_long(g_exit_status);
+	exit = ft_itoa_long_long(status);
 	if (exit == NULL)
 		return (free(new_str), NULL);
 	cat = malloc ((ft_strlen(new_str) + ft_strlen(exit) + 1) * sizeof(char));

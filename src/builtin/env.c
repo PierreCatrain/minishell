@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 22:28:44 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/06 15:46:06 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/09 22:34:56 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,3 @@ int	ft_env(char **env)
 	}
 	return (status);
 }
-
-// int	main(int ac, char **av, char **env)
-// {
-// 	ac = 2;
-// 	(void)av;
-// 	ft_env(env);
-// }

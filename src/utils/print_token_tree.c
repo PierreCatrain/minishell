@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_token_tree.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 08:32:07 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/08 17:22:55 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/09 22:40:45 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ void	ft_printf_2d(char **str, t_expand **expand)
 	{
 		printf("%s ", str[index]);
 		(void)expand;
-		// if (expand != NULL)
-		// 	ft_print_expand(expand[index]);
+		if (expand != NULL)
+			ft_print_expand(expand[index]);
 		index++;
 	}
 	printf("\n");

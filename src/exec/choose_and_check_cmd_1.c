@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   choose_and_check_cmd.c                             :+:      :+:    :+:   */
+/*   choose_and_check_cmd_1.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 10:10:03 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/05 22:18:28 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/09 23:48:23 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	**ft_get_path_cmd(char **env)
 	char	**path_split;
 	char	*path;
 
-	path = ft_get_env_value(env, "PATH"); // changer et mettre ma fonction
+	path = ft_get_env_value(env, "PATH");
 	if (!path)
 		return (NULL);
 	path_split = ft_split(path, ':');
@@ -40,6 +40,28 @@ void	ft_check_path_execve(char **path, char ***cmd, char ***env)
 	}
 }
 
+void	free_check_path(char ***env, char ***cmd,
+	char **msg_err, char ***path_split)
+{
+	if (env != NULL)
+		free_tab_tab(*env);
+	if (cmd != NULL)
+		free_tab_tab(*cmd);
+	if (msg_err != NULL)
+		free(*msg_err);
+	if (path_split != NULL)
+		free_tab_tab(*path_split);
+}
+
+void	ft_check_path_cmd_2(char **path_split, char ***env, char **cmd)
+{
+	if (!path_split)
+	{
+		free_check_path(env, &cmd, NULL, NULL);
+		exit (127);
+	}
+}
+
 int	ft_check_path_cmd(char ***env, char **cmd)
 {
 	int		i;
@@ -48,12 +70,7 @@ int	ft_check_path_cmd(char ***env, char **cmd)
 	char	*msg_err;
 
 	path_split = ft_get_path_cmd(*env);
-	if (!path_split)
-	{
-		free_tab_tab(*env);
-		free_tab_tab(cmd);
-		exit (127);
-	}
+	ft_check_path_cmd_2(path_split, env, cmd);
 	i = -1;
 	while (path_split[++i])
 	{
@@ -69,47 +86,6 @@ int	ft_check_path_cmd(char ***env, char **cmd)
 	}
 	msg_err = ft_strjoin_wihtout_free(cmd[0], ": command not found\n");
 	ft_putstr_fd(msg_err, 2);
-	free (msg_err);
-	free_tab_tab(cmd);
-	free_tab_tab(*env);
-	free_tab_tab(path_split);
+	free_check_path(env, &cmd, &msg_err, &path_split);
 	exit(127);
-}
-
-int	find_cmd(char ***env, char **cmd)
-{
-	int	status;
-	int	fake_exit_status;
-
-	status = 0;
-	if (check_absolute_path_builtin(&(cmd[0])) == ERROR_MALLOC)
-		return (ERROR_MALLOC);
-	if (ft_is_builtin(cmd[0]))
-	{
-		status = ft_find_builtin(cmd[0], cmd, env, &fake_exit_status);
-		if (status == -1)
-			return (1);
-		free_tab_tab(cmd);
-		free_tab_tab(*env);
-		exit(status);
-	}
-	// if (getenv("PATH") == NULL && (ft_strcmp(cmd[0], "UNSET") == 0 && ft_strcmp(ft_strcmp(cmd[1], "PATH") == 0)))
-	// 	ft_exec_env_less(env);
-	// si PATH n'est pas dans env et que mon path != NULL -> execve
-	// si PATH n'est pas dans en et que mon PATh cache == NULLL 
-	//		-> ecrire que le msg d'erreur que la commande n'est pas dispo
-	else
-	{
-		if (access(cmd[0], F_OK | X_OK) == 0)
-		{
-			if (execve(cmd[0], cmd, *env) == -1)
-			{
-				printf("bash: %s: cannot execute binary file: \
-				%s\n", cmd[0], strerror(errno));
-				exit (126);
-			}
-		}
-		ft_check_path_cmd(env, cmd);
-	}
-	return (status);
 }

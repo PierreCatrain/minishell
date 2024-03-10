@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 16:01:18 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/05 22:19:07 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/09 22:35:02 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,20 +117,5 @@ int	ft_unset(char ***env, char **cmd)
 	i = 0;
 	while (cmd[++i])
 		status = ft_unset2(env, cmd[i]);
-	printf("dans unset %p\n", *env);
 	return (status);
 }
-
-// int main(int ac, char **av, char **env)
-// {
-// 	char	**new_env;
-
-// 	(void)ac;
-// 	new_env = ft_copy_env(env);
-// 	ft_unset(&new_env, av);
-// 	if (!new_env)
-// 		return (0);
-// 	print_tab_tab(new_env);
-// 	free_tab_tab(new_env);
-// 	return (0);
-// }

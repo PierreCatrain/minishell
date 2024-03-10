@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 21:20:57 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/05 22:15:41 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/09 22:47:35 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_change_pwd_old_pwd2(char ***env, char *current_path)
 	exp_n_old_pwd = ft_str_dup_env("OLDPWD=", exp_n_old_pwd);
 	exp_val_old_pwd = ft_str_dup_env(current_path, exp_val_old_pwd);
 	exp_str_old_pwd = ft_strjoin_equal_val(exp_n_old_pwd, exp_val_old_pwd);
-	ft_export2(env, exp_str_old_pwd);	
+	ft_export2(env, exp_str_old_pwd);
 	free(exp_str_old_pwd);
 }
 
@@ -86,9 +86,7 @@ int	ft_cdpath(char **pathtab, char **env)
 		if (chdir(str_cdpath) == 0)
 		{
 			printf("%s\n", str_cdpath);
-			free(str_cdpath);
-			free_tab_tab(cdpath);
-			return (0);
+			return (free(str_cdpath), free_tab_tab(cdpath), 0);
 		}
 		free(str_cdpath);
 	}

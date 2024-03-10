@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 01:19:42 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/10 00:35:18 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/10 16:27:49 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ char	*ft_get_path(void)
 {
 	char	*path;
 
-	path = ft_strdup("PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin");
+	path = ft_strdup("PATH=/usr/local/sbin:"
+			"/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin");
 	if (!path)
 		return (NULL);
 	return (path);
@@ -87,6 +88,7 @@ int	ft_tree_exec(t_tree *tree, char ***env, int *status)
 				free_and_close_tree(tree);
 				free_tab_tab(*env);
 				rl_clear_history();
+				write(1, "exit\n", 5);
 				exit(status2);
 			}
 			return (free_tab_tab(arg), status2);
@@ -97,7 +99,6 @@ int	ft_tree_exec(t_tree *tree, char ***env, int *status)
 		{
 			ft_replace_last_command(env, tree->lst_exec->args[0]);
 			status2 = ft_exec_cmd_fork(tree, env, *status, pid);
-			// g_exit_status = status2;// j'ai rajouter ca c'est pour les signaux
 			if (status2 == ERROR_MALLOC)
 				return (ERROR_MALLOC);
 			if (tree->lst_exec->next != NULL)

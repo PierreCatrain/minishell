@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_create_tree_1.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 02:02:25 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/08 15:57:01 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/08 21:42:37 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,15 +96,15 @@ int	ft_create_tree(t_tree **tree, t_token *token, t_data_parse *data_parse)
 {	
 	int	tmp;
 
-	tmp = g_exit_status;
-	g_exit_status = -100;
+	tmp = g_signal;
+	g_signal = -100;
 	data_parse->index_here_doc = ft_nb_here_doc(token) - 1;
 	if (ft_complete_here_doc(data_parse, token, 0) != SUCCESS)
 	{
-		g_exit_status = tmp;
+		g_signal = tmp;
 		return (ERROR);
 	}
-	g_exit_status = tmp;
+	g_signal = tmp;
 	if (ft_complete_tree(tree, token, data_parse) != SUCCESS)
 		return (free(data_parse->array_here_doc), \
 				free_and_close_tree(*tree), ERROR);

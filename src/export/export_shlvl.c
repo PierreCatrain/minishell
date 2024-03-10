@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 18:10:37 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/06 18:46:20 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/09 22:41:47 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	ft_atoi_int_shlvl_export(char *nb)
 	i = 0;
 	while (nb[i])
 	{
-		if (nb[i] < '0' || nb[i] >  '9')
+		if (nb[i] < '0' || nb[i] > '9')
 			return (0);
 		res = res * 10 + nb[i] - 48;
 		i++;

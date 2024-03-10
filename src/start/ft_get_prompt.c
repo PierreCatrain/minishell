@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_get_prompt.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 21:50:13 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/04 18:09:17 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/09 22:39:47 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,8 @@ char	*ft_get_prompt(void)
 	char	*end_prompt;
 	char	wd[WD_BUFFER_SIZE];
 
-	start_prompt = ft_get_str("\1\033[1;33m\2minishell \1\033[1;34m\2WD:(\1\033[1;31m\2");
+	start_prompt = ft_get_str("\1\033[1;33m\2minishell"
+			" \1\033[1;34m\2WD:(\1\033[1;31m\2");
 	end_prompt = ft_get_str("\1\033[1;34m\2)\1\033[1;33m\2 ~ \1\033[0m\2");
 	if (getcwd(wd, WD_BUFFER_SIZE) == NULL)
 		return (NULL);

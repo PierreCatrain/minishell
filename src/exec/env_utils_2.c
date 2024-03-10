@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils_2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 12:37:17 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/07 16:26:17 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/09 22:34:39 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ char	*ft_itoa_shlvl(int nb)
 	int		len;
 	int		i;
 
-	// printf("nb dans itoa %d\n", nb);
 	if (nb >= 999)
 	{
 		ft_putstr_fd("bash: warning: shell level (1000)"
@@ -53,39 +52,42 @@ char	*ft_itoa_shlvl(int nb)
 	return (str);
 }
 
-int	ft_atoi_int_shlvl_main(char *nb)
+void	ft_check_increment(int *res)
 {
-	int	i;
-	int	res;
+	char	*last_cmd;
+
+	last_cmd = getenv("_");
+	if (ft_strcmp(last_cmd, "./minishell") == 0)
+		(*res)++;
+	else
+		return ;
+}
+
+int	ft_atoi_int_shlvl_main(char **envp, char *nb)
+{
+	int		i;
+	int		res;
 
 	i = 0;
 	res = 0;
-	if (nb[0] == '+')
-		i++;
+	(void)envp;
+	if (nb == NULL)
+		return (1);
 	while (nb[i])
 	{
-		if (nb[i] < '0' || nb[i] > '9')
-			return (0);
-		i++;
-	}
-	i = 0;
-	while (nb[i])
-	{
-		if (nb[i] < '0' || nb[i] >  '9')
-			return (0);
 		res = res * 10 + nb[i] - 48;
 		i++;
 	}
-	res += 1;
+	ft_check_increment(&res);
 	return (res);
 }
 
-char	*ft_change_shlvl(char *shlvl)
+char	*ft_change_shlvl(char **envp, char *shlvl)
 {
 	char	*res_val;
 	char	*res;
 
-	res_val = ft_itoa_shlvl(ft_atoi_int_shlvl_main(shlvl));
+	res_val = ft_itoa_shlvl(ft_atoi_int_shlvl_main(envp, shlvl));
 	if (!res_val)
 		return (NULL);
 	res = ft_strjoin_wihtout_free("SHLVL=", res_val);
@@ -98,18 +100,53 @@ char	*ft_change_shlvl(char *shlvl)
 int	ft_get_path_in_env(char **envp, char ***env, int *i)
 {
 	int	len_envp;
-	
+
 	len_envp = ft_strlen_2d(envp);
 	if (getenv("PATH") == NULL)
 		len_envp = ft_strlen_2d(envp) + 1;
-	*env = malloc (sizeof(char *) * (len_envp + 2));
+	*env = malloc (sizeof(char *) * (len_envp + 1));
 	if (!(*env))
 		return (ERROR_MALLOC);
 	if (getenv("PATH") == NULL)
-		(*env)[++(*i)] = ft_get_path();
-	if ((*env)[(*i)] == NULL)
-		return (ERROR_MALLOC);
+	{
+		(*env)[(*i)] = ft_get_path();
+		if ((*env)[(*i)] == NULL)
+			return (free_tab_tab(*env), ERROR_MALLOC);
+		(*env)[++(*i)] = NULL;
+	}
 	return (0);
+}
+
+void	ft_check_missing_env(char ***env, int *i)
+{
+	char	buff[PATH_MAX + 1];
+	char	*env_val;
+
+	if (getenv("PWD") == NULL)
+	{
+		(*env)[(*i)] = NULL;
+		env_val = ft_strjoin("PWD=", getcwd(buff, PATH_MAX));
+		ft_realloc_env(env, 1);
+		(*env)[(*i)] = ft_strdup(env_val);
+		free(env_val);
+		(*env)[++(*i)] = NULL;
+	}
+	if (getenv("_") == NULL)
+	{
+		env_val = ft_strdup("_=./minishell");
+		ft_realloc_env(env, 1);
+		(*env)[(*i)++] = ft_strdup(env_val);
+		free(env_val);
+		(*env)[*i] = NULL;
+	}
+	if (getenv("SHLVL") == NULL)
+	{
+		env_val = ft_strdup("SHLVL=1");
+		ft_realloc_env(env, 1);
+		(*env)[(*i)++] = ft_strdup(env_val);
+		free(env_val);
+		(*env)[*i] = NULL;
+	}
 }
 
 char	**ft_copy_env(char **envp)
@@ -120,35 +157,30 @@ char	**ft_copy_env(char **envp)
 	char	*envp_name;
 
 	len_envp = ft_strlen_2d(envp);
-	i = -1;
+	i = 0;
 	ft_get_path_in_env(envp, &env, &i);
+	if (!env)
+		return (NULL);
 	if (!envp[0])
+	{
+		ft_check_missing_env(&env, &i);
 		return (env);
-	while (envp[++i])
+	}
+	while (envp[i])
 	{
 		envp_name = ft_find_export_name(envp[i]);
 		if (ft_strcmp(envp_name, "SHLVL") == 0)
 		{
-			env[i] = ft_change_shlvl(getenv("SHLVL"));
+			env[i] = ft_change_shlvl(envp, getenv("SHLVL"));
 			free(envp_name);
+			i++;
 			continue ;
 		}
 		free(envp_name);
 		env[i] = ft_str_dup_env(envp[i], env[i]);
+		i++;
 	}
+	ft_check_missing_env(&env, &i);
 	env[i] = NULL;
 	return (env);
 }
-
-// int	main(int ac, char **av, char **envp)
-// {
-// 	char **env;
-	
-// 	(void)ac;
-// 	(void)av;
-	
-// 	env = ft_copy_env(envp);
-// 	print_tab_tab(env);
-// 	free_tab_tab(env);
-// 	return (0);
-// }

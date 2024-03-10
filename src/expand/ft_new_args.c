@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_new_args.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 06:51:13 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/09 23:24:17 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/09 23:54:39 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,10 @@
 
 char	**ft_new_args(t_lst_exec *lst_exec, int status, char **env)
 {
-	char	**new_args;
-	int		index;
-	t_data_expand data_expand;
+	char			**new_args;
+	int				index;
+	t_data_expand	data_expand;
 
-	printf("debut\n");
-	print_tab_tab(lst_exec->args);
 	data_expand.env = env;
 	data_expand.status = status;
 	lst_exec->len_expand = ft_strlen_2d(lst_exec->args);
@@ -36,7 +34,5 @@ char	**ft_new_args(t_lst_exec *lst_exec, int status, char **env)
 			return (NULL);
 		index++;
 	}
-	printf("\n");
-	print_tab_tab(new_args);
 	return (new_args);
 }

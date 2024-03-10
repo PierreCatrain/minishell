@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utils_5.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 11:55:49 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/05 13:09:10 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/08 21:55:34 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,19 +64,20 @@ char	**ft_split(char *s, char c)
 	tab = malloc(sizeof(char *) * (count_world(s, c) + 1));
 	if (!tab || !s)
 		return (NULL);
+	i = -1;
 	j = 0;
-	i = 0;
 	start_word = -1;
-	while (i <= ft_strlen(s))
+	while (++i <= ft_strlen(s))
 	{
 		if (s[i] != c && start_word < 0)
 			start_word = i;
 		else if ((s[i] == c || i == ft_strlen(s)) && start_word >= 0)
 		{
 			tab[j++] = dup_word(s, start_word, i);
+			if (tab[j -1] == NULL)
+				return (free_tab_tab(tab), NULL);
 			start_word = -1;
 		}
-		i++;
 	}
 	tab[j] = 0;
 	return (tab);
