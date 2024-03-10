@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 11:15:27 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/10 18:19:46 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/10 19:34:34 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,8 @@ int	ft_check_all(char **split, char *str)
 	len_str = ft_strlen(str);
 	index_split = 0;
 	index_str = 0;
-	print_tab_tab(split);
-	printf("str %s\n", str);
 	while (split[index_split] && index_str < len_str)
 	{
-		printf("passage %c\n", str[index_str]);
 		tmp = ft_strchr_wildcard(str, split[index_split++], index_str);
 		if (tmp == 0)
 			return (0);

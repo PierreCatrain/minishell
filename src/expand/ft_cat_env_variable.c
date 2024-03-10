@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 07:36:28 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/04 19:42:52 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/10 19:30:18 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,14 @@ char	*ft_add_env(char *str, char *new_str, int index, char **env)
 	str_isolate = ft_str_isolate(str, index, ft_lim_isolate(str, index));
 	if (str_isolate == NULL)
 		return (free(new_str), NULL);
+	if (str_isolate[0] == '\0')
+	{
+		free(str_isolate);
+		new_str = ft_join_char(new_str, '$');
+		if (new_str == NULL)
+			return (NULL);
+		return (new_str);
+	}
 	new_str = ft_strjoin(new_str, ft_get_env_value(env, str_isolate));
 	if (new_str == NULL)
 		return (free(str_isolate), NULL);

@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 18:08:43 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/10 18:21:50 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/10 19:32:57 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,26 @@ int	ft_clear_buffer_in_split_expand(int index, char ***new, \
 	return (SUCCESS);
 }
 
+int ft_not_found(char **split, char ***new, int add_start)
+{
+    int	len;
+
+	len = ft_strlen_2d(*new);
+	if (len != 0 && add_start == 1)
+	{
+		(*new)[len - 1] = ft_strjoin_1_malloc((*new)[len - 1], "\0");
+		if ((*new)[len - 1] == NULL)
+			return (free_2d(split), free_2d(*new), ERROR_MALLOC);
+	}
+	else
+	{
+		*new = ft_add_to_2d_expand(*new, "\0");
+		if (*new == NULL)
+			return (free_2d(split), ERROR_MALLOC);
+	}
+    return (SUCCESS);
+}
+
 int	ft_split_add_expand(char *new_str, char ***res, int *add_next)
 {
 	char	**split;
@@ -81,6 +101,11 @@ int	ft_split_add_expand(char *new_str, char ***res, int *add_next)
 	if (ft_set_split_add_expand_part2(&new, res, split) != SUCCESS)
 		return (ERROR_MALLOC);
 	index = -1;
+    if (split[0] == NULL)
+    {
+        if (ft_not_found(split, &new, add_start) != SUCCESS)
+			return (ERROR_MALLOC);
+    }
 	while (split[++index])
 	{
 		if (ft_clear_buffer_in_split_expand(index, &new, \

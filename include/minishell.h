@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/10 18:38:09 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/10 19:32:09 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,6 +229,12 @@ int						ft_set_sig(void);
 // |														|
 // # ====================================================== #
 
+//check_wildcard.c
+int	ft_strchr_wildcard(char *str, char *find, int index_str);
+int						ft_check_all(char **split, char *str);
+int						ft_check_before(char *to_find, char **split, char *str);
+int						ft_check_after(char *to_find, char **split, char *str);
+
 //condition_grammaire_1.c
 int						ft_check_parenthesis(t_token *token);
 int						ft_check_proximity_opperator_bonus_suite(t_token \
@@ -281,6 +287,14 @@ int	ft_set_maybe_a_wildcard(char **isol, char ***split, t_wildcard *ls,
 		t_data_parse *data_parse);
 int	ft_end_maybe_wildcard(int found, t_data_parse *data_parse, char *isol,
 		char **split);
+
+//ft_wildcard_3.c
+int						set_ls(t_wildcard **ls);
+int						ft_set_add_wildcard(char ***split, char *add,
+							char ***new);
+char					**ft_no_wildcard(char *add, char **base);
+int						ft_condition_wildcard(int *found, char **base,
+							char ***new, t_wildcard *ls);
 
 //ft_isol_operator.c
 char					*ft_isol_operator(t_data_parse *data_parse);
@@ -379,31 +393,15 @@ int						ft_exec_token_type_pipe(t_data_parse *data_parse,
 // |														|
 // # ====================================================== #
 
-//check_wildcard.c
-int	ft_strchr_wildcard(char *str, char *find, int index_str);
-int						ft_check_all(char **split, char *str);
-int						ft_check_before(char *to_find, char **split, char *str);
-int						ft_check_after(char *to_find, char **split, char *str);
-
 //expand_redirection.c
 char					*ft_ambiguous_redirect(char *str, char **split,
 							char *new);
-char					*ft_find_wildcard(char *str, t_wildcard *ls,
-							char **split, int found);
-char					*ft_transfo_wildcard(char *str, t_wildcard *ls);
 char					*transfo_expand(char *str, t_expand *expand,
 							t_data_parse *data_parse);
-
-int						set_ls(t_wildcard **ls);
-int						ft_set_add_wildcard(char ***split, char *add,
-							char ***new);
-char					**ft_no_wildcard(char *add, char **base);
-int						ft_condition_wildcard(int *found, char **base,
-							char ***new, t_wildcard *ls);
-char					**ft_add_wildcard(char **base, char *add,
-							t_wildcard *ls, int found);
+int	ft_set_replace_env_variable(char **new_str, int *index);
 char	*ft_replace_env_variable(char *str, t_expand *expand, \
 		char **env, int status);
+
 
 //ft_cat_env_variable.c
 int						ft_lim_isolate(char *str, int index);
@@ -447,6 +445,7 @@ int ft_add_classique(t_data_expand *data_expand, char ***res, char **new_str, ch
 int ft_set_split_add_expand_part1(char ***split, char **new_str, int *add_next, int *add_start);
 int ft_set_split_add_expand_part2(char ***new, char ***res, char **split);
 int ft_clear_buffer_in_split_expand(int index, char ***new, int add_start, char **split);
+int ft_not_found(char **split, char ***new, int add_start);
 int ft_split_add_expand(char *new_str, char ***res, int *add_next);
 
 // # ====================================================== #

@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:52:38 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/10 16:43:47 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/10 19:32:23 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,9 @@ int	main(int argc, char **argv, char **envp)
 			exit_status = ft_tree_exec(tree, &env, &exit_status);
 			if (exit_status == ERROR_MALLOC)
 				return (free_and_close_tree(tree), free(env), ERROR_MALLOC);
-			printf("test\n");
 			g_signal = tmp;
 			free_and_close_tree(tree);
 		}
 	}
 	return (exit_status);
 }
-
-//wc -l << lim
