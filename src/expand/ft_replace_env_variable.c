@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 07:05:34 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/10 16:28:27 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/10 17:22:28 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,16 @@ int ft_set_split_add_expand_part1(char ***split, char **new_str, int *add_next, 
 	*split = ft_split(*new_str, ' ');
 	if (*split == NULL)
 		return (ERROR_MALLOC);
+	printf("add next before = %d\n", *add_next);
+	// if ((*new_str)[0] == ' ')
+	// 	*add_start = 0;
+	// else
+	// 	*add_start = 1;
 	if ((*new_str)[0] != ' ' && *add_next != -1)
 		*add_start = 1;
 	else
 		*add_start = 0;
+	printf("add start after = %d\n", *add_start);
 	if ((*new_str)[ft_strlen(*new_str)] == ' ')
 		*add_next = 0;
 	else
@@ -222,6 +228,8 @@ int reset_the_buffer(t_data_expand *data_expand, char ***res, char **new_str)
 		if (*new_str == NULL)
 			return (free_2d(*res), ERROR_MALLOC);
 		(*new_str)[0] = '\0';
+		if (data_expand->add_next == -1)
+			data_expand->add_next = 1;
 	}
 	return (SUCCESS);
 }
@@ -229,8 +237,7 @@ int reset_the_buffer(t_data_expand *data_expand, char ***res, char **new_str)
 char **end_add_and_replace(char *new_str, char ***res, t_data_expand *data_expand, char *str)
 {
 	int len;
-	
-	printf("ici if %s\n", **res);
+
 	if (new_str[0] != '\0')
 	{
 		len = ft_strlen_2d(*res);
@@ -306,8 +313,6 @@ char	**ft_add_and_replace_env_variable(char *str, t_expand *expand, t_data_expan
 		{
 			if (ft_not_replace(str, &data_expand->new_str, data_expand->index, &expand) == ERROR_MALLOC)
 				return (NULL);
-			if (data_expand->add_next == -1)
-				data_expand->add_next = 1;
 		}
 	}
 	return (end_add_and_replace(data_expand->new_str, &data_expand->res, data_expand, str));
