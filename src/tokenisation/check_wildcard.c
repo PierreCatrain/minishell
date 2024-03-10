@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 11:15:27 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/10 18:19:14 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/10 19:55:40 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	ft_strchr_wildcard(char *str, char *find, int index_str)
 			j++;
 			if (j == ft_strlen(find))
 			{
-				return((i - index_str) + j);
+				return ((i - index_str) + j);
 			}
 		}
 		i++;
@@ -48,7 +48,6 @@ int	ft_check_all(char **split, char *str)
 	index_str = 0;
 	while (split[index_split] && index_str < len_str)
 	{
-		printf("passage %c\n", str[index_str]);
 		tmp = ft_strchr_wildcard(str, split[index_split++], index_str);
 		if (tmp == 0)
 			return (0);
