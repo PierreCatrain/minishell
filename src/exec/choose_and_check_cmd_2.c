@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 23:48:10 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/10 16:40:56 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/10 20:38:13 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,12 @@ int	find_cmd(char ***env, char **cmd)
 	int	status;
 
 	status = 0;
+	if (opendir((cmd[0])) != NULL)
+	{
+		ft_putstr_fd(cmd[0], 2);
+		ft_putstr_fd(" : Is a directory\n", 2);
+		exit (126);
+	}
 	if (ft_is_builtin(cmd[0]))
 		find_cmd_2(cmd, &status, env);
 	else
