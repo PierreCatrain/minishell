@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 06:51:13 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/10 19:34:29 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/10 21:16:00 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	**ft_new_args(t_lst_exec *lst_exec, int status, char **env)
 	int				index;
 	t_data_expand	data_expand;
 
+	if (lst_exec->args == NULL)
+		return (NULL);
 	data_expand.env = env;
 	data_expand.status = status;
 	lst_exec->len_expand = ft_strlen_2d(lst_exec->args);
