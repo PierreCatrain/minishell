@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 18:08:43 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/10 19:36:14 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/10 22:36:39 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,5 +114,5 @@ int	ft_split_add_expand(char *new_str, char ***res, int *add_next)
 	}
 	free_2d(*res);
 	*res = new;
-	return (SUCCESS);
+	return (free_2d(split), SUCCESS);
 }

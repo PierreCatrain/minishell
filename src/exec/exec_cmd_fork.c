@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 17:38:07 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/10 22:25:40 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/10 22:33:56 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,14 @@ void	ft_child(t_tree *tree, char ***env, int status, int *tab_pid)
 	}
 	arg = NULL;
 	arg = ft_new_args(tree->lst_exec, status, *env);
-	// print_tab_tab(arg);
+	if (!arg)
+	{
+		free_and_close_tree(tree);
+		free_tab_tab(*env);
+		free(tab_pid);
+		printf("qwer\n");
+		exit (0);
+	}
 	dup2(tree->lst_exec->fd_in, 0);
 	dup2(tree->lst_exec->fd_out, 1);
 	free_and_close_tree(tree);

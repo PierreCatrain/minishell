@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 23:48:10 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/10 21:30:00 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/10 22:17:07 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,14 @@ int	find_cmd(char ***env, char **cmd)
 	int	status;
 
 	status = 0;
-	if (opendir((cmd[0])) != NULL)
+	if (!ft_check_cmd(cmd[0]))
 	{
-		ft_putstr_fd(cmd[0], 2);
-		ft_putstr_fd(" : Is a directory\n", 2);
-		exit (126);
-	}
-	if (ft_is_builtin(cmd))
-		find_cmd_2(cmd, &status, env);
-	else
-	{
+		if (opendir(cmd[0]) != NULL)
+		{
+			ft_putstr_fd(cmd[0], 2);
+			ft_putstr_fd(" : Is a directory\n", 2);
+			exit (126);
+		}
 		if (access(cmd[0], F_OK | X_OK) == 0)
 		{
 			if (execve(cmd[0], cmd, *env) == -1)
@@ -63,13 +61,38 @@ int	find_cmd(char ***env, char **cmd)
 				exit (126);
 			}
 		}
-		if (!ft_check_cmd(cmd[0]))
+		if (access(cmd[0], F_OK) != 0)
 		{
-			ft_putstr_fd("minishell: ", 2);
-			ft_putstr_fd(cmd[0], 2);
-			ft_putstr_fd(": No such file or directory\n", 2);
-			exit(127);
+			ft_putstr_fd("No such file or directory\n", 2);
+			exit (127);
 		}
+		if (access(cmd[0], X_OK) != 0)
+		{
+			ft_putstr_fd("Permission denied\n", 2);
+			exit (126);
+		}
+		
+	}
+	if (ft_is_builtin(cmd))
+		find_cmd_2(cmd, &status, env);
+	else
+	{
+		if (access(cmd[0], F_OK | X_OK) == 0 && !ft_check_cmd(cmd[0]))
+		{
+			if (execve(cmd[0], cmd, *env) == -1)
+			{
+				printf("minishell: %s: cannot execute binary file: \
+				%s\n", cmd[0], strerror(errno));
+				exit (126);
+			}
+		}
+		// if (!ft_check_cmd(cmd[0]))
+		// {
+		// 	ft_putstr_fd("minishell: ", 2);
+		// 	ft_putstr_fd(cmd[0], 2);
+		// 	ft_putstr_fd(": No such file or directory\n", 2);
+		// 	exit(127);
+		// }
 		ft_check_path_cmd(env, cmd);
 	}
 	return (status);
