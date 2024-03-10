@@ -6,38 +6,47 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 22:51:52 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/10 15:42:13 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/10 19:48:40 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ft_export_3_1(int *empty, char **export)
+{
+	if (!check_after_equal(*export))
+	{
+		*empty = ft_check_empty_export(*export);
+		if (*empty == 1)
+			*export = add_equal_null_char(*export);
+		else if (*empty == 2)
+			*export = add_null(*export);
+	}
+}
 
 void	ft_export3(char *export_str, char **export, int *res)
 {
 	int		empty;
 
 	*res = 0;
-	if (export_str[0] == '=' || !ft_check_export_name(export_str) 
+	if (export_str[0] == '=' || !ft_check_export_name(export_str)
 		|| !ft_is_ascii(export_str[0]))
 	{
-		printf("bash: export:= `%s': not a valid identifier\n", export_str);
+		ft_putstr_fd("bash: export:= `", 2);
+		ft_putstr_fd(export_str, 2);
+		ft_putstr_fd("': not a valid identifier\n", 2);
 		*res = 1;
 		return ;
 	}
 	if (!ft_export_name(export_str, export))
 	{
-		printf("export:= not valid in this context: %s\n", *export);
+		ft_putstr_fd("export:= not valid in this context: ", 2);
+		ft_putstr_fd(*export, 2);
+		ft_putstr_fd("\n", 2);
 		*res = 1;
 		return (free(*export));
 	}
-	if (!check_after_equal(*export))
-	{
-		empty = ft_check_empty_export(*export);
-		if (empty == 1)
-			*export = add_equal_null_char(*export);
-		else if (empty == 2)
-			*export = add_null(*export);
-	}
+	ft_export_3_1(&empty, export);
 }
 
 char	*ft_get_export_value(char *str)

@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*	*/
-/*	:::		::::::::   */
-/*   minishell.h	:+:		:+:	:+:   */
-/*	+:+ +:+		+:+	 */
-/*   By: lgarfi <lgarfi@student.42.fr>		+#+  +:+	   +#+	*/
-/*	+#+#+#+#+#+   +#+		*/
-/*   Created: 2024/01/11 18:48:57 by picatrai		#+#	#+#	 */
-/*   Updated: 2024/03/09 20:22:48 by lgarfi		###   ########.fr	   */
-/*	*/
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
+/*   Updated: 2024/03/10 18:15:47 by lgarfi           ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
@@ -142,21 +142,28 @@ typedef struct s_data_parse
 	int			index_pipes;
 	int			**fd_pipes;
 	int			nb_pipes;
-	int			*array_here_doc;
-	int			index_here_doc;
-	int			tmp;
-	t_expand	**expand;
-	char		condition_1[4];
-	char		*res_1[4];
-	char		condition_2[5];
-	char		*res_2[5];
-	char		*opp[9];
-	int			type[9];
-	char		**env;
-	int			exit_status;
-	char		*wildcard;
-	int			tmp_wildcard;
-}	t_data_parse;
+
+	int *array_here_doc;
+	int index_here_doc;
+
+	int tmp;
+	t_expand **expand;
+
+	char condition_1[4];
+	char *res_1[4];
+	char condition_2[5];
+	char *res_2[5];
+
+	char *opp[9];
+	int type[9];
+
+	char **env;
+	int exit_status;
+	
+	char *wildcard;
+	int tmp_wildcard;
+	int found;
+}   t_data_parse;
 
 typedef struct s_wildcard
 {
@@ -167,11 +174,13 @@ typedef struct s_wildcard
 
 typedef struct s_data_expand
 {
-	int		index;
-	char	**env;
-	int		status;
-	int		add_next;
-}	t_data_expand;
+    char **env;
+    int status;
+    int add_next;
+    int index;
+    char **res;
+    char *new_str;
+} t_data_expand;
 
 typedef struct s_process_id
 {
@@ -256,8 +265,20 @@ int						ft_make_token(t_data_parse *data_parse,
 int						ft_tokenisation(t_token **token,
 							t_data_parse *data_parse);
 
-//ft_wildcard.c
-char					*ft_wildcard(t_data_parse *data_parse);
+//ft_wildcard_1.c
+int condition_maybe_wildcard(char **isol, char ***split, t_wildcard *ls, t_data_parse *data_parse);
+int	ft_maybe_a_wildcard(t_data_parse *data_parse);
+int	ft_set_wildcard(t_data_parse *data_parse);
+char	*ft_wildcard(t_data_parse *data_parse);
+
+//ft_wildcard_2.c
+char	*ft_isol_word(t_data_parse *data_parse);
+int	ft_condition_wildcard_2(int *found, char **wildcard, t_wildcard *ls);
+int	ft_all_wildcard(t_wildcard *ls, char **wildcard);
+int	ft_set_maybe_a_wildcard(char **isol, char ***split, t_wildcard *ls,
+		t_data_parse *data_parse);
+int	ft_end_maybe_wildcard(int found, t_data_parse *data_parse, char *isol,
+		char **split);
 
 //ft_isol_operator.c
 char					*ft_isol_operator(t_data_parse *data_parse);
@@ -357,7 +378,7 @@ int						ft_exec_token_type_pipe(t_data_parse *data_parse,
 // # ====================================================== #
 
 //check_wildcard.c
-int						ft_strchr_wildcard(char *str, char *find);
+int	ft_strchr_wildcard(char *str, char *find, int index_str);
 int						ft_check_all(char **split, char *str);
 int						ft_check_before(char *to_find, char **split, char *str);
 int						ft_check_after(char *to_find, char **split, char *str);

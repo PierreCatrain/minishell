@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 01:19:42 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/10 16:16:36 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/10 18:39:22 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ int	ft_tree_exec(t_tree *tree, char ***env, int *status)
 		pid.index = 0;
 		while (tree->lst_exec != NULL)
 		{
+			
 			ft_replace_last_command(env, tree->lst_exec->args[0]);
 			status2 = ft_exec_cmd_fork(tree, env, *status, pid);
 			if (status2 == ERROR_MALLOC)

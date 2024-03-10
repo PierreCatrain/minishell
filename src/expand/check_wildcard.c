@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   check_wildcard.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 11:15:27 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/05 11:19:01 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/10 18:19:14 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_strchr_wildcard(char *str, char *find)
+int	ft_strchr_wildcard(char *str, char *find, int index_str)
 {
 	int	i;
 	int	j;
 
-	i = 0;
+	i = index_str;
 	while (str[i])
 	{
 		j = 0;
@@ -25,7 +25,9 @@ int	ft_strchr_wildcard(char *str, char *find)
 		{
 			j++;
 			if (j == ft_strlen(find))
-				return (i + j);
+			{
+				return((i - index_str) + j);
+			}
 		}
 		i++;
 		if (i > ft_strlen(str) - ft_strlen(find))
@@ -46,7 +48,8 @@ int	ft_check_all(char **split, char *str)
 	index_str = 0;
 	while (split[index_split] && index_str < len_str)
 	{
-		tmp = ft_strchr_wildcard(str, split[index_split++]);
+		printf("passage %c\n", str[index_str]);
+		tmp = ft_strchr_wildcard(str, split[index_split++], index_str);
 		if (tmp == 0)
 			return (0);
 		index_str += tmp;
