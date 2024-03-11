@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 22:51:52 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/11 02:16:01 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/11 16:10:41 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,25 +80,20 @@ int	ft_export2(char ***env, char *export_str)
 	int		i;
 	int		res;
 
-	printf("1\n");
 	if (ft_check_shlvl_export(env, export_str) == 0)
 		return (0);
-	printf("2\n");
 	ft_export3(export_str, &export, &res);
 	if (res != 0)
 		return (res);
-	printf("3\n");
 	if (ft_is_export_in_env(*env, export))
 	{
 		ft_change_export(env, export);
 		return (free(export), 0);
 	}
-	printf("4\n");
 	i = ft_realloc_env(env, 1);
 	(*env)[i] = ft_str_dup_env(export, (*env)[i]);
 	(*env)[i + 1] = NULL;
 	free(export);
-	printf("5\n");
 	return (0);
 }
 
