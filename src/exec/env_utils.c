@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 18:09:13 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/09 22:34:14 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/11 18:17:41 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,4 +101,15 @@ int	ft_realloc_env(char ***env, int size)
 	(*env)[i] = NULL;
 	free_tab_tab(cp_env);
 	return (i);
+}
+
+char	*ft_get_path(void)
+{
+	char	*path;
+
+	path = ft_strdup("PATH=/usr/local/sbin:"
+			"/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin");
+	if (!path)
+		return (NULL);
+	return (path);
 }

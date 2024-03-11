@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/11 17:04:15 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/11 18:22:20 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -706,7 +706,7 @@ int						ft_env(char **env);
 
 // # ====================================================== #
 // |														|
-// |						EXEC								|
+// |						EXEC							|
 // |														|
 // # ====================================================== #
 
@@ -728,6 +728,8 @@ char					*ft_itoa_shlvl(int nb);
 char					**ft_copy_env(char **envp);
 char					*ft_change_shlvl(char **envp, char *shlvl);
 int						ft_check_shlvl_export(char ***env, char *export_str);
+void					ft_replace_last_command(char ***env, char **str);
+char					*ft_get_path(void);
 
 // # ====================================================== #
 // |														|

@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 01:26:47 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/11 16:19:01 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/11 18:22:29 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,30 @@ void	ft_check_missing_env(char ***env, int *i)
 		(*env)[*i] = NULL;
 	}
 	ft_check_missing_env_2(&env_val, env, i);
+}
+
+void	ft_replace_last_command(char ***env, char **str)
+{
+	char	*val;
+	int		i;
+	char	*export_name;
+
+	i = 0;
+	if (!str)
+		return ;
+	while ((*env)[i])
+	{
+		export_name = ft_find_export_name((*env)[i]);
+		if (ft_strcmp("_", export_name) == 0)
+		{
+			val = ft_strjoin_wihtout_free("_=", *str);
+			free(export_name);
+			free((*env)[i]);
+			(*env)[i] = ft_str_dup_env(val, (*env)[i]);
+			free(val);
+			return ;
+		}
+		free(export_name);
+		i++;
+	}
 }

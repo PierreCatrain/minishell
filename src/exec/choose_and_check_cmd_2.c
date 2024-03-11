@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 23:48:10 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/11 16:41:50 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/11 18:08:49 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,40 @@ int	ft_check_cmd(char *cmd)
 	return (1);
 }
 
+void	find_cmd_4(char **cmd)
+{
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(cmd[0], 2);
+	ft_putstr_fd(": cannot execute binary file:", 2);
+	ft_putstr_fd(strerror(errno), 2);
+	exit (126);
+}
+
+void	find_cmd_3(char ***env, char **cmd)
+{
+	if (opendir(cmd[0]) != NULL)
+	{
+		ft_putstr_fd(cmd[0], 2);
+		ft_putstr_fd(" : Is a directory\n", 2);
+		exit (126);
+	}
+	if (access(cmd[0], F_OK | X_OK) == 0)
+	{
+		if (execve(cmd[0], cmd, *env) == -1)
+			find_cmd_4(cmd);
+	}
+	if (access(cmd[0], F_OK) != 0)
+	{
+		ft_putstr_fd("No such file or directory\n", 2);
+		exit (127);
+	}
+	if (access(cmd[0], X_OK) != 0)
+	{
+		ft_putstr_fd("Permission denied\n", 2);
+		exit (126);
+	}
+}
+
 int	find_cmd(char ***env, char **cmd)
 {
 	int	status;
@@ -46,33 +80,7 @@ int	find_cmd(char ***env, char **cmd)
 	status = 0;
 	if (!ft_check_cmd(cmd[0]))
 	{
-		if (opendir(cmd[0]) != NULL)
-		{
-			ft_putstr_fd(cmd[0], 2);
-			ft_putstr_fd(" : Is a directory\n", 2);
-			exit (126);
-		}
-		if (access(cmd[0], F_OK | X_OK) == 0)
-		{
-			if (execve(cmd[0], cmd, *env) == -1)
-			{
-				ft_putstr_fd("minishell: ", 2);
-				ft_putstr_fd(cmd[0], 2);
-				ft_putstr_fd(": cannot execute binary file:", 2);
-				ft_putstr_fd(strerror(errno), 2);
-				exit (126);
-			}
-		}
-		if (access(cmd[0], F_OK) != 0)
-		{
-			ft_putstr_fd("No such file or directory\n", 2);
-			exit (127);
-		}
-		if (access(cmd[0], X_OK) != 0)
-		{
-			ft_putstr_fd("Permission denied\n", 2);
-			exit (126);
-		}
+		find_cmd_3(env, cmd);
 	}
 	if (ft_is_builtin(cmd))
 		find_cmd_2(cmd, &status, env);

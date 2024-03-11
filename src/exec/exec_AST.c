@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 01:19:42 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/11 00:30:51 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/11 19:37:01 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,41 +22,53 @@ int	ft_unset_path(char **path)
 	return (0);
 }
 
-char	*ft_get_path(void)
+int	builtin_exec(char ***env, t_tree *tree, int *status, int *status2)
 {
-	char	*path;
+	int		exit_flag;
+	char	**arg;
 
-	path = ft_strdup("PATH=/usr/local/sbin:"
-			"/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin");
-	if (!path)
-		return (NULL);
-	return (path);
+	exit_flag = 0;
+	ft_replace_last_command(env, tree->lst_exec->args);
+	arg = ft_new_args(tree->lst_exec, *status, *env);
+	*status2 = ft_exec_builtin(arg, env, &exit_flag, tree);
+	if (exit_flag || *status2 == ERROR_MALLOC)
+	{
+		free_tab_tab(arg);
+		free_and_close_tree(tree);
+		free_tab_tab(*env);
+		rl_clear_history();
+		write(1, "exit\n", 5);
+		exit(*status2);
+	}
+	free_tab_tab(arg)
+	return (*status2);
 }
 
-void	ft_replace_last_command(char ***env, char **str)
+int	fork_exec(t_tree *tree, char ***env, int *status, t_tab_pid *pid)
 {
-	char	*val;
-	int		i;
-	char	*export_name;
-
-	i = 0;
-	if (!str)
-		return ;
-	while ((*env)[i])
+	while (tree->lst_exec != NULL)
 	{
-		export_name = ft_find_export_name((*env)[i]);
-		if (ft_strcmp("_", export_name) == 0)
-		{
-			val = ft_strjoin_wihtout_free("_=", *str);
-			free(export_name);
-			free((*env)[i]);
-			(*env)[i] = ft_str_dup_env(val, (*env)[i]);
-			free(val);
-			return ;
-		}
-		free(export_name);
-		i++;
+		ft_replace_last_command(env, tree->lst_exec->args);
+		if (ft_exec_cmd_fork(tree, env, *status, *pid) == ERROR_MALLOC)
+			return (ERROR_MALLOC);
+		if (tree->lst_exec->next != NULL)
+			tree->lst_exec = tree->lst_exec->next;
+		else
+			break ;
+		(*pid).index++;
 	}
+	return (0);
+}
+
+void	wait_pid_status(int *ll_len, int *status, t_tab_pid *pid)
+{
+	while ((--(*ll_len)) + 1 > 0)
+	{
+		waitpid(pid->tab_pid[(pid->index)++], status, 0);
+	}
+	free(pid->tab_pid);
+	if (WIFEXITED(*status))
+		*status = WEXITSTATUS(*status);
 }
 
 int	ft_tree_exec(t_tree *tree, char ***env, int *status)
@@ -64,10 +76,8 @@ int	ft_tree_exec(t_tree *tree, char ***env, int *status)
 	int			ll_len;
 	int			status2;
 	char		**arg;
-	int			exit_flag;
 	t_tab_pid	pid;
 
-	ll_len = 0;
 	arg = NULL;
 	if (tree->left_child)
 		ft_tree_exec(tree->left_child, env, status);
@@ -77,44 +87,15 @@ int	ft_tree_exec(t_tree *tree, char ***env, int *status)
 		ft_tree_exec(tree->right_child, env, status);
 	if (tree->type == EXEC_LIST)
 	{
-		exit_flag = 0;
 		ll_len = ft_linked_list_size(tree->lst_exec);
 		if (ll_len == 1 && ft_is_builtin(tree->lst_exec->args) == 1)
-		{
-			ft_replace_last_command(env, tree->lst_exec->args);
-			arg = ft_new_args(tree->lst_exec, *status, *env);
-			status2 = ft_exec_builtin(arg, env, &exit_flag, tree);
-			if (exit_flag || status2 == ERROR_MALLOC)
-			{
-				free_tab_tab(arg);
-				free_and_close_tree(tree);
-				free_tab_tab(*env);
-				rl_clear_history();
-				write(1, "exit\n", 5);
-				exit(status2);
-			}
-			return (free_tab_tab(arg), status2);
-		}
+			return (builtin_exec(env, tree, status, &status2));
 		pid.tab_pid = malloc(sizeof(int) * ll_len);
 		pid.index = 0;
-		while (tree->lst_exec != NULL)
-		{
-			ft_replace_last_command(env, tree->lst_exec->args);
-			status2 = ft_exec_cmd_fork(tree, env, *status, pid);
-			if (status2 == ERROR_MALLOC)
-				return (ERROR_MALLOC);
-			if (tree->lst_exec->next != NULL)
-				tree->lst_exec = tree->lst_exec->next;
-			else
-				break ;
-			pid.index++;
-		}
+		if (fork_exec(tree, env, status, &pid) == ERROR_MALLOC)
+			return (ERROR_MALLOC);
 		pid.index = 0;
-		while ((--ll_len) + 1 > 0)
-			waitpid(pid.tab_pid[pid.index++], status, 0);
-		free(pid.tab_pid);
-		if (WIFEXITED(*status))
-			*status = WEXITSTATUS(*status);
+		wait_pid_status(&ll_len, status, &pid);
 	}
 	return (*status);
 }

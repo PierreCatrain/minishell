@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 17:38:07 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/11 16:34:29 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/11 18:13:17 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,8 @@ int	ft_exec_builtin(char **arg, char ***env, int *exit_flag, t_tree *tree)
 	return (check);
 }
 
-void	ft_child(t_tree *tree, char ***env, int status, int *tab_pid)
+void	ft_child_2(t_tree *tree, char ***env, int *tab_pid)
 {
-	char	**arg;
-
 	if (tree->lst_exec->fd_in == -2)
 	{
 		ft_putstr_fd("minishell: File: No such file or directory\n", 2);
@@ -66,6 +64,13 @@ void	ft_child(t_tree *tree, char ***env, int status, int *tab_pid)
 		free(tab_pid);
 		exit (0);
 	}
+}
+
+void	ft_child(t_tree *tree, char ***env, int status, int *tab_pid)
+{
+	char	**arg;
+
+	ft_child_2(tree, env, tab_pid);
 	arg = NULL;
 	arg = ft_new_args(tree->lst_exec, status, *env);
 	if (!arg)
