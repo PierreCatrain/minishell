@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/11 18:22:20 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/11 22:47:18 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,6 +214,7 @@ char					*ft_at_else(char *start_prompt, char *end_prompt,
 
 //signaux.c
 void					ft_display_new_prompt(int signal);
+int ft_change_sig(int index);
 int						ft_set_sig(void);
 
 // # ====================================================== #
