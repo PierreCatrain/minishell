@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 01:19:42 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/11 19:37:01 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/11 19:39:16 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	builtin_exec(char ***env, t_tree *tree, int *status, int *status2)
 		write(1, "exit\n", 5);
 		exit(*status2);
 	}
-	free_tab_tab(arg)
+	free_tab_tab(arg);
 	return (*status2);
 }
 
