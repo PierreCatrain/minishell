@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 02:23:35 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/08 15:56:48 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/11 01:01:45 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,24 @@
 
 int	ft_exec_token_type_heredoc(t_data_parse *data_parse, t_token **token)
 {
-	if (data_parse->fd_in != 0 && data_parse->fd_in != -1)
+	int fd_tmp;
+
+	fd_tmp = 0;
+	
+	fd_tmp = 0;
+	if (data_parse->fd_in == -1 || data_parse->fd_in == -2)
+		fd_tmp = data_parse->fd_in;
+	else if (data_parse->fd_in > 2)
 		close(data_parse->fd_in);
 	*token = (*token)->next;
 	data_parse->fd_in = \
 		data_parse->array_here_doc[data_parse->index_here_doc--];
+	if (fd_tmp == -1 || fd_tmp == -2)
+	{
+		if (data_parse->fd_in > 2)
+			close(data_parse->fd_in);
+		data_parse->fd_in = fd_tmp;
+	}
 	return (SUCCESS);
 }
 
