@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 08:32:07 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/10 20:00:00 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/10 22:53:42 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void	ft_print_lst_exec(t_lst_exec *lst_exec)
 	printf("exec\n");
 	while (lst_exec != NULL)
 	{
-		printf("passage\n");
 		if (lst_exec->args == NULL)
 			printf("args NULL\n");
 		else

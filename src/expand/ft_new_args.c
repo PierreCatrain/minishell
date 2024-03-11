@@ -6,15 +6,15 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 06:51:13 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/10 22:34:05 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/10 23:57:28 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int is_no_empty(char **arg)
+int	is_no_empty(char **arg)
 {
-	int index;
+	int	index;
 
 	index = -1;
 	while (arg[++index])
@@ -25,10 +25,10 @@ int is_no_empty(char **arg)
 	return (1);
 }
 
-char **ft_without_empty(char **new_args)
+char	**ft_without_empty(char **new_args)
 {
-	char **res;
-	int index;
+	char	**res;
+	int		index;
 
 	if (is_no_empty(new_args))
 		return (free_2d(new_args), NULL);

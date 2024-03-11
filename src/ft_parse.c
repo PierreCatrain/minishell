@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parse.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 00:23:08 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/10 20:57:38 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/11 00:16:05 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	ft_parse(t_tree **tree, t_data_parse *data_parse,
 {
 	t_token	*token;
 
+	if (is_input_only_whitespace(data_parse->input))
+		add_history(data_parse->input);
 	token = NULL;
 	data_parse->exit_status = exit_status;
 	data_parse->env = ft_strdup_2d(env);

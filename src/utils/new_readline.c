@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 14:02:47 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/08 15:47:00 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/11 00:37:10 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	*ft_handle_ctrl_c(char *new, char *read_str)
 char	*ft_handle_ctrl_d(char *new, char *read_str, char *lim)
 {
 	printf("\n");
-	ft_putstr_fd("minishell: warning: heredoc wanted (`", 2);
+	ft_putstr_fd("minishell: warning: here-document wanted (`", 2);
 	ft_putstr_fd(lim, 2);
 	ft_putstr_fd("')\n", 2);
 	return (free(new), free(read_str), NULL);
