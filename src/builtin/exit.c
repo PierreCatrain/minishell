@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 21:52:06 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/10 21:29:58 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/10 22:56:27 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,16 +91,20 @@ int	ft_exit(char **arg, int *exit_flag)
 		return (0);
 	}
 	if (ft_atoi(arg[1], &exit_value) == FALSE)
-		return (printf("minishell: exit: %s: numeric argument required\n",
-				arg[1]), 2);
+	{
+		return (ft_putstr_fd(": numeric arugment required\n", 2),
+			ft_putstr_fd(arg[1], 2),
+				ft_putstr_fd("minishell: exit: ", 2), 2);
+	}
 	else
 		*exit_flag = 1;
 	if (!ft_check_exit_char(arg[1]))
 	{
 		*exit_flag = 1;
 		exit_value = 2;
-		return (printf("minishell: exit: %s: numeric argument required\n",
-				arg[1]), exit_value);
+		return (ft_putstr_fd("minishell: exit: ", 2),
+			ft_putstr_fd(arg[1], 2),
+				ft_putstr_fd(": numeric argumment required\n", 2), exit_value);
 	}
 	ft_exit_parsing(arg, &exit_value, exit_flag);
 		return (exit_value);

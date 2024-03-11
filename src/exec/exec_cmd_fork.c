@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd_fork.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 17:38:07 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/10 22:43:43 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/11 00:33:26 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,24 @@
 int	ft_exec_builtin(char **arg, char ***env, int *exit_flag, t_tree *tree)
 {
 	int		check;
-	int		fd_stdout;
+	// int		fd_in_saved;
 	int		fd_out_saved;
 
 	if (tree->lst_exec->fd_in == -1 || tree->lst_exec->fd_out == -1)
 		return (ft_putstr_fd("minishell: File: Permission denied\n", 2), 1);
 	if (tree->lst_exec->fd_in == -2)
 		return (ft_putstr_fd("minishell: File: No such file or directory\n", 2), 1);
-	fd_stdout = dup(0);
+	// fd_in_saved = dup(0);
 	fd_out_saved = dup(1);
-	dup2(tree->lst_exec->fd_in, 0);
-	if (tree->lst_exec->fd_in > 2)
-		close (tree->lst_exec->fd_in);
+	// dup2(tree->lst_exec->fd_in, 0);
+	// if (tree->lst_exec->fd_in > 2)
+	// 	close (tree->lst_exec->fd_in);
 	dup2(tree->lst_exec->fd_out, 1);
-	if (tree->lst_exec->fd_in > 2)
+	if (tree->lst_exec->fd_out > 2)
 		close (tree->lst_exec->fd_out);
 	check = ft_find_builtin(arg[0], arg, env, exit_flag);
-	dup2(fd_stdout, 0);
-	close(fd_stdout);
+	// dup2(fd_in_saved, 0);
+	// close(fd_in_saved);
 	dup2(fd_out_saved, 1);
 	close(fd_out_saved);
 	return (check);
@@ -72,7 +72,6 @@ void	ft_child(t_tree *tree, char ***env, int status, int *tab_pid)
 		free_and_close_tree(tree);
 		free_tab_tab(*env);
 		free(tab_pid);
-		// printf("qwer\n");
 		exit (0);
 	}
 	dup2(tree->lst_exec->fd_in, 0);
