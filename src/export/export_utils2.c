@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 19:41:27 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/02/29 19:41:39 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/11 01:24:59 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,33 @@ void	clean_env_value(char ***new_env)
 			(*new_env)[i] = add_quote_to_value((*new_env)[i]);
 		}
 	}
+}
+
+int	ft_check_shlvl_export(char ***env, char *export_str)
+{
+	int		i;
+	char	*export_name;
+	char	*export_value;
+
+	export_name = ft_find_export_name(export_str);
+	if (!export_name)
+		return (ERROR_MALLOC);
+	if (ft_strcmp(export_name, "SHLVL") != 0)
+		return (free(export_name), 2);
+	i = 0;
+	free(export_name);
+	while ((*env)[i])
+	{
+		export_name = ft_find_export_name((*env)[i]);
+		if (ft_strcmp(export_name, "SHLVL") == 0)
+		{
+			export_value = ft_get_export_value(export_str);
+			free((*env)[i]);
+			(*env)[i] = ft_change_shlvl_export(export_value);
+			return (free(export_value), free(export_name), 0);
+		}
+		free(export_name);
+		i++;
+	}
+	return (2);
 }

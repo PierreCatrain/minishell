@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/11 00:02:07 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/11 01:58:22 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -612,8 +612,11 @@ char					*assign_export_empty_value(char *export);
 char					*ft_change_shlvl_export(char *shlvl);
 char					**dup_env(char **env);
 char					**dup_env_ascii_order(char **env);
+int						ft_get_path_in_env(char **envp, char ***env, int *i);
+void					ft_check_missing_env_2(char **env_val, char ***env, int *i);
+void					ft_check_missing_env(char ***env, int *i);
+char					*ft_get_export_value(char *str);
 void					ft_change_export(char ***env, char *str);
-
 int						ft_export2(char ***env, char *export_str);
 int						ft_export(char ***env, char **arg, int free);
 
@@ -630,7 +633,7 @@ int						ft_unset(char ***env, char **cmd);
 
 // # ====================================================== #
 // |														|
-// |						CD								|
+// |					  CD								|
 // |														|
 // # ====================================================== #
 
@@ -705,6 +708,8 @@ int						ft_find_builtin(char *cmd, char **cmd_tab, char ***env,
 							int *exit_flag);
 char					*ft_itoa_shlvl(int nb);
 char					**ft_copy_env(char **envp);
+char					*ft_change_shlvl(char **envp, char *shlvl);
+int						ft_check_shlvl_export(char ***env, char *export_str);
 
 // # ====================================================== #
 // |														|

@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:42:46 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/10 21:29:57 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/11 02:14:27 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_cd_parsing(char **path_tab)
 {
-	if (strcmp(path_tab[1], ".") == 0)
+	if (path_tab[1] && strcmp(path_tab[1], ".") == 0)
 		return (1);
 	if (ft_len_tab_tab(path_tab) > 2)
 	{

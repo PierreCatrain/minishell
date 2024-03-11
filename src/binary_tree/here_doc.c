@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 02:23:35 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/11 01:01:45 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/11 01:22:44 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,8 @@
 
 int	ft_exec_token_type_heredoc(t_data_parse *data_parse, t_token **token)
 {
-	int fd_tmp;
+	int	fd_tmp;
 
-	fd_tmp = 0;
-	
 	fd_tmp = 0;
 	if (data_parse->fd_in == -1 || data_parse->fd_in == -2)
 		fd_tmp = data_parse->fd_in;

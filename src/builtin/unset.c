@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 16:01:18 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/10 17:40:31 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/11 01:20:59 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,6 @@ int	ft_unset(char ***env, char **cmd)
 	int	status;
 
 	i = 0;
-	// print_tab_tab(cmd);
 	if (!cmd[1])
 		return (0);
 	while (cmd[++i])

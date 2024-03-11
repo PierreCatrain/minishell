@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 18:10:37 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/09 22:41:47 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/11 02:04:33 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,44 @@ char	*ft_change_shlvl_export(char *shlvl)
 	res = ft_strjoin_wihtout_free("SHLVL=", res_val);
 	free(res_val);
 	return (res);
+}
+
+int	ft_copy_env_2(char ***env ,char **envp_name, char **envp, int *i)
+{
+	*envp_name = ft_find_export_name(envp[*i]);
+	if (ft_strcmp(*envp_name, "SHLVL") == 0)
+	{
+		(*env)[*i] = ft_change_shlvl(envp, getenv("SHLVL"));
+		free(*envp_name);
+		(*i)++;
+		return (1);
+	}
+	free(*envp_name);
+	(*env)[*i] = ft_str_dup_env(envp[*i], (*env)[*i]);
+	(*i)++;
+	return (0);
+}
+
+char	**ft_copy_env(char **envp)
+{
+	char	**env;
+	int		len_envp;
+	int		i;
+	char	*envp_name;
+
+	len_envp = ft_strlen_2d(envp);
+	i = 0;
+	ft_get_path_in_env(envp, &env, &i);
+	if (!env)
+		return (NULL);
+	if (!envp[0])
+	{
+		ft_check_missing_env(&env, &i);
+		return (env);
+	}
+	while (envp[i])
+		ft_copy_env_2(&env, &envp_name, envp, &i);
+	ft_check_missing_env(&env, &i);
+	env[i] = NULL;
+	return (env);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_interpret_token_2.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 13:00:46 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/11 00:58:41 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/11 01:21:59 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	ft_exec_token_type_1(t_data_parse *data_parse, \
 int	ft_exec_token_type_infile(t_data_parse *data_parse, t_token *token)
 {
 	char	*str_tmp;
-	int fd_tmp;
+	int		fd_tmp;
 
 	fd_tmp = 0;
 	if (data_parse->fd_in == -1 || data_parse->fd_in == -2)
@@ -70,7 +70,7 @@ int	ft_exec_token_type_infile(t_data_parse *data_parse, t_token *token)
 int	ft_exec_token_type_outfile(t_data_parse *data_parse, t_token *token)
 {
 	char	*str_tmp;
-	int fd_tmp;
+	int		fd_tmp;
 
 	fd_tmp = 0;
 	if (data_parse->fd_out == -1 || data_parse->fd_out == -2)
@@ -96,7 +96,7 @@ int	ft_exec_token_type_outfile(t_data_parse *data_parse, t_token *token)
 int	ft_exec_token_type_append(t_data_parse *data_parse, t_token *token)
 {
 	char	*str_tmp;
-	int fd_tmp;
+	int		fd_tmp;
 
 	fd_tmp = 0;
 	if (data_parse->fd_out == -1 || data_parse->fd_out == -2)

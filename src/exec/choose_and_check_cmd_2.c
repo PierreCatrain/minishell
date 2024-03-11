@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 23:48:10 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/10 22:17:07 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/11 01:25:16 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,13 +86,6 @@ int	find_cmd(char ***env, char **cmd)
 				exit (126);
 			}
 		}
-		// if (!ft_check_cmd(cmd[0]))
-		// {
-		// 	ft_putstr_fd("minishell: ", 2);
-		// 	ft_putstr_fd(cmd[0], 2);
-		// 	ft_putstr_fd(": No such file or directory\n", 2);
-		// 	exit(127);
-		// }
 		ft_check_path_cmd(env, cmd);
 	}
 	return (status);
