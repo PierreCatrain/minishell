@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/11 01:58:22 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/11 17:04:15 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,12 +101,12 @@ typedef struct s_lst_exec
 
 typedef struct s_tree
 {
-	int				type;
-	struct s_tree	*parent;
-	struct s_tree	*left_child;
-	struct s_tree	*right_child;
-	t_lst_exec		*lst_exec;
-}					t_tree;
+	int					type;
+	struct s_tree		*parent;
+	struct s_tree		*left_child;
+	struct s_tree		*right_child;
+	t_lst_exec			*lst_exec;
+}						t_tree;
 
 typedef struct s_token
 {
@@ -120,50 +120,50 @@ typedef struct s_token
 
 typedef struct s_data_parse
 {
-	t_token		*token;
-	int			double_quote_open;
-	int			single_quote_open;
-	int			new_word;
-	int			index_str;
-	int			index;
-	char		*str;
-	char		*prompt;
-	char		*input;
-	int			merge;
-	int			index_new_str;
-	char		*before;
-	char		*after;
-	int			i;
-	int			part;
-	char		*heredoc;
-	int			fd_in;
-	int			fd_out;
-	char		**args_tmp;
-	int			index_pipes;
-	int			**fd_pipes;
-	int			nb_pipes;
+	t_token				*token;
+	int					double_quote_open;
+	int					single_quote_open;
+	int					new_word;
+	int					index_str;
+	int					index;
+	char				*str;
+	char				*prompt;
+	char				*input;
+	int					merge;
+	int					index_new_str;
+	char				*before;
+	char				*after;
+	int					i;
+	int					part;
+	char				*heredoc;
+	int					fd_in;
+	int					fd_out;
+	char				**args_tmp;
+	int					index_pipes;
+	int					**fd_pipes;
+	int					nb_pipes;
 
-	int *array_here_doc;
-	int index_here_doc;
+	int					*array_here_doc;
+	int					index_here_doc;
 
-	int tmp;
-	t_expand **expand;
+	int					tmp;
+	t_expand			**expand;
 
-	char condition_1[4];
-	char *res_1[4];
-	char condition_2[5];
-	char *res_2[5];
+	char				condition_1[4];
+	char				*res_1[4];
+	char				condition_2[5];
+	char				*res_2[5];
 
-	char *opp[9];
-	int type[9];
+	char				*opp[9];
+	int					type[9];
 
-	char **env;
-	int exit_status;
-	
-	char *wildcard;
-	int tmp_wildcard;
-	int found;
-}   t_data_parse;
+	char				**env;
+	int					exit_status;
+
+	char				*wildcard;
+	int					tmp_wildcard;
+	int					found;
+}						t_data_parse;
 
 typedef struct s_wildcard
 {
@@ -174,13 +174,13 @@ typedef struct s_wildcard
 
 typedef struct s_data_expand
 {
-    char **env;
-    int status;
-    int add_next;
-    int index;
-    char **res;
-    char *new_str;
-} t_data_expand;
+	char				**env;
+	int					status;
+	int					add_next;
+	int					index;
+	char				**res;
+	char				*new_str;
+}						t_data_expand;
 
 typedef struct s_process_id
 {
@@ -223,22 +223,24 @@ int						ft_set_sig(void);
 // # ====================================================== #
 
 //check_wildcard.c
-int	ft_strchr_wildcard(char *str, char *find, int index_str);
+int						ft_strchr_wildcard(char *str, char *find,
+							int index_str);
 int						ft_check_all(char **split, char *str);
 int						ft_check_before(char *to_find, char **split, char *str);
 int						ft_check_after(char *to_find, char **split, char *str);
 
 //condition_grammaire_1.c
 int						ft_check_parenthesis(t_token *token);
-int						ft_check_proximity_opperator_bonus_suite(t_token \
-																*token);
+int						ft_check_proximity_opperator_bonus_suite(
+							t_token *token);
 int						ft_check_proximity_opperator_bonus(t_token *token);
 int						is_cmd_between_bonus_opperator(t_token *token);
 int						ft_condition_grammaire(t_token *token);
 
 //condition_grammaire_2.c
 int						ft_is_quote_close(char *input,
-							int double_quote_open, int single_quote_open);
+							int double_quote_open,
+							int single_quote_open);
 int						ft_check_pipes(t_token *token);
 int						is_redirection_well_followed(t_token *token);
 void					print_no_cmd(char *str);
@@ -268,19 +270,21 @@ int						ft_tokenisation(t_token **token,
 							t_data_parse *data_parse);
 
 //ft_wildcard_1.c
-int condition_maybe_wildcard(char **isol, char ***split, t_wildcard *ls, t_data_parse *data_parse);
-int	ft_maybe_a_wildcard(t_data_parse *data_parse);
-int	ft_set_wildcard(t_data_parse *data_parse);
-char	*ft_wildcard(t_data_parse *data_parse);
+int						condition_maybe_wildcard(char **isol, char ***split,
+							t_wildcard *ls, t_data_parse *data_parse);
+int						ft_maybe_a_wildcard(t_data_parse *data_parse);
+int						ft_set_wildcard(t_data_parse *data_parse);
+char					*ft_wildcard(t_data_parse *data_parse);
 
 //ft_wildcard_2.c
-char	*ft_isol_word(t_data_parse *data_parse);
-int	ft_condition_wildcard_2(int *found, char **wildcard, t_wildcard *ls);
-int	ft_all_wildcard(t_wildcard *ls, char **wildcard);
-int	ft_set_maybe_a_wildcard(char **isol, char ***split, t_wildcard *ls,
-		t_data_parse *data_parse);
-int	ft_end_maybe_wildcard(int found, t_data_parse *data_parse, char *isol,
-		char **split);
+char					*ft_isol_word(t_data_parse *data_parse);
+int						ft_condition_wildcard_2(int *found, char **wildcard,
+							t_wildcard *ls);
+int						ft_all_wildcard(t_wildcard *ls, char **wildcard);
+int						ft_set_maybe_a_wildcard(char **isol, char ***split,
+							t_wildcard *ls, t_data_parse *data_parse);
+int						ft_end_maybe_wildcard(int found,
+							t_data_parse *data_parse, char *isol, char **split);
 
 //ft_wildcard_3.c
 int						set_ls(t_wildcard **ls);
@@ -304,7 +308,7 @@ void					ft_set_all_grammaire(t_token **token);
 
 // # ====================================================== #
 // |														|
-// |					binary_tree	   		|
+// |					binary_tree				|
 // |														|
 // # ====================================================== #
 
@@ -338,7 +342,8 @@ int						ft_complete_tree_part_2(t_tree **tree, t_token *tmp,
 int						ft_is_token_type_1(t_token *token);
 int						ft_is_token_type_2(t_token *token);
 int						ft_interpret_token_suite(t_data_parse *data_parse,
-							t_lst_exec **lst_exec, t_token **token);
+							t_lst_exec **lst_exec,
+							t_token **token);
 int						ft_interpret_token(t_data_parse *data_parse,
 							t_lst_exec **lst_exec,
 							t_token **token);
@@ -359,7 +364,8 @@ int						ft_exec_token_type_heredoc(t_data_parse *data_parse,
 							t_token **token);
 int						ft_nb_here_doc(t_token *token);
 int						ft_complete_here_doc(t_data_parse *data_parse,
-							t_token *token, int index);
+							t_token *token,
+							int index);
 int						ft_complete(int fd_in, t_token *token);
 char					*ft_here_doc(void);
 
@@ -392,10 +398,9 @@ char					*ft_ambiguous_redirect(char *str, char **split,
 							char *new);
 char					*transfo_expand(char *str, t_expand *expand,
 							t_data_parse *data_parse);
-int	ft_set_replace_env_variable(char **new_str, int *index);
-char	*ft_replace_env_variable(char *str, t_expand *expand, \
-		char **env, int status);
-
+int						ft_set_replace_env_variable(char **new_str, int *index);
+char					*ft_replace_env_variable(char *str, t_expand *expand,
+							char **env, int status);
 
 //ft_cat_env_variable.c
 int						ft_lim_isolate(char *str, int index);
@@ -415,30 +420,43 @@ int						ft_complete_expand(t_expand ***expand, t_expand *add,
 t_expand				**ft_dup_array_expand(t_expand **expand, int size);
 
 //ft_new_args.c
-int is_no_empty(char **arg);
-char **ft_without_empty(char **new_args);
+int						is_no_empty(char **arg);
+char					**ft_without_empty(char **new_args);
 char					**ft_new_args(t_lst_exec *lst_exec, int status,
 							char **env);
 
 //ft_replace_env_variable_1.c
-int ft_set_add(char ***res, char **new_str, char **new_args, t_data_expand *data_expand);
-int reset_the_buffer(t_data_expand *data_expand, char ***res, char **new_str, int len);
-char **end_add(char *new_str, char ***res, t_data_expand *data_expand, char *str);
-char	**ft_add_and_replace_env_variable(char *str, t_expand *expand, t_data_expand *data_expand, char **new_args);
+int						ft_set_add(char ***res, char **new_str, char **new_args,
+							t_data_expand *data_expand);
+int						reset_the_buffer(t_data_expand *data_expand,
+							char ***res, char **new_str, int len);
+char					**end_add(char *new_str, char ***res,
+							t_data_expand *data_expand, char *str);
+char					**ft_add_and_replace_env_variable(char *str,
+							t_expand *expand, t_data_expand *data_expand,
+							char **new_args);
 
 //ft_replace_env_variable_2.c
-int	ft_not_replace(char *str, char **new_str, int index, t_expand **expand);
-int	rep_status(int *index, char **new_str, int status, t_expand **expand);
-char	**ft_add_to_2d_expand(char **base, char *add);
-int ft_add_replace_status(t_data_expand *data_expand, char ***res, char **new_str, t_expand **expand);
-int ft_add_classique(t_data_expand *data_expand, char ***res, char **new_str, char *str);
+int						ft_not_replace(char *str, char **new_str, int index,
+							t_expand **expand);
+int						rep_status(int *index, char **new_str, int status,
+							t_expand **expand);
+char					**ft_add_to_2d_expand(char **base, char *add);
+int						ft_add_replace_status(t_data_expand *data_expand,
+							char ***res, char **new_str, t_expand **expand);
+int						ft_add_classique(t_data_expand *data_expand,
+							char ***res, char **new_str, char *str);
 
 //ft_split_add_expand.c
-int ft_set_split_add_expand_part1(char ***split, char **new_str, int *add_next, int *add_start);
-int ft_set_split_add_expand_part2(char ***new, char ***res, char **split);
-int ft_clear_buffer_in_split_expand(int index, char ***new, int add_start, char **split);
-int ft_not_found(char **split, char ***new, int add_start);
-int ft_split_add_expand(char *new_str, char ***res, int *add_next);
+int						ft_set_split_add_expand_part1(char ***split,
+							char **new_str, int *add_next, int *add_start);
+int						ft_set_split_add_expand_part2(char ***new, char ***res,
+							char **split);
+int						ft_clear_buffer_in_split_expand(int index, char ***new,
+							int add_start, char **split);
+int						ft_not_found(char **split, char ***new, int add_start);
+int						ft_split_add_expand(char *new_str, char ***res,
+							int *add_next);
 
 // # ====================================================== #
 // |														|
@@ -518,7 +536,7 @@ char					*ft_strjoin_1_malloc(char *str1, char *str2);
 char					*ft_join_char(char *str, char c);
 char					*ft_strjoin(char *str1, char *str2);
 char					**ft_strdup_2d(char **str);
-char	*ft_strjoin_1_malloc_expand(char *str1, char *str2);
+char					*ft_strjoin_1_malloc_expand(char *str1, char *str2);
 
 //ft_utils_debug.c
 void					print_tab_tab(char **tab);
@@ -613,7 +631,8 @@ char					*ft_change_shlvl_export(char *shlvl);
 char					**dup_env(char **env);
 char					**dup_env_ascii_order(char **env);
 int						ft_get_path_in_env(char **envp, char ***env, int *i);
-void					ft_check_missing_env_2(char **env_val, char ***env, int *i);
+void					ft_check_missing_env_2(char **env_val, char ***env,
+							int *i);
 void					ft_check_missing_env(char ***env, int *i);
 char					*ft_get_export_value(char *str);
 void					ft_change_export(char ***env, char *str);
@@ -633,14 +652,13 @@ int						ft_unset(char ***env, char **cmd);
 
 // # ====================================================== #
 // |														|
-// |					  CD								|
+// |						CD								|
 // |														|
 // # ====================================================== #
-
-void					ft_change_owd_old_pwd2(char ***env, char *current_path,
-							int check);
+void					ft_change_pwd_old_pwd2(char ***env, char *current_path);
 void					ft_change_pwd_old_pwd(char *current_path,
-							char *new_path, char ***env);
+							char *new_path,
+							char ***env);
 int						is_export_name_in_env(char **env, char *str);
 int						ft_cdpath(char **pathtab, char **env);
 int						ft_msg_err_chdir(char *str);

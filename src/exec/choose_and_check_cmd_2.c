@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 23:48:10 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/11 01:25:16 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/11 16:41:50 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,10 @@ int	find_cmd(char ***env, char **cmd)
 		{
 			if (execve(cmd[0], cmd, *env) == -1)
 			{
-				printf("minishell: %s: cannot execute binary file: \
-				%s\n", cmd[0], strerror(errno));
+				ft_putstr_fd("minishell: ", 2);
+				ft_putstr_fd(cmd[0], 2);
+				ft_putstr_fd(": cannot execute binary file:", 2);
+				ft_putstr_fd(strerror(errno), 2);
 				exit (126);
 			}
 		}
@@ -71,7 +73,6 @@ int	find_cmd(char ***env, char **cmd)
 			ft_putstr_fd("Permission denied\n", 2);
 			exit (126);
 		}
-		
 	}
 	if (ft_is_builtin(cmd))
 		find_cmd_2(cmd, &status, env);
@@ -81,8 +82,10 @@ int	find_cmd(char ***env, char **cmd)
 		{
 			if (execve(cmd[0], cmd, *env) == -1)
 			{
-				printf("minishell: %s: cannot execute binary file: \
-				%s\n", cmd[0], strerror(errno));
+				ft_putstr_fd("minishell: ", 2);
+				ft_putstr_fd(cmd[0], 2);
+				ft_putstr_fd(": cannot execute binary file:", 2);
+				ft_putstr_fd(strerror(errno), 2);
 				exit (126);
 			}
 		}

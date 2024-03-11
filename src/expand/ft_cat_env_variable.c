@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 07:36:28 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/10 19:30:18 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/11 01:55:05 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	ft_lim_isolate(char *str, int index)
 {
 	index++;
-	while (ft_isalphanum(str[index]))
+	while (ft_isalphanum(str[index]) || str[index] == '*')
 		index++;
 	return (index);
 }

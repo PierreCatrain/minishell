@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:52:38 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/11 00:17:05 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/11 17:05:01 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	g_signal;
 
-int set_main_1(t_tree **tree, int *exit_status, int argc, char **argv)
+int	set_main_1(t_tree **tree, int *exit_status, int argc, char **argv)
 {
 	*tree = NULL;
 	*exit_status = 0;
@@ -26,12 +26,31 @@ int set_main_1(t_tree **tree, int *exit_status, int argc, char **argv)
 	return (SUCCESS);
 }
 
-int set_main_2(char ***env, char **envp)
+int	set_main_2(char ***env, char **envp)
 {
 	*env = ft_copy_env(envp);
 	if (*env == NULL)
 		return (ERROR_MALLOC);
 	return (SUCCESS);
+}
+
+int	main_2(t_tree **tree, t_data_parse *data_parse,
+	char ***env, int *exit_status)
+{
+	int	tmp;
+
+	if (ft_parse(tree, data_parse, *env, *exit_status) == GOOD_INPUT)
+	{
+		tmp = g_signal;
+		g_signal = -100;
+		*exit_status = ft_tree_exec(*tree, env, exit_status);
+		if (*exit_status == ERROR_MALLOC)
+			return (free_and_close_tree(*tree),
+				free_tab_tab(*env), ERROR_MALLOC);
+		free_and_close_tree(*tree);
+		g_signal = tmp;
+	}
+	return (0);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -40,7 +59,6 @@ int	main(int argc, char **argv, char **envp)
 	t_tree			*tree;
 	int				exit_status;
 	char			**env;
-	int				tmp;
 
 	if (set_main_1(&tree, &exit_status, argc, argv) || set_main_2(&env, envp))
 		return (ERROR);
@@ -53,21 +71,10 @@ int	main(int argc, char **argv, char **envp)
 		free(data_parse.prompt);
 		tree = NULL;
 		if (data_parse.input == NULL)
-		{	
-			rl_clear_history();
-			ft_putstr_fd("exit\n", 1);
-			return (free_tab_tab(env), 0);
-		}
-		if (ft_parse(&tree, &data_parse, env, exit_status) == GOOD_INPUT)
-		{
-			tmp = g_signal;
-			g_signal = -100;
-			exit_status = ft_tree_exec(tree, &env, &exit_status);
-			if (exit_status == ERROR_MALLOC)
-				return (free_and_close_tree(tree), free(env), ERROR_MALLOC);
-			free_and_close_tree(tree);
-			g_signal = tmp;
-		}
+			return (rl_clear_history(),
+				ft_putstr_fd("exit\n", 1), free_tab_tab(env), 0);
+		if (main_2(&tree, &data_parse, &env, &exit_status) == ERROR_MALLOC)
+			return (ERROR_MALLOC);
 	}
 	return (exit_status);
 }

@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 17:38:07 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/11 01:25:34 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/11 16:34:29 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_exec_builtin(char **arg, char ***env, int *exit_flag, t_tree *tree)
 		return (ft_putstr_fd("minishell: File: Permission denied\n", 2), 1);
 	if (tree->lst_exec->fd_in == -2)
 		return (ft_putstr_fd("minishell: File:"
-			" No such file or directory\n", 2), 1);
+				" No such file or directory\n", 2), 1);
 	fd_in_saved = dup(0);
 	fd_out_saved = dup(1);
 	dup2(tree->lst_exec->fd_in, 0);

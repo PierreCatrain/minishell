@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 13:00:46 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/11 01:21:59 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/11 16:15:52 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	ft_exec_token_type_outfile(t_data_parse *data_parse, t_token *token)
 	fd_tmp = 0;
 	if (data_parse->fd_out == -1 || data_parse->fd_out == -2)
 		fd_tmp = data_parse->fd_out;
-	else if (data_parse->fd_out > 2)
+	if (data_parse->fd_out > 2)
 		close(data_parse->fd_out);
 	token = token->next;
 	str_tmp = transfo_expand(token->str, token->expand, data_parse);
@@ -101,7 +101,7 @@ int	ft_exec_token_type_append(t_data_parse *data_parse, t_token *token)
 	fd_tmp = 0;
 	if (data_parse->fd_out == -1 || data_parse->fd_out == -2)
 		fd_tmp = data_parse->fd_out;
-	else if (data_parse->fd_out > 2)
+	if (data_parse->fd_out > 2)
 		close(data_parse->fd_out);
 	token = token->next;
 	str_tmp = transfo_expand(token->str, token->expand, data_parse);
