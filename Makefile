@@ -3,33 +3,12 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+         #
+#    By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/11 18:47:20 by picatrai          #+#    #+#              #
-#    Updated: 2024/03/12 14:47:16 by lgarfi           ###   ########.fr        #
+#    Updated: 2024/03/12 21:50:59 by picatrai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
-#  # ====================================================== #
-#  |														|
-#  |			 CONSOLE_DESIGN								|
-#  |														|
-#  # ====================================================== #
-
-WHITE=$'\033[0;37m
-GREY=$'\033[0;30m
-RED=$'\033[0;31m
-GREEN=$'\033[0;32m
-YELLOW=$'\033[0;33m
-CYAN=$'\033[0;34m
-PURPLE=$'\033[0;35m
-DEF_COLOR = \033[0;39m
-
-#  # ====================================================== #
-#  |														|
-#  |				   VARIABLE								|
-#  |														|
-#  # ====================================================== #
 
 NAME = minishell
 CC = cc
@@ -40,7 +19,6 @@ OBJDIR = obj
 SRC = $(wildcard $(SRCDIR)/**/*.c $(SRCDIR)/*.c)
 OBJ = $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(SRC))
 INCLUDE = -I include
-INCLUDE_LIBFT = 
 header = ./include/minishell.h
 
 #  # ====================================================== #
@@ -59,33 +37,11 @@ dir_in_src = $(notdir $(shell find ./src/* -type d))
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c $(header) | obj_dir_create
 	$(CC) $(CFLAGS) -c -o $@ $< $(INCLUDE)
-	@echo "\033[1;32m COMPILED \033[1;37m->\033[4;32m $< \033[0m"
 
 all: $(NAME)
 
 $(NAME):  $(OBJ)
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(RFLAGS)
-	@echo "\n\033[1;33mAll objects have been created\033[0m"
-#	@clear	
-#	@./minishell
-
-valgrind:  $(OBJ)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(RFLAGS)
-	@echo "\n\033[1;33mAll objects have been created\033[0m"
-	@clear
-	@valgrind --trace-children=yes --track-fds=yes --leak-check=full --track-origins=yes --suppressions=supp.supp --show-leak-kinds=all ./minishell
-
-env less:  $(OBJ)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(RFLAGS)
-	@echo "\n\033[1;33mAll objects have been created\033[0m"
-	@clear
-	@env -i ./minishell
-
-valenv:  $(OBJ)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(RFLAGS)
-	@echo "\n\033[1;33mAll objects have been created\033[0m"
-	@clear
-	@valgrind --trace-children=yes --track-fds=yes --track-origins=yes --log-fd=2 --error-limit=no --leak-check=full --show-possibly-lost=yes --track-origins=yes --show-reachable=yes --suppressions=$$PATH/supp.supp env -i ./minishell
 
 obj_dir_create:
 	@if [ ! -d "./obj" ]; then\
