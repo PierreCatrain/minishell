@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 14:49:27 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/12 03:13:07 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/12 07:56:22 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,11 @@ int	ft_add_token(t_token **token, t_data_parse *data_parse, t_expand *expand)
 	if (data_parse->str) // ce que j'ai ajoute avec toi pour test ("" -> qwer)
 	{
 		if (data_parse->str[0] == '\0')
-			return (free(data_parse->str), SUCCESS);
+		{
+			free(data_parse->str);
+			data_parse->str = NULL;
+			return (SUCCESS);
+		}
 	}
 	return (SUCCESS);
 }

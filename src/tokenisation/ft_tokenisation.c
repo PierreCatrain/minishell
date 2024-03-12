@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 05:06:05 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/12 02:56:12 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/12 07:52:40 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,9 @@ int	ft_tokenisation(t_token **token, t_data_parse *data_parse)
 	while (data_parse->input[data_parse->index])
 	{
 		if (ft_make_token(data_parse, token) != SUCCESS)
-			return (free(data_parse->input), ERROR);
+			return (free(data_parse->str), free(data_parse->input), ERROR);
+		if (data_parse->str)
+			free(data_parse->str);
 	}
 	free(data_parse->input);
 	if (*token == NULL)

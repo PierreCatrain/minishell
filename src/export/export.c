@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 22:51:52 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/12 03:46:26 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/12 07:45:49 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,6 @@ int	ft_export(char ***env, char **arg, int free)
 	{
 		if (ft_check_if_i_do_the_export(arg[i]) == 0)
 		{
-			printf("je fais pas\n");
 			i++;
 			status = 0;
 			continue ;
