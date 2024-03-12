@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signaux.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 06:02:52 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/11 22:46:29 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/12 18:20:00 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	ft_core_dumped(int signal)
 	}
 }
 
-int ft_change_sig(int index)
+int	ft_change_sig(int index)
 {
 	struct sigaction	s_quit;
 

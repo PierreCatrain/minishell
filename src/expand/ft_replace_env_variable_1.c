@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 07:05:34 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/12 14:54:59 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/12 18:22:04 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,21 +102,18 @@ char	**ft_add_and_replace_env_variable(char *str, t_expand *expand, \
 		if (str[d_e->index] == '$' && str[d_e->index + 1] \
 				== '?' && expand->act == CHANGE)
 		{
-			printf("1\n");
 			if (ft_add_replace_status(d_e, &d_e->res, \
 						&d_e->new_str, &expand) != SUCCESS)
 				return (free(d_e->new_str), free_tab_tab(d_e->res), NULL);
 		}
 		else if (str[d_e->index] == '$' && expand->act == CHANGE)
 		{
-			printf("2\n");
 			if (ft_add_classique(d_e, &d_e->res, &d_e->new_str, str) != SUCCESS)
 				return (free(d_e->new_str), (NULL));
 			expand = expand->next;
 		}
 		else
 		{
-			printf("3\n");
 			if (ft_not_replace(str, &d_e->new_str, \
 						d_e->index, &expand) == ERROR_MALLOC)
 				return (NULL);

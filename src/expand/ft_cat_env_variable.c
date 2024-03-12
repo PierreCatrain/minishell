@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 07:36:28 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/12 15:00:34 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/12 18:22:42 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,7 @@ char	*ft_add_env(char *str, char *new_str, int index, char **env)
 
 char	*ft_cat_env_variable(char *new_str, char *str, int *index, char **env)
 {
-	printf("new str = |%s|\n", new_str);
 	new_str = ft_add_env(str, new_str, *index, env);
-	printf("new str = |%s|\n", new_str);
 	if (new_str == NULL)
 		return (NULL);
 	*index = ft_lim_isolate(str, *index) - 1;
