@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cat_env_variable.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 07:36:28 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/11 01:55:05 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/12 15:00:34 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ char	*ft_str_isolate(char *str, int index_debut, int index_fin)
 char	*ft_add_env(char *str, char *new_str, int index, char **env)
 {
 	char	*str_isolate;
+	char	*env_value;
 
 	str_isolate = ft_str_isolate(str, index, ft_lim_isolate(str, index));
 	if (str_isolate == NULL)
@@ -54,15 +55,21 @@ char	*ft_add_env(char *str, char *new_str, int index, char **env)
 			return (NULL);
 		return (new_str);
 	}
-	new_str = ft_strjoin(new_str, ft_get_env_value(env, str_isolate));
-	if (new_str == NULL)
+	// ft_get env value renvoie un pointeur qui se perd dans le str join, faut il le free ?
+	env_value = ft_get_env_value(env, str_isolate);
+	if (!env_value)
 		return (free(str_isolate), NULL);
-	return (free(str_isolate), new_str);
+	new_str = ft_strjoin(new_str, env_value);
+	if (new_str == NULL)
+		return (free(str_isolate), free(env_value), NULL);
+	return (free(str_isolate), free(env_value), new_str);
 }
 
 char	*ft_cat_env_variable(char *new_str, char *str, int *index, char **env)
 {
+	printf("new str = |%s|\n", new_str);
 	new_str = ft_add_env(str, new_str, *index, env);
+	printf("new str = |%s|\n", new_str);
 	if (new_str == NULL)
 		return (NULL);
 	*index = ft_lim_isolate(str, *index) - 1;
