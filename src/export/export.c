@@ -6,13 +6,13 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 22:51:52 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/11 16:10:41 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/12 07:45:49 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_export_3_1(int *empty, char **export)
+void	ft_export_parsing_2(int *empty, char **export)
 {
 	if (!check_after_equal(*export))
 	{
@@ -24,7 +24,7 @@ void	ft_export_3_1(int *empty, char **export)
 	}
 }
 
-void	ft_export3(char *export_str, char **export, int *res)
+void	ft_export_parsing(char *export_str, char **export, int *res)
 {
 	int		empty;
 
@@ -46,7 +46,7 @@ void	ft_export3(char *export_str, char **export, int *res)
 		*res = 1;
 		return (free(*export));
 	}
-	ft_export_3_1(&empty, export);
+	ft_export_parsing_2(&empty, export);
 }
 
 char	*ft_get_export_value(char *str)
@@ -74,7 +74,7 @@ char	*ft_get_export_value(char *str)
 	return (export_value);
 }
 
-int	ft_export2(char ***env, char *export_str)
+int	ft_do_the_export(char ***env, char *export_str)
 {
 	char	*export;
 	int		i;
@@ -82,10 +82,10 @@ int	ft_export2(char ***env, char *export_str)
 
 	if (ft_check_shlvl_export(env, export_str) == 0)
 		return (0);
-	ft_export3(export_str, &export, &res);
+	ft_export_parsing(export_str, &export, &res);
 	if (res != 0)
 		return (res);
-	if (ft_is_export_in_env(*env, export))
+	if (ft_is_export_in_env(*env, export) != -1)
 	{
 		ft_change_export(env, export);
 		return (free(export), 0);
@@ -111,10 +111,24 @@ int	ft_export(char ***env, char **arg, int free)
 	}
 	while (arg[i])
 	{
-		status = ft_export2(env, arg[i]);
+		if (ft_check_if_i_do_the_export(arg[i]) == 0)
+		{
+			i++;
+			status = 0;
+			continue ;
+		}
+		status = ft_do_the_export(env, arg[i]);
 		i++;
 	}
 	if (free)
 		free_tab_tab(arg);
 	return (status);
 }
+
+// int	main(int ac, char **av, char **envp)
+// {
+// 	(void)ac;
+// 	char **env = ft_copy_env(envp);
+// 	ft_do_the_export(&env, av[1]);
+// 	print_tab_tab(env);
+// }

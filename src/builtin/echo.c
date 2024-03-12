@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 22:17:53 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/11 00:18:49 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/12 01:25:44 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,22 @@ int	ft_echo2(char **tab, int i, int param)
 	return (0);
 }
 
+int	ft_check_echo_param(char *str)
+{
+	int	i;
+
+	i = 1;
+	if (str[0] != '-')
+		return (1);
+	while (str[i])
+	{
+		if (str[i] != 'n')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 int	ft_echo(char **tab)
 {
 	int	param;
@@ -77,7 +93,7 @@ int	ft_echo(char **tab)
 		printf("\n");
 		return (0);
 	}
-	if (ft_strcmp(tab[1], "-n") == 0)
+	if (ft_check_echo_param(tab[1]) == 0)
 	{
 		i = 2;
 		param = 1;

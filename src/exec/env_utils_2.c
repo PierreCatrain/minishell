@@ -6,14 +6,14 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 12:37:17 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/11 01:32:54 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/12 14:46:34 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int	count_word(int nb)
-{
+{	
 	int	count;
 
 	count = 1;

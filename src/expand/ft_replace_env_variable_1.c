@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 07:05:34 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/12 21:02:15 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/12 21:28:14 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,12 +104,12 @@ char	**ft_add_and_replace_env_variable(char *str, t_expand *expand, \
 		{
 			if (ft_add_replace_status(d_e, &d_e->res, \
 						&d_e->new_str, &expand) != SUCCESS)
-				return (NULL);
+				return (free(d_e->new_str), free_tab_tab(d_e->res), NULL);
 		}
 		else if (str[d_e->index] == '$' && expand->act == CHANGE)
 		{
 			if (ft_add_classique(d_e, &d_e->res, &d_e->new_str, str) != SUCCESS)
-				return (NULL);
+				return (free(d_e->new_str), (NULL));
 			expand = expand->next;
 		}
 		else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_make_token.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 13:37:36 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/04 18:08:45 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/12 06:20:08 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,11 @@ int	ft_make_token(t_data_parse *data_parse, t_token **token)
 	if (ft_set_make_token(data_parse) != SUCCESS)
 		return (ERROR_MALLOC);
 	if (data_parse->input[data_parse->index] == '\0')
-		return (free(data_parse->str), SUCCESS);
+	{
+		free(data_parse->str);
+		data_parse->str = NULL;
+		return (SUCCESS);
+	}
 	while (data_parse->input[data_parse->index] \
 			&& (data_parse->input[data_parse->index] != ' ' \
 				|| data_parse->single_quote_open == OPEN \

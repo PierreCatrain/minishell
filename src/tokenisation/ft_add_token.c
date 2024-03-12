@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_add_token.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 14:49:27 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/03 15:00:40 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/12 14:49:36 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,15 @@ int	ft_add_token(t_token **token, t_data_parse *data_parse, t_expand *expand)
 		if (ft_lst_add_back(token, ft_lstnew(data_parse->str, WORD, \
 						TEXT, expand)) == ERROR_MALLOC)
 			return (ERROR_MALLOC);
+	}
+	if (data_parse->str) // ce que j'ai ajoute avec toi pour test ("" -> qwer)
+	{
+		if (data_parse->str[0] == '\0')
+		{
+			free(data_parse->str);
+			data_parse->str = NULL;
+			return (SUCCESS);
+		}
 	}
 	return (SUCCESS);
 }

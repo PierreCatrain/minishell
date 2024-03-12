@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 16:31:38 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/12 01:02:11 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/12 21:27:10 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,13 @@ t_token	*ft_lstnew(char *str, int quotes, int type, t_expand *expand)
 
 	new = malloc(sizeof(t_token));
 	if (new == NULL)
-		return (free(str), NULL);
+	{
+		// free(str);
+		return (NULL);
+	}
 	new->str = ft_strdup(str);
 	if (new->str == NULL)
 		return (free(new), free(str), NULL);
-	free(str);
 	new->quotes = quotes;
 	new->type = type;
 	new->expand = expand;

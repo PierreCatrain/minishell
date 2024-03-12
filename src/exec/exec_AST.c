@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 01:19:42 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/11 19:39:16 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/12 14:59:39 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	builtin_exec(char ***env, t_tree *tree, int *status, int *status2)
 		free_and_close_tree(tree);
 		free_tab_tab(*env);
 		rl_clear_history();
-		write(1, "exit\n", 5);
+		write(1, "exitqwer\n", 5);
 		exit(*status2);
 	}
 	free_tab_tab(arg);
@@ -99,3 +99,5 @@ int	ft_tree_exec(t_tree *tree, char ***env, int *status)
 	}
 	return (*status);
 }
+
+// echo ">"Wer''1234'$USER'"$USER""%USER"""
