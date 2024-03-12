@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 20:26:44 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/12 01:02:30 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/12 08:05:34 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,6 @@ int	ft_pwd(char **tab, char **env)
 	if (!path)
 		ft_putstr_fd("no path availlable\n", 2);
 	check = ft_pustr_builtin_pwd(path);
+	free(path);
 	return (check);
 }
