@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 23:48:10 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/12 03:15:28 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/12 11:16:53 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,9 +100,7 @@ int	find_cmd(char ***env, char **cmd)
 
 	status = 0;
 	if (!ft_check_cmd(cmd[0]))
-	{
 		find_cmd_3(env, cmd);
-	}
 	if (ft_is_builtin(cmd))
 		find_cmd_2(cmd, &status, env);
 	else

@@ -6,7 +6,7 @@
 #    By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/11 18:47:20 by picatrai          #+#    #+#              #
-#    Updated: 2024/03/12 02:21:41 by lgarfi           ###   ########.fr        #
+#    Updated: 2024/03/12 14:47:16 by lgarfi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,7 +73,7 @@ valgrind:  $(OBJ)
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(RFLAGS)
 	@echo "\n\033[1;33mAll objects have been created\033[0m"
 	@clear
-	@valgrind --trace-children=yes --track-fds=yes --leak-check=full --show-leak-kinds=all --suppressions=/home/lgarfi/Documents/projets/ms/supp.supp ./minishell
+	@valgrind --trace-children=yes --track-fds=yes --leak-check=full --track-origins=yes --suppressions=supp.supp --show-leak-kinds=all ./minishell
 
 env less:  $(OBJ)
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(RFLAGS)

@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 18:10:37 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/11 16:18:37 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/12 13:59:34 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int	ft_atoi_int_shlvl_export(char *nb)
 		res = res * 10 + nb[i] - 48;
 		i++;
 	}
-	res -= 1;
 	return (res);
 }
 
@@ -44,10 +43,12 @@ char	*ft_change_shlvl_export(char *shlvl)
 	char	*res_val;
 	char	*res;
 
+	printf("shlvl = %s\n", shlvl);
 	res_val = ft_itoa_shlvl(ft_atoi_int_shlvl_export(shlvl));
 	if (!res_val)
 		return (NULL);
 	res = ft_strjoin_wihtout_free("SHLVL=", res_val);
+	printf("res final = %s\n", res);
 	free(res_val);
 	return (res);
 }
