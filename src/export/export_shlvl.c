@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 18:10:37 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/11 16:18:37 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/12 21:58:10 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int	ft_atoi_int_shlvl_export(char *nb)
 		res = res * 10 + nb[i] - 48;
 		i++;
 	}
-	res -= 1;
 	return (res);
 }
 

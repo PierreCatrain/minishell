@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 21:20:57 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/10 21:29:54 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/12 03:33:11 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_change_pwd_old_pwd2(char ***env, char *current_path)
 	exp_n_old_pwd = ft_str_dup_env("OLDPWD=", exp_n_old_pwd);
 	exp_val_old_pwd = ft_str_dup_env(current_path, exp_val_old_pwd);
 	exp_str_old_pwd = ft_strjoin_equal_val(exp_n_old_pwd, exp_val_old_pwd);
-	ft_export2(env, exp_str_old_pwd);
+	ft_do_the_export(env, exp_str_old_pwd);
 	free(exp_str_old_pwd);
 }
 
@@ -40,7 +40,7 @@ void	ft_change_pwd_old_pwd(char *current_path, char *new_path, char ***env)
 	exp_n_new = ft_str_dup_env("PWD=", exp_n_new);
 	exp_val_new = ft_str_dup_env(new_path, exp_val_new);
 	exp_str_new = ft_strjoin_equal_val(exp_n_new, exp_val_new);
-	ft_export2(env, exp_str_new);
+	ft_do_the_export(env, exp_str_new);
 	free(exp_str_new);
 	ft_change_pwd_old_pwd2(env, current_path);
 	return ;

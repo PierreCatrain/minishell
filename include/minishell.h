@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/11 22:47:18 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/12 21:25:28 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,7 +205,7 @@ int						ft_parse(t_tree **tree, t_data_parse *data_parse,
 // # ====================================================== #
 
 //ft_get_prompt.c
-char					*ft_get_prompt(void);
+char					*ft_get_prompt(char **env);
 char					*ft_at_user(char *start_prompt, char *end_prompt);
 char					*ft_at_home(char *start_prompt, char *end_prompt,
 							char *str);
@@ -309,7 +309,7 @@ void					ft_set_all_grammaire(t_token **token);
 
 // # ====================================================== #
 // |														|
-// |					binary_tree				|
+// |					binary_tree							|
 // |														|
 // # ====================================================== #
 
@@ -367,7 +367,7 @@ int						ft_nb_here_doc(t_token *token);
 int						ft_complete_here_doc(t_data_parse *data_parse,
 							t_token *token,
 							int index);
-int						ft_complete(int fd_in, t_token *token);
+int	ft_complete(int fd_in, t_token *token, t_data_parse *data_parse);
 char					*ft_here_doc(void);
 
 //make_lst_exec.c
@@ -390,9 +390,12 @@ int						ft_exec_token_type_pipe(t_data_parse *data_parse,
 
 // # ====================================================== #
 // |														|
-// |						expand								|
+// |						expand							|
 // |														|
 // # ====================================================== #
+
+//expand_here_doc.c
+char	*ft_expand_here_doc(char *str, char **env, int status);
 
 //expand_redirection.c
 char					*ft_ambiguous_redirect(char *str, char **split,
@@ -636,8 +639,9 @@ void					ft_check_missing_env_2(char **env_val, char ***env,
 							int *i);
 void					ft_check_missing_env(char ***env, int *i);
 char					*ft_get_export_value(char *str);
+int						ft_check_if_i_do_the_export(char *str);
 void					ft_change_export(char ***env, char *str);
-int						ft_export2(char ***env, char *export_str);
+int						ft_do_the_export(char ***env, char *export_str);
 int						ft_export(char ***env, char **arg, int free);
 
 // # ====================================================== #
@@ -679,6 +683,9 @@ int						ft_cd(char **path_tab, char ***env);
 // |														|
 // # ====================================================== #
 
+int						ft_check_echo_param(char *str);
+int						ft_echo2(char **tab, int i, int param);
+int						ft_echo_2_1(char **tab, int *i);
 int						ft_echo(char **tab);
 
 // # ====================================================== #
@@ -687,7 +694,9 @@ int						ft_echo(char **tab);
 // |														|
 // # ====================================================== #
 
-int						ft_pwd(char **tab);
+char					*ft_get_builtin_err_msg(char *builtin);
+int						ft_pustr_builtin_pwd(char *str);
+int						ft_pwd(char **tab, char **env);
 
 // # ====================================================== #
 // |														|
@@ -695,6 +704,10 @@ int						ft_pwd(char **tab);
 // |														|
 // # ====================================================== #
 
+enum e_bool				ft_atoi(char *str, long long int *res);
+int						ft_check_exit_char(char *str);
+void					ft_exit_parsing(char **arg,
+							long long int *exit_value, int *exit_flag);
 int						ft_exit(char **arg, int *exit_flag);
 
 // # ====================================================== #
@@ -703,6 +716,7 @@ int						ft_exit(char **arg, int *exit_flag);
 // |														|
 // # ====================================================== #
 
+int						ft_pustr_builtin_env(char *str);
 int						ft_env(char **env);
 
 // # ====================================================== #
@@ -712,18 +726,14 @@ int						ft_env(char **env);
 // # ====================================================== #
 
 // char	*ft_get_err_msg(char *cmd, char *msg);
-char					*ft_get_path(void);
-char					**ft_get_path_cmd(char **env);
 int						ft_is_builtin(char **cmd);
-int						find_cmd(char ***env, char **arg);
 int						check_absolute_path_builtin(char **arg);
-int						ft_check_path_cmd(char ***env, char **cmd);
 int						ft_exec_builtin(char **arg, char ***env, int *exit_flag,
 							t_tree *tree);
-int						ft_exec_cmd_fork(t_tree *tree, char ***env, int status,
+int						ft_exec_cmd_fork(t_tree *tree, char ***env, int status, \
 							t_tab_pid pid);
 int						ft_tree_exec(t_tree *tree, char ***env, int *status);
-int						ft_find_builtin(char *cmd, char **cmd_tab, char ***env,
+int						ft_find_builtin(char *cmd, char **cmd_tab, char ***env, \
 							int *exit_flag);
 char					*ft_itoa_shlvl(int nb);
 char					**ft_copy_env(char **envp);
@@ -731,6 +741,28 @@ char					*ft_change_shlvl(char **envp, char *shlvl);
 int						ft_check_shlvl_export(char ***env, char *export_str);
 void					ft_replace_last_command(char ***env, char **str);
 char					*ft_get_path(void);
+
+// # ====================================================== #
+// |														|
+// |				CHOOSE AND CHECK CMD					|
+// |														|
+// # ====================================================== #
+
+char					**ft_get_path_cmd(char **env);
+int						ft_check_cmd(char *cmd);
+void					free_exit(char **env, char **cmd);
+void					free_check_path(char ***env, char ***cmd, \
+							char **msg_err, char ***path_split);
+void					ft_check_path_execve(char **path, \
+							char ***cmd, char ***env);
+void					find_cmd_4(char **cmd, char ***env);
+void					find_cmd_5(char ***env, char **cmd);
+void					ft_check_path_cmd_2(char **path_split, \
+							char ***env, char **cmd);
+int						ft_check_path_cmd(char ***env, char **cmd);
+int						find_cmd_2(char **cmd, int *status, char ***env);
+void					find_cmd_3(char ***env, char **cmd);
+int						find_cmd(char ***env, char **cmd);
 
 // # ====================================================== #
 // |														|

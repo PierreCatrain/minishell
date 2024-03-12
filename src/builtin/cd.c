@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:42:46 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/11 02:14:27 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/12 02:20:35 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,21 +106,23 @@ int	ft_cd_cdpath(char **path_tab, char ***env)
 
 int	ft_cd(char **path_tab, char ***env)
 {
-	char	current_path[PATH_MAX + 1];
+	char	*current_path;
 	char	new_path[PATH_MAX + 1];
 
-	getcwd(current_path, PATH_MAX);
+	current_path = ft_get_env_value(*env, "PWD");
+	if (!current_path)
+		return (ERROR_MALLOC);
 	if (ft_cd_parsing(path_tab) != 0)
-		return (1);
+		return (free(current_path), 1);
 	if (!path_tab[1] || ft_strcmp(path_tab[1], "~") == 0)
-		return (ft_cd_home(env));
+		return (free(current_path), ft_cd_home(env));
 	if (ft_strcmp(path_tab[1], "-") == 0)
-		return (ft_cd_dash(env));
+		return (free(current_path), ft_cd_dash(env));
 	if (chdir(path_tab[1]) != 0)
 	{
-		return (ft_cd_cdpath(path_tab, env));
+		return (free(current_path), ft_cd_cdpath(path_tab, env));
 	}
-	else
-		ft_change_pwd_old_pwd(current_path, getcwd(new_path, PATH_MAX), env);
+	ft_change_pwd_old_pwd(current_path, getcwd(new_path, PATH_MAX), env);
+	free(current_path);
 	return (0);
 }
