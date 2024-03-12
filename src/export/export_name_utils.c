@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 18:10:21 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/11 01:23:17 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/12 00:36:17 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,60 +51,58 @@ void	ft_add_export_value(char **export, char *str)
 int	ft_is_export_in_env(char **env, char *str)
 {
 	char	*export_name;
+	char	*export_name_env;
 	int		i;
-	int		len_str;
 
 	export_name = ft_find_export_name(str);
 	if (!export_name)
 		return (-1);
 	i = 0;
-	len_str = ft_strlen(export_name);
 	while (env[i] != NULL)
 	{
-		if (ft_strncmp(str, env[i], len_str) == 0)
+		export_name_env = ft_find_export_name(env[i]);
+		if (ft_strcmp(export_name, export_name_env) == 0)
 		{
+			free(export_name_env);
 			free(export_name);
 			return (i);
 		}
+		free(export_name_env);
 		i++;
 	}
 	free(export_name);
-	return (0);
+	return (-1);
 }
 
 void	ft_change_export(char ***env, char *str)
 {
 	int	index_export;
-	int	i;
 
 	index_export = ft_find_export_index(*env, str);
 	if (index_export == -1)
 		return ;
-	i = 0;
-	while (i < index_export)
-		i++;
-	free((*env)[i]);
-	(*env)[i] = ft_str_dup_env(str, (*env)[i]);
+	free((*env)[index_export]);
+	(*env)[index_export] = ft_str_dup_env(str, (*env)[index_export]);
 }
 
 int	ft_find_export_index(char **env, char *str)
 {
 	int		i;
-	int		len_str;
 	char	*export_name;
+	char	*export_name_env;
 
 	i = 0;
 	export_name = ft_find_export_name(str);
-	len_str = ft_strlen(export_name);
-	if (len_str == 1)
-		len_str += 1;
 	while (env[i])
 	{
-		if (ft_strncmp(env[i], str, len_str -1) == 0)
+		export_name_env = ft_find_export_name(env[i]);
+		if (ft_strcmp(export_name_env, export_name) == 0)
 		{
+			free(export_name_env);
 			free(export_name);
 			return (i);
 		}
+		free(export_name_env);
 		i++;
 	}
 	free(export_name);

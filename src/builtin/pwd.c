@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 20:26:44 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/06 17:46:19 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/12 01:02:30 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,17 +53,15 @@ int	ft_pustr_builtin_pwd(char *str)
 	return (0);
 }
 
-int	ft_pwd(char **tab)
+int	ft_pwd(char **tab, char **env)
 {
-	char	buff[PATH_MAX + 1];
+	char	*path;
 	int		check;
 
 	(void)tab;
-	if (getcwd(buff, PATH_MAX) == NULL)
-	{
-		ft_msg_err_getcwd();
-		return (2);
-	}
-	check = ft_pustr_builtin_pwd(buff);
+	path = ft_get_env_value(env, "PWD");
+	if (!path)
+		ft_putstr_fd("no path availlable\n", 2);
+	check = ft_pustr_builtin_pwd(path);
 	return (check);
 }

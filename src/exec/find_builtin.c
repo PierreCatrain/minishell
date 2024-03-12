@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 09:32:17 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/10 21:10:15 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/12 01:03:43 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	ft_find_builtin(char *cmd, char **cmd_tab, char ***env, int *exit_flag)
 	}
 	else if (ft_strcmp(cmd, "pwd") == 0)
 	{
-		status = ft_pwd(cmd_tab);
+		status = ft_pwd(cmd_tab, *env);
 		return (status);
 	}
 	else

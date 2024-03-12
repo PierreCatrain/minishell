@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 22:51:52 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/11 16:10:41 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/12 00:35:25 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	ft_export2(char ***env, char *export_str)
 	ft_export3(export_str, &export, &res);
 	if (res != 0)
 		return (res);
-	if (ft_is_export_in_env(*env, export))
+	if (ft_is_export_in_env(*env, export) != -1)
 	{
 		ft_change_export(env, export);
 		return (free(export), 0);
@@ -118,3 +118,11 @@ int	ft_export(char ***env, char **arg, int free)
 		free_tab_tab(arg);
 	return (status);
 }
+
+// int	main(int ac, char **av, char **envp)
+// {
+// 	(void)ac;
+// 	char **env = ft_copy_env(envp);
+// 	ft_export2(&env, av[1]);
+// 	print_tab_tab(env);
+// }

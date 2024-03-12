@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:52:38 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/11 17:05:01 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/12 03:13:31 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,11 @@ int	main(int argc, char **argv, char **envp)
 		return (ERROR);
 	while (1)
 	{
-		data_parse.prompt = ft_get_prompt();
+		data_parse.prompt = ft_get_prompt(env);
 		if (data_parse.prompt == NULL)
+		{
 			return (ERROR_PROMPT);
+		}
 		data_parse.input = readline(data_parse.prompt);
 		free(data_parse.prompt);
 		tree = NULL;

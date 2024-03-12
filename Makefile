@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+         #
+#    By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/11 18:47:20 by picatrai          #+#    #+#              #
-#    Updated: 2024/03/10 23:02:34 by picatrai         ###   ########.fr        #
+#    Updated: 2024/03/12 02:21:41 by lgarfi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -85,7 +85,7 @@ valenv:  $(OBJ)
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(RFLAGS)
 	@echo "\n\033[1;33mAll objects have been created\033[0m"
 	@clear
-	@valgrind --trace-children=yes --track-fds=yes --track-origins=yes --log-fd=2 --error-limit=no --leak-check=full --show-possibly-lost=yes --track-origins=yes --show-reachable=yes --suppressions=/home/lgarfi/Documents/projets/ms/supp.supp env -i ./minishell
+	@valgrind --trace-children=yes --track-fds=yes --track-origins=yes --log-fd=2 --error-limit=no --leak-check=full --show-possibly-lost=yes --track-origins=yes --show-reachable=yes --suppressions=$$PATH/supp.supp env -i ./minishell
 
 obj_dir_create:
 	@if [ ! -d "./obj" ]; then\
