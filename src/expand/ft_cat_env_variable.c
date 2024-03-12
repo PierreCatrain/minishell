@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 07:36:28 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/12 18:22:42 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/12 22:05:08 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ char	*ft_str_isolate(char *str, int index_debut, int index_fin)
 char	*ft_add_env(char *str, char *new_str, int index, char **env)
 {
 	char	*str_isolate;
-	char	*env_value;
+	char *res;
+	char *tmp;
 
 	str_isolate = ft_str_isolate(str, index, ft_lim_isolate(str, index));
 	if (str_isolate == NULL)
@@ -55,14 +56,11 @@ char	*ft_add_env(char *str, char *new_str, int index, char **env)
 			return (NULL);
 		return (new_str);
 	}
-	// ft_get env value renvoie un pointeur qui se perd dans le str join, faut il le free ?
-	env_value = ft_get_env_value(env, str_isolate);
-	if (!env_value)
-		return (free(str_isolate), NULL);
-	new_str = ft_strjoin(new_str, env_value);
-	if (new_str == NULL)
-		return (free(str_isolate), free(env_value), NULL);
-	return (free(str_isolate), free(env_value), new_str);
+	tmp = ft_get_env_value(env, str_isolate);
+	res = ft_strjoin(new_str, tmp);
+	if (res == NULL)
+		return (free(str_isolate), free(tmp), free(new_str), NULL);
+	return (free(str_isolate), free(tmp), free(new_str), res);
 }
 
 char	*ft_cat_env_variable(char *new_str, char *str, int *index, char **env)

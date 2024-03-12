@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:52:38 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/12 05:55:32 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/12 22:18:40 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ int	main_2(t_tree **tree, t_data_parse *data_parse,
 
 	if (ft_parse(tree, data_parse, *env, *exit_status) == GOOD_INPUT)
 	{
+		if (g_signal == 130)
+			*exit_status = g_signal;
 		tmp = g_signal;
 		g_signal = -100;
 		if (ft_change_sig(0) != SUCCESS)

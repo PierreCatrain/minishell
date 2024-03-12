@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/12 18:19:24 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/12 22:07:14 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -367,7 +367,7 @@ int						ft_nb_here_doc(t_token *token);
 int						ft_complete_here_doc(t_data_parse *data_parse,
 							t_token *token,
 							int index);
-int						ft_complete(int fd_in, t_token *token);
+int	ft_complete(int fd_in, t_token *token, t_data_parse *data_parse);
 char					*ft_here_doc(void);
 
 //make_lst_exec.c
@@ -393,6 +393,9 @@ int						ft_exec_token_type_pipe(t_data_parse *data_parse,
 // |						expand							|
 // |														|
 // # ====================================================== #
+
+//expand_here_doc.c
+char	*ft_expand_here_doc(char *str, char **env, int status);
 
 //expand_redirection.c
 char					*ft_ambiguous_redirect(char *str, char **split,

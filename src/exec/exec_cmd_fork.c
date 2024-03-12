@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 17:38:07 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/12 18:19:44 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/12 22:07:31 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,8 @@ void	ft_child(t_tree *tree, char ***env, int status, int *tab_pid)
 		free_and_close_tree(tree);
 		free_tab_tab(*env);
 		free(tab_pid);
-		exit (0);
+			;
+	exit (0);
 	}
 	dup2(tree->lst_exec->fd_in, 0);
 	dup2(tree->lst_exec->fd_out, 1);
