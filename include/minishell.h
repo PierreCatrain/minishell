@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/12 03:28:37 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/12 03:41:34 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -308,7 +308,7 @@ void					ft_set_all_grammaire(t_token **token);
 
 // # ====================================================== #
 // |														|
-// |					binary_tree				|
+// |					binary_tree							|
 // |														|
 // # ====================================================== #
 
@@ -389,7 +389,7 @@ int						ft_exec_token_type_pipe(t_data_parse *data_parse,
 
 // # ====================================================== #
 // |														|
-// |						expand								|
+// |						expand							|
 // |														|
 // # ====================================================== #
 
@@ -635,8 +635,9 @@ void					ft_check_missing_env_2(char **env_val, char ***env,
 							int *i);
 void					ft_check_missing_env(char ***env, int *i);
 char					*ft_get_export_value(char *str);
+int						ft_check_if_i_do_the_export(char *str);
 void					ft_change_export(char ***env, char *str);
-int						ft_export2(char ***env, char *export_str);
+int						ft_do_the_export(char ***env, char *export_str);
 int						ft_export(char ***env, char **arg, int free);
 
 // # ====================================================== #
