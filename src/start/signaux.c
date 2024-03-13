@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 06:02:52 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/12 22:12:52 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/12 23:21:59 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ void	ft_display_new_prompt(int signal)
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
-		g_signal = 130;
 	}
+	g_signal = 130;
 }
 
 void	ft_core_dumped(int signal)
@@ -32,7 +32,7 @@ void	ft_core_dumped(int signal)
 		g_signal = 131;
 }
 
-int ft_change_sig(int index)
+int	ft_change_sig(int index)
 {
 	struct sigaction	s_quit;
 

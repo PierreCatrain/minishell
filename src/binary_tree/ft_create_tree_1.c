@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 02:02:25 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/10 19:50:08 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/13 01:51:25 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,9 +106,9 @@ int	ft_create_tree(t_tree **tree, t_token *token, t_data_parse *data_parse)
 	}
 	g_signal = tmp;
 	if (ft_complete_tree(tree, token, data_parse) != SUCCESS)
-		return (free(data_parse->array_here_doc), \
+		return (free(data_parse->array_hd), \
 				free_and_close_tree(*tree), ERROR);
 	ft_free_token(&token);
-	free(data_parse->array_here_doc);
+	free(data_parse->array_hd);
 	return (SUCCESS);
 }

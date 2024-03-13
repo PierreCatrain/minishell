@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 22:48:14 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/12 03:01:19 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/13 01:52:57 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,13 @@ void	ft_free_pipes(int **fd_pipes, int nb_pipes)
 		free(fd_pipes[nb_pipes]);
 	}
 	free(fd_pipes);
+}
+
+void	close_hd(int *array, int index)
+{
+	while (index >= 0)
+	{
+		close(array[index]);
+		index--;
+	}
 }

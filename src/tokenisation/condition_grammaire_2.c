@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   condition_grammaire_2.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 01:08:04 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/09 23:22:35 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/13 01:05:10 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,10 @@ int	ft_check_pipes(t_token *token)
 	{
 		if (token->type == PIPE && (token->next->type == OR \
 		|| token->next->type == AND || token->next->type == OPEN_PARENTHESIS \
-		|| token->next->type == CLOSE_PARENTHESIS \
-		|| token->next->type == INFILE || token->next->type == OUTFILE \
-		|| token->next->type == HEREDOC || token->next->type == APPEND))
+		|| token->next->type == CLOSE_PARENTHESIS))
 			return (WRONG_INPUT);
 		if ((token->type == OR || token->type == AND \
-		|| token->type == OPEN_PARENTHESIS || token->type == CLOSE_PARENTHESIS \
-		|| token->type == INFILE || token->type == OUTFILE \
-		|| token->type == HEREDOC || token->type == APPEND) \
+		|| token->type == OPEN_PARENTHESIS || token->type == CLOSE_PARENTHESIS) \
 		&& token->next->type == PIPE)
 			return (WRONG_INPUT);
 		if (token->type == PIPE && token->next->type == PIPE)

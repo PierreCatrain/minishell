@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 19:36:25 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/12 21:31:15 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/13 01:03:15 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,8 @@ que les ( soit precede par rien ou && || (
 on verifie que les operateur de redirections sont bien suivi par un mot */
 int	ft_condition_grammaire(t_token *token)
 {
-	// if (ft_check_pipes(token) == WRONG_INPUT)
-	// 	return (print_invalid_token("|"), WRONG_INPUT);
+	if (ft_check_pipes(token) == WRONG_INPUT)
+		return (print_invalid_token("|"), WRONG_INPUT);
 	if (ft_check_parenthesis(token) == WRONG_INPUT)
 		return (WRONG_INPUT);
 	if (ft_check_proximity_opperator_bonus(token) == WRONG_INPUT)

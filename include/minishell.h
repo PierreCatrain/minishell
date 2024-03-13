@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/12 21:25:28 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/13 02:10:22 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ typedef struct s_data_parse
 	int					**fd_pipes;
 	int					nb_pipes;
 
-	int					*array_here_doc;
+	int					*array_hd;
 	int					index_here_doc;
 
 	int					tmp;
@@ -196,7 +196,7 @@ enum					e_bool
 
 //ft_parse.c
 int						ft_parse(t_tree **tree, t_data_parse *data_parse,
-							char **env, int exit_status);
+							char **env, int *exit_status);
 
 // # ====================================================== #
 // |														|
@@ -214,7 +214,7 @@ char					*ft_at_else(char *start_prompt, char *end_prompt,
 
 //signaux.c
 void					ft_display_new_prompt(int signal);
-int ft_change_sig(int index);
+int						ft_change_sig(int index);
 int						ft_set_sig(void);
 
 // # ====================================================== #
@@ -249,6 +249,7 @@ int						ft_no_cmd(t_token *token);
 
 //ft_add_token.c
 void					ft_set_add_token(t_data_parse *data_parse);
+int						ft_add_token_end(t_data_parse *data_parse);
 int						ft_add_token(t_token **token, t_data_parse *data_parse,
 							t_expand *expand);
 int						ft_add_and_return(t_data_parse *data_parse,
@@ -263,6 +264,7 @@ int						ft_gestion_quotes_close(t_data_parse *data_parse,
 int						ft_gestion_quotes(t_data_parse *data_parse,
 							t_expand *expand,
 							t_token **token);
+int						ft_maybe_empty(t_data_parse *data_parse);
 int						ft_make_token(t_data_parse *data_parse,
 							t_token **token);
 
@@ -367,7 +369,8 @@ int						ft_nb_here_doc(t_token *token);
 int						ft_complete_here_doc(t_data_parse *data_parse,
 							t_token *token,
 							int index);
-int	ft_complete(int fd_in, t_token *token, t_data_parse *data_parse);
+int						ft_complete(int fd_in, t_token *token, \
+		t_data_parse *data_parse);
 char					*ft_here_doc(void);
 
 //make_lst_exec.c
@@ -394,8 +397,23 @@ int						ft_exec_token_type_pipe(t_data_parse *data_parse,
 // |														|
 // # ====================================================== #
 
-//expand_here_doc.c
-char	*ft_expand_here_doc(char *str, char **env, int status);
+//expand_here_doc_1.c
+char					*ft_add_env_expand_hd(char *str, char *new_str, \
+		int index, char **env);
+char					*ft_cat_env_variable_expand_hd(char *new_str, \
+		char *str, int *index, char **env);
+char					*ft_expand_here_doc(char *str, char **env, int status);
+
+//expand_here_doc_2.c
+int						ft_set_expand_hd(char **new_str, \
+		int *index, int *single_quotes, int *double_quotes);
+int						ft_is_an_end(char *str, int index);
+void					ft_change_quotes(char *str, int *single_quotes, \
+		int *double_quotes, int index);
+int						rep_status_expand_here_doc(int *index, \
+		char **new_str, int status);
+int						ft_not_replace_expand_hd(char *str, char **new_str, \
+		int index, int single_quotes);
 
 //expand_redirection.c
 char					*ft_ambiguous_redirect(char *str, char **split,
@@ -473,7 +491,6 @@ void					ft_free_token(t_token **token);
 void					free_tokenisation_2(t_token **token,
 							t_data_parse *data_parse);
 void					free_tokenisation_1(char *input, t_token **token);
-//ft_add_wildcard.c
 void					free_2d(char **str);
 void					ft_print_error_malloc(void);
 
@@ -482,6 +499,7 @@ void					free_mini_expand(t_expand *expand);
 void					free_tab_tab(char **tab);
 void					ft_free_wildcard(t_wildcard **ls);
 void					ft_free_pipes(int **fd_pipes, int nb_pipes);
+void					close_hd(int *array, int index);
 
 //free_and_close_tree.c
 void					free_expand(t_expand **expand, int len);
