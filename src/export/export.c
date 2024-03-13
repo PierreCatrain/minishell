@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 22:51:52 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/12 07:45:49 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/13 15:39:04 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	ft_export_parsing(char *export_str, char **export, int *res)
 	if (export_str[0] == '=' || !ft_check_export_name(export_str)
 		|| !ft_is_ascii(export_str[0]))
 	{
-		ft_putstr_fd("minishell: export:= `", 2);
+		ft_putstr_fd("minishell: export: `", 2);
 		ft_putstr_fd(export_str, 2);
 		ft_putstr_fd("': not a valid identifier\n", 2);
 		*res = 1;
@@ -40,7 +40,7 @@ void	ft_export_parsing(char *export_str, char **export, int *res)
 	}
 	if (!ft_export_name(export_str, export))
 	{
-		ft_putstr_fd("export:= not valid in this context: ", 2);
+		ft_putstr_fd("export: not valid in this context: ", 2);
 		ft_putstr_fd(*export, 2);
 		ft_putstr_fd("\n", 2);
 		*res = 1;
@@ -111,12 +111,6 @@ int	ft_export(char ***env, char **arg, int free)
 	}
 	while (arg[i])
 	{
-		if (ft_check_if_i_do_the_export(arg[i]) == 0)
-		{
-			i++;
-			status = 0;
-			continue ;
-		}
 		status = ft_do_the_export(env, arg[i]);
 		i++;
 	}
