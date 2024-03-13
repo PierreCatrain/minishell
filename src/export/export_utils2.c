@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 19:41:27 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/12 14:47:54 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/13 22:52:41 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	ft_check_shlvl_export(char ***env, char *export_str)
 	return (2);
 }
 
-int	ft_check_if_i_do_the_export(char *str)
+int	ft_check_if_i_print_env_i(char *str)
 {
 	int	i;
 	int	flag;

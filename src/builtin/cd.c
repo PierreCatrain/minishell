@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:42:46 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/12 02:20:35 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/13 22:46:25 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,13 @@ int	ft_cd(char **path_tab, char ***env)
 	{
 		return (free(current_path), ft_cd_cdpath(path_tab, env));
 	}
-	ft_change_pwd_old_pwd(current_path, getcwd(new_path, PATH_MAX), env);
+	if (getcwd(new_path, PATH_MAX) == NULL)
+	{
+		printf("you are lost in the abysse of the shell\n");
+		ft_change_pwd_old_pwd(current_path, "/lost", env);
+		return (0);
+	}
+	ft_change_pwd_old_pwd(current_path, new_path, env);
 	free(current_path);
 	return (0);
 }

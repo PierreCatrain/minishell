@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 18:10:21 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/13 15:37:59 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/14 00:16:13 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,9 @@ int	ft_check_export_name(char *str)
 {
 	int				i;
 	int				j;
-	char		*except;
+	char			*except;
 
 	j = 0;
-	if (ft_check_if_i_do_the_export(str) == 0)
-		return (0);
 	except = ft_get_str("!\\[]@#$%^&*-()+=/?.,`~\" ");
 	while (except[j])
 	{

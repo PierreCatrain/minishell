@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/13 15:54:06 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/13 22:55:22 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -657,7 +657,7 @@ void					ft_check_missing_env_2(char **env_val, char ***env,
 							int *i);
 void					ft_check_missing_env(char ***env, int *i);
 char					*ft_get_export_value(char *str);
-int						ft_check_if_i_do_the_export(char *str);
+int						ft_check_if_i_print_env_i(char *str);
 void					ft_change_export(char ***env, char *str);
 int						ft_do_the_export(char ***env, char *export_str);
 int						ft_export(char ***env, char **arg, int free);
