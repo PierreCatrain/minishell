@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_AST.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 01:19:42 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/12 22:12:16 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/12 23:51:06 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	builtin_exec(char ***env, t_tree *tree, int *status, int *status2)
 		free_and_close_tree(tree);
 		free_tab_tab(*env);
 		rl_clear_history();
-		write(1, "exitqwer\n", 5);
+		write(1, "exit\n", 5);
 		exit(*status2);
 	}
 	free_tab_tab(arg);

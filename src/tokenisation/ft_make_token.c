@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_make_token.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 13:37:36 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/12 06:20:08 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/13 01:02:01 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,17 @@ t_expand *expand, t_token **token)
 	return (SUCCESS);
 }
 
+int	ft_maybe_empty(t_data_parse *data_parse)
+{
+	if (data_parse->input[data_parse->index] == '\0')
+	{
+		free(data_parse->str);
+		data_parse->str = NULL;
+		return (SUCCESS_SQUARE);
+	}
+	return (SUCCESS);
+}
+
 int	ft_make_token(t_data_parse *data_parse, t_token **token)
 {
 	t_expand	*expand;
@@ -83,12 +94,8 @@ int	ft_make_token(t_data_parse *data_parse, t_token **token)
 	expand = NULL;
 	if (ft_set_make_token(data_parse) != SUCCESS)
 		return (ERROR_MALLOC);
-	if (data_parse->input[data_parse->index] == '\0')
-	{
-		free(data_parse->str);
-		data_parse->str = NULL;
+	if (ft_maybe_empty(data_parse) == SUCCESS_SQUARE)
 		return (SUCCESS);
-	}
 	while (data_parse->input[data_parse->index] \
 			&& (data_parse->input[data_parse->index] != ' ' \
 				|| data_parse->single_quote_open == OPEN \

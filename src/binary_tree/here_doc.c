@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 02:23:35 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/12 22:04:59 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/13 01:53:47 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	ft_exec_token_type_heredoc(t_data_parse *data_parse, t_token **token)
 		close(data_parse->fd_in);
 	*token = (*token)->next;
 	data_parse->fd_in = \
-		data_parse->array_here_doc[data_parse->index_here_doc--];
+		data_parse->array_hd[data_parse->index_here_doc--];
 	if (fd_tmp == -1 || fd_tmp == -2)
 	{
 		if (data_parse->fd_in > 2)
@@ -47,29 +47,29 @@ int	ft_nb_here_doc(t_token *token)
 	return (count);
 }
 
-int	ft_complete_here_doc(t_data_parse *data_parse, t_token *token, int index)
+int	ft_complete_here_doc(t_data_parse *d_p, t_token *token, int index)
 {
-	data_parse->array_here_doc = malloc (ft_nb_here_doc(token) * sizeof(int));
-	if (data_parse->array_here_doc == NULL)
+	d_p->array_hd = malloc (ft_nb_here_doc(token) * sizeof(int));
+	if (d_p->array_hd == NULL)
 		return (ERROR_MALLOC);
 	while (token != NULL)
 	{
 		if (token->type == HEREDOC)
 		{
 			token = token->next;
-			data_parse->heredoc = ft_here_doc();
-			if (data_parse->heredoc == NULL)
-				return (free(data_parse->array_here_doc), ERROR);
-			data_parse->array_here_doc[index] = open(data_parse->heredoc, \
+			d_p->heredoc = ft_here_doc();
+			if (d_p->heredoc == NULL)
+				return (free(d_p->array_hd), ERROR);
+			d_p->array_hd[index] = open(d_p->heredoc, \
 					O_CREAT | O_RDWR | O_TRUNC, 0644);
-			if (ft_complete(data_parse->array_here_doc[index], token, data_parse) == ERROR)
-				return (close(data_parse->array_here_doc[index]), free(data_parse->array_here_doc), \
-						free(data_parse->heredoc), ERROR);// free tous les here docs
-			close(data_parse->array_here_doc[index]);
-			data_parse->array_here_doc[index++] = open(data_parse->heredoc, \
-					O_RDWR, 0644);
-			unlink(data_parse->heredoc);
-			free(data_parse->heredoc);
+			if (ft_complete(d_p->array_hd[index], \
+						token, d_p) == ERROR)
+				return (close_hd(d_p->array_hd, index), free(d_p->array_hd), \
+				free(d_p->heredoc), ERROR);
+			close(d_p->array_hd[index]);
+			d_p->array_hd[index++] = open(d_p->heredoc, O_RDWR, 0644);
+			unlink(d_p->heredoc);
+			free(d_p->heredoc);
 		}
 		token = token->next;
 	}
@@ -79,20 +79,19 @@ int	ft_complete_here_doc(t_data_parse *data_parse, t_token *token, int index)
 int	ft_complete(int fd_in, t_token *token, t_data_parse *data_parse)
 {
 	char	*line;
-	char *tmp;
+	char	*tmp;
 
 	if (fd_in == -1)
 		return (SUCCESS);
 	ft_putstr_fd("> ", 1);
 	line = new_readline(token->str);
 	if (line == NULL)
-	{
 		return (ERROR);
-	}
 	if (ft_strncmp(line, token->str, ft_strlen(token->str)) == 1 \
 			|| ft_strlen(token->str) != ft_strlen(line) - 1)
 	{
-		tmp = ft_expand_here_doc(line, data_parse->env, data_parse->exit_status);
+		tmp = ft_expand_here_doc(line, data_parse->env, \
+				data_parse->exit_status);
 		if (tmp == NULL)
 			return (ERROR);
 		ft_putstr_fd(tmp, fd_in);

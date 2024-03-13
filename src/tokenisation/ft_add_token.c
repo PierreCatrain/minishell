@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_add_token.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 14:49:27 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/12 14:49:36 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/13 00:55:56 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,16 @@ void	ft_set_add_token(t_data_parse *data_parse)
 	data_parse->type[6] = PIPE;
 	data_parse->type[7] = OPEN_PARENTHESIS;
 	data_parse->type[8] = CLOSE_PARENTHESIS;
+}
+
+int	ft_add_token_end(t_data_parse *data_parse)
+{
+	if (data_parse->str && data_parse->str[0] == '\0')
+	{
+		free(data_parse->str);
+		data_parse->str = NULL;
+	}
+	return (SUCCESS);
 }
 
 /*
@@ -62,16 +72,7 @@ int	ft_add_token(t_token **token, t_data_parse *data_parse, t_expand *expand)
 						TEXT, expand)) == ERROR_MALLOC)
 			return (ERROR_MALLOC);
 	}
-	if (data_parse->str) // ce que j'ai ajoute avec toi pour test ("" -> qwer)
-	{
-		if (data_parse->str[0] == '\0')
-		{
-			free(data_parse->str);
-			data_parse->str = NULL;
-			return (SUCCESS);
-		}
-	}
-	return (SUCCESS);
+	return (ft_add_token_end(data_parse));
 }
 
 int	ft_add_and_return(t_data_parse *data_parse, \

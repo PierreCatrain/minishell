@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_replace_env_variable_2.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 18:11:33 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/12 21:55:20 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/13 00:08:00 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int	ft_add_classique(t_data_expand *data_expand, \
 	{
 		return (free(*new_str), free_2d(*res), ERROR_MALLOC);
 	}
-	// free(*new_str);
+	free(*new_str);
 	*new_str = malloc(sizeof(char));
 	if (*new_str == NULL)
 		return (free_2d(*res), ERROR_MALLOC);

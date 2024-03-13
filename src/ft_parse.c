@@ -3,24 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parse.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 00:23:08 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/12 02:12:32 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/12 23:34:54 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int	ft_parse(t_tree **tree, t_data_parse *data_parse,
-	char **env, int exit_status)
+	char **env, int *exit_status)
 {
 	t_token	*token;
 
 	if (is_input_only_whitespace(data_parse->input))
 		add_history(data_parse->input);
 	token = NULL;
-	data_parse->exit_status = exit_status;
+	data_parse->exit_status = *exit_status;
 	data_parse->env = ft_strdup_2d(env);
 	if (data_parse->env == NULL)
 		return (ERROR_MALLOC);

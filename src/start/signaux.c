@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signaux.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 06:02:52 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/12 22:05:32 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/12 23:21:59 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	ft_display_new_prompt(int signal)
 {
 	(void)signal;
-	if (g_signal != -100)
+	if (g_signal != -100 && g_signal != 131)
 	{
 		write(1, "\n", 1);
 		rl_replace_line("", 0);
@@ -28,11 +28,8 @@ void	ft_display_new_prompt(int signal)
 void	ft_core_dumped(int signal)
 {
 	(void)signal;
-	if (g_signal == -100)
-	{
-		ft_putstr_fd("Quit (core dumped)\n", 2);
+	ft_putstr_fd("Quit (core dumped)\n", 2);
 		g_signal = 131;
-	}
 }
 
 int	ft_change_sig(int index)

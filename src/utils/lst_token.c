@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_token.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 16:31:38 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/12 22:06:12 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/13 01:07:09 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,7 @@ t_token	*ft_lstnew(char *str, int quotes, int type, t_expand *expand)
 
 	new = malloc(sizeof(t_token));
 	if (new == NULL)
-	{
-		free(str);
 		return (NULL);
-	}
 	new->str = ft_strdup(str);
 	if (new->str == NULL)
 		return (free(new), free(str), NULL);

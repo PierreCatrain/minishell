@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cat_env_variable.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 07:36:28 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/12 22:05:08 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/13 01:11:02 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ char	*ft_str_isolate(char *str, int index_debut, int index_fin)
 char	*ft_add_env(char *str, char *new_str, int index, char **env)
 {
 	char	*str_isolate;
-	char *res;
-	char *tmp;
+	char	*res;
+	char	*tmp;
 
 	str_isolate = ft_str_isolate(str, index, ft_lim_isolate(str, index));
 	if (str_isolate == NULL)
@@ -60,7 +60,9 @@ char	*ft_add_env(char *str, char *new_str, int index, char **env)
 	res = ft_strjoin(new_str, tmp);
 	if (res == NULL)
 		return (free(str_isolate), free(tmp), free(new_str), NULL);
-	return (free(str_isolate), free(tmp), free(new_str), res);
+	if (res[0] != '\0')
+		free(new_str);
+	return (free(str_isolate), free(tmp), res);
 }
 
 char	*ft_cat_env_variable(char *new_str, char *str, int *index, char **env)

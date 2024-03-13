@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:52:38 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/12 22:18:40 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/13 00:48:35 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,10 @@ int	set_main_2(char ***env, char **envp)
 int	main_2(t_tree **tree, t_data_parse *data_parse,
 	char ***env, int *exit_status)
 {
-	int	tmp;
-
-	if (ft_parse(tree, data_parse, *env, *exit_status) == GOOD_INPUT)
+	if (ft_parse(tree, data_parse, *env, exit_status) == GOOD_INPUT)
 	{
 		if (g_signal == 130)
 			*exit_status = g_signal;
-		tmp = g_signal;
 		g_signal = -100;
 		if (ft_change_sig(0) != SUCCESS)
 			return (free_and_close_tree(*tree),
@@ -56,7 +53,7 @@ int	main_2(t_tree **tree, t_data_parse *data_parse,
 		if (ft_change_sig(1) != SUCCESS)
 			return (free_and_close_tree(*tree),
 				free_tab_tab(*env), ERROR_MALLOC);
-		g_signal = tmp;
+		g_signal = 0;
 	}
 	return (0);
 }
