@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_AST.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 01:19:42 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/12 23:51:06 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/14 15:33:03 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	builtin_exec(char ***env, t_tree *tree, int *status, int *status2)
 		free_tab_tab(*env);
 		rl_clear_history();
 		write(1, "exit\n", 5);
+		printf("status 2 %d\n", *status2);
 		exit(*status2);
 	}
 	free_tab_tab(arg);
@@ -65,14 +66,12 @@ void	wait_pid_status(int *ll_len, int *status, t_tab_pid *pid)
 	while ((--(*ll_len)) + 1 > 0)
 	{
 		waitpid(pid->tab_pid[(pid->index)++], status, 0);
+		if (WIFEXITED(*status))
+			*status = WEXITSTATUS(*status);
 	}
 	free(pid->tab_pid);
-	if (WIFEXITED(*status))
-		*status = WEXITSTATUS(*status);
-	if (g_signal == 130 || g_signal == 131)
-	{
+	if ((g_signal == 130 || g_signal == 131))
 		*status = g_signal;
-	}
 }
 
 int	ft_tree_exec(t_tree *tree, char ***env, int *status)
@@ -101,7 +100,7 @@ int	ft_tree_exec(t_tree *tree, char ***env, int *status)
 		pid.index = 0;
 		wait_pid_status(&ll_len, status, &pid);
 	}
-	return (*status);
+		return (*status);
 }
 
 // echo ">"Wer''1234'$USER'"$USER""%USER"""
