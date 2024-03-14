@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/13 22:55:22 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/14 11:58:37 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -701,7 +701,8 @@ int						ft_cd(char **path_tab, char ***env);
 // |														|
 // # ====================================================== #
 
-int						ft_check_echo_param(char *str);
+int						ft_check_echo_param_only_one(char *str);
+void					ft_check_echo_param(char **tab, int *j, int *param);
 int						ft_echo2(char **tab, int i, int param);
 int						ft_echo_2_1(char **tab, int *i);
 int						ft_echo(char **tab);
