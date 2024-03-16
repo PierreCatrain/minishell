@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 12:37:17 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/12 14:46:34 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/16 19:43:50 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,17 +52,6 @@ char	*ft_itoa_shlvl(int nb)
 	return (str);
 }
 
-void	ft_check_increment(int *res)
-{
-	char	*last_cmd;
-
-	last_cmd = getenv("_");
-	if (ft_strcmp(last_cmd, "./minishell") == 0)
-		(*res)++;
-	else
-		return ;
-}
-
 int	ft_atoi_int_shlvl_main(char **envp, char *nb)
 {
 	int		i;
@@ -75,10 +64,10 @@ int	ft_atoi_int_shlvl_main(char **envp, char *nb)
 		return (1);
 	while (nb[i])
 	{
-		res = res * 10 + nb[i] - 48;
+		res = res * 10 + (nb[i] - 48);
 		i++;
 	}
-	ft_check_increment(&res);
+	res++;
 	return (res);
 }
 
