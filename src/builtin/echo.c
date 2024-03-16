@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 22:17:53 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/14 12:21:43 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/16 14:28:50 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ void	ft_check_echo_param(char **tab, int *j, int *param)
 		if (ft_check_echo_param_only_one(tab[i]) == 0)
 		{
 			(*j)++;
-			// printf("j = %d tab[%d] %s\n",*j, i, tab[i]);
 			*param = 1;
 		}
 		else
@@ -123,21 +122,7 @@ int	ft_echo(char **tab)
 	}
 	j = 1;
 	flag = 0;
-	// while (tab[i])
-	// {
-	// 	if (flag > 0)
-	// 		break ;
-	// 	if (ft_check_echo_param(tab[i]) == 0)
-	// 	{
-	// 		j++;
-	// 		param = 1;
-	// 	}
-	// 	else
-	// 		flag++;
-	// 	i++;
-	// }
 	ft_check_echo_param(tab, &j, &param);
-	// printf("j |%d| param |%d|", j, param);
 	check = ft_echo2(tab, j, param);
 	return (check);
 }
