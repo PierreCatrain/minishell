@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 06:02:52 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/14 15:29:50 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/16 21:25:24 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	ft_core_dumped(int signal)
 {
 	(void)signal;
 	ft_putstr_fd("Quit (core dumped)\n", 2);
-		g_signal = 131;
+	g_signal = 131;
 }
 
 int	ft_change_sig(int index)

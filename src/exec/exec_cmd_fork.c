@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 17:38:07 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/16 13:41:50 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/16 21:35:33 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ void	ft_child(t_tree *tree, char ***env, int status, int *tab_pid)
 {
 	char	**arg;
 
+	signal(SIGQUIT, SIG_DFL);
+	signal(SIGINT, SIG_DFL);
 	ft_child_2(tree, env, tab_pid);
 	arg = NULL;
 	arg = ft_new_args(tree->lst_exec, status, *env);
