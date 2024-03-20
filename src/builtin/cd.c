@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:42:46 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/13 22:46:25 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/20 04:02:44 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,11 @@ int	ft_cd_dash(char ***env)
 	char	new_path[PATH_MAX + 1];
 
 	if (is_export_name_in_env(*env, "OLDPWD") == -1)
-	{
-		ft_putstr_fd("minishell: cd: OLDPWD not set\n", 2);
-		return (1);
-	}
+		return (ft_putstr_fd("minishell: cd:"\
+			" OLDPWD not set\n", 2), 1);
 	oldpwd = ft_get_env_value(*env, "OLDPWD");
+	if (getcwd(current_path, PATH_MAX) == NULL)
+		return (ft_msg_err_getcwd(), free(oldpwd), 1);
 	if (chdir(oldpwd) != 0)
 	{
 		if (ft_msg_err_chdir(oldpwd) == ERROR_MALLOC)
@@ -70,12 +70,9 @@ int	ft_cd_dash(char ***env)
 		return (free(oldpwd), 1);
 	}
 	if (getcwd(new_path, PATH_MAX) == NULL)
-	{
-		ft_msg_err_getcwd();
-		return (free(oldpwd), 1);
-	}
+		return (ft_msg_err_getcwd(), free(oldpwd), 1);
 	free(oldpwd);
-	ft_change_pwd_old_pwd(getcwd(current_path, PATH_MAX), new_path, env);
+	ft_change_pwd_old_pwd(current_path, new_path, env);
 	return (0);
 }
 

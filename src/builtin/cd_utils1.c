@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 21:20:57 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/12 03:33:11 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/20 04:02:37 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void	ft_change_pwd_old_pwd(char *current_path, char *new_path, char ***env)
 	ft_do_the_export(env, exp_str_new);
 	free(exp_str_new);
 	ft_change_pwd_old_pwd2(env, current_path);
-	return ;
 }
 
 int	is_export_name_in_env(char **env, char *str)
