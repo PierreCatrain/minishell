@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_create_tree_1.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 02:02:25 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/22 10:20:51 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/22 19:09:14 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,8 @@ int	ft_complete_tree(t_tree **tree, t_token *token, t_data_parse *data_parse)
 	return (SUCCESS);
 }
 
-int	ft_create_tree(t_tree **tree, t_token *token, t_data_parse *data_parse, int *exit_status)
+int	ft_create_tree(t_tree **tree, t_token *token,
+	t_data_parse *data_parse, int *exit_status)
 {	
 	int	tmp;
 

@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 01:19:42 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/22 17:19:03 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/22 19:22:47 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,19 @@ int	fork_exec(t_tree *tree, char ***env, int *status, t_tab_pid *pid)
 	return (0);
 }
 
-
-
 void	wait_pid_status(int *ll_len, int *status, t_tab_pid *pid)
 {
-	while ((--(*ll_len)) + 1 > 0)
+	struct sigaction	s_quit;
+
+	s_quit.sa_flags = SA_RESTART;
+	s_quit.sa_handler = &print;
+	if (sigaction(SIGINT, &s_quit, NULL) == -1)
 	{
-	
+		ft_putstr_fd("minishell: error with sigaction\n", 2);
+		return ;
+	}
+	while ((--(*ll_len)) + 1 > 0)
+	{	
 		waitpid(pid->tab_pid[(pid->index)++], status, 0);
 		if (WIFEXITED(*status))
 			*status = WEXITSTATUS(*status);
@@ -107,5 +113,3 @@ int	ft_tree_exec(t_tree *tree, char ***env, int *status)
 	}
 	return (*status);
 }
-
-// echo ">"Wer''1234'$USER'"$USER""%USER"""

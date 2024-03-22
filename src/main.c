@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:52:38 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/22 17:19:22 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/22 18:48:24 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,9 @@ int	main_2(t_tree **tree, t_data_parse *data_parse,
 		if (ft_change_sig(0) != SUCCESS)
 			return (free_and_close_tree(*tree),
 				free_tab_tab(*env), ERROR_MALLOC);
-		signal(SIGINT, SIG_IGN);
 		signal(SIGQUIT, SIG_IGN);
-		printf("avant exec\n");
+		signal(SIGINT, SIG_IGN);
 		*exit_status = ft_tree_exec(*tree, env, exit_status);
-		printf("apres exec\n");
 		if (*exit_status == ERROR_MALLOC)
 			return (free_and_close_tree(*tree),
 				free_tab_tab(*env), ERROR_MALLOC);

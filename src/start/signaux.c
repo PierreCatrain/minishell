@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 06:02:52 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/22 17:19:18 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/22 19:22:03 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	ft_display_new_prompt(int signal)
 {
 	(void)signal;
-	printf("qwer\n");
 	if (g_signal != -100 && g_signal != 131)
 	{
 		write(1, "\n", 1);
@@ -65,6 +64,12 @@ int	ft_change_sig(int index)
 		return (ERROR);
 	}
 	return (SUCCESS);
+}
+
+void	print(int signal)
+{
+	(void)signal;
+	g_signal = 130;
 }
 
 int	ft_set_sig(void)

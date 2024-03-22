@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/22 10:41:15 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/22 19:22:29 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,6 +216,7 @@ char					*ft_at_else(char *start_prompt, char *end_prompt,
 void					ft_display_new_prompt(int signal);
 int						ft_change_sig(int index);
 int						ft_set_sig(void);
+void					print(int signal);
 
 // # ====================================================== #
 // |														|
@@ -366,8 +367,10 @@ int						ft_exec_token_type_2(t_data_parse *data_parse,
 int						ft_exec_token_type_heredoc(t_data_parse *data_parse,
 							t_token **token);
 int						ft_nb_here_doc(t_token *token);
-int						ft_complete_here_doc(t_data_parse *d_p, t_token *token, int index, int *exit_status);
-int						ft_complete(int fd_in, t_token *token, t_data_parse *data_parse, int *exit_status);
+int						ft_complete_here_doc(t_data_parse *d_p, t_token *token,
+							int index, int *exit_status);
+int						ft_complete(int fd_in, t_token *token,
+							t_data_parse *data_parse, int *exit_status);
 char					*ft_here_doc(void);
 
 //make_lst_exec.c
@@ -379,7 +382,8 @@ int						ft_set_exec(t_data_parse *data_parse,
 							t_token *token);
 int						ft_lst_exec(t_token *token, t_lst_exec **lst_exec,
 							t_data_parse *data_parse);
-int						ft_create_tree(t_tree **tree, t_token *token, t_data_parse *data_parse, int *exit_status);
+int						ft_create_tree(t_tree **tree, t_token *token,
+							t_data_parse *data_parse, int *exit_status);
 
 //pipes.c
 void					ft_pipes_fail(int **fd_pipes, int index_pipes);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 02:23:35 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/22 10:24:25 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/22 19:12:03 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ int	ft_nb_here_doc(t_token *token)
 	return (count);
 }
 
-int	ft_complete_here_doc(t_data_parse *d_p, t_token *token, int index, int *exit_status)
+int	ft_complete_here_doc(t_data_parse *d_p, t_token *token,
+	int index, int *exit_status)
 {
 	d_p->array_hd = malloc (ft_nb_here_doc(token) * sizeof(int));
 	if (d_p->array_hd == NULL)
@@ -76,7 +77,8 @@ int	ft_complete_here_doc(t_data_parse *d_p, t_token *token, int index, int *exit
 	return (SUCCESS);
 }
 
-int	ft_complete(int fd_in, t_token *token, t_data_parse *data_parse, int *exit_status)
+int	ft_complete(int fd_in, t_token *token,
+	t_data_parse *data_parse, int *exit_status)
 {
 	char	*line;
 	char	*tmp;
