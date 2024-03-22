@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_AST.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 01:19:42 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/20 04:43:53 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/22 16:57:34 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,13 @@ int	fork_exec(t_tree *tree, char ***env, int *status, t_tab_pid *pid)
 	return (0);
 }
 
+
+
 void	wait_pid_status(int *ll_len, int *status, t_tab_pid *pid)
 {
 	while ((--(*ll_len)) + 1 > 0)
 	{
+	
 		waitpid(pid->tab_pid[(pid->index)++], status, 0);
 		if (WIFEXITED(*status))
 			*status = WEXITSTATUS(*status);

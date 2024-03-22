@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 06:02:52 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/22 09:34:13 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/22 16:53:49 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	ft_display_new_prompt(int signal)
 {
 	(void)signal;
+	printf("qwer\n");
 	if (g_signal != -100 && g_signal != 131)
 	{
 		write(1, "\n", 1);
@@ -35,15 +36,30 @@ void	ft_core_dumped(int signal)
 int	ft_change_sig(int index)
 {
 	struct sigaction	s_quit;
+	struct sigaction	s_int;
 
 	sigemptyset(&s_quit.sa_mask);
 	sigaddset(&s_quit.sa_mask, SIGQUIT);
+	sigemptyset(&s_int.sa_mask);
+	sigaddset(&s_int.sa_mask, SIGINT);
+	s_int.sa_flags = 0;
 	s_quit.sa_flags = 0;
 	if (index == 0)
+	{
 		s_quit.sa_handler = &ft_core_dumped;
-	else
+		s_int.sa_handler = SIG_IGN;
+	}
+	else if (index == 1)
+	{
 		s_quit.sa_handler = SIG_IGN;
+		s_int.sa_handler = &ft_display_new_prompt;
+	}
 	if (sigaction(SIGQUIT, &s_quit, NULL) == -1)
+	{
+		ft_putstr_fd("minishell: error with sigaction\n", 2);
+		return (ERROR);
+	}
+	if (sigaction(SIGINT, &s_int, NULL) == -1)
 	{
 		ft_putstr_fd("minishell: error with sigaction\n", 2);
 		return (ERROR);

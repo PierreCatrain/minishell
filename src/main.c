@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:52:38 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/20 04:44:25 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/22 16:28:32 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,9 @@ int	main_2(t_tree **tree, t_data_parse *data_parse,
 				free_tab_tab(*env), ERROR_MALLOC);
 		signal(SIGINT, SIG_IGN);
 		signal(SIGQUIT, SIG_IGN);
+		printf("avant exec\n");
 		*exit_status = ft_tree_exec(*tree, env, exit_status);
+		printf("apres exec\n");
 		if (*exit_status == ERROR_MALLOC)
 			return (free_and_close_tree(*tree),
 				free_tab_tab(*env), ERROR_MALLOC);
