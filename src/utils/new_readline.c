@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 14:02:47 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/11 00:37:10 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/22 10:45:40 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char	*end_new_readline(int size, char *new, char *read_str, char *lim)
 	return (free(new), free(read_str), res);
 }
 
-char	*new_readline(char *lim)
+char	*new_readline(char *lim, int *exit_status)
 {
 	char	*new;
 	char	*read_str;
@@ -81,5 +81,5 @@ char	*new_readline(char *lim)
 		}
 		size = read(0, read_str, 1);
 	}
-	return (end_new_readline(size, new, read_str, lim));
+	return (ft_handle_exit_status(size, exit_status), end_new_readline(size, new, read_str, lim));
 }

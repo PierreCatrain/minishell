@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 23:13:46 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/10 18:14:13 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/22 10:32:12 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,4 +91,10 @@ char	*ft_strjoin_1_malloc_expand(char *str1, char *str2)
 		join[i + j] = str2[j];
 	join[i + j] = '\0';
 	return (free(str1), join);
+}
+
+void ft_handle_exit_status(int size, int *exit_status)
+{
+	if (size == -1)
+		*exit_status = 130;
 }

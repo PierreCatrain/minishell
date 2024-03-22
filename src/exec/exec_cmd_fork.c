@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 17:38:07 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/22 13:10:49 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/22 17:19:10 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,6 @@ void	ft_child(t_tree *tree, char ***env, int status, int *tab_pid)
 {
 	char	**arg;
 
-	signal(SIGQUIT, SIG_DFL);
-	signal(SIGINT, SIG_DFL);
 	ft_child_2(tree, env, tab_pid);
 	arg = NULL;
 	arg = ft_new_args(tree->lst_exec, status, *env);
@@ -94,15 +92,37 @@ void	ft_child(t_tree *tree, char ***env, int status, int *tab_pid)
 	}
 }
 
+void print(int signal)
+{
+	(void)signal;
+	printf("toto\n");
+	g_signal = 130;
+}
+
 int	ft_exec_cmd_fork(t_tree *tree, char ***env, int status, t_tab_pid pid_data)
 {
+	struct sigaction	s_quit;
 	pid_t	pid;
+
 
 	pid = fork();
 	if (pid == -1)
 		return (EXIT_FAILURE);
 	if (pid == 0)
+	{
+		signal(SIGQUIT, SIG_DFL);
+		signal(SIGINT, SIG_DFL);
+		sigemptyset(&s_quit.sa_mask);
+		sigaddset(&s_quit.sa_mask, SIGQUIT);
+		s_quit.sa_flags = 0;
+		s_quit.sa_handler = &print;
+		if (sigaction(SIGQUIT, &s_quit, NULL) == -1)
+		{
+			ft_putstr_fd("minishell: error with sigaction\n", 2);
+			return (ERROR);
+		}
 		ft_child(tree, env, status, pid_data.tab_pid);
+	}
 	else
 	{
 		pid_data.tab_pid[pid_data.index++] = pid;

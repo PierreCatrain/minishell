@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 02:23:35 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/13 01:53:47 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/22 10:24:25 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	ft_nb_here_doc(t_token *token)
 	return (count);
 }
 
-int	ft_complete_here_doc(t_data_parse *d_p, t_token *token, int index)
+int	ft_complete_here_doc(t_data_parse *d_p, t_token *token, int index, int *exit_status)
 {
 	d_p->array_hd = malloc (ft_nb_here_doc(token) * sizeof(int));
 	if (d_p->array_hd == NULL)
@@ -63,7 +63,7 @@ int	ft_complete_here_doc(t_data_parse *d_p, t_token *token, int index)
 			d_p->array_hd[index] = open(d_p->heredoc, \
 					O_CREAT | O_RDWR | O_TRUNC, 0644);
 			if (ft_complete(d_p->array_hd[index], \
-						token, d_p) == ERROR)
+						token, d_p, exit_status) == ERROR)
 				return (close_hd(d_p->array_hd, index), free(d_p->array_hd), \
 				free(d_p->heredoc), ERROR);
 			close(d_p->array_hd[index]);
@@ -76,7 +76,7 @@ int	ft_complete_here_doc(t_data_parse *d_p, t_token *token, int index)
 	return (SUCCESS);
 }
 
-int	ft_complete(int fd_in, t_token *token, t_data_parse *data_parse)
+int	ft_complete(int fd_in, t_token *token, t_data_parse *data_parse, int *exit_status)
 {
 	char	*line;
 	char	*tmp;
@@ -84,7 +84,7 @@ int	ft_complete(int fd_in, t_token *token, t_data_parse *data_parse)
 	if (fd_in == -1)
 		return (SUCCESS);
 	ft_putstr_fd("> ", 1);
-	line = new_readline(token->str);
+	line = new_readline(token->str, exit_status);
 	if (line == NULL)
 		return (ERROR);
 	if (ft_strncmp(line, token->str, ft_strlen(token->str)) == 1 \
@@ -97,7 +97,7 @@ int	ft_complete(int fd_in, t_token *token, t_data_parse *data_parse)
 		ft_putstr_fd(tmp, fd_in);
 		free(tmp);
 		free(line);
-		if (ft_complete(fd_in, token, data_parse) == ERROR)
+		if (ft_complete(fd_in, token, data_parse, exit_status) == ERROR)
 			return (ERROR);
 	}
 	else
