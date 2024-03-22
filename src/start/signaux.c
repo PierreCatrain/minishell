@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 06:02:52 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/22 16:53:49 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/22 17:24:54 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,10 @@
 void	ft_display_new_prompt(int signal)
 {
 	(void)signal;
-	printf("qwer\n");
-	if (g_signal != -100 && g_signal != 131)
-	{
-		write(1, "\n", 1);
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
-	}
+	write(1, "\n", 1);
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
 	g_signal = 130;
 }
 
@@ -53,6 +49,11 @@ int	ft_change_sig(int index)
 	{
 		s_quit.sa_handler = SIG_IGN;
 		s_int.sa_handler = &ft_display_new_prompt;
+	}
+	else if (index == 2)
+	{
+		s_quit.sa_handler = SIG_IGN;
+		s_int.sa_handler = SIG_IGN;
 	}
 	if (sigaction(SIGQUIT, &s_quit, NULL) == -1)
 	{

@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 01:19:42 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/22 16:57:34 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/22 18:06:54 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,6 @@ int	fork_exec(t_tree *tree, char ***env, int *status, t_tab_pid *pid)
 	return (0);
 }
 
-
-
 void	wait_pid_status(int *ll_len, int *status, t_tab_pid *pid)
 {
 	while ((--(*ll_len)) + 1 > 0)
@@ -76,6 +74,8 @@ void	wait_pid_status(int *ll_len, int *status, t_tab_pid *pid)
 			*status = WEXITSTATUS(*status);
 	}
 	free(pid->tab_pid);
+	if (*status == 2)//
+		*status = 130;//
 	if ((g_signal == 130 || g_signal == 131))
 		*status = g_signal;
 }
