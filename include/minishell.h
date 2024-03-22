@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/20 01:29:52 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/22 10:41:15 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -366,11 +366,8 @@ int						ft_exec_token_type_2(t_data_parse *data_parse,
 int						ft_exec_token_type_heredoc(t_data_parse *data_parse,
 							t_token **token);
 int						ft_nb_here_doc(t_token *token);
-int						ft_complete_here_doc(t_data_parse *data_parse,
-							t_token *token,
-							int index);
-int						ft_complete(int fd_in, t_token *token, \
-		t_data_parse *data_parse);
+int						ft_complete_here_doc(t_data_parse *d_p, t_token *token, int index, int *exit_status);
+int						ft_complete(int fd_in, t_token *token, t_data_parse *data_parse, int *exit_status);
 char					*ft_here_doc(void);
 
 //make_lst_exec.c
@@ -382,8 +379,7 @@ int						ft_set_exec(t_data_parse *data_parse,
 							t_token *token);
 int						ft_lst_exec(t_token *token, t_lst_exec **lst_exec,
 							t_data_parse *data_parse);
-int						ft_create_tree(t_tree **tree, t_token *token,
-							t_data_parse *data_parse);
+int						ft_create_tree(t_tree **tree, t_token *token, t_data_parse *data_parse, int *exit_status);
 
 //pipes.c
 void					ft_pipes_fail(int **fd_pipes, int index_pipes);
@@ -559,6 +555,7 @@ char					*ft_join_char(char *str, char c);
 char					*ft_strjoin(char *str1, char *str2);
 char					**ft_strdup_2d(char **str);
 char					*ft_strjoin_1_malloc_expand(char *str1, char *str2);
+void					ft_handle_exit_status(int size, int *exit_status);
 
 //ft_utils_debug.c
 void					print_tab_tab(char **tab);
@@ -606,7 +603,7 @@ char					*ft_handle_ctrl_c(char *new, char *read_str);
 char					*ft_handle_ctrl_d(char *new, char *read_str, char *lim);
 char					*end_new_readline(int size, char *new, char *read_str,
 							char *lim);
-char					*new_readline(char *lim);
+char					*new_readline(char *lim, int *exit_status);
 
 //print_token_tree.c
 void					ft_print_expand(t_expand *expand);
