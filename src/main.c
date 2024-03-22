@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:52:38 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/14 00:11:00 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/20 04:44:25 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	g_signal;
 int	set_main_1(t_tree **tree, int *exit_status, int argc, char **argv)
 {
 	*tree = NULL;
-	*exit_status = 0;
+	(void)exit_status;
 	(void)argv;
 	if (argc != 1)
 		return (ERROR);
@@ -45,6 +45,8 @@ int	main_2(t_tree **tree, t_data_parse *data_parse,
 		if (ft_change_sig(0) != SUCCESS)
 			return (free_and_close_tree(*tree),
 				free_tab_tab(*env), ERROR_MALLOC);
+		signal(SIGINT, SIG_IGN);
+		signal(SIGQUIT, SIG_IGN);
 		*exit_status = ft_tree_exec(*tree, env, exit_status);
 		if (*exit_status == ERROR_MALLOC)
 			return (free_and_close_tree(*tree),
@@ -65,18 +67,16 @@ int	main(int argc, char **argv, char **envp)
 	int				exit_status;
 	char			**env;
 
-	if (set_main_1(&tree, &exit_status, argc, argv) || set_main_2(&env, envp))
+	if (set_main_2(&env, envp))
 		return (ERROR);
 	while (1)
 	{
+		set_main_1(&tree, &exit_status, argc, argv);
 		data_parse.prompt = ft_get_prompt(env);
 		if (data_parse.prompt == NULL)
-		{
 			return (ERROR_PROMPT);
-		}
 		data_parse.input = readline(data_parse.prompt);
 		free(data_parse.prompt);
-		tree = NULL;
 		if (data_parse.input == NULL)
 			return (rl_clear_history(),
 				ft_putstr_fd("exit\n", 1), free_tab_tab(env), 0);

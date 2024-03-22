@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 22:17:53 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/12 01:25:44 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/16 14:28:50 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,13 @@ int	ft_echo2(char **tab, int i, int param)
 	return (0);
 }
 
-int	ft_check_echo_param(char *str)
+int	ft_check_echo_param_only_one(char *str)
 {
 	int	i;
 
 	i = 1;
+	if (!str)
+		return (0);
 	if (str[0] != '-')
 		return (1);
 	while (str[i])
@@ -77,14 +79,39 @@ int	ft_check_echo_param(char *str)
 			return (1);
 		i++;
 	}
-	return (0);
+	return (i == 1);
+}
+
+void	ft_check_echo_param(char **tab, int *j, int *param)
+{
+	int	i;
+	int	flag;
+
+	i = 1;
+	flag = 0;
+	while (tab[i])
+	{
+		if (flag > 0)
+			break ;
+		if (ft_check_echo_param_only_one(tab[i]) == 0)
+		{
+			(*j)++;
+			*param = 1;
+		}
+		else
+			flag++;
+		i++;
+	}
+	return ;
 }
 
 int	ft_echo(char **tab)
 {
 	int	param;
 	int	i;
+	int	j;
 	int	check;
+	int	flag;
 
 	param = 0;
 	i = 1;
@@ -93,11 +120,9 @@ int	ft_echo(char **tab)
 		printf("\n");
 		return (0);
 	}
-	if (ft_check_echo_param(tab[1]) == 0)
-	{
-		i = 2;
-		param = 1;
-	}
-	check = ft_echo2(tab, i, param);
+	j = 1;
+	flag = 0;
+	ft_check_echo_param(tab, &j, &param);
+	check = ft_echo2(tab, j, param);
 	return (check);
 }
