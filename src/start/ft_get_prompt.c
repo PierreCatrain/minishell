@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 21:50:13 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/12 03:11:18 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/20 01:38:18 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,16 @@ char	*ft_at_else(char *start_prompt, char *end_prompt, char *str)
 	return (prompt);
 }
 
+int	ft_get_cwd_pwd(char **wd)
+{
+	char	buf[PATH_MAX + 1];
+	char	*str;
+
+	str = getcwd(buf, PATH_MAX);
+	*wd = ft_strdup(str);
+	return (1);
+}
+
 char	*ft_get_prompt(char **env)
 {
 	char	*prompt;
@@ -98,7 +108,7 @@ char	*ft_get_prompt(char **env)
 	end_prompt = ft_get_str("\1\033[1;34m\2)\1\033[1;33m\2 ~ \1\033[0m\2");
 	wd = ft_get_env_value(env, "PWD");
 	if (wd == NULL)
-		return (NULL);
+		ft_get_cwd_pwd(&wd);
 	if (ft_occ(wd, '/') == 1)
 	{
 		prompt = ft_at_home(start_prompt, end_prompt, wd);
