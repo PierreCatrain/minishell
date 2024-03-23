@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   new_readline.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 14:02:47 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/22 18:53:35 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/23 10:03:51 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*ft_handle_ctrl_d(char *new, char *read_str, char *lim)
 	return (free(new), free(read_str), NULL);
 }
 
-char	*end_new_readline(int size, char *new, char *read_str, char *lim)
+char	*ft_end_2(int size, char *new, char *read_str, char *lim)
 {
 	char	*res;
 
@@ -81,6 +81,5 @@ char	*new_readline(char *lim, int *exit_status)
 		}
 		size = read(0, read_str, 1);
 	}
-	return (ft_handle_exit_status(size, exit_status),
-		end_new_readline(size, new, read_str, lim));
+	return (ft_end_1(size, exit_status), ft_end_2(size, new, read_str, lim));
 }

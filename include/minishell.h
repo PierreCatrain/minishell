@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:48:57 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/22 19:22:29 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/23 10:04:05 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,7 +214,7 @@ char					*ft_at_else(char *start_prompt, char *end_prompt,
 
 //signaux.c
 void					ft_display_new_prompt(int signal);
-int						ft_change_sig(int index);
+int						ft_change_sig(void);
 int						ft_set_sig(void);
 void					print(int signal);
 
@@ -559,7 +559,7 @@ char					*ft_join_char(char *str, char c);
 char					*ft_strjoin(char *str1, char *str2);
 char					**ft_strdup_2d(char **str);
 char					*ft_strjoin_1_malloc_expand(char *str1, char *str2);
-void					ft_handle_exit_status(int size, int *exit_status);
+void					ft_end_1(int size, int *exit_status);
 
 //ft_utils_debug.c
 void					print_tab_tab(char **tab);
@@ -605,7 +605,7 @@ int						ft_set_new_readline(char **new, char **read_str,
 							int *size);
 char					*ft_handle_ctrl_c(char *new, char *read_str);
 char					*ft_handle_ctrl_d(char *new, char *read_str, char *lim);
-char					*end_new_readline(int size, char *new, char *read_str,
+char					*ft_end_2(int size, char *new, char *read_str,
 							char *lim);
 char					*new_readline(char *lim, int *exit_status);
 

@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:52:38 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/23 10:21:22 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/23 10:27:40 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,10 @@
 
 int	g_signal;
 
-int	set_main_1(t_tree **tree, int *exit_status, int argc, char **argv)
+int	set_main_1(t_tree **tree, int argc, char **argv)
 {
 	*tree = NULL;
 	(void)argv;
-	(void)exit_status;
 	if (argc != 1)
 		return (ERROR);
 	if (ft_set_sig() == ERROR)
@@ -26,8 +25,9 @@ int	set_main_1(t_tree **tree, int *exit_status, int argc, char **argv)
 	return (SUCCESS);
 }
 
-int	set_main_2(char ***env, char **envp)
+int	set_main_2(char ***env, char **envp, int *exit_status)
 {
+	*exit_status = 0;
 	*env = ft_copy_env(envp);
 	if (*env == NULL)
 		return (ERROR_MALLOC);
@@ -42,9 +42,6 @@ int	main_2(t_tree **tree, t_data_parse *data_parse,
 		if (g_signal == 130)
 			*exit_status = g_signal;
 		g_signal = -100;
-		if (ft_change_sig(0) != SUCCESS)
-			return (free_and_close_tree(*tree),
-				free_tab_tab(*env), ERROR_MALLOC);
 		signal(SIGQUIT, SIG_IGN);
 		signal(SIGINT, SIG_IGN);
 		*exit_status = ft_tree_exec(*tree, env, exit_status);
@@ -52,7 +49,7 @@ int	main_2(t_tree **tree, t_data_parse *data_parse,
 			return (free_and_close_tree(*tree),
 				free_tab_tab(*env), ERROR_MALLOC);
 		free_and_close_tree(*tree);
-		if (ft_change_sig(1) != SUCCESS)
+		if (ft_change_sig() != SUCCESS)
 			return (free_and_close_tree(*tree),
 				free_tab_tab(*env), ERROR_MALLOC);
 		g_signal = 0;
@@ -67,12 +64,11 @@ int	main(int argc, char **argv, char **envp)
 	int				exit_status;
 	char			**env;
 
-	exit_status = 0;
-	if (set_main_2(&env, envp))
+	if (set_main_2(&env, envp, &exit_status))
 		return (ERROR);
 	while (1)
 	{
-		set_main_1(&tree, &exit_status, argc, argv);
+		set_main_1(&tree, argc, argv);
 		data_parse.prompt = ft_get_prompt(env);
 		if (data_parse.prompt == NULL)
 			return (ERROR_PROMPT);
