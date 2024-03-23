@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utils_7.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 23:13:46 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/22 18:51:43 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/23 10:03:05 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ char	*ft_strjoin_1_malloc_expand(char *str1, char *str2)
 	return (free(str1), join);
 }
 
-void	ft_handle_exit_status(int size, int *exit_status)
+void	ft_end_1(int size, int *exit_status)
 {
 	if (size == -1)
 		*exit_status = 130;

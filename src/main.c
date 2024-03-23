@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:52:38 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/23 09:39:17 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/23 10:14:13 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	g_signal;
 int	set_main_1(t_tree **tree, int *exit_status, int argc, char **argv)
 {
 	*tree = NULL;
-	(void)exit_status;
+	*exit_status = 0;
 	(void)argv;
 	if (argc != 1)
 		return (ERROR);
@@ -42,9 +42,6 @@ int	main_2(t_tree **tree, t_data_parse *data_parse,
 		if (g_signal == 130)
 			*exit_status = g_signal;
 		g_signal = -100;
-		if (ft_change_sig(0) != SUCCESS)
-			return (free_and_close_tree(*tree),
-				free_tab_tab(*env), ERROR_MALLOC);
 		signal(SIGQUIT, SIG_IGN);
 		signal(SIGINT, SIG_IGN);
 		*exit_status = ft_tree_exec(*tree, env, exit_status);
@@ -52,7 +49,7 @@ int	main_2(t_tree **tree, t_data_parse *data_parse,
 			return (free_and_close_tree(*tree),
 				free_tab_tab(*env), ERROR_MALLOC);
 		free_and_close_tree(*tree);
-		if (ft_change_sig(1) != SUCCESS)
+		if (ft_change_sig() != SUCCESS)
 			return (free_and_close_tree(*tree),
 				free_tab_tab(*env), ERROR_MALLOC);
 		g_signal = 0;

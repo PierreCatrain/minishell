@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 06:02:52 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/23 09:45:04 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/23 10:01:34 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,7 @@ void	ft_core_dumped(int signal)
 	g_signal = 131;
 }
 
-void	ft_useless(int signal)
-{
-	(void)signal;
-	g_signal = 130;
-}
-
-int	ft_change_sig(int index)
+int	ft_change_sig(void)
 {
 	struct sigaction	s_quit;
 	struct sigaction	s_int;
@@ -49,16 +43,8 @@ int	ft_change_sig(int index)
 	sigaddset(&s_int.sa_mask, SIGINT);
 	s_int.sa_flags = 0;
 	s_quit.sa_flags = 0;
-	if (index == 0)
-	{
-		s_quit.sa_handler = &ft_core_dumped;
-		s_int.sa_handler = &ft_useless;
-	}
-	else if (index == 1)
-	{
-		s_quit.sa_handler = SIG_IGN;
-		s_int.sa_handler = &ft_display_new_prompt;
-	}
+	s_quit.sa_handler = SIG_IGN;
+	s_int.sa_handler = &ft_display_new_prompt;
 	if (sigaction(SIGQUIT, &s_quit, NULL) == -1)
 	{
 		ft_putstr_fd("minishell: error with sigaction\n", 2);
