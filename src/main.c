@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:52:38 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/23 10:14:13 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/23 10:21:57 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,9 @@
 
 int	g_signal;
 
-int	set_main_1(t_tree **tree, int *exit_status, int argc, char **argv)
+int	set_main_1(t_tree **tree, int argc, char **argv)
 {
 	*tree = NULL;
-	*exit_status = 0;
 	(void)argv;
 	if (argc != 1)
 		return (ERROR);
@@ -26,8 +25,9 @@ int	set_main_1(t_tree **tree, int *exit_status, int argc, char **argv)
 	return (SUCCESS);
 }
 
-int	set_main_2(char ***env, char **envp)
+int	set_main_2(char ***env, char **envp, int *exit_status)
 {
+	*exit_status = 0;
 	*env = ft_copy_env(envp);
 	if (*env == NULL)
 		return (ERROR_MALLOC);
@@ -64,11 +64,11 @@ int	main(int argc, char **argv, char **envp)
 	int				exit_status;
 	char			**env;
 
-	if (set_main_2(&env, envp))
+	if (set_main_2(&env, envp, &exit_status))
 		return (ERROR);
 	while (1)
 	{
-		set_main_1(&tree, &exit_status, argc, argv);
+		set_main_1(&tree, argc, argv);
 		data_parse.prompt = ft_get_prompt(env);
 		if (data_parse.prompt == NULL)
 			return (ERROR_PROMPT);
