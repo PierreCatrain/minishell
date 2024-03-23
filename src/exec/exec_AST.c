@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 01:19:42 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/22 18:06:54 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/22 18:12:13 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@ void	wait_pid_status(int *ll_len, int *status, t_tab_pid *pid)
 			*status = WEXITSTATUS(*status);
 	}
 	free(pid->tab_pid);
-	if (*status == 2)//
-		*status = 130;//
+	// if (*status == 2)//
+	// 	*status = 130;//
 	if ((g_signal == 130 || g_signal == 131))
 		*status = g_signal;
 }

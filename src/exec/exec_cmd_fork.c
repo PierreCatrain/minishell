@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 17:38:07 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/22 17:43:21 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/22 18:41:11 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,14 @@ void	ft_child(t_tree *tree, char ***env, int status, int *tab_pid)
 		free(tab_pid);
 		exit (0);
 	}
+	if (ft_strcmp("./minishell", arg[0]) == 0)//
+	{//
+		printf("trouver\n");
+		signal(SIGINT, SIG_IGN);
+		signal(SIGQUIT, SIG_IGN);
+		// if (ft_change_sig(3) != SUCCESS)
+		// 	return ;
+	}//
 	dup2(tree->lst_exec->fd_in, 0);
 	dup2(tree->lst_exec->fd_out, 1);
 	free_and_close_tree(tree);
@@ -109,8 +117,8 @@ int	ft_exec_cmd_fork(t_tree *tree, char ***env, int status, t_tab_pid pid_data)
 		return (EXIT_FAILURE);
 	if (pid == 0)
 	{
-		signal(SIGINT, SIG_DFL);
-		signal(SIGQUIT, SIG_DFL);
+		// signal(SIGINT, SIG_DFL);
+		// signal(SIGQUIT, SIG_DFL);
 		// signal(SIGQUIT, SIG_IGN);
 		// if (ft_change_sig(1) != SUCCESS)
 		// 	return (ERROR_MALLOC);
