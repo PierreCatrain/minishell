@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:52:38 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/22 18:48:24 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/23 10:21:22 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ int	g_signal;
 int	set_main_1(t_tree **tree, int *exit_status, int argc, char **argv)
 {
 	*tree = NULL;
-	(void)exit_status;
 	(void)argv;
+	(void)exit_status;
 	if (argc != 1)
 		return (ERROR);
 	if (ft_set_sig() == ERROR)
@@ -67,6 +67,7 @@ int	main(int argc, char **argv, char **envp)
 	int				exit_status;
 	char			**env;
 
+	exit_status = 0;
 	if (set_main_2(&env, envp))
 		return (ERROR);
 	while (1)

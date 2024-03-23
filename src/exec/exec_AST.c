@@ -6,7 +6,7 @@
 /*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 01:19:42 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/22 19:22:47 by lgarfi           ###   ########.fr       */
+/*   Updated: 2024/03/23 09:58:04 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ void	wait_pid_status(int *ll_len, int *status, t_tab_pid *pid)
 {
 	struct sigaction	s_quit;
 
+	sigemptyset(&s_quit.sa_mask);
+	sigaddset(&s_quit.sa_mask, SIGQUIT);
 	s_quit.sa_flags = SA_RESTART;
 	s_quit.sa_handler = &print;
 	if (sigaction(SIGINT, &s_quit, NULL) == -1)
