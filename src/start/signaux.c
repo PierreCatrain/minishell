@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 06:02:52 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/22 18:36:17 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/23 09:45:04 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,13 @@
 void	ft_display_new_prompt(int signal)
 {
 	(void)signal;
-	write(1, "\n", 1);
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	rl_redisplay();
+	if (g_signal != -100 && g_signal != 131)
+	{
+		write(1, "\n", 1);
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+	}
 	g_signal = 130;
 }
 
@@ -56,11 +59,6 @@ int	ft_change_sig(int index)
 		s_quit.sa_handler = SIG_IGN;
 		s_int.sa_handler = &ft_display_new_prompt;
 	}
-	else if (index == 2)
-	{
-		s_quit.sa_handler = SIG_IGN;
-		s_int.sa_handler = &ft_useless;
-	}
 	if (sigaction(SIGQUIT, &s_quit, NULL) == -1)
 	{
 		ft_putstr_fd("minishell: error with sigaction\n", 2);
@@ -72,6 +70,12 @@ int	ft_change_sig(int index)
 		return (ERROR);
 	}
 	return (SUCCESS);
+}
+
+void	print(int signal)
+{
+	(void)signal;
+	g_signal = 130;
 }
 
 int	ft_set_sig(void)

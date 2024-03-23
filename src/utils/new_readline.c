@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   new_readline.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgarfi <lgarfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 14:02:47 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/22 10:45:40 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/22 18:53:35 by lgarfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,5 +81,6 @@ char	*new_readline(char *lim, int *exit_status)
 		}
 		size = read(0, read_str, 1);
 	}
-	return (ft_handle_exit_status(size, exit_status), end_new_readline(size, new, read_str, lim));
+	return (ft_handle_exit_status(size, exit_status),
+		end_new_readline(size, new, read_str, lim));
 }

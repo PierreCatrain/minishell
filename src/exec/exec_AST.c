@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 01:19:42 by lgarfi            #+#    #+#             */
-/*   Updated: 2024/03/22 18:12:13 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/23 09:40:13 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,16 +66,22 @@ int	fork_exec(t_tree *tree, char ***env, int *status, t_tab_pid *pid)
 
 void	wait_pid_status(int *ll_len, int *status, t_tab_pid *pid)
 {
-	while ((--(*ll_len)) + 1 > 0)
+	struct sigaction	s_quit;
+
+	s_quit.sa_flags = SA_RESTART;
+	s_quit.sa_handler = &print;
+	if (sigaction(SIGINT, &s_quit, NULL) == -1)
 	{
-	
+		ft_putstr_fd("minishell: error with sigaction\n", 2);
+		return ;
+	}
+	while ((--(*ll_len)) + 1 > 0)
+	{	
 		waitpid(pid->tab_pid[(pid->index)++], status, 0);
 		if (WIFEXITED(*status))
 			*status = WEXITSTATUS(*status);
 	}
 	free(pid->tab_pid);
-	// if (*status == 2)//
-	// 	*status = 130;//
 	if ((g_signal == 130 || g_signal == 131))
 		*status = g_signal;
 }
@@ -107,5 +113,3 @@ int	ft_tree_exec(t_tree *tree, char ***env, int *status)
 	}
 	return (*status);
 }
-
-// echo ">"Wer''1234'$USER'"$USER""%USER"""

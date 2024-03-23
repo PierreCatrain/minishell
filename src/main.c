@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:52:38 by picatrai          #+#    #+#             */
-/*   Updated: 2024/03/22 18:41:08 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/03/23 09:39:17 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ int	main_2(t_tree **tree, t_data_parse *data_parse,
 		if (ft_change_sig(0) != SUCCESS)
 			return (free_and_close_tree(*tree),
 				free_tab_tab(*env), ERROR_MALLOC);
-		// signal(SIGINT, SIG_IGN);
-		// signal(SIGQUIT, SIG_IGN);
+		signal(SIGQUIT, SIG_IGN);
+		signal(SIGINT, SIG_IGN);
 		*exit_status = ft_tree_exec(*tree, env, exit_status);
 		if (*exit_status == ERROR_MALLOC)
 			return (free_and_close_tree(*tree),
